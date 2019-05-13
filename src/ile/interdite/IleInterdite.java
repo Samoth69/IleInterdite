@@ -20,6 +20,7 @@ public class IleInterdite {
         System.out.println("Nouvelle commande");
         System.out.println("Salut c'est moi.");
         System.out.println("coucou");
+        System.out.println("Naod ce génie");
     }
     
 }
