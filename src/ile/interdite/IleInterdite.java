@@ -17,6 +17,7 @@ public class IleInterdite {
     public static void main(String[] args) {
         // TODO code application logic here
         System.out.println("Bonjour (de la part de Monsieur Blanchon)");
+        System.out.println("Nouvelle commande");
     }
     
 }
