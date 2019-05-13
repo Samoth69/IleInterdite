@@ -19,6 +19,7 @@ public class IleInterdite {
         System.out.println("Bonjour (de la part de Monsieur Blanchon)");
         System.out.println("Nouvelle commande");
         System.out.println("Salut c'est moi.");
+        System.out.println("coucou");
     }
     
 }
