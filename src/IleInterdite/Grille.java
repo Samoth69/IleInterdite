@@ -10,6 +10,15 @@ package IleInterdite;
  * @author violentt
  */
 public class Grille {
-    //test
     
+    public Tuille getTuiles() {
+        return null;     
+    }
+    
+    public void AugmenterInnondation(Tuille PositionTuile) {
+        
+    }
+    
+    public void ReduireInondation(Tuille)
+        
 }
