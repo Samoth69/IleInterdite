@@ -6,11 +6,12 @@
 package IleInterdite;
 import Personnages.Personnage;
 import java.util.ArrayList;
+import Cartes.CarteInondation;
 /**
  *
  * @author violentt
  */
-public class Tuile {
+public class Tuile extends CarteInondation {
     
     private int X;
     private int Y;
