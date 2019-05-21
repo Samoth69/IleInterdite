@@ -27,6 +27,10 @@ public abstract class Personnage {
         this.ile = ile;
     }
     
+    public String getNom(){     //Implementé par Paul
+        return nom;
+    }
+    
     public Tuile[] getDeplacements(Tuile EmplacementJoueur) {
         
     }

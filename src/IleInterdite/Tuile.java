@@ -85,7 +85,6 @@ public class Tuile {
     public void reduireInondation(){    // Reduit etat de l'inondation de la tuile en fonction de son etat actuel
         switch(EtatInondation)
         {
-            
             //Si SEC affiche message pour dire que l'etat de la tuile ne peut etre changé
             case SEC:
                 System.out.println("Tuile déjà séche");
