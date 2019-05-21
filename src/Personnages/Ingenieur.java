@@ -9,6 +9,13 @@ package Personnages;
  *
  * @author violentt
  */
-public class Ingenieur {
+public class Ingenieur extends Personnage{
     
+    Ingenieur(String nom) {
+        super(nom);
+    }
+    
+    public int getNbTuilleSechable() {
+        
+    }
 }

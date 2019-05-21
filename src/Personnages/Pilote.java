@@ -5,10 +5,20 @@
  */
 package Personnages;
 
+import IleInterdite.Tuille;
+
 /**
  *
  * @author violentt
  */
-public class Pilote {
+public class Pilote extends Personnage{
+    Pilote(String nom) {
+        super(nom);
+    }
+    
+    @Override
+    public Tuille[] getDeplacements(Tuille EmplacementJoueur) {
+        
+    }
     
 }
