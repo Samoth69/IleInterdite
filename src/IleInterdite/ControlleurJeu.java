@@ -3,25 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ile.interdite;
+package IleInterdite;
 
 /**
  *
  * @author violentt
  */
-public class IleInterdite {
+public class ControlleurJeu {
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        System.out.println("Bonjour (de la part de Monsieur Blanchon)");
-        System.out.println("Nouvelle commande");
-        System.out.println("Salut c'est moi.");
-        System.out.println("coucou");
-        System.out.println("Naod ce génie");
-        System.out.println("test push");  //Paul
     }
     
 }
