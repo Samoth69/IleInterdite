@@ -15,7 +15,7 @@ public class Tuile {
     private int X;
     private int Y;
     private TypeEnum EtatInondation = TypeEnum.SEC;
-    private ArrayList<Personnage> persoSurLaTuille = new ArrayList<Personnage>();
+    private ArrayList<Personnage> persoSurLaTuile = new ArrayList<Personnage>();
     
     Tuile(int X, int Y){
         setX(X);
@@ -113,14 +113,20 @@ public class Tuile {
     }
     
     public void addJoueur(Personnage perso){
-        
+        persoSurLaTuile.add(perso);
     }
     
     public void removeJoueur(Personnage perso){
-        
+        for(int i = 0; i < persoSurLaTuile.size(); i++)
+        {
+            if(persoSurLaTuile.get(i).getNom() == perso.getNom())
+            {
+                persoSurLaTuile.remove(i);
+            }
+        }
     }
     
     public ArrayList<Personnage> getPersonnages(){
-        return persoSurLaTuille;
+        return persoSurLaTuile;
     }
 }
