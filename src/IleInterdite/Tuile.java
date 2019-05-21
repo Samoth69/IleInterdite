@@ -14,18 +14,17 @@ public class Tuile {
     
     private int X;
     private int Y;
-    private TypeEnum EtatInondation;
+    private TypeEnum EtatInondation = TypeEnum.SEC;
     private ArrayList<Personnage> persoSurLaTuille = new ArrayList<Personnage>();
     
     Tuile(int X, int Y){
-        
+        setX(X);
+        setY(Y);
     }
-    
     
     public int getX(){
         return X;
     }
-    
     
     public void setX(int x){
         if(x < 0)
@@ -37,8 +36,6 @@ public class Tuile {
             this.X = x;
         }
     }
-    
-    
     
     public int getY(){
         return Y;
@@ -55,24 +52,64 @@ public class Tuile {
         }
     }
     
-    public TypeEnum getInondation(){
+    public TypeEnum getInondation(){        // Renvoie etat de la tuile (SEC, MOPUILLE ou INONDE)
         return EtatInondation;
     }
     
-    public void augmenterInondation(){
-        
+    public void augmenterInondation(){  // Augmente etat de l'inondation de la tuile en fonction de son etat actuel
+        switch(EtatInondation)                                      
+        {
+            
+            //Si SEC etat devient MOUILLE
+            case SEC:
+                EtatInondation = TypeEnum.MOUILLE;
+            break;
+            
+            //Si MOUILLE etat devient INONDE
+            case MOUILLE:
+                EtatInondation = TypeEnum.INONDE;
+            break;
+            
+            //Si INONDE affiche message pour dire que l'etat de la tuile ne peut etre changé
+            case INONDE:
+                System.out.println("Niveau d'eau déjà au max!");
+            break;
+            
+            //Si aucun des cas ne correspondent affiche warning (modifiable à votre guise)
+            default:
+                System.out.println("WARNING : tuile non inondable!");
+            break;
+        }
     }
     
-    public void reduireInondation(){
-        
+    public void reduireInondation(){    // Reduit etat de l'inondation de la tuile en fonction de son etat actuel
+        switch(EtatInondation)
+        {
+            
+            //Si SEC affiche message pour dire que l'etat de la tuile ne peut etre changé
+            case SEC:
+                System.out.println("Tuile déjà séche");
+            break;
+            
+            //Si MOUILLE etat devient SEC
+            case MOUILLE:
+                EtatInondation = TypeEnum.SEC;
+            break;
+            
+            //Si INONDE affiche message pour dire que l'etat de la tuile ne peut etre changé
+            case INONDE:
+                System.out.println("Tuile inondée, impossible de la sécher");
+            break;
+            
+            //Si aucun des cas ne correspondent affiche warning (modifiable à votre guise)
+            default:
+                System.out.println("WARNING : tuile non séchable!");
+            break;
+        }
     }
     
     private void ileInondee(){      //Demander a thomas pour plus de details
         
-    }
-    
-    public Grille getGrille(){          //A completer
-        return null;
     }
     
     public void addJoueur(Personnage perso){

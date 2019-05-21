@@ -10,7 +10,18 @@ package IleInterdite;
  * @author mariottp
  */
 public enum TypeEnum {
-    sec,
-    mouille,
-    inonde;
+    SEC("SEC"),
+    MOUILLE("MOUILLE"),
+    INONDE("INONDE");
+    
+    private String etat = "";
+    
+    TypeEnum(String etat){
+        this.etat = etat;
+    }
+    
+    @Override
+    public String toString(){
+        return etat;
+    }
 }
