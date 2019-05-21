@@ -9,14 +9,14 @@ package IleInterdite;
  *
  * @author mariottp
  */
-public enum TypeEnum {
+public enum TypeEnum {      //Enumeration pour les etats des tuiles
     SEC("SEC"),
     MOUILLE("MOUILLE"),
     INONDE("INONDE");
     
     private String etat = "";
     
-    TypeEnum(String etat){
+    TypeEnum(String etat){      //constructeur
         this.etat = etat;
     }
     
