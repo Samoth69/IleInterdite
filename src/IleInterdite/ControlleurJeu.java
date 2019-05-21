@@ -17,7 +17,7 @@ public class ControlleurJeu {
     public static void main(String[] args) {
         // TODO code application logic here
         
-        //C'est le push
+        //C'est le push num 2
     }
     
 }

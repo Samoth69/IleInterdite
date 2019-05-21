@@ -11,4 +11,14 @@ package IleInterdite;
  */
 public class Grille {
     
+    public Tuille getTuiles() {
+        return null;     
+    }
+    
+    public void AugmenterInnondation(Tuille PositionTuile) {
+        
+    }
+    
+    public void ReduireInondation(Tuille)
+        
 }
