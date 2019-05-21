@@ -122,10 +122,6 @@ public class Tuile extends CarteInondation {
         }
     }
     
-    private void ileInondee(){      //Demander a thomas pour plus de details
-        
-    }
-    
     public void addJoueur(Personnage perso){
         persoSurLaTuile.add(perso);
     }
