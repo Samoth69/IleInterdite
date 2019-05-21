@@ -9,7 +9,7 @@ package IleInterdite;
  *
  * @author mariottp
  */
-public enum Inondation {
+public enum TypeEnum {
     sec,
     mouille,
     inonde;

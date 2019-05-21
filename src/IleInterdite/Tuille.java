@@ -14,7 +14,7 @@ public class Tuille {
     
     private int X;
     private int Y;
-    private Inondation EtatInondation;
+    private TypeEnum EtatInondation;
     private ArrayList<Personnage> persoSurLaTuille = new ArrayList<Personnage>();
     
     Tuille(int X, int Y){
@@ -36,7 +36,7 @@ public class Tuille {
         return Y;
     }
     
-    public Inondation getInondation(){
+    public TypeEnum getInondation(){
         return EtatInondation;
     }
     
