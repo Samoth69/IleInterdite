@@ -20,21 +20,23 @@ public class Tuile extends CarteInondation {
     private TypeEnumTresors tresor = null;
     private ArrayList<Personnage> persoSurLaTuile = new ArrayList<Personnage>();
     
-    Tuile(int X, int Y){
+    Tuile(int X, int Y, String nom){
+        super(nom);
         setX(X);
         setY(Y);
     }
     
     Tuile(int X, int Y, String nom, TypeEnumTresors tresor){
+        super(nom, tresor);
         setX(X);
         setY(Y);
-        setTresor(tresor);
+       
     }
     
     Tuile(int X, int Y, String nom, TypeEnumTresors tresor, String image){
+        super(nom, tresor, image);
         setX(X);
         setY(Y);
-        setTresor(tresor);
     }
     
     public int getX(){
@@ -138,13 +140,5 @@ public class Tuile extends CarteInondation {
     
     public ArrayList<Personnage> getPersonnages(){
         return persoSurLaTuile;
-    }
-    
-    public void setTresor(TypeEnumTresors tresor){
-        this.tresor = tresor;
-    }
-    
-    public void setImage(){
-        //Code pour afficher une image
     }
 }
