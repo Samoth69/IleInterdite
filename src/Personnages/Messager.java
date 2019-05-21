@@ -5,10 +5,25 @@
  */
 package Personnages;
 
+import Cartes.CarteRouge;
+
 /**
  *
  * @author violentt
  */
-public class Messager {
+public class Messager extends Personnage{
     
+    Messager(String nom) {
+        super(nom);
+    }
+    
+    @Override
+    public void donnerCarteAJoueur(Personnage personnage, CarteRouge[] cartes)  {
+        
+    }
+    
+    @Override
+    public void donnerCarteAJoueur(Personnage personnage, CarteRouge carte) {
+        
+    }
 }
