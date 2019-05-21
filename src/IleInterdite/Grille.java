@@ -15,16 +15,33 @@ import java.util.Collection;
  */
 public class Grille {
     
-    private final ArrayList <Tuile> tuiles;
-    private final Personnage personnage;
+    //private final ArrayList <Tuile> tuiles;
+    private final Tuile tabTuile[][] = new Tuile[6][6]; // A potentiellement changer pour mettre des cases vides
+    private Personnage personnage1, personnage2, personnage3, personnage4;
     
-    Grille(Personnage perso) {
-        tuiles = new ArrayList();
-        this.personnage = perso;
+    Grille(Personnage perso1, Personnage perso2) {
+        //tuiles = new ArrayList();
+        this.personnage1 = perso1;
+        this.personnage2 = perso2;
     }
     
-    public Collection <Tuile> getTuiles() {
-        return tuiles;    
+    Grille(Personnage perso1, Personnage perso2, Personnage perso3) {
+        //tuiles = new ArrayList();
+        this.personnage1 = perso1;
+        this.personnage2 = perso2;
+        this.personnage3 = perso3;
+    }
+    
+    Grille(Personnage perso1, Personnage perso2, Personnage perso3, Personnage perso4) {
+        //tuiles = new ArrayList();
+        this.personnage1 = perso1;
+        this.personnage2 = perso2;
+        this.personnage3 = perso3;
+        this.personnage4 = perso4;
+    }
+    
+    public Tuile[][] getTuiles() {
+        return tabTuile;    
     }
     
     public void AugmenterInnondation(Tuile PositionTuile) {
