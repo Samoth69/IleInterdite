@@ -15,7 +15,7 @@ import java.util.Collection;
  */
 public class Grille {
     
-    private final ArrayList <Tuille> tuiles;
+    private final ArrayList <Tuile> tuiles;
     private final Personnage personnage;
     
     Grille(Personnage perso) {
@@ -23,19 +23,19 @@ public class Grille {
         this.personnage = perso;
     }
     
-    public Collection <Tuille> getTuiles() {
+    public Collection <Tuile> getTuiles() {
         return tuiles;    
     }
     
-    public void AugmenterInnondation(Tuille PositionTuile) {
+    public void AugmenterInnondation(Tuile PositionTuile) {
         
     }
     
-    public void ReduireInondation(Tuille PositionTuile) {
+    public void ReduireInondation(Tuile PositionTuile) {
         
     }
     
-    public void getTuilesAutoursPraticable(Tuille tuile) {
+    public void getTuilesAutoursPraticable(Tuile tuile) {
         
     }
     
@@ -43,7 +43,7 @@ public class Grille {
         
     }
     
-    public void getTuilesAutoursMouille(Tuille tuile) {
+    public void getTuilesAutoursMouille(Tuile tuile) {
         
     }
     

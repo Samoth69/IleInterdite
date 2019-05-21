@@ -5,7 +5,7 @@
  */
 package Personnages;
 
-import IleInterdite.Tuille;
+import IleInterdite.Tuile;
 
 /**
  *
@@ -18,7 +18,7 @@ public class Navigateur extends Personnage{
     }
     
     @Override
-    public Tuille[] getDeplacements(Tuille EmplacementJoueur) {
+    public Tuile[] getDeplacements(Tuile EmplacementJoueur) {
         
     }
 }

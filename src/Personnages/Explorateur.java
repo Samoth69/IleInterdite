@@ -5,7 +5,7 @@
  */
 package Personnages;
 
-import IleInterdite.Tuille;
+import IleInterdite.Tuile;
 
 /**
  *
@@ -17,11 +17,11 @@ public class Explorateur extends Personnage{
         super(nom);
     }
     
-    public Tuille[] getDeplacements(Tuille EmplacementJoueur) {
+    public Tuile[] getDeplacements(Tuile EmplacementJoueur) {
         
     }
     
-    public Tuille[] getTuilleQuiPeutSecher() {
+    public Tuile[] getTuilleQuiPeutSecher() {
         
     }
 }

@@ -7,7 +7,7 @@ package Personnages;
 
 import Cartes.CarteRouge;
 import IleInterdite.Grille;
-import IleInterdite.Tuille;
+import IleInterdite.Tuile;
 import java.util.ArrayList;
 
 /**
@@ -17,25 +17,25 @@ import java.util.ArrayList;
 public abstract class Personnage {
     private boolean surTuilleInondee = false;
     private String nom;
-    private Tuille emplacementJoueur;
+    private Tuile emplacementJoueur;
     private Grille ile;
     private ArrayList<CarteRouge> cartes = new ArrayList<>();
     
-    Personnage(String nom, Tuille emplacementJoueur, Grille ile) {
+    Personnage(String nom, Tuile emplacementJoueur, Grille ile) {
         this.nom = nom;
         this.emplacementJoueur = emplacementJoueur;
         this.ile = ile;
     }
     
-    public Tuille[] getDeplacements(Tuille EmplacementJoueur) {
+    public Tuile[] getDeplacements(Tuile EmplacementJoueur) {
         
     }
     
-    public void deplacement(Tuille nouvelleTuille) {
+    public void deplacement(Tuile nouvelleTuille) {
         
     }
     
-    public Tuille getEmplacement() {
+    public Tuile getEmplacement() {
         
     }
     
@@ -47,7 +47,7 @@ public abstract class Personnage {
         return surTuilleInondee;
     }
    
-    public Tuille[] getTuilleQuiPeutSecher() {
+    public Tuile[] getTuilleQuiPeutSecher() {
         
     }
     
