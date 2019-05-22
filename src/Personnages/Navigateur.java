@@ -5,6 +5,7 @@
  */
 package Personnages;
 
+import IleInterdite.Grille;
 import IleInterdite.Tuile;
 
 /**
@@ -13,12 +14,12 @@ import IleInterdite.Tuile;
  */
 public class Navigateur extends Personnage{
     
-    Navigateur(String nom) {
-        super(nom);
+    Navigateur(String nom, Tuile emplacementJoueur, Grille ile) {
+        super(nom, emplacementJoueur, ile);
     }
-    
+    /*
     @Override
     public Tuile[] getDeplacements(Tuile EmplacementJoueur) {
         
-    }
+    }*/
 }

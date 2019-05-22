@@ -5,17 +5,21 @@
  */
 package Personnages;
 
+import IleInterdite.Grille;
+import IleInterdite.Tuile;
+
 /**
  *
  * @author violentt
  */
 public class Ingenieur extends Personnage{
     
-    Ingenieur(String nom) {
-        super(nom);
+    Ingenieur(String nom, Tuile emplacementJoueur, Grille ile) {
+        super(nom, emplacementJoueur, ile);
     }
     
-    public int getNbTuilleSechable() {
-        
+    @Override
+    public int getNbTuileSechable() {
+        return 2;
     }
 }

@@ -6,6 +6,9 @@
 package Personnages;
 
 import Cartes.CarteRouge;
+import IleInterdite.Grille;
+import IleInterdite.Tuile;
+import java.util.ArrayList;
 
 /**
  *
@@ -13,12 +16,12 @@ import Cartes.CarteRouge;
  */
 public class Messager extends Personnage{
     
-    Messager(String nom) {
-        super(nom);
+    Messager(String nom, Tuile emplacementJoueur, Grille ile) {
+        super(nom, emplacementJoueur, ile);
     }
     
     @Override
-    public void donnerCarteAJoueur(Personnage personnage, CarteRouge[] cartes)  {
+    public void donnerCarteAJoueur(Personnage personnage, ArrayList<CarteRouge> cartes)  {
         
     }
     
