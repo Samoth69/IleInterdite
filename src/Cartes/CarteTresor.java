@@ -5,6 +5,8 @@
  */
 package Cartes;
 
+import Enumerations.TypeEnumTresors;
+
 /**
  *
  * @author violentt

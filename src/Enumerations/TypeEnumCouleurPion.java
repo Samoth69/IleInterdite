@@ -3,29 +3,30 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Cartes;
+package Enumerations;
 
 /**
  *
- * @author paul m
+ * @author Thomas
  */
-public enum TypeEnumTresors {
-    
-    LUNE("LUNE"),
-    LION("LION"),
-    TROPHEE("TROPHEE"),
-    FEU("FEU"),
-    AUCUN("AUCUN");
+public enum TypeEnumCouleurPion {
+    AUCUN("AUCUN"),
+    BLEU("BLEU"),
+    JAUNE("JAUNE"),
+    ORANGE("ORANGE"),
+    ROUGE("ROUGE"),
+    VIOLET("VIOLET"),
+    VERT("VERT");
     
     private String nom = "";
     
-    TypeEnumTresors(String nom){
+    TypeEnumCouleurPion(String nom){
         this.nom = nom;
     }
     
-   
     @Override
     public String toString(){
         return nom;
     }
+    
 }

@@ -5,6 +5,9 @@
  */
 package Cartes;
 
+import Enumerations.TypeEnumCouleurPion;
+import Enumerations.TypeEnumTresors;
+
 /**
  *
  * @author violentt
@@ -12,9 +15,15 @@ package Cartes;
 public class CarteInondation {
     private String nom, image;
     private TypeEnumTresors tresor;
+    private TypeEnumCouleurPion couleurPion = TypeEnumCouleurPion.AUCUN;
     
     public CarteInondation(String nom){
         setNom(nom);
+    }
+    
+    public CarteInondation(String nom, TypeEnumCouleurPion couleurPion){
+        setNom(nom);
+        this.couleurPion = couleurPion;
     }
     
     public CarteInondation(String nom, TypeEnumTresors tresor){
@@ -33,6 +42,10 @@ public class CarteInondation {
     
     public String getNom(){
         return nom;
+    }
+    
+    public TypeEnumCouleurPion getCouleurPion() {
+        return couleurPion;
     }
     
     public void setTresor(TypeEnumTresors tresor){

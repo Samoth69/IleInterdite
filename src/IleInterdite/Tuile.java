@@ -4,10 +4,12 @@
  * and open the template in the editor.
  */
 package IleInterdite;
+import Enumerations.TypeEnum;
 import Personnages.Personnage;
 import java.util.ArrayList;
 import Cartes.CarteInondation;
-import Cartes.TypeEnumTresors;
+import Enumerations.TypeEnumCouleurPion;
+import Enumerations.TypeEnumTresors;
 /**
  *
  * @author violentt
@@ -22,6 +24,12 @@ public class Tuile extends CarteInondation {
     
     Tuile(int X, int Y, String nom){
         super(nom);
+        setX(X);
+        setY(Y);
+    }
+    
+    Tuile(int X, int Y, String nom, TypeEnumCouleurPion couleurPion){
+        super(nom, couleurPion);
         setX(X);
         setY(Y);
     }
@@ -140,5 +148,9 @@ public class Tuile extends CarteInondation {
     
     public ArrayList<Personnage> getPersonnages(){
         return persoSurLaTuile;
+    }
+    
+    public String getNom() {
+        return super.getNom();
     }
 }

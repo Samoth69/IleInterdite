@@ -5,8 +5,12 @@
  */
 package IleInterdite;
 
+import Cartes.CarteInondation;
+import Enumerations.TypeEnum;
+import Enumerations.TypeEnumCouleurPion;
 import Personnages.Personnage;
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  *
@@ -15,18 +19,20 @@ import java.util.ArrayList;
 public class Grille {
     
    
-    private final Tuile tabTuile[][] = new Tuile[5][5]; // A potentiellement changer pour mettre des cases vides
-    private ArrayList<Personnage> persos = null; 
+    private final Tuile tabTuile[][] = new Tuile[5][5]; // A potentiellement changer pour mettre des cases vides --- par quoi mdr ?
+    private ArrayList<Personnage> persos = new ArrayList<>(); 
     
     Grille(Personnage perso1, Personnage perso2) {
         persos.add(perso1);
         persos.add(perso2);
+        genererTableauTuiles();
     }
     
     Grille(Personnage perso1, Personnage perso2, Personnage perso3) {
         persos.add(perso1);
         persos.add(perso2);
         persos.add(perso3);
+        genererTableauTuiles();
     }
     
     Grille(Personnage perso1, Personnage perso2, Personnage perso3, Personnage perso4) {
@@ -34,10 +40,55 @@ public class Grille {
         persos.add(perso2);
         persos.add(perso3);
         persos.add(perso4);
+        genererTableauTuiles();
     }
     
     public Tuile[][] getTuiles() {
         return tabTuile;    
+    }
+    
+    //génère le tableau des tuiles aléatoire
+    private void genererTableauTuiles() {
+        ArrayList<CarteInondation> tuile = getListTuiles();
+        Collections.shuffle(tuile); //mélange la liste des tuiles
+        
+        for (int i = 0; i <= 5; i++) {
+            for (int j = 0; j <= 5; j++) {
+                tabTuile[i][j] = new Tuile(i, j, tuile.get(i + j).getNom(), tuile.get(i + j).getCouleurPion());
+            }
+        }
+    }
+    
+    //renvoie les cartes du jeu
+    public ArrayList<CarteInondation> getListTuiles() {
+        ArrayList<CarteInondation> out = new ArrayList<>();
+        
+        out.add(new CarteInondation("Le Pont des Abimes"));
+        out.add(new CarteInondation("La Porte de Bronze", TypeEnumCouleurPion.ROUGE));
+        out.add(new CarteInondation("La Caverne des Ombres"));
+        out.add(new CarteInondation("La Porte de Fer", TypeEnumCouleurPion.VIOLET));
+        out.add(new CarteInondation("La Porte d'Or", TypeEnumCouleurPion.JAUNE));
+        out.add(new CarteInondation("Les Falaises de l’Oubli"));
+        out.add(new CarteInondation("Le Palais de Corail"));
+        out.add(new CarteInondation("La Porte d'Argent", TypeEnumCouleurPion.ORANGE));
+        out.add(new CarteInondation("Les Dunes de l'Illusion"));
+        out.add(new CarteInondation("Heliport", TypeEnumCouleurPion.BLEU));
+        out.add(new CarteInondation("La Porte de Cuivre", TypeEnumCouleurPion.VERT));
+        out.add(new CarteInondation("Le Jardin des Hurlements"));
+        out.add(new CarteInondation("La Foret Pourpre"));
+        out.add(new CarteInondation("Le Lagon Perdu"));
+        out.add(new CarteInondation("Le Marais Brumeux"));
+        out.add(new CarteInondation("Observatoire"));
+        out.add(new CarteInondation("Le Rocher Fantome"));
+        out.add(new CarteInondation("La Caverne du Brasier"));
+        out.add(new CarteInondation("Le Temple du Soleil"));
+        out.add(new CarteInondation("Le Temple de La Lune"));
+        out.add(new CarteInondation("Le Palais des Marees"));
+        out.add(new CarteInondation("Le Val du Crepuscule"));
+        out.add(new CarteInondation("La Tour du Guet"));
+        out.add(new CarteInondation("Le Jardin des Murmures"));
+        
+        return out;
     }
     
     //Prend une tuile en parametre. Augmente directement le niveau d'innondation d'une tuile
