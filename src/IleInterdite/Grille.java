@@ -73,7 +73,7 @@ public class Grille {
     
     //prend une tuile en parametre et renvoie un arraylist de tuile praticable autour de celle-ci
     public ArrayList<Tuile> getTuilesAutoursPraticable(Tuile tuile) {
-        ArrayList<Tuile> tuilesAutourPraticable = null;
+        ArrayList<Tuile> tuilesAutourPraticable = new ArrayList<>();
         
         for(int i = -1; i < 1; i++)
         {
@@ -90,29 +90,26 @@ public class Grille {
     
     //Surcharge de la fonction précédente pour prendre un personnage en paramétre
     public ArrayList<Tuile> getTuilesAutoursPraticable(Personnage personnage) {
-        ArrayList<Tuile> tuilesAutourPraticable = null;
-        Tuile tuile = personnage.getEmplacement();
-                
+        return getTuilesAutoursPraticable(personnage.getEmplacement());
+    }
+    
+    public ArrayList<Tuile> getTuilesAutoursMouille(Tuile tuile) {
+        ArrayList<Tuile> tuilesAutourPraticable = new ArrayList<>();
         for(int i = -1; i < 1; i++)
         {
             for(int j = -1; j < 1; j++)
             {
-                if((tabTuile[tuile.getX()+i][tuile.getY()+i].getInondation() == TypeEnum.SEC) || (tabTuile[tuile.getX()+i][tuile.getY()+i].getInondation() == TypeEnum.MOUILLE))
+                if(tabTuile[tuile.getX()+i][tuile.getY()+i].getInondation() == TypeEnum.MOUILLE)
                 {
                     tuilesAutourPraticable.add(tuile);
                 }
             }
         }
         return tuilesAutourPraticable;
-        
     }
     
-    public void getTuilesAutoursMouille(Tuile tuile) {
-        
-    }
-    
-    public void getTuilesAutoursMouille(Personnage Personnage) {
-        
+    public ArrayList<Tuile> getTuilesAutoursMouille(Personnage Personnage) {
+        return getTuilesAutoursMouille(Personnage.getEmplacement());
     }
         
 }
