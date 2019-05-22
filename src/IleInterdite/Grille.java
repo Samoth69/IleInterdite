@@ -16,7 +16,7 @@ public class Grille {
     
    
     private final Tuile tabTuile[][] = new Tuile[5][5]; // A potentiellement changer pour mettre des cases vides
-    private ArrayList<Personnage> persos = null;
+    private ArrayList<Personnage> persos = null; 
     
     Grille(Personnage perso1, Personnage perso2) {
         persos.add(perso1);
