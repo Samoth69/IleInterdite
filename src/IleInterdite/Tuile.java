@@ -69,7 +69,7 @@ public class Tuile extends CarteInondation {
         }
     }
     
-    public TypeEnum getInondation(){        // Renvoie etat de la tuile (SEC, MOPUILLE ou INONDE)
+    public TypeEnum getInondation(){        // Renvoie etat de la tuile (SEC, MOUILLE ou INONDE)
         return EtatInondation;
     }
     

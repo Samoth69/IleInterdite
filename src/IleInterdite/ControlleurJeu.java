@@ -49,6 +49,10 @@ public class ControlleurJeu {
         return pilecarterouge.get(0);
     }
     
+    public CarteInondation PiocherCarteInond() {
+        return pilecarteinondation.get(0);
+    }
+    
     public void VerifNbCarte(Personnage perso) {
         
     }
@@ -68,19 +72,27 @@ public class ControlleurJeu {
         for(int i = 1; i >= 2; i++) {
             CarteRouge cartepioche = this.PiocherCarteRouge();
             
-            if(cartepioche.getType == "CarteMonteeDesEaux") {
-                
+            if(cartepioche.getNomCarte() == "CarteMonteeDesEaux") {
+                addNiveauEau();
+                if (defausecarteinondation.size()!=0){
+                    
+                }
+                defausecarterouge.add(cartepioche);
             }
-            if(cartepioche.getType == "CarteTresor") {
+            if(cartepioche.getNomCarte() == "CarteTresor") {
                 
             }
         }
         
+        int niveau = getNiveauEau();
+        
         //ACTION NUMERO 3 : PIOCHER CARTES INNONDATION
         int i=0;
-        while(niveauEau>i){
+        while(niveau>i){
             i++;
-            //FaireAction(typeAction);
+            CarteInondation cartepiocheinond = this.PiocherCarteInond();
+            grille.AugmenterInnondation(PositionTuile);
+           // AugmenterInondation(cartepiocheinond);
         }
     }
     
