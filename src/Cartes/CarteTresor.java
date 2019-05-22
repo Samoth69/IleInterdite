@@ -9,6 +9,6 @@ package Cartes;
  *
  * @author violentt
  */
-public class CarteTresor {
+public class CarteTresor extends CarteRouge{
     
 }
