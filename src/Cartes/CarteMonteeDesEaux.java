@@ -10,5 +10,18 @@ package Cartes;
  * @author violentt
  */
 public class CarteMonteeDesEaux extends CarteRouge{
-    
+        
+        public CarteMonteeDesEaux(String nom, boolean estTiree){
+            super(nom,estTiree);
+        }
+
+         public CarteMonteeDesEaux(String nom, boolean estTiree, String description){
+            super(nom,estTiree,description);
+        }
+         
+         @Override
+         
+         public String getNom(){
+             return "Carte MonteeDesEaux";
+         }
 }
