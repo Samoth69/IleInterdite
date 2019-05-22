@@ -15,28 +15,25 @@ import java.util.ArrayList;
 public class Grille {
     
    
-    private final Tuile tabTuile[][] = new Tuile[6][6]; // A potentiellement changer pour mettre des cases vides
-    private Personnage personnage1, personnage2, personnage3, personnage4;
+    private final Tuile tabTuile[][] = new Tuile[5][5]; // A potentiellement changer pour mettre des cases vides
+    private ArrayList<Personnage> persos = null;
     
     Grille(Personnage perso1, Personnage perso2) {
-        //tuiles = new ArrayList();
-        this.personnage1 = perso1;
-        this.personnage2 = perso2;
+        persos.add(perso1);
+        persos.add(perso2);
     }
     
     Grille(Personnage perso1, Personnage perso2, Personnage perso3) {
-        //tuiles = new ArrayList();
-        this.personnage1 = perso1;
-        this.personnage2 = perso2;
-        this.personnage3 = perso3;
+        persos.add(perso1);
+        persos.add(perso2);
+        persos.add(perso3);
     }
     
     Grille(Personnage perso1, Personnage perso2, Personnage perso3, Personnage perso4) {
-        //tuiles = new ArrayList();
-        this.personnage1 = perso1;
-        this.personnage2 = perso2;
-        this.personnage3 = perso3;
-        this.personnage4 = perso4;
+        persos.add(perso1);
+        persos.add(perso2);
+        persos.add(perso3);
+        persos.add(perso4);
     }
     
     public Tuile[][] getTuiles() {
