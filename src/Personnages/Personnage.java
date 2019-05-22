@@ -131,4 +131,8 @@ public abstract class Personnage {
     public void removeCarte(CarteRouge carte) {
         this.cartes.add(carte);
     }
+    
+    public String getNom(){
+        return nom;
+    }
 }

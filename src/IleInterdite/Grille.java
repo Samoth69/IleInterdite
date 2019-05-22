@@ -43,10 +43,14 @@ public class Grille {
         return tabTuile;    
     }
     
+    //Prend une tuile en parametre. Augmente directement le niveau d'innondation d'une tuile
+    //sans passer par le tableau de tuile
     public void AugmenterInnondation(Tuile tuile) {
         tuile.augmenterInondation();
     }
     
+    //Prend un nom de carte en parametre. Augmente le niveau d'inondation d'une tuile en
+    //fonction du nom d'une carte innondation
     public void AugmenterInnondation(String nom){
         for(int i = 0; i<6; i++)
         {
@@ -60,23 +64,14 @@ public class Grille {
         }
     }
     
+    //Prend une tuile en parametre. Reduit directement le niveau d'innondation d'une tuile
+    //sans passer par le tableau de tuile
     public void ReduireInondation(Tuile tuile) {
         tuile.reduireInondation();
     }
+
     
-    public void ReduireInondation(String nom) {
-        for(int i = 0; i<6; i++)
-        {
-            for(int j = 0; i<6; j++)
-            {
-                if(tabTuile[i][j].getNom() == nom)
-                {
-                    tabTuile[i][j].reduireInondation();
-                }
-            }
-        } 
-    }
-    
+    //prend une tuile en parametre et renvoie un arraylist de tuile praticable autour de celle-ci
     public ArrayList<Tuile> getTuilesAutoursPraticable(Tuile tuile) {
         ArrayList<Tuile> tuilesAutourPraticable = null;
         
@@ -93,7 +88,22 @@ public class Grille {
         return tuilesAutourPraticable;
     }
     
-    public void getTuilesAutoursPraticable(Personnage personnage) {
+    //Surcharge de la fonction précédente pour prendre un personnage en paramétre
+    public ArrayList<Tuile> getTuilesAutoursPraticable(Personnage personnage) {
+        ArrayList<Tuile> tuilesAutourPraticable = null;
+        Tuile tuile = personnage.getEmplacement();
+                
+        for(int i = -1; i < 1; i++)
+        {
+            for(int j = -1; j < 1; j++)
+            {
+                if((tabTuile[tuile.getX()+i][tuile.getY()+i].getInondation() == TypeEnum.SEC) || (tabTuile[tuile.getX()+i][tuile.getY()+i].getInondation() == TypeEnum.MOUILLE))
+                {
+                    tuilesAutourPraticable.add(tuile);
+                }
+            }
+        }
+        return tuilesAutourPraticable;
         
     }
     
