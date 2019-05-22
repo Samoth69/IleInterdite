@@ -77,7 +77,9 @@ public class Grille {
             }
         } 
     }
+    
     public void getTuilesAutoursPraticable(Tuile tuile) {
+        //verif diagonale haut gauche
         if((tabTuile[tuile.getX()-1][tuile.getY()-1].getInondation() == TypeEnum.SEC) || (tabTuile[tuile.getX()-1][tuile.getY()-1].getInondation() == TypeEnum.MOUILLE))
         {
             tuilesAutourPraticable.add(tuile);
