@@ -43,8 +43,8 @@ public class Grille {
         return tabTuile;    
     }
     
-    public void AugmenterInnondation(int X, int Y) { //peut-etre changer x et y par un tableau
-        tabTuile[X][Y].augmenterInondation();
+    public void AugmenterInnondation(Tuile tuile) { //peut-etre changer x et y par un tableau
+        tuile.augmenterInondation();
     }
     
     public void AugmenterInnondation(String nom){
@@ -58,11 +58,10 @@ public class Grille {
                 }
             }
         }
-        
     }
     
-    public void ReduireInondation(int X, int Y) {
-        tabTuile[X][Y].reduireInondation();
+    public void ReduireInondation(Tuile tuile) {
+        tuile.reduireInondation();
     }
     
     public void ReduireInondation(String nom) {
