@@ -7,7 +7,6 @@ package IleInterdite;
 
 import Personnages.Personnage;
 import java.util.ArrayList;
-import java.util.Collection;
 
 /**
  *
@@ -15,7 +14,7 @@ import java.util.Collection;
  */
 public class Grille {
     
-    //private final ArrayList <Tuile> tuiles;
+    private ArrayList<Tuile> tuilesAutourPraticable;
     private final Tuile tabTuile[][] = new Tuile[6][6]; // A potentiellement changer pour mettre des cases vides
     private Personnage personnage1, personnage2, personnage3, personnage4;
     
@@ -44,16 +43,47 @@ public class Grille {
         return tabTuile;    
     }
     
-    public void AugmenterInnondation(Tuile PositionTuile) {
+    public void AugmenterInnondation(int X, int Y) { //peut-etre changer x et y par un tableau
+        tabTuile[X][Y].augmenterInondation();
+    }
+    
+    public void AugmenterInnondation(String nom){
+        for(int i = 0; i<6; i++)
+        {
+            for(int j = 0; i<6; j++)
+            {
+                if(tabTuile[i][j].getNom() == nom)
+                {
+                    tabTuile[i][j].augmenterInondation();
+                }
+            }
+        }
         
     }
     
-    public void ReduireInondation(Tuile PositionTuile) {
-        
+    public void ReduireInondation(int X, int Y) {
+        tabTuile[X][Y].reduireInondation();
+    }
+    
+    public void ReduireInondation(String nom) {
+        for(int i = 0; i<6; i++)
+        {
+            for(int j = 0; i<6; j++)
+            {
+                if(tabTuile[i][j].getNom() == nom)
+                {
+                    tabTuile[i][j].reduireInondation();
+                }
+            }
+        } 
     }
     
     public void getTuilesAutoursPraticable(Tuile tuile) {
-        
+        //verif diagonale haut gauche
+        if((tabTuile[tuile.getX()-1][tuile.getY()-1].getInondation() == TypeEnum.SEC) || (tabTuile[tuile.getX()-1][tuile.getY()-1].getInondation() == TypeEnum.MOUILLE))
+        {
+            tuilesAutourPraticable.add(tuile);
+        }
     }
     
     public void getTuilesAutoursPraticable(Personnage personnage) {
