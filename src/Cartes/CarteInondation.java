@@ -31,6 +31,10 @@ public class CarteInondation {
         this.nom = nom;
     }
     
+    public String getNom(){
+        return nom;
+    }
+    
     public void setTresor(TypeEnumTresors tresor){
         this.tresor = tresor;
     }
