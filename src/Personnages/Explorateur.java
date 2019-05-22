@@ -20,10 +20,10 @@ public class Explorateur extends Personnage{
     }
     
     public ArrayList<Tuile> getDeplacements(Tuile EmplacementJoueur) {
-        return ile.getTuilesAutoursPraticable(this); //liste
+        return super.ile.getTuilesAutoursPraticable(this); //liste
     }
     
     public ArrayList<Tuile> getTuilleQuiPeutSecher() {
-        return ile.getTuilesAutoursMouille(this);
+        return super.ile.getTuilesAutoursMouille(this);
     }
 }

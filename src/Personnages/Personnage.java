@@ -20,7 +20,7 @@ public abstract class Personnage {
     //emplacement du Joueur (liée à la tuille sur laquel le personnage est)
     private Tuile emplacementJoueur;
     //grille du jeu
-    private Grille ile;
+    protected Grille ile;
     //cartes que le joueur possède
     private ArrayList<CarteRouge> cartes = new ArrayList<>();
     
