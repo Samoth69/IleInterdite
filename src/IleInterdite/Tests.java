@@ -22,13 +22,17 @@ public class Tests {
     //permet de tester les différentes fonctions du programme
     //A executer puis ce laissez guider
     ArrayList<Personnage> perso = new ArrayList<>();
+    Grille grille;
     
-    public static void main(String[] args) {
-        // TODO code application logic here
+    public Tests() {
         
-        
-        
-        //perso.add(new Explorateur("NomExplo", "",""));
     }
     
+    public ArrayList<> getListTuiles() {
+        ArrayList<Carte> out = new ArrayList<>();
+        
+        out.add(new Tuile(""));
+    }
+    
+    public static void main(String[] args) {new Tests();}
 }
