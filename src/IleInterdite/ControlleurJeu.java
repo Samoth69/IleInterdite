@@ -10,6 +10,7 @@ import Cartes.CarteMonteeDesEaux;
 import Cartes.CarteRouge;
 import Personnages.Personnage;
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  *
@@ -57,6 +58,14 @@ public class ControlleurJeu {
         
     }
     
+    public void MelangeCarteInnondation() {
+        //defausecarteinondatio
+        Collections.shuffle(defausecarteinondation);
+        for (CarteInondation carteinond : defausecarteinondation){
+            pilecarteinondation.add(carteinond);
+        }
+    }
+    
     //Gerer le tour de Jeu
     public void TourDeJeu() {
         
@@ -72,14 +81,14 @@ public class ControlleurJeu {
         for(int i = 1; i >= 2; i++) {
             CarteRouge cartepioche = this.PiocherCarteRouge();
             
-            if(cartepioche.getNomCarte() == "CarteMonteeDesEaux") {
+            if(cartepioche.getNom() == "CarteMonteeDesEaux") {
                 addNiveauEau();
                 if (defausecarteinondation.size()!=0){
-                    
+                    MelangeCarteInnondation();
                 }
                 defausecarterouge.add(cartepioche);
             }
-            if(cartepioche.getNomCarte() == "CarteTresor") {
+            else if(cartepioche.getNom() == "CarteTresor") {
                 
             }
         }
@@ -91,7 +100,7 @@ public class ControlleurJeu {
         while(niveau>i){
             i++;
             CarteInondation cartepiocheinond = this.PiocherCarteInond();
-            grille.AugmenterInnondation(PositionTuile);
+            grille.AugmenterInnondation(cartepiocheinond.getNom());
            // AugmenterInondation(cartepiocheinond);
         }
     }
