@@ -90,21 +90,6 @@ public class Grille {
         return getTuilesAutoursPraticable(personnage.getEmplacement());
     }
     
-    public ArrayList<Tuile> getTuilesAutoursMouille(Tuile tuile) {
-        ArrayList<Tuile> tuilesAutourPraticable = new ArrayList<>();
-        for(int i = -1; i < 1; i++)
-        {
-            for(int j = -1; j < 1; j++)
-            {
-                if(tabTuile[tuile.getX()+i][tuile.getY()+i].getInondation() == TypeEnum.MOUILLE)
-                {
-                    tuilesAutourPraticable.add(tuile);
-                }
-            }
-        }
-        return tuilesAutourPraticable;
-    }
-    
     //Prend une tuile en parametre. Renvoie un Arraylist de tuile.
     //Renvoie les tuiles mouille autour de celle passé en paramétre.
     public ArrayList<Tuile> getTuilesAutoursMouille(Tuile tuile) {
@@ -126,20 +111,7 @@ public class Grille {
     //Prend un personnage en parametre. Renvoie un Arraylist de tuile.
     //Renvoie les tuiles mouille autour de la tuile sur laquelle est le personnage.
     public ArrayList<Tuile> getTuilesAutoursMouille(Personnage personnage) {
-        ArrayList<Tuile> tuilesAutourMouille = null;
-        Tuile tuile = personnage.getEmplacement();
-        
-        for(int i = -1; i < 1; i++)
-        {
-            for(int j = -1; j < 1; j++)
-            {
-                if(tabTuile[tuile.getX()+i][tuile.getY()+i].getInondation() == TypeEnum.MOUILLE)
-                {
-                    tuilesAutourMouille.add(tuile);
-                }
-            }
-        }
-        return tuilesAutourMouille;
+        return getTuilesAutoursMouille(personnage.getEmplacement());
     }
         
 }
