@@ -14,7 +14,7 @@ import java.util.ArrayList;
  */
 public class Grille {
     
-    private ArrayList<Tuile> tuilesAutourPraticable;
+   
     private final Tuile tabTuile[][] = new Tuile[6][6]; // A potentiellement changer pour mettre des cases vides
     private Personnage personnage1, personnage2, personnage3, personnage4;
     
@@ -43,7 +43,7 @@ public class Grille {
         return tabTuile;    
     }
     
-    public void AugmenterInnondation(Tuile tuile) { //peut-etre changer x et y par un tableau
+    public void AugmenterInnondation(Tuile tuile) {
         tuile.augmenterInondation();
     }
     
@@ -77,12 +77,20 @@ public class Grille {
         } 
     }
     
-    public void getTuilesAutoursPraticable(Tuile tuile) {
-        //verif diagonale haut gauche
-        if((tabTuile[tuile.getX()-1][tuile.getY()-1].getInondation() == TypeEnum.SEC) || (tabTuile[tuile.getX()-1][tuile.getY()-1].getInondation() == TypeEnum.MOUILLE))
+    public ArrayList<Tuile> getTuilesAutoursPraticable(Tuile tuile) {
+        ArrayList<Tuile> tuilesAutourPraticable = null;
+        
+        for(int i = -1; i < 1; i++)
         {
-            tuilesAutourPraticable.add(tuile);
+            for(int j = -1; j < 1; j++)
+            {
+                if((tabTuile[tuile.getX()+i][tuile.getY()+i].getInondation() == TypeEnum.SEC) || (tabTuile[tuile.getX()+i][tuile.getY()+i].getInondation() == TypeEnum.MOUILLE))
+                {
+                    tuilesAutourPraticable.add(tuile);
+                }
+            }
         }
+        return tuilesAutourPraticable;
     }
     
     public void getTuilesAutoursPraticable(Personnage personnage) {
