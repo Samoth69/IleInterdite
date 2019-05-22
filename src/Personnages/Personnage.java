@@ -30,19 +30,19 @@ public abstract class Personnage {
         this.ile = ile;
     }
     
-    //renvoie les déplacement possible des joueurs
+    //renvoie les déplacement possible autour de la position actuel du joueur
     //peut être renvoyer une arraylist vide
     public ArrayList<Tuile> getDeplacements(Tuile EmplacementJoueur) {
-        ArrayList<Tuile> tmp = ile.getTuilesAutoursPraticable(this);
-        ArrayList<Tuile> out = new ArrayList<>();
+        ArrayList<Tuile> tmp = ile.getTuilesAutoursPraticable(this); //liste
+        ArrayList<Tuile> out = new ArrayList<>(); //liste que l'on revoie à la fin (même si elle est vide)
         
         int currentX = this.emplacementJoueur.getX();
         int currentY = this.emplacementJoueur.getY();
         
         if (tmp != null) {
-            if (tmp.size() != 0) {
+            if (!tmp.isEmpty()) {
                for (Tuile t : tmp) {
-                    if (t.getX() == currentX || t.getY() == currentY) {
+                    if (t.getX() == currentX || t.getY() == currentY) { //si X ou Y dans la liste est égal à la position actuel du personnage
                         out.add(t);
                     }
                 } 
@@ -60,7 +60,13 @@ public abstract class Personnage {
     public Tuile getEmplacement() {
         return emplacementJoueur; 
     }
+    
+    protected Grille getGrille() {
+        return ile;
+    }
 
+    //renvoie les iles qui peuvent être sécher autour du joueur
+    //peut être renvoyer une arraylist vide
     public ArrayList<Tuile> getTuileQuiPeutSecher() {
         ArrayList<Tuile> tmp = ile.getTuilesAutoursMouille(this);
         ArrayList<Tuile> out = new ArrayList<>();
@@ -80,10 +86,12 @@ public abstract class Personnage {
         return out;
     }
     
+    //renvoie le nombre de case qui peuvent être sécher en une action
     public int getNbTuileSechable() {
         return 1;
     }
     
+    //donne une (ou plusieur) carte(s) à un autre personnage
     public void donnerCarteAJoueur(Personnage personnage, ArrayList<CarteRouge> cartes)  {
         if (personnage.getEmplacement() == this.getEmplacement()) {
             personnage.addCartes(cartes);
@@ -91,6 +99,7 @@ public abstract class Personnage {
         }
     }
     
+    //donne une carte à un autre joueur
     public void donnerCarteAJoueur(Personnage personnage, CarteRouge carte) {
         if (personnage.getEmplacement() == this.getEmplacement()) {
             personnage.addCarte(carte);
@@ -98,22 +107,27 @@ public abstract class Personnage {
         }
     }
     
+    //ajoute la/les cartes à la liste des cartes de ce joueur
     public void addCartes(ArrayList<CarteRouge> cartes) {
         this.cartes.addAll(cartes);
     }
     
+    //ajoute la carte à la liste des cartes de ce joueur
     public void addCarte(CarteRouge carte) {
         this.cartes.add(carte);
     }
     
+    //renvoie toute les cartes que possède ce joueur
     public ArrayList<CarteRouge> getCartes() {
         return cartes;
     }
     
+    //enlève une/des cartes de ce joueur
     public void removeCartes(ArrayList<CarteRouge> cartes) {
         this.cartes.removeAll(cartes);
     }
     
+    //enlève une carte de ce joueur
     public void removeCarte(CarteRouge carte) {
         this.cartes.add(carte);
     }

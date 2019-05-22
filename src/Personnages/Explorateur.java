@@ -5,7 +5,9 @@
  */
 package Personnages;
 
+import IleInterdite.Grille;
 import IleInterdite.Tuile;
+import java.util.ArrayList;
 
 /**
  *
@@ -13,15 +15,15 @@ import IleInterdite.Tuile;
  */
 public class Explorateur extends Personnage{
     
-    Explorateur(String nom) {
-        super(nom);
+    Explorateur(String nom, Tuile emplacementJoueur, Grille ile) {
+        super(nom, emplacementJoueur, ile);
     }
     
-    public Tuile[] getDeplacements(Tuile EmplacementJoueur) {
-        
+    public ArrayList<Tuile> getDeplacements(Tuile EmplacementJoueur) {
+        return ile.getTuilesAutoursPraticable(this); //liste
     }
     
-    public Tuile[] getTuilleQuiPeutSecher() {
-        
+    public ArrayList<Tuile> getTuilleQuiPeutSecher() {
+        return ile.getTuilesAutoursMouille(this);
     }
 }
