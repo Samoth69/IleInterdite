@@ -124,8 +124,16 @@ public class Grille {
         //verif diagonale haut gauche
         for (int i = -1; i<1; i++) {
             for (int j = -1; j<1; j++) {
-                if((tabTuile[tuile.getX()+i][tuile.getY()+j].getInondation() == TypeEnum.SEC) || (tabTuile[tuile.getX()+i][tuile.getY()+j].getInondation() == TypeEnum.MOUILLE)) {
-                    tuilesAutourPraticable.add(tuile);
+                    if(tuile.getX()+i<0 || tuile.getX()+i>5 || tuile.getY()<0 || tuile.getY()>5)
+                    {
+                        System.out.println("Tuile innexistante");
+                    }
+                    else
+                    {
+                        if((tabTuile[tuile.getX()+i][tuile.getY()+j].getInondation() == TypeEnum.SEC) || (tabTuile[tuile.getX()+i][tuile.getY()+j].getInondation() == TypeEnum.MOUILLE)) {
+                        tuilesAutourPraticable.add(tuile);
+                    }
+                
                 }
             } 
         }
@@ -140,8 +148,15 @@ public class Grille {
         ArrayList<Tuile> tuilesAutourMouille = new ArrayList<>();
         for (int i = -1; i<1; i++) {
                 for (int j = -1; j<1; j++) {
-                    if((tabTuile[tuile.getX()+i][tuile.getY()+j].getInondation() == TypeEnum.MOUILLE)) {
-                    tuilesAutourMouille.add(tuile);
+                    if(tuile.getX()+i<0 || tuile.getX()+i>5 || tuile.getY()<0 || tuile.getY()>5)
+                    {
+                        System.out.println("Tuile innexistante");
+                    }
+                    else
+                    {
+                        if((tabTuile[tuile.getX()+i][tuile.getY()+j].getInondation() == TypeEnum.MOUILLE)) {
+                        tuilesAutourMouille.add(tuile);  
+                    }
                 }
             }
         }
