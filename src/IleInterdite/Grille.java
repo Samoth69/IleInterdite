@@ -122,9 +122,9 @@ public class Grille {
     public ArrayList <Tuile> getTuilesAutoursPraticable(Tuile tuile) {
         ArrayList<Tuile> tuilesAutourPraticable = new ArrayList<>();
         //verif diagonale haut gauche
-        for (int i = 0; i<6; i++) {
-            for (int j = 0; j<6; j++) {
-                if((tabTuile[i][j].getInondation() == TypeEnum.SEC) || (tabTuile[i][j].getInondation() == TypeEnum.MOUILLE)) {
+        for (int i = -1; i<1; i++) {
+            for (int j = -1; j<1; j++) {
+                if((tabTuile[tuile.getX()+i][tuile.getY()+j].getInondation() == TypeEnum.SEC) || (tabTuile[tuile.getX()+i][tuile.getY()+j].getInondation() == TypeEnum.MOUILLE)) {
                     tuilesAutourPraticable.add(tuile);
                 }
             } 
@@ -138,9 +138,9 @@ public class Grille {
     
     public ArrayList <Tuile> getTuilesAutoursMouille(Tuile tuile) {
         ArrayList<Tuile> tuilesAutourMouille = new ArrayList<>();
-        for (int i = 0; i<6; i++) {
-                for (int j = 0; j<6; j++) {
-                    if((tabTuile[i][j].getInondation() == TypeEnum.MOUILLE)) {
+        for (int i = -1; i<1; i++) {
+                for (int j = -1; j<1; j++) {
+                    if((tabTuile[tuile.getX()+i][tuile.getY()+j].getInondation() == TypeEnum.MOUILLE)) {
                     tuilesAutourMouille.add(tuile);
                 }
             }
