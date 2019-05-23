@@ -8,6 +8,7 @@ package IleInterdite;
 import Cartes.CarteInondation;
 import Enumerations.TypeEnumCouleurPion;
 import Personnages.Explorateur;
+import Personnages.Ingenieur;
 import Personnages.Personnage;
 import java.util.ArrayList;
 
@@ -23,10 +24,13 @@ public class Tests {
     
     //permet de tester les différentes fonctions du programme
     //A executer puis ce laissez guider
-    ArrayList<Personnage> perso = new ArrayList<>();
+    //ArrayList<Personnage> perso = new ArrayList<>();
     Grille grille;
+    Explorateur perso1;
+    Ingenieur perso2;
     
     public Tests() {
+        grille = new Grille(perso1, perso2);
         
     }
     

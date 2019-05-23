@@ -104,9 +104,10 @@ public class Grille {
         {
             for(int j = 0; i<6; j++)
             {
-                if(tabTuile[i][j].getNom() == nom)
+                if(tabTuile[i][j].getNom().equals(nom))
                 {
                     tabTuile[i][j].augmenterInondation();
+                    return;
                 }
             }
         }
