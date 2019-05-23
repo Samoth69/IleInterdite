@@ -119,6 +119,8 @@ public class Grille {
     }
 
     
+    //Prend une tuile en parametre. renvoie un arrylist de tuile.
+    //Renvoie les tuile praticable(SEC ou MOUILLE) autour de la tuile en parametre
     public ArrayList <Tuile> getTuilesAutoursPraticable(Tuile tuile) {
         ArrayList<Tuile> tuilesAutourPraticable = new ArrayList<>();
         //verif diagonale haut gauche
@@ -140,10 +142,13 @@ public class Grille {
         return tuilesAutourPraticable;
     }
     
+    //Surcharge de la fonction precedente
     public ArrayList <Tuile> getTuilesAutoursPraticable(Personnage personnage) {
         return getTuilesAutoursPraticable(personnage.getEmplacement());
     }
     
+    //Prend une tuile en parametre. renvoie un arrylist de tuile.
+    //Renvoie les tuile MOUILLE autour de la tuile en parametre.
     public ArrayList <Tuile> getTuilesAutoursMouille(Tuile tuile) {
         ArrayList<Tuile> tuilesAutourMouille = new ArrayList<>();
         for (int i = -1; i<1; i++) {
@@ -163,6 +168,7 @@ public class Grille {
         return tuilesAutourMouille;
     }
     
+    //Surcharge de la fonction precedente
     public ArrayList <Tuile> getTuilesAutoursMouille(Personnage personnage) {
         return getTuilesAutoursMouille(personnage.getEmplacement());
     }
