@@ -20,6 +20,7 @@ public class Grille {
     
    
     private final Tuile tabTuile[][] = new Tuile[5][5]; // A potentiellement changer pour mettre des cases vides --- par quoi mdr ?
+    private final ArrayList<Tuile> listTuile = new ArrayList<>(); 
     private ArrayList<Personnage> persos = new ArrayList<>(); 
     
     Grille(Personnage perso1, Personnage perso2) {
@@ -54,7 +55,17 @@ public class Grille {
         
         for (int i = 0; i <= 5; i++) {
             for (int j = 0; j <= 5; j++) {
-                tabTuile[i][j] = new Tuile(i, j, tuile.get(i + j).getNom(), tuile.get(i + j).getCouleurPion());
+                Tuile t = new Tuile(i, j, tuile.get(i + j).getNom(), tuile.get(i + j).getCouleurPion());
+                tabTuile[i][j] = t;
+                listTuile.add(t);
+            }
+        }
+    }
+    
+    private void assignerJoueursATuile(ArrayList<Personnage> perso) {
+        for (Tuile t : listTuile) {
+            if (t.getCouleurPion() == perso.getCouleurPion()) {
+                
             }
         }
     }

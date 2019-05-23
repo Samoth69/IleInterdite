@@ -6,6 +6,7 @@
 package Personnages;
 
 import Cartes.CarteRouge;
+import Enumerations.TypeEnumCouleurPion;
 import IleInterdite.Grille;
 import IleInterdite.Tuile;
 import java.util.ArrayList;
@@ -23,11 +24,28 @@ public abstract class Personnage {
     protected Grille ile;
     //cartes que le joueur possède
     private ArrayList<CarteRouge> cartes = new ArrayList<>();
+    //couleur pion associé au personnage
+    private TypeEnumCouleurPion pion = TypeEnumCouleurPion.AUCUN;
     
-    Personnage(String nom, Tuile emplacementJoueur, Grille ile) {
+    Personnage(String nom, Grille ile, TypeEnumCouleurPion pion) {
         this.nom = nom;
-        this.emplacementJoueur = emplacementJoueur;
         this.ile = ile;
+        this.pion = pion;
+    }
+    
+    //utiliser uniquement pour définir l'emplacement de départ du joueur.
+    //utiliser la fonction deplacement pour déplacer le personnage sur la grille
+    public void setEmplacementJoueur(Tuile emplacementJoueur) {
+        if (emplacementJoueur == null) {
+            this.emplacementJoueur = emplacementJoueur;
+        } else {
+            new Error("La fonction setEmplacementJoueur ne doit être utiliser que à l'initialisation du personnage ! \nPas pour déplacer le joueur sur la map");
+        }
+    }
+    
+    //récupère la couleur du pion associé à ce personnage
+    public TypeEnumCouleurPion getCouleurPion() {
+        return pion;
     }
     
     //renvoie les déplacement possible autour de la position actuel du joueur

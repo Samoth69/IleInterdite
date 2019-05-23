@@ -5,6 +5,8 @@
  */
 package Personnages;
 
+import Enumerations.TypeEnumCarteAction;
+import Enumerations.TypeEnumCouleurPion;
 import IleInterdite.Grille;
 import IleInterdite.Tuile;
 import java.util.ArrayList;
@@ -15,8 +17,8 @@ import java.util.ArrayList;
  */
 public class Explorateur extends Personnage{
     
-    Explorateur(String nom, Tuile emplacementJoueur, Grille ile) {
-        super(nom, emplacementJoueur, ile);
+    public Explorateur(String nom, Grille ile, TypeEnumCouleurPion pion) {
+        super(nom, ile, pion);
     }
     
     public ArrayList<Tuile> getDeplacements(Tuile EmplacementJoueur) {

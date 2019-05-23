@@ -31,7 +31,8 @@ public class Tests {
     
     public Tests() {
         grille = new Grille(perso1, perso2);
-        
+        perso1 = new Explorateur("NomExplorateur1", grille);
+        perso2 = new Ingenieur("NomIngenieur1", grille);
     }
     
     public ArrayList<CarteInondation> getListTuiles() {
