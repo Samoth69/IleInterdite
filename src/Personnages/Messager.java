@@ -6,6 +6,7 @@
 package Personnages;
 
 import Cartes.CarteRouge;
+import Enumerations.TypeEnumCouleurPion;
 import IleInterdite.Grille;
 import IleInterdite.Tuile;
 import java.util.ArrayList;
@@ -16,8 +17,8 @@ import java.util.ArrayList;
  */
 public class Messager extends Personnage{
     
-    Messager(String nom, Tuile emplacementJoueur, Grille ile) {
-        super(nom, emplacementJoueur, ile);
+    public Messager(String nom, Grille ile) {
+        super(nom, ile, TypeEnumCouleurPion.ORANGE);
     }
     
     @Override

@@ -33,6 +33,15 @@ public class Tests {
         grille = new Grille(perso1, perso2);
         perso1 = new Explorateur("NomExplorateur1", grille);
         perso2 = new Ingenieur("NomIngenieur1", grille);
+        
+        Tuile[][] t = grille.getTuiles();
+        
+        for (int i = 0; i <= t.length; i++) {
+            for (int j = 0; j <= t[i].length; j++) {
+                System.out.print(i + ":" + t[i][j].getNom() + "\t");
+            }
+            System.out.println();
+        }
     }
     
     public ArrayList<CarteInondation> getListTuiles() {

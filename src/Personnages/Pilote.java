@@ -5,6 +5,7 @@
  */
 package Personnages;
 
+import Enumerations.TypeEnumCouleurPion;
 import IleInterdite.Grille;
 import IleInterdite.Tuile;
 import java.util.ArrayList;
@@ -15,8 +16,8 @@ import java.util.ArrayList;
  */
 public class Pilote extends Personnage{
     
-    Pilote(String nom, Tuile emplacementJoueur, Grille ile) {
-        super(nom, emplacementJoueur, ile);
+    public Pilote(String nom, Grille ile) {
+        super(nom, ile, TypeEnumCouleurPion.BLEU);
     }
     
     @Override

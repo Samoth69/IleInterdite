@@ -5,6 +5,7 @@
  */
 package Personnages;
 
+import Enumerations.TypeEnumCouleurPion;
 import IleInterdite.Grille;
 import IleInterdite.Tuile;
 
@@ -14,8 +15,8 @@ import IleInterdite.Tuile;
  */
 public class Navigateur extends Personnage{
     
-    Navigateur(String nom, Tuile emplacementJoueur, Grille ile) {
-        super(nom, emplacementJoueur, ile);
+    public Navigateur(String nom, Grille ile) {
+        super(nom, ile, TypeEnumCouleurPion.JAUNE);
     }
     /*
     @Override
