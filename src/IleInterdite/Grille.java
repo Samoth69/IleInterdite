@@ -27,6 +27,7 @@ public class Grille {
         persos.add(perso1);
         persos.add(perso2);
         genererTableauTuiles();
+        assignerJoueursATuile(persos);
     }
     
     Grille(Personnage perso1, Personnage perso2, Personnage perso3) {
@@ -34,6 +35,7 @@ public class Grille {
         persos.add(perso2);
         persos.add(perso3);
         genererTableauTuiles();
+        assignerJoueursATuile(persos);
     }
     
     Grille(Personnage perso1, Personnage perso2, Personnage perso3, Personnage perso4) {
@@ -42,6 +44,7 @@ public class Grille {
         persos.add(perso3);
         persos.add(perso4);
         genererTableauTuiles();
+        assignerJoueursATuile(persos);
     }
     
     public Tuile[][] getTuiles() {
@@ -53,8 +56,8 @@ public class Grille {
         ArrayList<CarteInondation> tuile = getListTuiles();
         Collections.shuffle(tuile); //mélange la liste des tuiles
         
-        for (int i = 0; i <= 5; i++) {
-            for (int j = 0; j <= 5; j++) {
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
                 Tuile t = new Tuile(i, j, tuile.get(i + j).getNom(), tuile.get(i + j).getCouleurPion());
                 tabTuile[i][j] = t;
                 listTuile.add(t);
@@ -63,10 +66,15 @@ public class Grille {
     }
     
     private void assignerJoueursATuile(ArrayList<Personnage> perso) {
-        for (Tuile t : listTuile) {
-            if (t.getCouleurPion() == perso.getCouleurPion()) {
-                
+        for (Personnage p : perso) {
+            int i = 0;
+            System.out.println(listTuile.get(i).getCouleurPion());
+            System.out.println(p.getCouleurPion());
+            while (p.getCouleurPion() == listTuile.get(i).getCouleurPion() && i < listTuile.size()) {
+                System.out.println(i);
+                i++;
             }
+            p.setEmplacementJoueur(listTuile.get(i));
         }
     }
     
