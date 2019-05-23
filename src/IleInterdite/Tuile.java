@@ -19,7 +19,7 @@ public class Tuile extends CarteInondation {
     private int X;
     private int Y;
     private TypeEnum EtatInondation = TypeEnum.SEC;
-    private TypeEnumTresors tresor = null;
+    private TypeEnumTresors tresor;
     private ArrayList<Personnage> persoSurLaTuile = new ArrayList<Personnage>();
     
     Tuile(int X, int Y, String nom){
