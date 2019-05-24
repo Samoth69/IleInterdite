@@ -5,29 +5,27 @@
  */
 package IHM;
 import IleInterdite.Grille;
-import Personnages.Personnage;
-import Personnages.Explorateur;
-import Personnages.Ingenieur;
-import Cartes.CarteInondation;
-import Enumerations.TypeEnumCouleurPion;
-import java.util.ArrayList;
+import Personnages.*;
+import IleInterdite.Tuile;
+
 /**
  *
  * @author mariottp
  */
+
 public class IHMsimple {
 
-    Grille plateauJeu;  
     Explorateur explo;
     Ingenieur inge;
-            
-    public IHMsimple(){
-        
-        explo = new Explorateur("explo", plateauJeu);
-        inge = new Ingenieur("inge", plateauJeu);
-        plateauJeu = new Grille(inge, explo);
-    }
+    Grille plateauJeu;
     
+    public IHMsimple() {
+        explo = new Explorateur("NomExplorateur1", plateauJeu);
+        inge = new Ingenieur("NomIngenieur1", plateauJeu);
+        plateauJeu = new Grille(explo, inge);
+
+    }
+        
     public static void main(String[] args){
         new IHMsimple();
     }
