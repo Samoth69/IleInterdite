@@ -22,26 +22,26 @@ public class Tuile extends CarteInondation {
     private TypeEnumTresors tresor;
     private ArrayList<Personnage> persoSurLaTuile = new ArrayList<Personnage>();
     
-    Tuile(int X, int Y, String nom){
+    public Tuile(int X, int Y, String nom){
         super(nom);
         setX(X);
         setY(Y);
     }
     
-    Tuile(int X, int Y, String nom, TypeEnumCouleurPion couleurPion){
+    public Tuile(int X, int Y, String nom, TypeEnumCouleurPion couleurPion){
         super(nom, couleurPion);
         setX(X);
         setY(Y);
     }
     
-    Tuile(int X, int Y, String nom, TypeEnumTresors tresor){
+    public Tuile(int X, int Y, String nom, TypeEnumTresors tresor){
         super(nom, tresor);
         setX(X);
         setY(Y);
        
     }
     
-    Tuile(int X, int Y, String nom, TypeEnumTresors tresor, String image){
+    public Tuile(int X, int Y, String nom, TypeEnumTresors tresor, String image){
         super(nom, tresor, image);
         setX(X);
         setY(Y);
