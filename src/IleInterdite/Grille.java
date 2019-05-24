@@ -50,6 +50,12 @@ public class Grille {
         assignerJoueursATuile(persos);
     }
     
+    Grille(ArrayList<Personnage> p) {
+        persos.addAll(p);
+        genererTableauTuiles();
+        assignerJoueursATuile(persos);
+    }
+    
     public Tuile[][] getTuiles() {
         return tabTuile;    
     }
