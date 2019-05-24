@@ -12,6 +12,8 @@ import Personnages.Personnage;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import java.util.concurrent.ThreadLocalRandom; //pour générer nombre aléatoire
+
 /**
  *
  * @author violentt
@@ -19,9 +21,10 @@ import java.util.Collections;
 public class Grille {
     
    
-    private final Tuile tabTuile[][] = new Tuile[5][5]; // A potentiellement changer pour mettre des cases vides --- par quoi mdr ?
+    private final Tuile tabTuile[][] = new Tuile[6][6]; // A potentiellement changer pour mettre des cases vides --- par quoi mdr ?
     private final ArrayList<Tuile> listTuile = new ArrayList<>(); 
     private ArrayList<Personnage> persos = new ArrayList<>(); 
+    private int counter = 0;
     
     Grille(Personnage perso1, Personnage perso2) {
         persos.add(perso1);
@@ -54,27 +57,50 @@ public class Grille {
     //génère le tableau des tuiles aléatoire
     private void genererTableauTuiles() {
         ArrayList<CarteInondation> tuile = getListTuiles();
-        Collections.shuffle(tuile); //mélange la liste des tuiles
+        for (int i = 0; i < ThreadLocalRandom.current().nextInt(2, 5); i++) {
+            Collections.shuffle(tuile); //mélange la liste des tuiles
+        }
+        counter = 0;
         
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 5; j++) {
-                Tuile t = new Tuile(i, j, tuile.get(i + j).getNom(), tuile.get(i + j).getCouleurPion());
-                tabTuile[i][j] = t;
-                listTuile.add(t);
+        for (int x = 0; x <= 5; x++) {
+            addTuile(x, 2, tuile);
+            addTuile(x, 3, tuile);
+            if (x >= 1 && x <= 4) {
+                addTuile(x, 1, tuile);
+                addTuile(x, 4, tuile);
+            }
+            if (x == 2 || x == 3) {
+                addTuile(x, 0, tuile);
+                addTuile(x, 5, tuile);
             }
         }
+        
+        //System.out.println();
+    }
+    
+    private void addTuile(int x, int y, ArrayList<CarteInondation> tuile) {
+        Tuile t = new Tuile(x, y, tuile.get(this.counter).getNom(), tuile.get(this.counter).getCouleurPion());
+        tabTuile[x][y] = t;
+        listTuile.add(t);        
+        //System.out.println(x + "\t" + y + "\t" + this.counter + "\t" + tuile.get(this.counter).getNom());
+        
+        this.counter++;
     }
     
     private void assignerJoueursATuile(ArrayList<Personnage> perso) {
         for (Personnage p : perso) {
             int i = 0;
-            System.out.println(listTuile.get(i).getCouleurPion());
-            System.out.println(p.getCouleurPion());
-            while (p.getCouleurPion() == listTuile.get(i).getCouleurPion() && i < listTuile.size()) {
-                System.out.println(i);
+            //System.out.println(listTuile.get(i).getCouleurPion());
+            //System.out.println(p.getCouleurPion());
+            while (p.getCouleurPion() != listTuile.get(i).getCouleurPion() && i < listTuile.size()) {
+                //System.out.println(i);
                 i++;
             }
-            p.setEmplacementJoueur(listTuile.get(i));
+            if (i != listTuile.size()) {
+                p.setEmplacementJoueur(listTuile.get(i));
+                //System.out.println("Association");
+            }
+            
         }
     }
     

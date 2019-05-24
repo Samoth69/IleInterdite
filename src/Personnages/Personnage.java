@@ -31,12 +31,13 @@ public abstract class Personnage {
         this.nom = nom;
         this.ile = ile;
         this.pion = pion;
+        //System.out.println("init perso");
     }
     
     //utiliser uniquement pour définir l'emplacement de départ du joueur.
     //utiliser la fonction deplacement pour déplacer le personnage sur la grille
     public void setEmplacementJoueur(Tuile emplacementJoueur) {
-        if (emplacementJoueur == null) {
+        if (this.emplacementJoueur == null) {
             this.emplacementJoueur = emplacementJoueur;
         } else {
             new Error("La fonction setEmplacementJoueur ne doit être utiliser que à l'initialisation du personnage ! \nPas pour déplacer le joueur sur la map");

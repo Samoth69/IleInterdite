@@ -9,7 +9,6 @@ import Cartes.CarteInondation;
 import Enumerations.TypeEnumCouleurPion;
 import Personnages.Explorateur;
 import Personnages.Ingenieur;
-import Personnages.Personnage;
 import java.util.ArrayList;
 
 /**
@@ -30,49 +29,32 @@ public class Tests {
     Ingenieur perso2;
     
     public Tests() {
-        grille = new Grille(perso1, perso2);
         perso1 = new Explorateur("NomExplorateur1", grille);
         perso2 = new Ingenieur("NomIngenieur1", grille);
+        grille = new Grille(perso1, perso2);
         
         Tuile[][] t = grille.getTuiles();
         
-        for (int i = 0; i <= t.length; i++) {
-            for (int j = 0; j <= t[i].length; j++) {
-                System.out.print(i + ":" + t[i][j].getNom() + "\t");
+        for (int i = 0; i <= 5; i++) {
+            for (int j = 0; j <= 5; j++) {
+                if (t[i][j] != null) {
+                    System.out.print(i + ":" + j + "\t" + t[i][j].getNom() + "\t");
+                } else {
+                    System.out.print(i + ":" + j + "\t NULL \t\t");
+                }
+                
             }
             System.out.println();
         }
-    }
-    
-    public ArrayList<CarteInondation> getListTuiles() {
-        ArrayList<CarteInondation> out = new ArrayList<>();
         
-        out.add(new CarteInondation("Le Pont des Abimes"));
-        out.add(new CarteInondation("La Porte de Bronze", TypeEnumCouleurPion.ROUGE));
-        out.add(new CarteInondation("La Caverne des Ombres"));
-        out.add(new CarteInondation("La Porte de Fer", TypeEnumCouleurPion.VIOLET));
-        out.add(new CarteInondation("La Porte d'Or", TypeEnumCouleurPion.JAUNE));
-        out.add(new CarteInondation("Les Falaises de l’Oubli"));
-        out.add(new CarteInondation("Le Palais de Corail"));
-        out.add(new CarteInondation("La Porte d'Argent", TypeEnumCouleurPion.ORANGE));
-        out.add(new CarteInondation("Les Dunes de l'Illusion"));
-        out.add(new CarteInondation("Heliport", TypeEnumCouleurPion.BLEU));
-        out.add(new CarteInondation("La Porte de Cuivre", TypeEnumCouleurPion.VERT));
-        out.add(new CarteInondation("Le Jardin des Hurlements"));
-        out.add(new CarteInondation("La Foret Pourpre"));
-        out.add(new CarteInondation("Le Lagon Perdu"));
-        out.add(new CarteInondation("Le Marais Brumeux"));
-        out.add(new CarteInondation("Observatoire"));
-        out.add(new CarteInondation("Le Rocher Fantome"));
-        out.add(new CarteInondation("La Caverne du Brasier"));
-        out.add(new CarteInondation("Le Temple du Soleil"));
-        out.add(new CarteInondation("Le Temple de La Lune"));
-        out.add(new CarteInondation("Le Palais des Marees"));
-        out.add(new CarteInondation("Le Val du Crepuscule"));
-        out.add(new CarteInondation("La Tour du Guet"));
-        out.add(new CarteInondation("Le Jardin des Murmures"));
+        System.out.println("perso1:");
+        Tuile tuile = perso1.getEmplacement();
+        System.out.println(tuile.getNom() + "\t" + tuile.getX() + "\t" + tuile.getY());
+        System.out.println("perso2:");
+        tuile = perso2.getEmplacement();
+        System.out.println(tuile.getNom() + "\t" + tuile.getX() + "\t" + tuile.getY());
         
-        return out;
+        
     }
     
     public static void main(String[] args) {new Tests();}
