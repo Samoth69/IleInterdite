@@ -4,18 +4,32 @@
  * and open the template in the editor.
  */
 package IHM;
-
+import IleInterdite.Grille;
+import Personnages.Personnage;
+import Personnages.Explorateur;
+import Personnages.Ingenieur;
+import Cartes.CarteInondation;
+import Enumerations.TypeEnumCouleurPion;
+import java.util.ArrayList;
 /**
  *
  * @author mariottp
  */
 public class IHMsimple {
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        // TODO code application logic here
+    Grille plateauJeu;  
+    Explorateur explo;
+    Ingenieur inge;
+            
+    public IHMsimple(){
+        
+        explo = new Explorateur("explo", plateauJeu);
+        inge = new Ingenieur("inge", plateauJeu);
+        plateauJeu = new Grille(inge, explo);
+    }
+    
+    public static void main(String[] args){
+        new IHMsimple();
     }
     
 }
