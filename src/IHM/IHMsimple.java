@@ -17,12 +17,16 @@ public class IHMsimple {
 
     Explorateur explo;
     Ingenieur inge;
-    Grille plateauJeu;
+    Grille grille;
+    Tuile plateau[][] = new Tuile[][];
+    
     
     public IHMsimple() {
-        explo = new Explorateur("NomExplorateur1", plateauJeu);
-        inge = new Ingenieur("NomIngenieur1", plateauJeu);
-        plateauJeu = new Grille(explo, inge);
+        explo = new Explorateur("NomExplorateur1", grille);
+        inge = new Ingenieur("NomIngenieur1", grille);
+        grille = new Grille(explo, inge);
+        
+        grille.getTuiles();
 
     }
         
