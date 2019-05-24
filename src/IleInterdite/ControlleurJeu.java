@@ -56,6 +56,8 @@ public class ControlleurJeu {
         }
     }
     
+    //Obtient les personnages pour démararer la partie.
+    //renvoie une liste contenant de NOUVEAU joueurs avec tous un role différent
     private ArrayList<Personnage> getPersonnagesDebutDePartie(int nbJoueurs) {
         ArrayList<Personnage> p = new ArrayList<>();
         ArrayList<Integer> PersonnageDejaUtilise = new ArrayList<>();
@@ -93,6 +95,7 @@ public class ControlleurJeu {
         return p;
     }
     
+    //cherche dans un arraylist si num est trouvé, renvoie true. sinon renvoie faux.
     private boolean search(ArrayList<Integer> ar, int num) {
         boolean exist = false;
         for(int i=0; i<ar.size();i++){
