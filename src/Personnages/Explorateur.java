@@ -20,6 +20,7 @@ public class Explorateur extends Personnage{
         super(nom, ile, TypeEnumCouleurPion.VERT);
     }
     
+    @Override
     public ArrayList<Tuile> getDeplacements(Tuile EmplacementJoueur) {
         return super.ile.getTuilesAutoursPraticable(this); //liste
     }
