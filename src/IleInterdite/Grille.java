@@ -26,14 +26,14 @@ public class Grille {
     private ArrayList<Personnage> persos = new ArrayList<>(); 
     private int counter = 0;
     
-    Grille(Personnage perso1, Personnage perso2) {
+    public Grille(Personnage perso1, Personnage perso2) {
         persos.add(perso1);
         persos.add(perso2);
         genererTableauTuiles();
         assignerJoueursATuile(persos);
     }
     
-    Grille(Personnage perso1, Personnage perso2, Personnage perso3) {
+    public Grille(Personnage perso1, Personnage perso2, Personnage perso3) {
         persos.add(perso1);
         persos.add(perso2);
         persos.add(perso3);
@@ -41,7 +41,7 @@ public class Grille {
         assignerJoueursATuile(persos);
     }
     
-    Grille(Personnage perso1, Personnage perso2, Personnage perso3, Personnage perso4) {
+    public Grille(Personnage perso1, Personnage perso2, Personnage perso3, Personnage perso4) {
         persos.add(perso1);
         persos.add(perso2);
         persos.add(perso3);
