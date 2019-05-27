@@ -78,26 +78,28 @@ public class Plateau {
         {
             for(int j = 0; j < 6; j++)
             {
-                JPanel pn = new JPanel(new GridLayout(2,1));
-                pn.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+                JPanel pn = new JPanel(new GridLayout(2,1));        //Creation d'une case
+                pn.setBorder(BorderFactory.createLineBorder(Color.BLACK));  //bordure de la case
                 
                 if (plateau[i][j] != null) 
                 {
+                    //ajout label nom case
                     pn.add(new JLabel(plateau[i][j].getNom()));
                     
+                    //si case = point de depart d'un pion -> mettre le pion
                     if(plateau[i][j].getCouleurPion() == pion.getCouleurPion())
                     {
                         pn.add(pion);
                     }
                     
-                    pn.setBackground(Color.yellow);
+                    pn.setBackground(Color.yellow);     //background en jaune
                 } 
                 else 
                 {
-                    pn.setBackground(Color.blue);
+                    pn.setBackground(Color.blue);       //background en bleu
                 }
                 
-                panelGrille.add(pn);
+                panelGrille.add(pn);        //Ajout de la case a la grille de jeu (panelGrille)
             }
         }
     }

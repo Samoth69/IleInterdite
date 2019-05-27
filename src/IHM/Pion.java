@@ -25,7 +25,7 @@ public class Pion extends JComponent{
         this.perso = perso;
     }
     
-  
+    //Fonction appelé par defaut pour dessiner le pion
     public void paint(Graphics g){
         Dimension dim = getSize();
         
@@ -33,6 +33,7 @@ public class Pion extends JComponent{
         g.fillOval(0, 0, 10, 10);
     }
     
+    //getteur pour la couleur du pion en fonction du personnage
     public TypeEnumCouleurPion getCouleurPion(){
         return perso.getCouleurPion();
     }
