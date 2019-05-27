@@ -72,31 +72,16 @@ public class IHMsimple {
         {
             for(int j = 0; j < 6; j++)
             {
-                if(plateau[i][j] == null)
-                {
-                    panelCentre.add(getCellule(i, plateau[i][j]));
+                JPanel pn = new JPanel();
+                if (plateau[i][j] != null) {
+                    pn.add(new JLabel(plateau[i][j].getNom()));
+                    pn.setBackground(Color.yellow);
+                } else {
+                    pn.setBackground(Color.blue);
                 }
-                else
-                {
-                    panelCentre.add(getCellule(i, plateau[i][j]), new JLabel(plateau[i][j].getNom()));
-                }
+                
+                panelCentre.add(pn);
             }
-        }
-    }
-        
-    private JPanel getCellule(int i, Tuile tuile) {
-        int numLigne = (int) (i+4)/4 ;
-        int numCouleur = (i-numLigne+1) % 4 + 1;
-        JPanel panelCellule = new JPanel();
-        if(tuile == null)
-        {
-            panelCellule.setBackground(new Color(0, 0, 254));
-            return panelCellule ;
-        }
-        else
-        {
-            panelCellule.setBackground(new Color(255, 254, 0));
-            return panelCellule;
         }
     }
     
