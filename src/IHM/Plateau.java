@@ -22,7 +22,7 @@ import javax.swing.JPanel;
  * @author mariottp
  */
 
-public class IHMsimple {
+public class Plateau {
 
     Explorateur explo;
     Ingenieur inge;
@@ -31,7 +31,7 @@ public class IHMsimple {
     private final JFrame window ;
     
     
-    public IHMsimple() {
+    public Plateau() {
         /** INITIALISATION **/
         explo = new Explorateur("NomExplorateur1", grille);
         inge = new Ingenieur("NomIngenieur1", grille);
@@ -90,7 +90,7 @@ public class IHMsimple {
     }
     
     public static void main(String[] args){
-        IHMsimple ihm = new IHMsimple();
+        Plateau ihm = new Plateau();
         ihm.afficher();
     }
     
