@@ -13,6 +13,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
+import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -24,20 +25,25 @@ import javax.swing.JPanel;
 
 public class Plateau {
 
-    Explorateur explo;
+    Explorateur explo, testP;
     Ingenieur inge;
     Grille grille;
+    Pion pion;
     Tuile plateau[][] = new Tuile[6][6];
     private final JFrame window ;
     
     
     public Plateau() {
         /** INITIALISATION **/
+        
         explo = new Explorateur("NomExplorateur1", grille);
         inge = new Ingenieur("NomIngenieur1", grille);
-        grille = new Grille(explo, inge);
-        plateau = grille.getTuiles();
+        testP = new Explorateur("testP", grille);       //test
+        grille = new Grille(explo, inge, testP);        //test
         
+        pion = new Pion(testP);                 //test
+        
+        plateau = grille.getTuiles();
         
         /** PARTIE SWING **/
         
@@ -65,17 +71,25 @@ public class Plateau {
         
         
         /**AJOUT DE LA GRILLE DE JEU AU CENTRE DE LA FENETRE **/
-        JPanel panelCentre = new JPanel(new GridLayout(6, 6));
-        mainPanel.add(panelCentre, BorderLayout.CENTER);
+        JPanel panelGrille = new JPanel(new GridLayout(6, 6));
+        mainPanel.add(panelGrille, BorderLayout.CENTER);
         
         for(int i = 0; i< 6; i++)
         {
             for(int j = 0; j < 6; j++)
             {
-                JPanel pn = new JPanel();
+                JPanel pn = new JPanel(new GridLayout(2,1));
+                pn.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+                
                 if (plateau[i][j] != null) 
                 {
                     pn.add(new JLabel(plateau[i][j].getNom()));
+                    
+                    if(plateau[i][j].getCouleurPion() == pion.getCouleurPion())
+                    {
+                        pn.add(pion);
+                    }
+                    
                     pn.setBackground(Color.yellow);
                 } 
                 else 
@@ -83,7 +97,7 @@ public class Plateau {
                     pn.setBackground(Color.blue);
                 }
                 
-                panelCentre.add(pn);
+                panelGrille.add(pn);
             }
         }
     }
