@@ -5,16 +5,18 @@
  */
 package IHM;
 
-import javax.swing.JPanel;
+import Enumerations.TypeEnumCouleurPion;
 import Personnages.*;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import javax.swing.JComponent;
 
 /**
  *
  * @author mariottp
  */
-public class Pion extends JPanel{
+public class Pion extends JComponent{
     
     
     Personnage perso;
@@ -23,8 +25,15 @@ public class Pion extends JPanel{
         this.perso = perso;
     }
     
-    @Override
-    public void paintComponent(Graphics g){
+  
+    public void paint(Graphics g){
         Dimension dim = getSize();
+        
+        g.setColor(Color.green);
+        g.fillOval(0, 0, 10, 10);
+    }
+    
+    public TypeEnumCouleurPion getCouleurPion(){
+        return perso.getCouleurPion();
     }
 }
