@@ -45,8 +45,11 @@ public class ControlleurJeu {
     
     //METHODES
 
-    public ControlleurJeu() {
-        nombreJoueurDansPartie = 3;
+    public ControlleurJeu(int nbJoueur) {
+        if (nbJoueur < 2 || nbJoueur > 4) {
+            throw new Error("Le nombre de joueur doit être compris entre 2 et 4 (inclus)");
+        }
+        nombreJoueurDansPartie = nbJoueur;
         personnages.addAll(getPersonnagesDebutDePartie(nombreJoueurDansPartie));
         grille = new Grille(personnages);
         for (Personnage p : personnages) {
@@ -198,15 +201,4 @@ public class ControlleurJeu {
             defausecarteinondation.add(cartepiocheinond);
         }
     }
-    
-    
-    public static void main(String[] args) {
-        // TODO code application logic here
-        new ControlleurJeu();
-        
-        
-        
-        
-    }
-    
 }

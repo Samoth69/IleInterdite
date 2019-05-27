@@ -6,7 +6,7 @@
 package IleInterdite;
 
 import Cartes.CarteInondation;
-import Enumerations.TypeEnum;
+import Enumerations.TypeEnumInondation;
 import Enumerations.TypeEnumCouleurPion;
 import Personnages.Personnage;
 import java.util.ArrayList;
@@ -104,6 +104,7 @@ public class Grille {
             }
             if (i != listTuile.size()) {
                 p.setEmplacementJoueur(listTuile.get(i));
+                listTuile.get(i).addJoueur(p);
                 //System.out.println("Association");
             }
             
@@ -184,7 +185,7 @@ public class Grille {
                     }
                     else
                     {
-                        if((tabTuile[tuile.getX()+i][tuile.getY()+j].getInondation() == TypeEnum.SEC) || (tabTuile[tuile.getX()+i][tuile.getY()+j].getInondation() == TypeEnum.MOUILLE)) {
+                        if((tabTuile[tuile.getX()+i][tuile.getY()+j].getInondation() == TypeEnumInondation.SEC) || (tabTuile[tuile.getX()+i][tuile.getY()+j].getInondation() == TypeEnumInondation.MOUILLE)) {
                         tuilesAutourPraticable.add(tuile);
                     }
                 
@@ -211,7 +212,7 @@ public class Grille {
                     }
                     else
                     {
-                        if((tabTuile[tuile.getX()+i][tuile.getY()+j].getInondation() == TypeEnum.MOUILLE)) {
+                        if((tabTuile[tuile.getX()+i][tuile.getY()+j].getInondation() == TypeEnumInondation.MOUILLE)) {
                         tuilesAutourMouille.add(tuile);  
                     }
                 }

@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package IleInterdite;
-import Enumerations.TypeEnum;
+import Enumerations.TypeEnumInondation;
 import Personnages.Personnage;
 import java.util.ArrayList;
 import Cartes.CarteInondation;
@@ -18,7 +18,7 @@ public class Tuile extends CarteInondation {
     
     private int X;
     private int Y;
-    private TypeEnum EtatInondation = TypeEnum.SEC;
+    private TypeEnumInondation EtatInondation = TypeEnumInondation.SEC;
     private TypeEnumTresors tresor;
     private ArrayList<Personnage> persoSurLaTuile = new ArrayList<Personnage>();
     
@@ -77,7 +77,7 @@ public class Tuile extends CarteInondation {
         }
     }
     
-    public TypeEnum getInondation(){        // Renvoie etat de la tuile (SEC, MOUILLE ou INONDE)
+    public TypeEnumInondation getInondation(){        // Renvoie etat de la tuile (SEC, MOUILLE ou INONDE)
         return EtatInondation;
     }
     
@@ -87,12 +87,12 @@ public class Tuile extends CarteInondation {
             
             //Si SEC etat devient MOUILLE
             case SEC:
-                EtatInondation = TypeEnum.MOUILLE;
+                EtatInondation = TypeEnumInondation.MOUILLE;
             break;
             
             //Si MOUILLE etat devient INONDE
             case MOUILLE:
-                EtatInondation = TypeEnum.INONDE;
+                EtatInondation = TypeEnumInondation.INONDE;
             break;
             
             //Si INONDE affiche message pour dire que l'etat de la tuile ne peut etre changé
@@ -117,7 +117,7 @@ public class Tuile extends CarteInondation {
             
             //Si MOUILLE etat devient SEC
             case MOUILLE:
-                EtatInondation = TypeEnum.SEC;
+                EtatInondation = TypeEnumInondation.SEC;
             break;
             
             //Si INONDE affiche message pour dire que l'etat de la tuile ne peut etre changé
