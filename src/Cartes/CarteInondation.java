@@ -19,11 +19,13 @@ public class CarteInondation {
     
     public CarteInondation(String nom){
         setNom(nom);
+        tresor = TypeEnumTresors.AUCUN;
     }
     
     public CarteInondation(String nom, TypeEnumCouleurPion couleurPion){
         setNom(nom);
         this.couleurPion = couleurPion;
+        tresor = TypeEnumTresors.AUCUN;
     }
     
     public CarteInondation(String nom, TypeEnumTresors tresor){
@@ -46,6 +48,10 @@ public class CarteInondation {
     
     public TypeEnumCouleurPion getCouleurPion() {
         return couleurPion;
+    }
+    
+    public TypeEnumTresors getTresor() {
+        return tresor;
     }
     
     public void setTresor(TypeEnumTresors tresor){

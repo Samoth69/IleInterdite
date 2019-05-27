@@ -62,7 +62,7 @@ public class Grille {
     
     //génère le tableau des tuiles aléatoire
     private void genererTableauTuiles() {
-        ArrayList<CarteInondation> tuile = getListTuiles();
+        ArrayList<CarteInondation> tuile = getListCarteInondation();
         for (int i = 0; i < ThreadLocalRandom.current().nextInt(2, 5); i++) {
             Collections.shuffle(tuile); //mélange la liste des tuiles
         }
@@ -111,8 +111,12 @@ public class Grille {
         }
     }
     
+    public ArrayList<Tuile> getListTuile() {
+        return listTuile;
+    }
+    
     //renvoie les cartes du jeu
-    public ArrayList<CarteInondation> getListTuiles() {
+    public ArrayList<CarteInondation> getListCarteInondation() {
         ArrayList<CarteInondation> out = new ArrayList<>();
         
         out.add(new CarteInondation("Le Pont des Abimes"));

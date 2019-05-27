@@ -5,6 +5,7 @@
  */
 package IleInterdite;
 
+import Enumerations.TypeEnumAction;
 import Enumerations.TypeEnumMessage;
 
 /**
@@ -13,18 +14,46 @@ import Enumerations.TypeEnumMessage;
  */
 public class Message {
     TypeEnumMessage type;
-    boolean pressed;
+    TypeEnumAction action;
+    String additionnal; //donnée additionnel au message (aucune règle de formatage, à traiter au cas par cas)
     
     public Message(TypeEnumMessage type) {
         this.type = type;
-        pressed = false;
+        action = TypeEnumAction.NA;
+        additionnal = "";
     }
     
-    public void setPressed(boolean p) {
-        this.pressed = p;
+    public Message(TypeEnumMessage type, String ad) {
+        this.type = type;
+        action = TypeEnumAction.NA;
+        additionnal = ad;
     }
     
-    public boolean getPressed() {
-        return this.pressed;
+    public Message(TypeEnumMessage type, TypeEnumAction ac) {
+        this.type = type;
+        action = ac;
+        additionnal = "";
     }   
+    
+    public Message(TypeEnumMessage type, TypeEnumAction ac, String ad) {
+        this.type = type;
+        action = ac;
+        additionnal = ad;
+    } 
+    
+    public TypeEnumMessage getMessageType() {
+        return type;
+    }
+    
+    public TypeEnumAction getActionType() {
+        return action;
+    }
+    
+    public String getAdditionnal() {
+        return additionnal;
+    }
+    
+    public void setAdditionnal(String ad) {
+        additionnal = ad;
+    }
 }

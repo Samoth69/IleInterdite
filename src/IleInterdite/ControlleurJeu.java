@@ -23,7 +23,7 @@ import java.util.concurrent.ThreadLocalRandom;
  *
  * @author violentt
  */
-public class ControlleurJeu {
+public class ControlleurJeu implements Observe{
 
     /**
      * @param args the command line arguments
@@ -52,11 +52,6 @@ public class ControlleurJeu {
         nombreJoueurDansPartie = nbJoueur;
         personnages.addAll(getPersonnagesDebutDePartie(nombreJoueurDansPartie));
         grille = new Grille(personnages);
-        for (Personnage p : personnages) {
-            System.out.println(p.getNom());
-            Tuile t = p.getEmplacement();
-            System.out.println(t.getNom() + "\t" + t.getX() + "\t" + t.getY());
-        }
     }
     
     //Obtient les personnages pour démararer la partie.
@@ -137,6 +132,14 @@ public class ControlleurJeu {
         return pilecarteinondation.get(pilecarteinondation.size()-1);
     }
     
+    public Tuile[][] getCarte() {
+        return grille.getTuiles();
+    }
+    
+    public ArrayList<Tuile> getListeCarte() {
+        return grille.getListTuile();
+    }
+    
     public void VerifNbCarte(Personnage perso) {
         if (personnages.get(numJoueurEnCours).getCartes().size()>5){
             while (personnages.get(numJoueurEnCours).getCartes().size()>5) {
@@ -201,4 +204,15 @@ public class ControlleurJeu {
             defausecarteinondation.add(cartepiocheinond);
         }
     }
+
+    private Observateur observateur;    
+    public void addObservateur(Observateur o) {
+        this.observateur = o;
+    }
+    
+    public void notifierObservateur(Message m) {
+        if (observateur != null) {
+            observateur.traiterMessage(m);
+        }
+    } 
 }

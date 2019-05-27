@@ -9,6 +9,7 @@ package Enumerations;
  *
  * @author violentt
  */
-public class TypeEnumMessage {
-    
+public enum TypeEnumMessage {
+    ACTION,
+    CARTE
 }
