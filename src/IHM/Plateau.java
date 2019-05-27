@@ -25,7 +25,8 @@ import javax.swing.JPanel;
 
 public class Plateau {
 
-    Explorateur explo, testP;
+    Explorateur explo;
+    Messager testP;
     Ingenieur inge;
     Grille grille;
     Pion pion;
@@ -38,10 +39,12 @@ public class Plateau {
         
         explo = new Explorateur("NomExplorateur1", grille);
         inge = new Ingenieur("NomIngenieur1", grille);
-        testP = new Explorateur("testP", grille);       //test
+        testP = new Messager("testP", grille);       //test
         grille = new Grille(explo, inge, testP);        //test
         
         pion = new Pion(testP);                 //test
+        pion = new Pion(explo);
+        pion = new Pion(inge);
         
         plateau = grille.getTuiles();
         
@@ -78,13 +81,15 @@ public class Plateau {
         {
             for(int j = 0; j < 6; j++)
             {
-                JPanel pn = new JPanel(new GridLayout(2,1));        //Creation d'une case
-                pn.setBorder(BorderFactory.createLineBorder(Color.BLACK));  //bordure de la case
+                //Creation d'une case
+                JPanel pn = new JPanel(new GridLayout(2,1));     
+                //bordure de la case
+                pn.setBorder(BorderFactory.createLineBorder(Color.BLACK));  
                 
                 if (plateau[i][j] != null) 
                 {
                     //ajout label nom case
-                    pn.add(new JLabel(plateau[i][j].getNom()));
+                    pn.add(new JLabel(plateau[i][j].getNom()), BorderLayout.CENTER);
                     
                     //si case = point de depart d'un pion -> mettre le pion
                     if(plateau[i][j].getCouleurPion() == pion.getCouleurPion())
@@ -102,6 +107,10 @@ public class Plateau {
                 panelGrille.add(pn);        //Ajout de la case a la grille de jeu (panelGrille)
             }
         }
+    }
+    
+    public void affecterPion(){
+        
     }
     
     public void afficher() {

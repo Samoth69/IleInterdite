@@ -30,7 +30,7 @@ public class Pion extends JComponent{
         Dimension dim = getSize();
         
         g.setColor(Color.green);
-        g.fillOval(0, 0, 10, 10);
+        g.fillOval((int)dim.getWidth()/2, 0, 50, 50);
     }
     
     //getteur pour la couleur du pion en fonction du personnage
