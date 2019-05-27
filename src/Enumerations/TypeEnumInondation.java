@@ -10,9 +10,9 @@ package Enumerations;
  * @author mariottp
  */
 public enum TypeEnumInondation {      //Enumeration pour les etats des tuiles
-    SEC("SEC"),
-    MOUILLE("MOUILLE"),
-    INONDE("INONDE");
+    SEC("Sec"),
+    MOUILLE("Mouillé"),
+    INONDE("Inondé");
     
     private String etat = "";
     

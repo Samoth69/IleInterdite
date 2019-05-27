@@ -11,10 +11,10 @@ package Enumerations;
  */
 public enum TypeEnumTresors {
     
-    LUNE("LUNE"),
-    LION("LION"),
-    TROPHEE("TROPHEE"),
-    FEU("FEU"),
+    LUNE("Lune"),
+    LION("Lion"),
+    TROPHEE("Trophée"),
+    FEU("Feu"),
     AUCUN("AUCUN");
     
     private String nom = "";

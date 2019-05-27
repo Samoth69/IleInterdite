@@ -5,6 +5,8 @@
  */
 package IleInterdite;
 
+import Enumerations.TypeEnumTresors;
+import Personnages.Personnage;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -25,22 +27,24 @@ public class MainCLI implements Observateur{
         cj.addObservateur(this);
         
         ecrireCarte();
+        
+        
     }
     
-    public void ecrireCarte() {
+    private void ecrireCarte() {
         ArrayList<Tuile> al = cj.getListeCarte();
         int maxCharCount = 0; 
-        for (Tuile t : al) {
+        /*for (Tuile t : al) {
             if (t.getNom().length() > maxCharCount) {
                 maxCharCount = t.getNom().length();
             }
-        }
-        maxCharCount++;
+        }*/
+        maxCharCount+= 35;
         //System.out.println(maxCharCount);
-        String[] text = new String[5];
+        String[] text = new String[8];
         Tuile[][] t = cj.getCarte();
         for (int x = 0; x < 6; x++) {
-            for (int i = 0; i < 5; i++) {
+            for (int i = 0; i < text.length; i++) {
                 text[i] = "";
             }
             for (int y = 0; y < 6; y++) {
@@ -52,12 +56,20 @@ public class MainCLI implements Observateur{
                 }
                 for (int i = 1; i < text.length; i++) {
                         text[i] += "|";
-                    }
+                }
                 if (t[x][y] != null) {
-                    text[1] += t[x][y].getNom();
-                    text[2] += t[x][y].getTresor();
-                    text[3] += t[x][y].getCouleurPion();
-                    text[4] += t[x][y].getInondation();
+                    text[1] += t[x][y].getNom() + "(" + t[x][y].getInondation() + ")";
+                    if (t[x][y].getTresor() != TypeEnumTresors.AUCUN) {
+                        text[2] += "Trésor: " + t[x][y].getTresor();
+                    }
+                    //text[3] += t[x][y].getCouleurPion();
+                    if (!t[x][y].getPersonnages().isEmpty()) {
+                        int counter = 4;
+                        for (Personnage p: t[x][y].getPersonnages()) {
+                            text[counter] += p.getNom();
+                            counter++;
+                        }
+                    }
                 }
                 
                 for (int j = 1; j < text.length; j++) {

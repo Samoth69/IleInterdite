@@ -10,8 +10,8 @@ package Enumerations;
  * @author paul m
  */
 public enum TypeEnumCarteAction {
-    HELICOPTERE("HELICOPTERE"),
-    SAC_DE_SABLE("SAC_DE_SABLE");
+    HELICOPTERE("Hélicoptère"),
+    SAC_DE_SABLE("Sac de sable");
     
     private String nom = "";
     

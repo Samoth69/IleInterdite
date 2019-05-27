@@ -8,6 +8,7 @@ package IleInterdite;
 import Cartes.CarteInondation;
 import Enumerations.TypeEnumInondation;
 import Enumerations.TypeEnumCouleurPion;
+import Enumerations.TypeEnumTresors;
 import Personnages.Personnage;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -85,7 +86,7 @@ public class Grille {
     }
     
     private void addTuile(int x, int y, ArrayList<CarteInondation> tuile) {
-        Tuile t = new Tuile(x, y, tuile.get(this.counter).getNom(), tuile.get(this.counter).getCouleurPion());
+        Tuile t = new Tuile(x, y, tuile.get(this.counter));
         tabTuile[x][y] = t;
         listTuile.add(t);        
         //System.out.println(x + "\t" + y + "\t" + this.counter + "\t" + tuile.get(this.counter).getNom());
@@ -121,28 +122,28 @@ public class Grille {
         
         out.add(new CarteInondation("Le Pont des Abimes"));
         out.add(new CarteInondation("La Porte de Bronze", TypeEnumCouleurPion.ROUGE));
-        out.add(new CarteInondation("La Caverne des Ombres"));
+        out.add(new CarteInondation("La Caverne des Ombres", TypeEnumTresors.FEU));
         out.add(new CarteInondation("La Porte de Fer", TypeEnumCouleurPion.VIOLET));
         out.add(new CarteInondation("La Porte d'Or", TypeEnumCouleurPion.JAUNE));
         out.add(new CarteInondation("Les Falaises de l’Oubli"));
-        out.add(new CarteInondation("Le Palais de Corail"));
+        out.add(new CarteInondation("Le Palais de Corail", TypeEnumTresors.TROPHEE));
         out.add(new CarteInondation("La Porte d'Argent", TypeEnumCouleurPion.ORANGE));
         out.add(new CarteInondation("Les Dunes de l'Illusion"));
         out.add(new CarteInondation("Heliport", TypeEnumCouleurPion.BLEU));
         out.add(new CarteInondation("La Porte de Cuivre", TypeEnumCouleurPion.VERT));
-        out.add(new CarteInondation("Le Jardin des Hurlements"));
+        out.add(new CarteInondation("Le Jardin des Hurlements", TypeEnumTresors.LION));
         out.add(new CarteInondation("La Foret Pourpre"));
         out.add(new CarteInondation("Le Lagon Perdu"));
         out.add(new CarteInondation("Le Marais Brumeux"));
         out.add(new CarteInondation("Observatoire"));
         out.add(new CarteInondation("Le Rocher Fantome"));
-        out.add(new CarteInondation("La Caverne du Brasier"));
-        out.add(new CarteInondation("Le Temple du Soleil"));
-        out.add(new CarteInondation("Le Temple de La Lune"));
-        out.add(new CarteInondation("Le Palais des Marees"));
+        out.add(new CarteInondation("La Caverne du Brasier", TypeEnumTresors.FEU));
+        out.add(new CarteInondation("Le Temple du Soleil", TypeEnumTresors.LUNE));
+        out.add(new CarteInondation("Le Temple de La Lune", TypeEnumTresors.LUNE));
+        out.add(new CarteInondation("Le Palais des Marees", TypeEnumTresors.TROPHEE));
         out.add(new CarteInondation("Le Val du Crepuscule"));
         out.add(new CarteInondation("La Tour du Guet"));
-        out.add(new CarteInondation("Le Jardin des Murmures"));
+        out.add(new CarteInondation("Le Jardin des Murmures", TypeEnumTresors.LION));
         
         return out;
     }

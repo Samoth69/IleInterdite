@@ -11,12 +11,12 @@ package Enumerations;
  */
 public enum TypeEnumCouleurPion {
     AUCUN("AUCUN"),
-    BLEU("BLEU"),
-    JAUNE("JAUNE"),
-    ORANGE("ORANGE"),
-    ROUGE("ROUGE"),
-    VIOLET("VIOLET"),
-    VERT("VERT");
+    BLEU("Bleu"),
+    JAUNE("Jaune"),
+    ORANGE("Orange"),
+    ROUGE("Rouge"),
+    VIOLET("Violet"),
+    VERT("Vert");
     
     private String nom = "";
     

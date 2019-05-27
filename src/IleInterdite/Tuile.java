@@ -19,30 +19,10 @@ public class Tuile extends CarteInondation {
     private int X;
     private int Y;
     private TypeEnumInondation EtatInondation = TypeEnumInondation.SEC;
-    private TypeEnumTresors tresor;
     private ArrayList<Personnage> persoSurLaTuile = new ArrayList<Personnage>();
     
-    public Tuile(int X, int Y, String nom){
-        super(nom);
-        setX(X);
-        setY(Y);
-    }
-    
-    public Tuile(int X, int Y, String nom, TypeEnumCouleurPion couleurPion){
-        super(nom, couleurPion);
-        setX(X);
-        setY(Y);
-    }
-    
-    public Tuile(int X, int Y, String nom, TypeEnumTresors tresor){
-        super(nom, tresor);
-        setX(X);
-        setY(Y);
-       
-    }
-    
-    public Tuile(int X, int Y, String nom, TypeEnumTresors tresor, String image){
-        super(nom, tresor, image);
+    public Tuile(int X, int Y, CarteInondation ci){
+        super(ci.getNom(), ci.getCouleurPion(), ci.getTresor());
         setX(X);
         setY(Y);
     }

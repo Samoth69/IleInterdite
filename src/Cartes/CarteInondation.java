@@ -13,33 +13,32 @@ import Enumerations.TypeEnumTresors;
  * @author violentt
  */
 public class CarteInondation {
-    private String nom, image;
-    private TypeEnumTresors tresor;
-    private TypeEnumCouleurPion couleurPion = TypeEnumCouleurPion.AUCUN;
+    private final String nom;
+    private final TypeEnumTresors tresor;
+    private final TypeEnumCouleurPion couleurPion;
     
     public CarteInondation(String nom){
-        setNom(nom);
+        this.nom = nom;
         tresor = TypeEnumTresors.AUCUN;
+        couleurPion = TypeEnumCouleurPion.AUCUN;
     }
     
     public CarteInondation(String nom, TypeEnumCouleurPion couleurPion){
-        setNom(nom);
+        this.nom = nom;
         this.couleurPion = couleurPion;
         tresor = TypeEnumTresors.AUCUN;
     }
     
     public CarteInondation(String nom, TypeEnumTresors tresor){
-        setNom(nom);
-        setTresor(tresor);
-    }
-    
-    public CarteInondation(String nom, TypeEnumTresors tresor, String image){
-        setNom(nom);
-        setTresor(tresor);
-    }
-    
-    public void setNom(String nom){
         this.nom = nom;
+        couleurPion = TypeEnumCouleurPion.AUCUN;
+        this.tresor = tresor;
+    }
+    
+    public CarteInondation(String nom, TypeEnumCouleurPion couleurPion, TypeEnumTresors tresor){
+        this.nom = nom;
+        this.couleurPion = couleurPion;
+        this.tresor = tresor;
     }
     
     public String getNom(){
@@ -52,13 +51,5 @@ public class CarteInondation {
     
     public TypeEnumTresors getTresor() {
         return tresor;
-    }
-    
-    public void setTresor(TypeEnumTresors tresor){
-        this.tresor = tresor;
-    }
-    
-    public void setImage(String image){
-        
     }
 }
