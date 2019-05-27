@@ -54,7 +54,7 @@ public class Pion extends JComponent{
             break;
         }
         
-        g.fillOval((int)dim.getWidth()/2, 0, 50, 50);
+        g.fillOval((int)dim.getWidth()/2, 0, 30, 30);
     }
     
     //getteur pour la couleur du pion en fonction du personnage

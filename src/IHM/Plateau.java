@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package IHM;
+import Enumerations.TypeEnumTresors;
 import IleInterdite.Grille;
 import Personnages.*;
 import IleInterdite.Tuile;
@@ -94,7 +95,7 @@ public class Plateau {
             for(int j = 0; j < 6; j++)
             {
                 //Creation d'une case
-                JPanel pn = new JPanel(new GridLayout(2,1));     
+                JPanel pn = new JPanel(new GridLayout(3,1));     
                 //bordure de la case
                 pn.setBorder(BorderFactory.createLineBorder(Color.BLACK));  
                 
@@ -113,6 +114,11 @@ public class Plateau {
                         }
                     }
 
+                    if(plateau[i][j].getTresor() != TypeEnumTresors.AUCUN)
+                    {
+                        pn.add(new Tresor());
+                    }
+                    
                     pn.setBackground(Color.yellow);     //background en jaune
                 } 
                 else 

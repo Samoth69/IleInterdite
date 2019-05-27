@@ -132,7 +132,7 @@ public class ControlleurJeu implements Observe{
         return pilecarteinondation.get(pilecarteinondation.size()-1);
     }
     
-    public Tuile[][] getCarte() {
+    public Tuile[][] getGrille() {
         return grille.getTuiles();
     }
     

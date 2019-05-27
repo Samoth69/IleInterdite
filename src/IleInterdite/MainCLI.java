@@ -42,7 +42,7 @@ public class MainCLI implements Observateur{
         maxCharCount+= 35;
         //System.out.println(maxCharCount);
         String[] text = new String[8];
-        Tuile[][] t = cj.getCarte();
+        Tuile[][] t = cj.getGrille();
         for (int x = 0; x < 6; x++) {
             for (int i = 0; i < text.length; i++) {
                 text[i] = "";
