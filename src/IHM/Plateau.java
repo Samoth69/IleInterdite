@@ -17,6 +17,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import java.util.ArrayList;
 
 /**
  *
@@ -29,7 +30,8 @@ public class Plateau {
     Messager testP;
     Ingenieur inge;
     Grille grille;
-    Pion pion;
+    Pion pion, pion2, pion3;
+    ArrayList<Pion> listPion;
     Tuile plateau[][] = new Tuile[6][6];
     private final JFrame window ;
     
@@ -43,8 +45,10 @@ public class Plateau {
         grille = new Grille(explo, inge, testP);        //test
         
         pion = new Pion(testP);                 //test
-        pion = new Pion(explo);
-        pion = new Pion(inge);
+        pion2 = new Pion(explo);
+        pion3 = new Pion(inge);
+        
+        listPion = new ArrayList<Pion>();
         
         plateau = grille.getTuiles();
         
@@ -77,6 +81,14 @@ public class Plateau {
         JPanel panelGrille = new JPanel(new GridLayout(6, 6));
         mainPanel.add(panelGrille, BorderLayout.CENTER);
         
+        listPion.add(pion);
+        listPion.add(pion2);
+        listPion.add(pion3);
+        
+        affecterCase(plateau, listPion, panelGrille);
+    }
+    
+    public void affecterCase(Tuile plateau[][], ArrayList<Pion> listPion, JPanel grille){
         for(int i = 0; i< 6; i++)
         {
             for(int j = 0; j < 6; j++)
@@ -91,26 +103,26 @@ public class Plateau {
                     //ajout label nom case
                     pn.add(new JLabel(plateau[i][j].getNom()), BorderLayout.CENTER);
                     
-                    //si case = point de depart d'un pion -> mettre le pion
-                    if(plateau[i][j].getCouleurPion() == pion.getCouleurPion())
-                    {
-                        pn.add(pion);
-                    }
                     
+                    for(int p = 0; p<listPion.size(); p++)
+                    {
+                        //si case = point de depart d'un pion -> mettre le pion
+                        if(plateau[i][j].getCouleurPion() == listPion.get(p).getCouleurPion())
+                        {
+                            pn.add(listPion.get(p));
+                        }
+                    }
+
                     pn.setBackground(Color.yellow);     //background en jaune
                 } 
                 else 
                 {
-                    pn.setBackground(Color.blue);       //background en bleu
+                    pn.setBackground(new Color(0, 153, 255));       //background en bleu
                 }
                 
-                panelGrille.add(pn);        //Ajout de la case a la grille de jeu (panelGrille)
+                grille.add(pn);        //Ajout de la case a la grille de jeu (panelGrille)
             }
         }
-    }
-    
-    public void affecterPion(){
-        
     }
     
     public void afficher() {

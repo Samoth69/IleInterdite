@@ -29,7 +29,31 @@ public class Pion extends JComponent{
     public void paint(Graphics g){
         Dimension dim = getSize();
         
-        g.setColor(Color.green);
+        switch(perso.getCouleurPion())
+        {
+            case BLEU:
+                g.setColor(Color.GREEN);
+            break;
+            case JAUNE:
+                g.setColor(Color.YELLOW);
+            break;
+            case ORANGE:
+                g.setColor(Color.ORANGE);
+            break;
+            case ROUGE:
+                g.setColor(Color.RED);
+            break;
+            case VERT:
+                g.setColor(Color.GREEN);
+            break;
+            case VIOLET:
+                g.setColor(Color.MAGENTA);
+            break;
+            default:
+                g.setColor(Color.GRAY);
+            break;
+        }
+        
         g.fillOval((int)dim.getWidth()/2, 0, 50, 50);
     }
     
