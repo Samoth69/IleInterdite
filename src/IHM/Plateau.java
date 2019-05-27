@@ -73,10 +73,13 @@ public class Plateau {
             for(int j = 0; j < 6; j++)
             {
                 JPanel pn = new JPanel();
-                if (plateau[i][j] != null) {
+                if (plateau[i][j] != null) 
+                {
                     pn.add(new JLabel(plateau[i][j].getNom()));
                     pn.setBackground(Color.yellow);
-                } else {
+                } 
+                else 
+                {
                     pn.setBackground(Color.blue);
                 }
                 
