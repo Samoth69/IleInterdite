@@ -6,29 +6,32 @@
 package IHM;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 /**
  *
  * @author laraicha
  */
-public class Menu extends JFrame {
+public class Menu extends JFrame implements ActionListener {
 
     /**
      * @param args the command line arguments
      */
     
-    private final JFrame menu;
-    private final JButton jouer;
-    private final JButton quitter;
+    private JFrame menu;
+    private JButton jouer;
+    private JButton quitter;
     
     public Menu() {
             
@@ -54,13 +57,13 @@ public class Menu extends JFrame {
         panelHaut.add(labelTitre) ;
         
         jouer = new JButton("Jouer");
+        jouer.addActionListener(this);
         quitter = new JButton("Quitter");
+        quitter.addActionListener(this);
         
         panelCentre.add(new JLabel(""));
         panelCentre.add(jouer);
-        panelCentre.add(quitter);
-    
-    
+        panelCentre.add(quitter);  
     
     }
     
@@ -73,8 +76,24 @@ public class Menu extends JFrame {
         Menu m = new Menu();
         m.afficher();
     }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == jouer) {
+            this.menu.setVisible(false);
+            Joueurs j = new Joueurs();
+            j.afficher();
+        }
+        
+        if (e.getSource() == quitter) {
+            int rep = JOptionPane.showConfirmDialog(null,"Etes-vous sûr(e) de vouloir quitter le jeu ?", "Message de confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);                   
+            if (rep == JOptionPane.YES_OPTION) {
+                 System.exit(0);
+        }
+    }
     
     }
+}
     
             
 
