@@ -126,7 +126,7 @@ public class Plateau {
                     pn.setBackground(new Color(0, 153, 255));       //background en bleu
                 }
                 
-                grille.add(pn);        //Ajout de la case a la grille de jeu (panelGrille)
+                grille.add(pn, i, j);        //Ajout de la case a la grille de jeu (panelGrille)
             }
         }
     }

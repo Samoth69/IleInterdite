@@ -28,7 +28,12 @@ public class MainCLI implements Observateur{
         
         ecrireCarte();
         
+        //System.out.println(cj.getNomJoueur());
         
+    }
+    
+    private void ecrireActionsPossible() {
+        System.out.println("");
     }
     
     private void ecrireCarte() {
@@ -79,8 +84,6 @@ public class MainCLI implements Observateur{
                         text[j] += " ";
                     }
                 }
-                
-                
             }
             text[0] += "+";
             for (int j = 1; j < text.length; j++) {

@@ -8,6 +8,7 @@ package IleInterdite;
 import Cartes.CarteInondation;
 import Cartes.CarteMonteeDesEaux;
 import Cartes.CarteRouge;
+import Enumerations.TypeEnumMessage;
 import Personnages.Explorateur;
 import Personnages.Ingenieur;
 import Personnages.Messager;
@@ -89,7 +90,6 @@ public class ControlleurJeu implements Observe{
                     break;  
             }
         }
-        
         return p;
     }
     
@@ -110,6 +110,11 @@ public class ControlleurJeu implements Observe{
         }
     }
     
+    //renvoie le nom du joueur qui est actuellement entrain de jouer
+    public String getNomJoueur() {
+        notifierObservateur(new Message(TypeEnumMessage.ACTION, "coucou"));
+        return personnages.get(numJoueurEnCours).getNom();
+    }  
     
     //Gerer le niveau d'eau
     public int getNiveauEau() {
