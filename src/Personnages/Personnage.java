@@ -112,7 +112,7 @@ public abstract class Personnage {
     
     //assecher une tuile
     public void assecher(Tuile tuileAssechable){
-        if(tuileAssechable.getInondation() == TypeEnumInondation.SEC){
+        if (tuileAssechable.getInondation() == TypeEnumInondation.SEC){
             System.out.println("Tuile est déjà sec");
         } else if(tuileAssechable.getInondation() == TypeEnumInondation.MOUILLE){
             tuileAssechable.reduireInondation();
