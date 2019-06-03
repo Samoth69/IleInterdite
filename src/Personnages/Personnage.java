@@ -83,6 +83,10 @@ public abstract class Personnage {
     protected Grille getGrille() {
         return ile;
     }
+    
+    public void setGrille(Grille g) {
+        ile = g;
+    }
 
     //renvoie les iles qui peuvent être sécher autour du joueur
     //peut être renvoyer une arraylist vide

@@ -290,7 +290,7 @@ public class Joueurs extends JFrame implements ActionListener {
             this.joueurs.setVisible(false);
             Message msg = new Message(TypeEnumMessage.MENU_JOUER);
             ArrayList<String> infos = new ArrayList<>();
-            infos.add((String)nbJoueurs.getSelectedItem());
+            infos.add(String.valueOf(nbJoueurs.getSelectedItem()));
             infos.add(pseudo1.getText());
             infos.add((String)role1.getSelectedItem());
             infos.add(pseudo2.getText());

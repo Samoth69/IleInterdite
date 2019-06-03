@@ -8,6 +8,7 @@ package IleInterdite;
 import Enumerations.TypeEnumMessage;
 import IHM.Joueurs;
 import IHM.Menu;
+import Personnages.*;
 import java.util.ArrayList;
 
 /**
@@ -22,7 +23,6 @@ public class MainIHM implements Observateur{
     private Joueurs joueurs = new Joueurs();
     private Menu menu = new Menu();
     private ControlleurJeu cj;
-    
     
     public static void main(String[] args) {
         new MainIHM();
@@ -46,16 +46,34 @@ public class MainIHM implements Observateur{
                 break;
             case MENU_JOUER:
                 ArrayList<String> infos = m.getAdditionnal();
-                for (int i = 1; i < Integer.parseInt(infos.get(0)); i++) {
-                    //Personnage perso;
-                  //TODO  
+                ArrayList<Personnage> perso = new ArrayList<>();
+                int counter = 1;
+                int joueurCompter = 0;
+                
+                while (joueurCompter < Integer.valueOf(infos.get(0))) {
+                    switch(infos.get(counter + 1)) {
+                        case "Explorateur":
+                            perso.add(new Explorateur(infos.get(counter), null));
+                            break;
+                        case "Ingénieur":
+                            perso.add(new Ingenieur(infos.get(counter), null));
+                            break;
+                        case "Navigateur":
+                            perso.add(new Navigateur(infos.get(counter), null));
+                            break;
+                        case "Pilote":
+                            perso.add(new Pilote(infos.get(counter), null));
+                            break;
+                        case "Plongeur":
+                            perso.add(new Plongeur(infos.get(counter), null));
+                            break;
+                    }
+                    joueurCompter++;
+                    counter += 2;
                 }
                 
-                //cj = new ControlleurJeu();
-                break;
-            default:
-                break;
+                cj = new ControlleurJeu(perso);
+                System.out.println("coucou");
         }
     }
-    
 }

@@ -119,6 +119,11 @@ public class ControlleurJeu implements Observe{
         }
     }
     
+    //renvoie l'objet Grille
+    public Grille getIle() {
+        return grille;
+    }
+    
     //renvoie le nom du joueur qui est actuellement entrain de jouer
     public String getNomJoueur() {
         notifierObservateur(new Message(TypeEnumMessage.ACTION));
