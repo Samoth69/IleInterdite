@@ -11,5 +11,8 @@ package Enumerations;
  */
 public enum TypeEnumMessage {
     ACTION,
-    CARTE
+    CARTE,
+    MENU_PRINCIPAL,
+    MENU_JOUEURS,
+    MENU_JOUER
 }

@@ -32,7 +32,7 @@ public class Pion extends JComponent{
         switch(perso.getCouleurPion())
         {
             case BLEU:
-                g.setColor(Color.GREEN);
+                g.setColor(Color.BLUE);
             break;
             case JAUNE:
                 g.setColor(Color.YELLOW);
