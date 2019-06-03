@@ -220,4 +220,8 @@ public class ControlleurJeu implements Observe{
             observateur.traiterMessage(m);
         }
     } 
+    
+    public ArrayList<Personnage> getPerso(){
+        return personnages;
+    }
 }
