@@ -8,6 +8,7 @@ package IleInterdite;
 import Enumerations.TypeEnumMessage;
 import IHM.Joueurs;
 import IHM.Menu;
+import IHM.Plateau;
 import Personnages.*;
 import java.util.ArrayList;
 
@@ -22,6 +23,7 @@ public class MainIHM implements Observateur{
      */
     private Joueurs joueurs = new Joueurs();
     private Menu menu = new Menu();
+    private Plateau plateau;
     private ControlleurJeu cj;
     
     public static void main(String[] args) {
@@ -73,7 +75,15 @@ public class MainIHM implements Observateur{
                 }
                 
                 cj = new ControlleurJeu(perso);
-                System.out.println("coucou");
+                plateau = new Plateau(perso, cj);
+                plateau.addObservateur(this);
+                
+                for (Personnage p : perso) {
+                    p.setGrille(cj.getIle());
+                }
+                
+                plateau.afficher();
+                //System.out.println("coucou");
         }
     }
 }

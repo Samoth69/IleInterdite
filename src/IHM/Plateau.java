@@ -5,6 +5,7 @@
  */
 package IHM;
 import Enumerations.TypeEnumTresors;
+import IleInterdite.ControlleurJeu;
 import IleInterdite.Grille;
 import IleInterdite.Message;
 import IleInterdite.Observateur;
@@ -31,31 +32,38 @@ import java.util.ArrayList;
 
 public class Plateau {
 
-    Explorateur explo;
-    Messager testP;
-    Ingenieur inge;
-    Grille grille;
-    Pion pion, pion2, pion3;
+    //Explorateur explo;
+    //Messager testP;
+    //Ingenieur inge;
+    //Grille grille;
+    //Pion pion, pion2, pion3;
+    ArrayList<Personnage> listPerso;
     ArrayList<Pion> listPion;
     Tuile plateau[][] = new Tuile[6][6];
+    JPanel panel[][] = new JPanel[6][6];
+    JPanel panelGrille;
+    
+    ControlleurJeu cj;
+    Grille grille;
+    
+    boolean deplacementMode = false; //Devient vrai si le joueur à cliquer sur la case de son emplacement et voit donc les cases sur lesquels il peut aller
+    
+    final Color waterColor = new Color(0, 153, 255);
+    final Color selectColor = Color.green;
+    final Color tuileColor = Color.yellow;
+    final Color nonSelectedColor = Color.gray;
+    
     private final JFrame window ;
     
-    
-    public Plateau() {
-        /** INITIALISATION **/
-        
-        explo = new Explorateur("NomExplorateur1", grille);
-        inge = new Ingenieur("NomIngenieur1", grille);
-        testP = new Messager("testP", grille);       //test
-        grille = new Grille(explo, inge, testP);        //test
-        
-        pion = new Pion(testP);                 //test
-        pion2 = new Pion(explo);
-        pion3 = new Pion(inge);
-        
+    public Plateau(ArrayList<Personnage> persos, ControlleurJeu cj) {
+        plateau = cj.getGrille();
+        this.cj = cj;
+        grille = cj.getIle();
         listPion = new ArrayList<Pion>();
-        
-        plateau = grille.getTuiles();
+        listPerso = persos;
+        for (Personnage p : listPerso) {
+            listPion.add(new Pion(p));
+        }
         
         /** PARTIE SWING **/
         
@@ -84,12 +92,8 @@ public class Plateau {
         
         
         /**AJOUT DE LA GRILLE DE JEU AU CENTRE DE LA FENETRE **/
-        JPanel panelGrille = new JPanel(new GridLayout(6, 6));
+        panelGrille = new JPanel(new GridLayout(6, 6));
         mainPanel.add(panelGrille, BorderLayout.CENTER);
-        
-        listPion.add(pion);
-        listPion.add(pion2);
-        listPion.add(pion3);
         
         affecterCase(plateau, listPion, panelGrille);
     }
@@ -124,17 +128,22 @@ public class Plateau {
                         pn.add(new Tresor());
                     }
                     
-                    pn.setBackground(Color.yellow);     //background en jaune
+                    pn.setBackground(tuileColor);     //background en jaune
                 } 
                 else 
                 {
-                    pn.setBackground(new Color(0, 153, 255));       //background en bleu
+                    pn.setBackground(waterColor);       //background en bleu
                 }
+                
+                final JPanel xjp = pn;
+                final Tuile xt = plateau[i][j];
+                final int xi = i;
+                final int xj = j;
                 
                 pn.addMouseListener(new MouseListener() {
                     @Override
                     public void mouseClicked(MouseEvent e) {
-                        
+                        panelClick(xjp, xt, xi, xj);
                     }
 
                     @Override
@@ -147,9 +156,67 @@ public class Plateau {
                     public void mouseExited(MouseEvent e) {}
                 });
                 
+                panel[i][j] = pn;
                 grille.add(pn, i, j);        //Ajout de la case a la grille de jeu (panelGrille)
+                
             }
         }
+    }
+    
+    //ce déclenche quand une case sur l'écran est cliquer
+    private void panelClick(JPanel jp, Tuile emplacement, int i, int j) {
+        System.out.println("panelClick: " + i + ", " + j);
+        if (cj.getJoueurEntrainDeJouer().getEmplacement() == emplacement) {
+            if (deplacementMode && jp.getBackground() == tuileColor) {
+                cj.deplacerJoueurEnCour(emplacement);
+                int x = cj.getJoueurEntrainDeJouer().getEmplacement().getX();
+                int y = cj.getJoueurEntrainDeJouer().getEmplacement().getX();
+                panel[x][y].remove(listPion.get(cj.getJoueurNum()));
+                panel[i][j].add(listPion.get(cj.getJoueurNum()));
+                
+                deplacementMode = false;
+                paintNonSelected();
+            }
+            if (jp.getBackground() == selectColor) {
+                paintNormal();
+                deplacementMode = false;
+            } else {
+                paintNonSelected();
+                jp.setBackground(selectColor);
+                for (Tuile t : cj.getJoueurEntrainDeJouer().getDeplacements(emplacement)) {
+                    JPanel jpa = panel[t.getX()][t.getY()];
+                    jpa.setBackground(tuileColor);
+                    System.out.println(t.getNom() + "\t" + t.getX() + "\t" + t.getY());
+                }
+                deplacementMode = true;
+            }
+        window.repaint();
+        }
+    }
+    
+    private void paintNonSelected() {
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 6; j++) {
+                JPanel jp = panel[i][j];
+                if (jp.getBackground() != waterColor) {
+                    jp.setBackground(nonSelectedColor);
+                }
+                
+            }
+        }
+        window.repaint();
+    }
+    
+    private void paintNormal() {
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 6; j++) {
+                JPanel jp = panel[i][j];
+                if (jp.getBackground() != waterColor) {
+                    jp.setBackground(tuileColor);
+                }
+            }
+        }
+        window.repaint();
     }
     
     public void afficher() {
@@ -167,9 +234,9 @@ public class Plateau {
         }
     } 
     
-    public static void main(String[] args){
+    /*public static void main(String[] args){
         Plateau ihm = new Plateau();
         ihm.afficher();
-    }
+    }*/
     
 }

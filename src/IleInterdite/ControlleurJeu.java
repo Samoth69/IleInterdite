@@ -102,6 +102,18 @@ public class ControlleurJeu implements Observe{
         return p;
     }
     
+    public void deplacerJoueurEnCour(Tuile newPos) {
+        personnages.get(numJoueurEnCours).deplacement(newPos);
+    }
+    
+    public Personnage getJoueurEntrainDeJouer() {
+        return personnages.get(numJoueurEnCours);
+    }
+    
+    public int getJoueurNum() {
+        return numJoueurEnCours;
+    }
+    
     //cherche dans un arraylist si num est trouvé, renvoie true. sinon renvoie faux.
     private boolean search(ArrayList<Integer> ar, int num) {
         boolean exist = false;

@@ -22,7 +22,7 @@ public abstract class Personnage {
     //emplacement du Joueur (liée à la tuille sur laquel le personnage est)
     private Tuile emplacementJoueur;
     //grille du jeu
-    protected Grille ile;
+    public Grille ile;
     //cartes que le joueur possède
     private ArrayList<CarteRouge> cartes = new ArrayList<>();
     //couleur pion associé au personnage

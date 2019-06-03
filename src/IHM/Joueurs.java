@@ -54,6 +54,8 @@ public class Joueurs extends JFrame implements ActionListener {
     private JComboBox role4;
     private JComboBox nbJoueurs;
     
+    private ArrayList<JTextField> listPseudo;
+    private ArrayList<JComboBox> listRole;
     private final Integer[] nombreJoueur = {2, 3, 4};
     private final String[] nomRoles = {"Explorateur", "Ingénieur", "Navigateur", "Pilote", "Plongeur"};
     
@@ -105,6 +107,12 @@ public class Joueurs extends JFrame implements ActionListener {
         pseudo3 = new JTextField();    
         pseudo4 = new JTextField();
         
+        listPseudo = new ArrayList<>();
+        listPseudo.add(pseudo1);
+        listPseudo.add(pseudo2);
+        listPseudo.add(pseudo3);
+        listPseudo.add(pseudo4);
+        
         JLabel labeljoueur1 = new JLabel(" Joueur n°1", SwingConstants.CENTER);
         JLabel labeljoueurPseudo1 = new JLabel(" Pseudonyme : ", SwingConstants.LEFT);
         
@@ -133,6 +141,13 @@ public class Joueurs extends JFrame implements ActionListener {
         
         role4 = new JComboBox(nomRoles);
         role4.setSelectedIndex(3);
+        
+        listRole = new ArrayList<>();
+        listRole.add(role1);
+        listRole.add(role2);
+        listRole.add(role3);
+        listRole.add(role4);
+        
         
         nbJoueurs = new JComboBox(nombreJoueur);
         nbJoueurs.addActionListener(new ActionListener() {
@@ -287,6 +302,22 @@ public class Joueurs extends JFrame implements ActionListener {
         }
         
         if (e.getSource() == lancer) {
+            ArrayList<String> usedRole = new ArrayList<>();
+            for (int i = 0; i < (int)nbJoueurs.getSelectedItem(); i++) {
+                if (usedRole.contains((String)listRole.get(i).getSelectedItem())) {
+                    JOptionPane.showMessageDialog(null, "Chaque joueur doit avoir un rôle différent");
+                    return; //quitte la fonction
+                }
+                usedRole.add((String)listRole.get(i).getSelectedItem());
+            }
+            for (int i = 0; i < (int)nbJoueurs.getSelectedItem(); i++) {
+                if (listPseudo.get(i).getText().isBlank()) {
+                    JOptionPane.showMessageDialog(null, "Le pseudo d'un joueur ne peux pas être vide");
+                    return; //quitte la fonction
+                }
+            }
+            
+            
             this.joueurs.setVisible(false);
             Message msg = new Message(TypeEnumMessage.MENU_JOUER);
             ArrayList<String> infos = new ArrayList<>();
