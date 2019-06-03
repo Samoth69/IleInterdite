@@ -7,6 +7,7 @@ package Personnages;
 
 import Cartes.CarteRouge;
 import Enumerations.TypeEnumCouleurPion;
+import Enumerations.TypeEnumInondation;
 import IleInterdite.Grille;
 import IleInterdite.Tuile;
 import java.util.ArrayList;
@@ -103,6 +104,18 @@ public abstract class Personnage {
             }
         }
         return out;
+    }
+    
+    //assecher une tuile
+    public void assecher(Tuile tuileAssechable){
+        if(tuileAssechable.getInondation() == TypeEnumInondation.SEC){
+            System.out.println("Tuile est déjà sec");
+        } else if(tuileAssechable.getInondation() == TypeEnumInondation.MOUILLE){
+            tuileAssechable.reduireInondation();
+        } else{
+            System.out.print("Tuile est innondée, impossible de l'assécher");
+        }
+        
     }
     
     //renvoie le nombre de case qui peuvent être sécher en une action
