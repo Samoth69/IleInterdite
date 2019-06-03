@@ -55,6 +55,15 @@ public class ControlleurJeu implements Observe{
         grille = new Grille(personnages);
     }
     
+    public ControlleurJeu(ArrayList<Personnage> perso) {
+        if (perso.size() < 2 || perso.size() > 4) {
+            throw new Error("Le nombre de joueur doit être compris entre 2 et 4 (inclus)");
+        }
+        nombreJoueurDansPartie = perso.size();
+        personnages = perso;
+        grille = new Grille(personnages);
+    }
+    
     //Obtient les personnages pour démararer la partie.
     //renvoie une liste contenant de NOUVEAU joueurs avec tous un role différent
     private ArrayList<Personnage> getPersonnagesDebutDePartie(int nbJoueurs) {
@@ -112,7 +121,7 @@ public class ControlleurJeu implements Observe{
     
     //renvoie le nom du joueur qui est actuellement entrain de jouer
     public String getNomJoueur() {
-        notifierObservateur(new Message(TypeEnumMessage.ACTION, "coucou"));
+        notifierObservateur(new Message(TypeEnumMessage.ACTION));
         return personnages.get(numJoueurEnCours).getNom();
     }  
     
@@ -220,4 +229,8 @@ public class ControlleurJeu implements Observe{
             observateur.traiterMessage(m);
         }
     } 
+    
+    public ArrayList<Personnage> getPerso(){
+        return personnages;
+    }
 }

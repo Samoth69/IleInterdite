@@ -6,6 +6,8 @@
 package IHM;
 import Enumerations.TypeEnumTresors;
 import IleInterdite.Grille;
+import IleInterdite.Message;
+import IleInterdite.Observateur;
 import Personnages.*;
 import IleInterdite.Tuile;
 import java.awt.BorderLayout;
@@ -14,6 +16,8 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -61,6 +65,7 @@ public class Plateau {
         window.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
         // Définit la taille de la fenêtre en pixels
         window.setSize(1500, 900);
+        window.setTitle("Ile Interdite");
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         window.setLocation(dim.width/2-window.getSize().width/2, dim.height/2-window.getSize().height/2);
         
@@ -126,6 +131,22 @@ public class Plateau {
                     pn.setBackground(new Color(0, 153, 255));       //background en bleu
                 }
                 
+                pn.addMouseListener(new MouseListener() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        
+                    }
+
+                    @Override
+                    public void mousePressed(MouseEvent e) {}
+                    @Override
+                    public void mouseReleased(MouseEvent e) {}
+                    @Override
+                    public void mouseEntered(MouseEvent e) {}
+                    @Override
+                    public void mouseExited(MouseEvent e) {}
+                });
+                
                 grille.add(pn, i, j);        //Ajout de la case a la grille de jeu (panelGrille)
             }
         }
@@ -134,6 +155,17 @@ public class Plateau {
     public void afficher() {
         this.window.setVisible(true);
     }
+    
+    private Observateur observateur;    
+    public void addObservateur(Observateur o) {
+        this.observateur = o;
+    }
+    
+    public void notifierObservateur(Message m) {
+        if (observateur != null) {
+            observateur.traiterMessage(m);
+        }
+    } 
     
     public static void main(String[] args){
         Plateau ihm = new Plateau();
