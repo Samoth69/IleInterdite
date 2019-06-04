@@ -77,38 +77,19 @@ public class Tuile extends CarteInondation {
             
             //Si INONDE affiche message pour dire que l'etat de la tuile ne peut etre changé
             case INONDE:
-                System.out.println("Niveau d'eau déjà au max!");
+                //System.out.println("Niveau d'eau déjà au max!");
             break;
             
             //Si aucun des cas ne correspondent affiche warning (modifiable à votre guise)
             default:
-                System.out.println("WARNING : tuile non inondable!");
+                //System.out.println("WARNING : tuile non inondable!");
             break;
         }
     }
     
     public void reduireInondation(){    // Reduit etat de l'inondation de la tuile en fonction de son etat actuel
-        switch(EtatInondation)
-        {
-            //Si SEC affiche message pour dire que l'etat de la tuile ne peut etre changé
-            case SEC:
-                System.out.println("Tuile déjà séche");
-            break;
-            
-            //Si MOUILLE etat devient SEC
-            case MOUILLE:
-                EtatInondation = TypeEnumInondation.SEC;
-            break;
-            
-            //Si INONDE affiche message pour dire que l'etat de la tuile ne peut etre changé
-            case INONDE:
-                System.out.println("Tuile inondée, impossible de la sécher");
-            break;
-            
-            //Si aucun des cas ne correspondent affiche warning (modifiable à votre guise)
-            default:
-                System.out.println("WARNING : tuile non séchable!");
-            break;
+        if (EtatInondation == TypeEnumInondation.MOUILLE) {
+            EtatInondation = TypeEnumInondation.SEC;
         }
     }
     

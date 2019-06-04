@@ -185,10 +185,10 @@ public class Grille {
         for (int i = -1; i <= 1; i++) {
             for (int j = -1; j <= 1; j++) {
                 if (i != 0 || j != 0) {
-                    System.out.println("i=" + i + "\tj=" + j);
+                    //System.out.println("i=" + i + "\tj=" + j);
                     if(((tuile.getX()+i) >= 0 && (tuile.getX() + i) <= 5) && ((tuile.getY() + j) >= 0 && (tuile.getY() + j) <= 5) && tabTuile[tuile.getX()+i][tuile.getY()+j] != null)
                     {
-                        System.out.println(tuile.getX() + "\t" + i + "\t" + tuile.getY() + "\t" + j);
+                        //System.out.println(tuile.getX() + "\t" + i + "\t" + tuile.getY() + "\t" + j);
                         if((tabTuile[tuile.getX()+i][tuile.getY()+j].getInondation() == TypeEnumInondation.SEC) || (tabTuile[tuile.getX()+i][tuile.getY()+j].getInondation() == TypeEnumInondation.MOUILLE)) {
                             tuilesAutourPraticable.add(tabTuile[tuile.getX()+i][tuile.getY()+j]);
                         }
@@ -211,15 +211,15 @@ public class Grille {
         ArrayList<Tuile> tuilesAutourMouille = new ArrayList<>();
         for (int i = -1; i<1; i++) {
             for (int j = -1; j<1; j++) {
-                if(((tuile.getX()+i) < 0 || (tuile.getX() + i)>5) && ((tuile.getY() + j)<0 || (tuile.getY() + j)>5))
-                {
-                    //System.out.println("Tuile innexistante");
-                }
-                else
-                {
-                    System.out.println(tuile.getX() + "\t" + i + "\t" + tuile.getY() + "\t" + j);
-                    if((tabTuile[tuile.getX()+i][tuile.getY()+j].getInondation() == TypeEnumInondation.MOUILLE)) {
-                        tuilesAutourMouille.add(tabTuile[tuile.getX()+i][tuile.getY()+j]);  
+                if (i != 0 || j != 0) {
+                    //System.out.println("i=" + i + "\tj=" + j);
+                    if(((tuile.getX()+i) >= 0 && (tuile.getX() + i) <= 5) && ((tuile.getY() + j) >= 0 && (tuile.getY() + j) <= 5) && tabTuile[tuile.getX()+i][tuile.getY()+j] != null)
+                    {
+                        //System.out.println(tuile.getX() + "\t" + i + "\t" + tuile.getY() + "\t" + j);
+                        if(tabTuile[tuile.getX()+i][tuile.getY()+j].getInondation() == TypeEnumInondation.MOUILLE) {
+                            tuilesAutourMouille.add(tabTuile[tuile.getX()+i][tuile.getY()+j]);
+                        }
+
                     }
                 }
             }

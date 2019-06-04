@@ -138,7 +138,7 @@ public class ControlleurJeu implements Observe{
     
     //renvoie le nom du joueur qui est actuellement entrain de jouer
     public String getNomJoueur() {
-        notifierObservateur(new Message(TypeEnumMessage.ACTION));
+        //notifierObservateur(new Message(TypeEnumMessage.ACTION));
         return personnages.get(numJoueurEnCours).getNom();
     }  
     
