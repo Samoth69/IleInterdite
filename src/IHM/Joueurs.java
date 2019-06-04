@@ -13,6 +13,7 @@ package IHM;
 import Enumerations.TypeEnumMessage;
 import IleInterdite.Message;
 import IleInterdite.Observateur;
+import com.sun.tools.javac.util.StringUtils;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -311,7 +312,7 @@ public class Joueurs extends JFrame implements ActionListener {
                 usedRole.add((String)listRole.get(i).getSelectedItem());
             }
             for (int i = 0; i < (int)nbJoueurs.getSelectedItem(); i++) {
-                if (listPseudo.get(i).getText().isBlank()) {
+                if (listPseudo.get(i).getText().isEmpty()) {
                     JOptionPane.showMessageDialog(null, "Le pseudo d'un joueur ne peux pas être vide");
                     return; //quitte la fonction
                 }
