@@ -51,7 +51,7 @@ public class Grille {
         assignerJoueursATuile(persos);
     }
     
-    Grille(ArrayList<Personnage> p) {
+    public Grille(ArrayList<Personnage> p) {
         persos.addAll(p);
         genererTableauTuiles();
         assignerJoueursATuile(persos);
