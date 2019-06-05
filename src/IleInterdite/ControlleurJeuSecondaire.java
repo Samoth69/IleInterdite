@@ -188,6 +188,10 @@ public class ControlleurJeuSecondaire implements Observe{
         return numJoueurEnCours;
     }
     
+    public void MelangeCarteRouge() {
+        //todo
+    }
+    
     public void MelangeCarteInnondation() {
         //defausecarteinondatio
         Collections.shuffle(defausecarteinondation);
