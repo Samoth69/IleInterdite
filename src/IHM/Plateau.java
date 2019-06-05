@@ -5,7 +5,7 @@
  */
 package IHM;
 import Enumerations.TypeEnumTresors;
-import IleInterdite.ControlleurJeu;
+import IleInterdite.ControlleurJeuSecondaire;
 import IleInterdite.Grille;
 import IleInterdite.Message;
 import IleInterdite.Observateur;
@@ -42,7 +42,7 @@ public class Plateau {
     Tuile plateau[][] = new Tuile[6][6];
     JPanel panel[][] = new JPanel[6][6];
     
-    ControlleurJeu cj;
+    ControlleurJeuSecondaire cj;
     Grille grille;
     
     JLabel joueurActuel;
@@ -58,7 +58,7 @@ public class Plateau {
     
     private final JFrame window ;
     
-    public Plateau(ArrayList<Personnage> persos, ControlleurJeu cj) {
+    public Plateau(ArrayList<Personnage> persos, ControlleurJeuSecondaire cj) {
         plateau = cj.getGrille();
         this.cj = cj;
         grille = cj.getIle();

@@ -29,7 +29,7 @@ public class Tests {
     Grille grille;
     Explorateur perso1;
     Ingenieur perso2;
-    private ControlleurJeu cj;
+    private ControlleurJeuSecondaire cj;
     private int nbJoueurs;
     
     public Tests() {
@@ -38,7 +38,7 @@ public class Tests {
         int nombreJoueur = sc.nextInt();
         nbJoueurs = nombreJoueur;
         
-        cj = new ControlleurJeu(nombreJoueur);
+        cj = new ControlleurJeuSecondaire(nombreJoueur);
     }
     
     private void ecrireCarte() {

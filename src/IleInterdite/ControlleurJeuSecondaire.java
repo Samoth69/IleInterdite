@@ -24,7 +24,7 @@ import java.util.concurrent.ThreadLocalRandom;
  *
  * @author violentt
  */
-public class ControlleurJeu implements Observe{
+public class ControlleurJeuSecondaire implements Observe{
 
     /**
      * @param args the command line arguments
@@ -46,7 +46,7 @@ public class ControlleurJeu implements Observe{
     
     //METHODES
 
-    public ControlleurJeu(int nbJoueur) {
+    public ControlleurJeuSecondaire(int nbJoueur) {
         if (nbJoueur < 2 || nbJoueur > 4) {
             throw new Error("Le nombre de joueur doit être compris entre 2 et 4 (inclus)");
         }
@@ -55,7 +55,7 @@ public class ControlleurJeu implements Observe{
         grille = new Grille(personnages);
     }
     
-    public ControlleurJeu(ArrayList<Personnage> perso) {
+    public ControlleurJeuSecondaire(ArrayList<Personnage> perso) {
         if (perso.size() < 2 || perso.size() > 4) {
             throw new Error("Le nombre de joueur doit être compris entre 2 et 4 (inclus)");
         }

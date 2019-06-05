@@ -16,7 +16,7 @@ import java.util.ArrayList;
  *
  * @author Toto
  */
-public class MainIHM implements Observateur{
+public class ControlleurJeuPrincipal implements Observateur{
 
     /**
      * @param args the command line arguments
@@ -24,13 +24,13 @@ public class MainIHM implements Observateur{
     private Joueurs joueurs = new Joueurs();
     private Menu menu = new Menu();
     private Plateau plateau;
-    private ControlleurJeu cj;
+    private ControlleurJeuSecondaire cj;
     
     public static void main(String[] args) {
-        new MainIHM();
+        new ControlleurJeuPrincipal();
     }
     
-    private MainIHM() {
+    private ControlleurJeuPrincipal() {
         menu.addObservateur(this);
         joueurs.addObservateur(this);
         
@@ -74,7 +74,7 @@ public class MainIHM implements Observateur{
                     counter += 2;
                 }
                 
-                cj = new ControlleurJeu(perso);
+                cj = new ControlleurJeuSecondaire(perso);
                 plateau = new Plateau(perso, cj);
                 plateau.addObservateur(this);
                 
