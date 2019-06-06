@@ -13,7 +13,7 @@ import Enumerations.TypeEnumCarteAction;
  */
 public class CarteAction extends CarteRouge{
         
-        public CarteAction(String nom, TypeEnumCarteAction typeAction){
+        public CarteAction(String nom, TypeEnumCarteAction typeAction){     //Enlever String nom car inutile (?)
             super(nom, typeAction.toString());
         }
          
