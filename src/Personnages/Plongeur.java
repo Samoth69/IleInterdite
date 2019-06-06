@@ -21,8 +21,8 @@ public class Plongeur extends Personnage{
     }
     
     @Override
-    public ArrayList<Tuile> getDeplacements(Tuile emplacementJoueur) {
-        return super.ile.getTuilesAutoursPraticable(emplacementJoueur);
+    public ArrayList<Tuile> getDeplacements() {
+        return super.ile.getTuilesAutoursPraticable(this);
     }
     
 }

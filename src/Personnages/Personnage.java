@@ -52,8 +52,8 @@ public abstract class Personnage {
     
     //renvoie les déplacement possible autour de la position actuel du joueur
     //peut être renvoyer une arraylist vide
-    public ArrayList<Tuile> getDeplacements(Tuile EmplacementJoueur) {
-        ArrayList<Tuile> tmp = ile.getTuilesAutoursPraticable(this); //liste
+    public ArrayList<Tuile> getDeplacements() {
+        ArrayList<Tuile> tmp = ile.getTuilesAutoursPraticable(this); //récupère la position actuel du joueur
         ArrayList<Tuile> out = new ArrayList<>(); //liste que l'on revoie à la fin (même si elle est vide)
         
         int currentX = this.emplacementJoueur.getX();

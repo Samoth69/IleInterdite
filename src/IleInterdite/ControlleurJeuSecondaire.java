@@ -62,6 +62,13 @@ public class ControlleurJeuSecondaire implements Observe{
         nombreJoueurDansPartie = perso.size();
         personnages = perso;
         grille = new Grille(personnages);
+        pilecarteinondation = grille.getListCarteInondation();
+        Collections.shuffle(pilecarteinondation);
+        
+        for (int i = 0; i <= 5; i++) {
+            CarteInondation ci = PiocherCarteInond();
+            augementerInondation(ci.getNom());
+        } 
     }
     
     //Obtient les personnages pour démararer la partie.
@@ -114,6 +121,10 @@ public class ControlleurJeuSecondaire implements Observe{
         return numJoueurEnCours;
     }
     
+    public void assecher(Tuile t) {
+        t.reduireInondation();
+    }
+    
     //cherche dans un arraylist si num est trouvé, renvoie true. sinon renvoie faux.
     private boolean search(ArrayList<Integer> ar, int num) {
         boolean exist = false;
@@ -156,11 +167,23 @@ public class ControlleurJeuSecondaire implements Observe{
     }
     
     public CarteRouge PiocherCarteRouge() {
-        return pilecarterouge.get(pilecarterouge.size()-1);
+        CarteRouge cr = pilecarterouge.get(pilecarterouge.size() - 1);
+        pilecarterouge.remove(pilecarterouge.size() - 1);
+        return cr;
     }
     
     public CarteInondation PiocherCarteInond() {
-        return pilecarteinondation.get(pilecarteinondation.size()-1);
+        CarteInondation ci = pilecarteinondation.get(pilecarteinondation.size() - 1);
+        pilecarteinondation.remove(pilecarteinondation.size() - 1);
+        return ci;
+    }
+    
+    public void DefausserCarte(CarteInondation ci) {
+        defausecarteinondation.add(ci);
+    }
+    
+    public void DefausserCarte(CarteRouge cr) {
+        defausecarterouge.add(cr);
     }
     
     public Tuile[][] getGrille() {
@@ -197,6 +220,26 @@ public class ControlleurJeuSecondaire implements Observe{
         Collections.shuffle(defausecarteinondation);
         for (CarteInondation carteinond : defausecarteinondation){
             pilecarteinondation.add(carteinond);
+        }
+    }
+    
+    //cherche une tuile et si il la trouve, augement sont inondation
+    public void augementerInondation(String s) {
+        for (Tuile t : getListeCarte()) {
+            if (t.getNom().equals(s)) {
+                t.augmenterInondation();
+                return;
+            }
+        }
+    }
+    
+    //cherche une tuile et si il la trouve, reduit sont inondation
+    public void reduireInondation(String s) {
+        for (Tuile t : getListeCarte()) {
+            if (t.getNom().equals(s)) {
+                t.reduireInondation();
+                return;
+            }
         }
     }
     

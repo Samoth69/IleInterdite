@@ -76,7 +76,7 @@ public class ControlleurJeuPrincipal implements Observateur{
                 
                 cj = new ControlleurJeuSecondaire(perso);
                 plateau = new Plateau(perso, cj);
-                plateau.addObservateur(this);
+                cj.addObservateur(plateau);
                 
                 for (Personnage p : perso) {
                     p.setGrille(cj.getIle());

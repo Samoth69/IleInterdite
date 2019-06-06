@@ -81,8 +81,6 @@ public class Grille {
                 addTuile(x, 5, tuile);
             }
         }
-        
-        //System.out.println();
     }
     
     private void addTuile(int x, int y, ArrayList<CarteInondation> tuile) {
@@ -209,18 +207,16 @@ public class Grille {
     //Renvoie les tuile MOUILLE autour de la tuile en parametre.
     public ArrayList <Tuile> getTuilesAutoursMouille(Tuile tuile) {
         ArrayList<Tuile> tuilesAutourMouille = new ArrayList<>();
-        for (int i = -1; i<1; i++) {
-            for (int j = -1; j<1; j++) {
-                if (i != 0 || j != 0) {
-                    //System.out.println("i=" + i + "\tj=" + j);
-                    if(((tuile.getX()+i) >= 0 && (tuile.getX() + i) <= 5) && ((tuile.getY() + j) >= 0 && (tuile.getY() + j) <= 5) && tabTuile[tuile.getX()+i][tuile.getY()+j] != null)
-                    {
-                        //System.out.println(tuile.getX() + "\t" + i + "\t" + tuile.getY() + "\t" + j);
-                        if(tabTuile[tuile.getX()+i][tuile.getY()+j].getInondation() == TypeEnumInondation.MOUILLE) {
-                            tuilesAutourMouille.add(tabTuile[tuile.getX()+i][tuile.getY()+j]);
-                        }
-
+        for (int i = -1; i <= 1; i++) {
+            for (int j = -1; j <= 1; j++) {
+                //System.out.println("i=" + i + "\tj=" + j);
+                if(((tuile.getX()+i) >= 0 && (tuile.getX() + i) <= 5) && ((tuile.getY() + j) >= 0 && (tuile.getY() + j) <= 5) && tabTuile[tuile.getX()+i][tuile.getY()+j] != null)
+                {
+                    //System.out.println(tuile.getX() + "\t" + i + "\t" + tuile.getY() + "\t" + j);
+                    if(tabTuile[tuile.getX()+i][tuile.getY()+j].getInondation() == TypeEnumInondation.MOUILLE) {
+                        tuilesAutourMouille.add(tabTuile[tuile.getX()+i][tuile.getY()+j]);
                     }
+
                 }
             }
         }
