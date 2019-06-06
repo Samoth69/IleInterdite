@@ -10,8 +10,8 @@ package Enumerations;
  * @author violentt
  */
 public enum TypeEnumMessage {
-    NA,
-    ACTION,
-    CARTE,
-    JOUEUR_SUIVANT
+    NA,             // = non applicable
+    ACTION,         //action à éffectuer par la vue du plateau (sera préciser par TypeEnumAction)
+    CARTE,          // ?
+    JOUEUR_SUIVANT  //indique à l'IHM que l'on change de joueur
 }
