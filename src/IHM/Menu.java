@@ -5,6 +5,7 @@
  */
 package IHM;
 
+import Enumerations.TypeEnumMenuPrincipal;
 import Enumerations.TypeEnumMessage;
 import IleInterdite.Message;
 import IleInterdite.Observateur;
@@ -86,7 +87,7 @@ public class Menu extends JFrame implements ActionListener {
             this.menu.setVisible(false);
             //Joueurs j = new Joueurs();
             //j.afficher();
-            notifierObservateur(new Message(TypeEnumMessage.MENU_JOUEURS));
+            notifierObservateur(new Message(TypeEnumMenuPrincipal.MENU_JOUEURS));
         }
         
         if (e.getSource() == quitter) {

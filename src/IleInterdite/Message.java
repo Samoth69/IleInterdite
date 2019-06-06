@@ -6,6 +6,7 @@
 package IleInterdite;
 
 import Enumerations.TypeEnumAction;
+import Enumerations.TypeEnumMenuPrincipal;
 import Enumerations.TypeEnumMessage;
 import java.util.ArrayList;
 
@@ -14,19 +15,18 @@ import java.util.ArrayList;
  * @author violentt
  */
 public class Message {
-    TypeEnumMessage type;
-    TypeEnumAction action;
+    TypeEnumMessage type = TypeEnumMessage.NA;
+    TypeEnumMenuPrincipal type2 = TypeEnumMenuPrincipal.NA;
+    TypeEnumAction action = TypeEnumAction.NA;
     ArrayList<String> additionnal; //donnée additionnel au message (aucune règle de formatage, à traiter au cas par cas)
     
     public Message(TypeEnumMessage type) {
         this.type = type;
-        action = TypeEnumAction.NA;
         additionnal = null;
     }
     
     public Message(TypeEnumMessage type, ArrayList<String> ad) {
         this.type = type;
-        action = TypeEnumAction.NA;
         additionnal = ad;
     }
     
@@ -42,8 +42,16 @@ public class Message {
         additionnal = ad;
     } 
     
+    public Message(TypeEnumMenuPrincipal type) {
+        type2 = type;
+    }
+    
     public TypeEnumMessage getMessageType() {
         return type;
+    }
+    
+    public TypeEnumMenuPrincipal getMessageType2() {
+        return type2;
     }
     
     public TypeEnumAction getActionType() {

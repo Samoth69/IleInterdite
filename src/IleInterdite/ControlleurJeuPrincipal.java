@@ -5,7 +5,7 @@
  */
 package IleInterdite;
 
-import Enumerations.TypeEnumMessage;
+import Enumerations.TypeEnumMenuPrincipal;
 import IHM.Joueurs;
 import IHM.Menu;
 import IHM.Plateau;
@@ -39,7 +39,7 @@ public class ControlleurJeuPrincipal implements Observateur{
 
     @Override
     public void traiterMessage(Message m) {
-        switch (m.getMessageType()) {
+        switch (m.getMessageType2()) {
             case MENU_JOUEURS:
                 joueurs.afficher();
                 break;

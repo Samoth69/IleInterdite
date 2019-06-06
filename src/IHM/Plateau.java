@@ -347,6 +347,17 @@ public class Plateau implements Observateur{
     @Override
     public void traiterMessage(Message m) {
         System.out.println("MESSAGE");
+        switch(m.getMessageType()) {
+            case ACTION:
+                
+                break;
+            case CARTE:
+                
+                break;
+            case JOUEUR_SUIVANT:
+                
+                break;
+        }
     }
     
 }

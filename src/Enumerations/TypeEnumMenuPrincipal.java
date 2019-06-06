@@ -9,9 +9,9 @@ package Enumerations;
  *
  * @author violentt
  */
-public enum TypeEnumMessage {
-    NA,
-    ACTION,
-    CARTE,
-    JOUEUR_SUIVANT
+public enum TypeEnumMenuPrincipal {
+    MENU_PRINCIPAL,
+    MENU_JOUEURS,
+    MENU_JOUER,
+    NA
 }

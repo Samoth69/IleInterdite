@@ -10,6 +10,7 @@ package IHM;
  * @author laraicha
  */
         
+import Enumerations.TypeEnumMenuPrincipal;
 import Enumerations.TypeEnumMessage;
 import IleInterdite.Message;
 import IleInterdite.Observateur;
@@ -291,7 +292,7 @@ public class Joueurs extends JFrame implements ActionListener {
             int rep = JOptionPane.showConfirmDialog(null,"Etes-vous sûr(e) de vouloir retourner au menu ?", "Message de confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);                   
             if (rep == JOptionPane.YES_OPTION) {
                 this.joueurs.setVisible(false);
-                notifierObservateur(new Message(TypeEnumMessage.MENU_PRINCIPAL));
+                notifierObservateur(new Message(TypeEnumMenuPrincipal.MENU_PRINCIPAL));
             }
         }
         
@@ -320,7 +321,7 @@ public class Joueurs extends JFrame implements ActionListener {
             
             
             this.joueurs.setVisible(false);
-            Message msg = new Message(TypeEnumMessage.MENU_JOUER);
+            Message msg = new Message(TypeEnumMenuPrincipal.MENU_JOUER);
             ArrayList<String> infos = new ArrayList<>();
             infos.add(String.valueOf(nbJoueurs.getSelectedItem()));
             infos.add(pseudo1.getText());
