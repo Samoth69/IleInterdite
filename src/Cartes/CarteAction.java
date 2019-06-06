@@ -12,21 +12,13 @@ import Enumerations.TypeEnumCarteAction;
  * @author violentt
  */
 public class CarteAction extends CarteRouge{
-    private TypeEnumCarteAction typeAction;
         
-        public CarteAction(String nom, boolean estTiree, TypeEnumCarteAction typeAction){
-            super(nom,estTiree);
-            this.typeAction=typeAction;
-        }
-
-         public CarteAction(String nom, boolean estTiree, String description,TypeEnumCarteAction typeAction){
-            super(nom,estTiree,description);
-            this.typeAction=typeAction;
+        public CarteAction(String nom, TypeEnumCarteAction typeAction){
+            super(nom, typeAction.toString());
         }
          
-         @Override
-         
-         public String getNom(){
-             return "CarteAction";
-         }
+        @Override
+        public String getNom(){
+            return "CarteAction";
+        }
 }

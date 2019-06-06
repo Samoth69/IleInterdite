@@ -13,21 +13,12 @@ import Enumerations.TypeEnumTresors;
  */
 public class CarteTresor extends CarteRouge{
     
-        private TypeEnumTresors typeTresor;
-        
-        public CarteTresor(String nom, boolean estTiree, TypeEnumTresors typeTresor){
-            super(nom,estTiree);
-            this.typeTresor=typeTresor;
-        }
-
-         public CarteTresor(String nom, boolean estTiree, String description,TypeEnumTresors typeTresor){
-            super(nom,estTiree,description);
-            this.typeTresor=typeTresor;
+        public CarteTresor(String nom, TypeEnumTresors typeTresor){
+            super(nom, typeTresor.toString());
         }
          
-         @Override
-         
-         public String getNom(){
-             return "CarteTresor";
-         }
+        @Override
+        public String getNom(){
+            return "CarteTresor";
+        }
 }

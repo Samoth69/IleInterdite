@@ -16,14 +16,14 @@ import java.util.Scanner;
  */
 public class MainCLI implements Observateur{
     
-    private ControlleurJeu cj;
+    private ControlleurJeuSecondaire cj;
     
     MainCLI() {
         System.out.print("Entrez le nombre de joueurs(entre 2 et 4):");
         Scanner sc = new Scanner(System.in);
         int nombreJoueur = sc.nextInt();
         
-        cj = new ControlleurJeu(nombreJoueur);
+        cj = new ControlleurJeuSecondaire(nombreJoueur);
         cj.addObservateur(this);
         
         ecrireCarte();

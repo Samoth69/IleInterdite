@@ -11,12 +11,12 @@ package Cartes;
  */
 public class CarteMonteeDesEaux extends CarteRouge{
         
-        public CarteMonteeDesEaux(String nom, boolean estTiree){
-            super(nom,estTiree);
+        public CarteMonteeDesEaux(String nom){
+            super(nom);
         }
 
-         public CarteMonteeDesEaux(String nom, boolean estTiree, String description){
-            super(nom,estTiree,description);
+         public CarteMonteeDesEaux(String nom, String description){
+            super(nom,description);
         }
          
          @Override
