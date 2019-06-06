@@ -38,10 +38,10 @@ public class ControlleurJeuSecondaire implements Observe{
     private Grille grille;    
     private CarteRouge carteselectionne;
     private ArrayList<Personnage>personnages = new ArrayList<>();
-    private ArrayList<CarteRouge>pilecarterouge = new ArrayList<>();
-    private ArrayList<CarteRouge>defausecarterouge = new ArrayList<>();
-    private ArrayList<CarteInondation>pilecarteinondation = new ArrayList<>();
-    private ArrayList<CarteInondation>defausecarteinondation = new ArrayList<>();
+    private ArrayList<CarteRouge>pileCarteRouge = new ArrayList<>();
+    private ArrayList<CarteRouge>defauseCarteRouge = new ArrayList<>();
+    private ArrayList<CarteInondation>pileCarteInondation = new ArrayList<>();
+    private ArrayList<CarteInondation>defauseCarteInondation = new ArrayList<>();
     
     //-----------------------------------------------------------------------------------
     
@@ -63,8 +63,8 @@ public class ControlleurJeuSecondaire implements Observe{
         nombreJoueurDansPartie = perso.size();
         personnages = perso;
         grille = new Grille(personnages);
-        pilecarteinondation = grille.getListCarteInondation();
-        Collections.shuffle(pilecarteinondation);
+        pileCarteInondation = grille.getListCarteInondation();
+        Collections.shuffle(pileCarteInondation);
         
         for (int i = 0; i <= 5; i++) {
             CarteInondation ci = PiocherCarteInond();
@@ -170,23 +170,35 @@ public class ControlleurJeuSecondaire implements Observe{
     }
     
     public CarteRouge PiocherCarteRouge() {
-        CarteRouge cr = pilecarterouge.get(pilecarterouge.size() - 1);
-        pilecarterouge.remove(pilecarterouge.size() - 1);
+        if(pileCarteRouge.isEmpty())
+        {
+            pileCarteRouge.addAll(defauseCarteRouge);
+            defauseCarteRouge.clear();
+            MelangeCarteRouge();
+        }
+        CarteRouge cr = pileCarteRouge.get(pileCarteRouge.size() - 1);
+        pileCarteRouge.remove(pileCarteRouge.size() - 1);
         return cr;
     }
     
     public CarteInondation PiocherCarteInond() {
-        CarteInondation ci = pilecarteinondation.get(pilecarteinondation.size() - 1);
-        pilecarteinondation.remove(pilecarteinondation.size() - 1);
+        if(pileCarteInondation.isEmpty())
+        {
+            pileCarteInondation.addAll(defauseCarteInondation);
+            defauseCarteInondation.clear();
+            MelangeCarteInnondation();
+        }
+        CarteInondation ci = pileCarteInondation.get(pileCarteInondation.size() - 1);
+        pileCarteInondation.remove(pileCarteInondation.size() - 1);
         return ci;
     }
     
     public void DefausserCarte(CarteInondation ci) {
-        defausecarteinondation.add(ci);
+        defauseCarteInondation.add(ci);
     }
     
     public void DefausserCarte(CarteRouge cr) {
-        defausecarterouge.add(cr);
+        defauseCarteRouge.add(cr);
     }
     
     public Tuile[][] getGrille() {
@@ -201,7 +213,7 @@ public class ControlleurJeuSecondaire implements Observe{
         if (personnages.get(numJoueurEnCours).getCartes().size()>5){
             while (personnages.get(numJoueurEnCours).getCartes().size()>5) {
                 CarteRouge cartechoisi = getCarteSelectionne();
-                defausecarterouge.add(cartechoisi);
+                defauseCarteRouge.add(cartechoisi);
             }
         }
     }
@@ -216,16 +228,13 @@ public class ControlleurJeuSecondaire implements Observe{
         return numJoueurEnCours;
     }
     
-    public void MelangeCarteRouge() {
-        //todo
+    private void MelangeCarteRouge() {
+        Collections.shuffle(pileCarteRouge);
     }
     
-    public void MelangeCarteInnondation() {
+    private void MelangeCarteInnondation() {
         //defausecarteinondatio
-        Collections.shuffle(defausecarteinondation);
-        for (CarteInondation carteinond : defausecarteinondation){
-            pilecarteinondation.add(carteinond);
-        }
+        Collections.shuffle(pileCarteInondation);
     }
     
     private void decrementAction(){
@@ -270,14 +279,14 @@ public class ControlleurJeuSecondaire implements Observe{
         //ACTION NUMERO 2 : PIOCHER CARTES ROUGES
         for(int i = 1; i >= 2; i++) {
             CarteRouge cartepioche = this.PiocherCarteRouge();
-            pilecarterouge.remove(pilecarterouge.size()-1);
+            pileCarteRouge.remove(pileCarteRouge.size()-1);
             
             if(cartepioche.getNom() == "CarteMonteeDesEaux") {
                 addNiveauEau();
-                if (defausecarteinondation.size()!=0){
+                if (defauseCarteInondation.size()!=0){
                     MelangeCarteInnondation();
                 }
-                defausecarterouge.add(cartepioche);
+                defauseCarteRouge.add(cartepioche);
             }
             else if(cartepioche.getNom() == "CarteTresor") {
                 personnages.get(numJoueurEnCours).addCarte(cartepioche);
@@ -292,7 +301,7 @@ public class ControlleurJeuSecondaire implements Observe{
             i++;
             CarteInondation cartepiocheinond = this.PiocherCarteInond();
             grille.AugmenterInnondation(cartepiocheinond.getNom());
-            defausecarteinondation.add(cartepiocheinond);
+            defauseCarteInondation.add(cartepiocheinond);
         }
     }
 
