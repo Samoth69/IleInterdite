@@ -32,6 +32,7 @@ import javax.swing.JPanel;
 import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.SwingConstants;
 
 /**
  *
@@ -83,6 +84,10 @@ public class Plateau implements Observateur {
     final String nomAnnulé = "Annuler";
 
     private final JFrame window;
+    private JLabel[] niveauEau;
+    private JPanel ContenantNiveauEau;
+    private JButton AugmenterniveauEau;
+    private int niveauEaucompteur=0;
 
     public Plateau(ArrayList<Personnage> persos, ControlleurJeuSecondaire cj) {
         plateau = cj.getGrille();
@@ -116,7 +121,96 @@ public class Plateau implements Observateur {
 
         JPanel panelHaut = new JPanel();
         mainPanel.add(panelHaut, BorderLayout.NORTH);
+        
+        /*********************************** NIVEAU EAU ***************************************/
+        ContenantNiveauEau= new JPanel(new GridLayout(10,1));
+        ContenantNiveauEau.setPreferredSize(new Dimension(175,mainPanel.getHeight()));
+        niveauEau= new JLabel[9];
+        int compteur=10;
+        
+          for(int i=0; i<9; i++){
+              niveauEau[i]=new JLabel(Integer.toString(--compteur), SwingConstants.CENTER);
+              niveauEau[i].setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+              niveauEau[i].setPreferredSize(new Dimension(150, ContenantNiveauEau.getHeight()/12));
+              switch(compteur){
+                  case 2 :
+              niveauEau[i].setText(("Novice  2"));
+              break;
+                  case 5:
+              niveauEau[i].setText("Intermédiaire  5");
+              break;
+                  case 8:
+              niveauEau[i].setText("Expert  8");
+              break;
+              }
+              ContenantNiveauEau.add(niveauEau[i]);
+          }
+        AugmenterniveauEau=new JButton("Augmenter Niveau Eau");
+        AugmenterniveauEau.setPreferredSize(new Dimension(150, ContenantNiveauEau.getHeight()/12));
+        ContenantNiveauEau.add(AugmenterniveauEau);
+        mainPanel.add(ContenantNiveauEau, BorderLayout.WEST);
+        
+        AugmenterniveauEau.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    switch(niveauEaucompteur){
+                        case 0 :
+                            niveauEau[8].setBackground(Color.CYAN);
+                            niveauEau[8].setOpaque(true);
+                            niveauEaucompteur++;
+                            break;
+                        
+                        case 1 :
+                            niveauEau[7].setBackground(Color.CYAN);
+                            niveauEau[7].setOpaque(true);
+                            niveauEaucompteur++;
+                            break;
+                            
+                        case 2 :
+                            niveauEau[6].setBackground(Color.CYAN);
+                            niveauEau[6].setOpaque(true);
+                            niveauEaucompteur++;
+                            break;
+                            
+                        case 3 :
+                            niveauEau[5].setBackground(Color.CYAN);
+                            niveauEau[5].setOpaque(true);
+                            niveauEaucompteur++;
+                            break;
+                            
+                        case 4 :
+                            niveauEau[4].setBackground(Color.CYAN);
+                            niveauEau[4].setOpaque(true);
+                            niveauEaucompteur++;
+                            break;
+                            
+                        case 5 :
+                            niveauEau[3].setBackground(Color.CYAN);
+                            niveauEau[3].setOpaque(true);
+                            niveauEaucompteur++;
+                            break;
+                            
+                        case 6 :
+                            niveauEau[2].setBackground(Color.CYAN);
+                            niveauEau[2].setOpaque(true);
+                            niveauEaucompteur++;
+                            break;    
+                    
+                        case 7 :
+                            niveauEau[1].setBackground(Color.CYAN);
+                            niveauEau[1].setOpaque(true);
+                            niveauEaucompteur++;
+                            break; 
+                            
+                        case 8 :
+                            niveauEau[0].setBackground(Color.CYAN);
+                            niveauEau[0].setOpaque(true);
+                            niveauEaucompteur++;
+                            break;
+                    }
 
+                }
+        });
+      /******************************************************************************************************/
         JLabel labelTitre = new JLabel("Ile Interdite");
         labelTitre.setForeground(Color.BLUE);
         labelTitre.setFont(new Font(labelTitre.getFont().getName(), labelTitre.getFont().getStyle(), (int) (labelTitre.getFont().getSize() * 1.5)));
@@ -163,20 +257,6 @@ public class Plateau implements Observateur {
         panelGamePad.add(panelHautGamePad, BorderLayout.NORTH);
         mainPanel.add(panelGamePad, BorderLayout.EAST);
 
-        JPanel panelNiveauEau = new JPanel(new GridLayout(2, 10));
-
-        for (int i = 0; i < 1; i++) {
-            JPanel p = new JPanel();
-            Graphics g;
-            p.setBackground(echelleDeath);
-            p.paintComponents(g);
-            if (i == 0) {
-                
-            }
-            panelNiveauEau.add(p, i);
-        }
-
-        mainPanel.add(panelNiveauEau, BorderLayout.WEST);
 
         affecterCase(plateau, listPion, panelGrille);
         updateGamePad();
