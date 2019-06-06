@@ -14,17 +14,17 @@ import java.util.ArrayList;
  *
  * @author violentt
  */
-public class Explorateur extends Personnage{
-    
+public class Explorateur extends Personnage {
+
     public Explorateur(String nom, Grille ile) {
         super(nom, ile, TypeEnumCouleurPion.VERT);
     }
-    
+
     @Override
     public ArrayList<Tuile> getDeplacements() {
         return super.ile.getTuilesAutoursPraticable(this); //liste
     }
-    
+
     @Override
     public ArrayList<Tuile> getTuileQuiPeutSecher() {
         return super.ile.getTuilesAutoursMouille(this);

@@ -80,7 +80,7 @@ public class Test2 {
                if(assecherChoix.contentEquals("oui")){
                    boolean TuileAssechableExiste=false;
                    
-                   tuilesAssechables=perso1.getTuilleQuiPeutSecher();
+                   tuilesAssechables=perso1.getTuileQuiPeutSecher();
                    
                    System.out.println(tuilesAssechables.size()+" tuile(s) assechables");
                    for(Tuile tuileA: tuilesAssechables){

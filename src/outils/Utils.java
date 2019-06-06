@@ -5,6 +5,7 @@
  */
 package outils;
 
+import Personnages.Personnage;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -72,7 +73,7 @@ public class Utils {
         }
     }
 
-    public static ArrayList<Aventurier> melangerAventuriers(ArrayList<Aventurier> arrayList) {
+    public static ArrayList<Personnage> melangerAventuriers(ArrayList<Personnage> arrayList) {
         if (Parameters.ALEAS) {
             Collections.shuffle(arrayList);
         }
