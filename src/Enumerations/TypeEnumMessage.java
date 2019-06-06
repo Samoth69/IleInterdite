@@ -14,5 +14,6 @@ public enum TypeEnumMessage {
     CARTE,
     MENU_PRINCIPAL,
     MENU_JOUEURS,
-    MENU_JOUER
+    MENU_JOUER,
+    JOUEUR_SUIVANT
 }
