@@ -34,6 +34,7 @@ public class ControlleurJeuSecondaire implements Observe{
     private int niveauEau;
     private int numJoueurEnCours;
     private int nombreJoueurDansPartie;
+    private int nombreAction;
     private Grille grille;    
     private CarteRouge carteselectionne;
     private ArrayList<Personnage>personnages = new ArrayList<>();
@@ -69,6 +70,8 @@ public class ControlleurJeuSecondaire implements Observe{
             CarteInondation ci = PiocherCarteInond();
             augementerInondation(ci.getNom());
         } 
+        
+        nombreAction = 3;
     }
     
     //Obtient les personnages pour démararer la partie.
@@ -207,7 +210,9 @@ public class ControlleurJeuSecondaire implements Observe{
         numJoueurEnCours++;
         if (nombreJoueurDansPartie > numJoueurEnCours){
             numJoueurEnCours = 0;
-        }      
+        }
+        notifierObservateur(new Message(TypeEnumMessage.JOUEUR_SUIVANT));
+        nombreAction = 3;
         return numJoueurEnCours;
     }
     
@@ -220,6 +225,14 @@ public class ControlleurJeuSecondaire implements Observe{
         Collections.shuffle(defausecarteinondation);
         for (CarteInondation carteinond : defausecarteinondation){
             pilecarteinondation.add(carteinond);
+        }
+    }
+    
+    private void decrementAction(){
+        nombreAction--;
+        if(nombreAction <= 0)
+        {
+            passerJoueurSuivant();
         }
     }
     
