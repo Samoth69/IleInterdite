@@ -34,7 +34,7 @@ import javax.swing.JButton;
  * @author mariottp
  */
 
-public class Plateau {
+public class Plateau implements Observateur{
 
     //Explorateur explo;
     //Messager testP;
@@ -344,20 +344,9 @@ public class Plateau {
         this.window.setVisible(true);
     }
     
-    private Observateur observateur;    
-    public void addObservateur(Observateur o) {
-        this.observateur = o;
+    @Override
+    public void traiterMessage(Message m) {
+        System.out.println("MESSAGE");
     }
-    
-    public void notifierObservateur(Message m) {
-        if (observateur != null) {
-            observateur.traiterMessage(m);
-        }
-    } 
-    
-    /*public static void main(String[] args){
-        Plateau ihm = new Plateau();
-        ihm.afficher();
-    }*/
     
 }
