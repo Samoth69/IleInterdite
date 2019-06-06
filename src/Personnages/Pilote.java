@@ -21,7 +21,7 @@ public class Pilote extends Personnage{
     }
     
     @Override
-    public ArrayList<Tuile> getDeplacements(Tuile EmplacementJoueur) {
+    public ArrayList<Tuile> getDeplacements() {
         Tuile tb[][] = super.getGrille().getTuiles();
         ArrayList<Tuile> out = new ArrayList<>();
         for (int i = 0; i <= 5; i++) {

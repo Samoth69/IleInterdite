@@ -21,11 +21,12 @@ public class Explorateur extends Personnage{
     }
     
     @Override
-    public ArrayList<Tuile> getDeplacements(Tuile EmplacementJoueur) {
+    public ArrayList<Tuile> getDeplacements() {
         return super.ile.getTuilesAutoursPraticable(this); //liste
     }
     
-    public ArrayList<Tuile> getTuilleQuiPeutSecher() {
+    @Override
+    public ArrayList<Tuile> getTuileQuiPeutSecher() {
         return super.ile.getTuilesAutoursMouille(this);
     }
 }
