@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package IHM;
+import Enumerations.TypeEnumAction;
 import Enumerations.TypeEnumInondation;
 import Enumerations.TypeEnumTresors;
 import IleInterdite.ControlleurJeuSecondaire;
@@ -349,7 +350,14 @@ public class Plateau implements Observateur{
         System.out.println("MESSAGE");
         switch(m.getMessageType()) {
             case ACTION:
-                
+                switch (m.getActionType()) {
+                    case PIOCHER_CARTE_MONTEE_DES_EAUX:
+                        
+                        break;
+                    case PIOCHER_DEUX_CARTE_TRESOR:
+                        
+                        break;
+                }
                 break;
             case CARTE:
                 
