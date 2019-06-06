@@ -138,6 +138,8 @@ public class Tests {
             
             numJoueur.get(numTour);
             
+            System.out.println(numJoueur.get(numTour).getNom());
+            
             System.out.println("Entrez case a aller");
             
             String pause = sc.nextLine();
