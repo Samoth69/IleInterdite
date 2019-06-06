@@ -66,7 +66,7 @@ public class Plateau {
     final Color tuileMouilee = new Color(52, 152, 219);
     final Color tuileInondee = new Color(86, 101, 115);
     final Color selectColor = new Color(12, 175, 12);
-    final Color tuileColor = Color.yellow;
+    final Color tuileColor = new Color(243, 156, 18);
     final Color nonSelectedColor = Color.gray;
     
     final String nomButtonDeplacement = "Se Déplacer";
@@ -267,6 +267,7 @@ public class Plateau {
                 paintNonSelected();
                 buttonAssecher.setEnabled(true);
                 buttonDeplacement.setEnabled(false);
+                buttonAssecher.setText(nomAnnulé);
                 
                 for (Tuile t : cj.getJoueurEntrainDeJouer().getTuileQuiPeutSecher()) {
                     JPanel jpa = panel[t.getX()][t.getY()];
@@ -281,21 +282,25 @@ public class Plateau {
     private void panelClick(JPanel jp, Tuile emplacement, int i, int j) {
         System.out.println("panelClick: " + i + ", " + j);
         System.out.println("deplacement = " + mode);
-        switch(mode) {
-            case 1: //se deplacer
-                System.out.println("Moving");
-                cj.deplacerJoueurEnCour(emplacement);
-                int x = cj.getJoueurEntrainDeJouer().getEmplacement().getX();
-                int y = cj.getJoueurEntrainDeJouer().getEmplacement().getX();
-                panel[x][y].remove(listPion.get(cj.getJoueurNum()));
-                panel[i][j].add(listPion.get(cj.getJoueurNum()));
-                break;
-            case 2:
-                System.out.println("Assechement");
-                cj.assecher(emplacement);
-                break;
+        if (jp.getBackground() != nonSelectedColor) {
+            switch(mode) {
+                case 1: //se deplacer
+                        System.out.println("Moving");
+                        cj.deplacerJoueurEnCour(emplacement);
+                        int x = cj.getJoueurEntrainDeJouer().getEmplacement().getX();
+                        int y = cj.getJoueurEntrainDeJouer().getEmplacement().getX();
+                        panel[x][y].remove(listPion.get(cj.getJoueurNum()));
+                        panel[i][j].add(listPion.get(cj.getJoueurNum()));    
+
+                    break;
+                case 2:
+                    System.out.println("Assechement");
+                    cj.assecher(emplacement);
+                    break;
+            }
+            actionFinished();
         }
-        actionFinished();
+                
     }
     
     //tout le plateau devient gris
