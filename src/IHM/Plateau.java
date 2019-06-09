@@ -30,6 +30,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.SwingConstants;
@@ -85,9 +87,15 @@ public class Plateau implements Observateur {
 
     private final JFrame window;
     private JLabel[] niveauEau;
-    private JPanel ContenantNiveauEau;
-    private JButton AugmenterniveauEau;
-    private int niveauEaucompteur=0;
+    
+    private JPanel contenantNiveauEauMain;
+    private JPanel contenantNiveauEauGauche;
+    private JPanel contenantNiveauEauDroite;
+    
+    private JButton augmenterniveauEau;
+    
+    private final int max = 9; //taille frise inondation
+    private int niveauEaucompteur = max;
 
     public Plateau(ArrayList<Personnage> persos, ControlleurJeuSecondaire cj) {
         plateau = cj.getGrille();
@@ -123,93 +131,90 @@ public class Plateau implements Observateur {
         mainPanel.add(panelHaut, BorderLayout.NORTH);
         
         /*********************************** NIVEAU EAU ***************************************/
-        ContenantNiveauEau= new JPanel(new GridLayout(10,1));
-        ContenantNiveauEau.setPreferredSize(new Dimension(175,mainPanel.getHeight()));
-        niveauEau= new JLabel[9];
-        int compteur=10;
+        contenantNiveauEauMain = new JPanel(new BorderLayout()); //menu principal qui sera ajouté au mainPanel
+        contenantNiveauEauDroite = new JPanel(new GridLayout(10, 1)); //menu avec les chiffres indiquant le nombre de carte inondation à piocher
+        contenantNiveauEauDroite.setPreferredSize(new Dimension(25,mainPanel.getHeight()));
+        contenantNiveauEauGauche = new JPanel(new GridLayout(10, 1)); //niveau de l'eau
+        contenantNiveauEauGauche.setPreferredSize(new Dimension(90,mainPanel.getHeight()));
         
-          for(int i=0; i<9; i++){
-              niveauEau[i]=new JLabel(Integer.toString(--compteur), SwingConstants.CENTER);
-              niveauEau[i].setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-              niveauEau[i].setPreferredSize(new Dimension(150, ContenantNiveauEau.getHeight()/12));
-              switch(compteur){
-                  case 2 :
-              niveauEau[i].setText(("Novice  2"));
-              break;
-                  case 5:
-              niveauEau[i].setText("Intermédiaire  5");
-              break;
-                  case 8:
-              niveauEau[i].setText("Expert  8");
-              break;
-              }
-              ContenantNiveauEau.add(niveauEau[i]);
-          }
-        AugmenterniveauEau=new JButton("Augmenter Niveau Eau");
-        AugmenterniveauEau.setPreferredSize(new Dimension(150, ContenantNiveauEau.getHeight()/12));
-        ContenantNiveauEau.add(AugmenterniveauEau);
-        mainPanel.add(ContenantNiveauEau, BorderLayout.WEST);
+        //MENU GAUCHE
+        niveauEau = new JLabel[max + 1];
+        for(int i = 0; i <= max; i++){
+            System.out.println(i);
+            System.out.println(max - i);
+            System.out.println();
+            niveauEau[max - i]=new JLabel(Integer.toString(i), SwingConstants.CENTER);
+            //niveauEau[max - i].setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+            niveauEau[max - i].setPreferredSize(new Dimension(150, contenantNiveauEauGauche.getHeight()/12));
+        }
+        for (int i = 0; i <= max; i++) {
+            contenantNiveauEauGauche.add(niveauEau[i]);
+        }
         
-        AugmenterniveauEau.addActionListener(new ActionListener() {
+        niveauEau[max].setText("Novice");
+        niveauEau[max - 1].setText("Normal");
+        niveauEau[max - 2].setText("Elite");
+        niveauEau[max - 3].setText("Légendaire");
+        niveauEau[0].setText("Dead");
+        augmenterniveauEau=new JButton("Augmenter Niveau Eau");
+        augmenterniveauEau.setPreferredSize(new Dimension(150, contenantNiveauEauGauche.getHeight()/12));
+        //décommenté pour voir le bouton
+        //contenantNiveauEauGauche.add(augmenterniveauEau);
+        
+        augmenterniveauEau.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    switch(niveauEaucompteur){
-                        case 0 :
-                            niveauEau[8].setBackground(Color.CYAN);
-                            niveauEau[8].setOpaque(true);
-                            niveauEaucompteur++;
-                            break;
-                        
-                        case 1 :
-                            niveauEau[7].setBackground(Color.CYAN);
-                            niveauEau[7].setOpaque(true);
-                            niveauEaucompteur++;
-                            break;
-                            
-                        case 2 :
-                            niveauEau[6].setBackground(Color.CYAN);
-                            niveauEau[6].setOpaque(true);
-                            niveauEaucompteur++;
-                            break;
-                            
-                        case 3 :
-                            niveauEau[5].setBackground(Color.CYAN);
-                            niveauEau[5].setOpaque(true);
-                            niveauEaucompteur++;
-                            break;
-                            
-                        case 4 :
-                            niveauEau[4].setBackground(Color.CYAN);
-                            niveauEau[4].setOpaque(true);
-                            niveauEaucompteur++;
-                            break;
-                            
-                        case 5 :
-                            niveauEau[3].setBackground(Color.CYAN);
-                            niveauEau[3].setOpaque(true);
-                            niveauEaucompteur++;
-                            break;
-                            
-                        case 6 :
-                            niveauEau[2].setBackground(Color.CYAN);
-                            niveauEau[2].setOpaque(true);
-                            niveauEaucompteur++;
-                            break;    
-                    
-                        case 7 :
-                            niveauEau[1].setBackground(Color.CYAN);
-                            niveauEau[1].setOpaque(true);
-                            niveauEaucompteur++;
-                            break; 
-                            
-                        case 8 :
-                            niveauEau[0].setBackground(Color.CYAN);
-                            niveauEau[0].setOpaque(true);
-                            niveauEaucompteur++;
-                            break;
-                    }
-
+                    niveauEau[niveauEaucompteur].setBackground(Color.CYAN);
+                    niveauEau[niveauEaucompteur].setOpaque(true);
+                    niveauEaucompteur--;
                 }
         });
+        
+        //MENU DROITE
+        JLabel num2 = new JLabel("2", SwingConstants.RIGHT); 
+        JLabel num3 = new JLabel("3", SwingConstants.RIGHT); 
+        JLabel num4 = new JLabel("4", SwingConstants.RIGHT); 
+        JLabel num5 = new JLabel("5", SwingConstants.RIGHT); 
+        
+        for (int i = 0; i <= max; i++) {
+            switch(i) {
+                case 8:
+                    //num2.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+                    num2.setPreferredSize(new Dimension(90, contenantNiveauEauGauche.getHeight()/12));
+                    num2.setFont(new Font(num2.getFont().getName(), Font.PLAIN, 35)); //on garde la police utilisé par l'objet                    
+                    contenantNiveauEauDroite.add(num2);
+                    break;
+                case 5:
+                    //num3.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+                    num3.setPreferredSize(new Dimension(90, contenantNiveauEauGauche.getHeight()/12));
+                    num3.setFont(new Font(num3.getFont().getName(), Font.PLAIN, 35)); //on garde la police utilisé par l'objet           
+                    contenantNiveauEauDroite.add(num3);
+                    break;
+                case 3:
+                    //num4.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+                    num4.setPreferredSize(new Dimension(90, contenantNiveauEauGauche.getHeight()/12));
+                    num4.setFont(new Font(num4.getFont().getName(), Font.PLAIN, 35)); //on garde la police utilisé par l'objet           
+                    contenantNiveauEauDroite.add(num4);
+                    break;
+                case 1:
+                    //num5.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+                    num5.setPreferredSize(new Dimension(90, contenantNiveauEauGauche.getHeight()/12));
+                    num5.setFont(new Font(num5.getFont().getName(), Font.PLAIN, 35)); //on garde la police utilisé par l'objet           
+                    contenantNiveauEauDroite.add(num5);
+                    break;
+                default:
+                    JLabel numEmpty = new JLabel("");
+                    //numEmpty.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+                    numEmpty.setPreferredSize(new Dimension(90, contenantNiveauEauGauche.getHeight()/12));
+                    contenantNiveauEauDroite.add(numEmpty);
+                    break;
+            }
+        }
+        
+        //MENU PRINCPALE
+        contenantNiveauEauMain.add(contenantNiveauEauGauche, BorderLayout.WEST);
+        contenantNiveauEauMain.add(contenantNiveauEauDroite, BorderLayout.EAST);
+        
+        mainPanel.add(contenantNiveauEauMain, BorderLayout.WEST);
       /******************************************************************************************************/
         JLabel labelTitre = new JLabel("Ile Interdite");
         labelTitre.setForeground(Color.BLUE);

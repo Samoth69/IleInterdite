@@ -14,7 +14,7 @@ import Enumerations.TypeEnumMenuPrincipal;
 import Enumerations.TypeEnumMessage;
 import IleInterdite.Message;
 import IleInterdite.Observateur;
-import com.sun.tools.javac.util.StringUtils;
+//import com.sun.tools.javac.util.StringUtils;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
