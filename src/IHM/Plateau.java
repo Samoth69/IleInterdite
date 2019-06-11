@@ -293,6 +293,8 @@ public class Plateau implements Observateur {
     }
 
     public void affecterCase(Tuile plateau[][], ArrayList<Pion> listPion, JPanel grille) {
+        int nbTresor = 0;
+        
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 6; j++) {
                 //Creation d'une case
@@ -312,7 +314,26 @@ public class Plateau implements Observateur {
                     }
 
                     if (plateau[i][j].getTresor() != TypeEnumTresors.AUCUN) {
-                        pn.add(new Tresor());
+                        
+                        switch(plateau[i][j].getTresor())
+                        {
+                            case FEU:
+                                pn.add(new Tresor(TypeEnumTresors.FEU));
+                            break;
+                            case LION:
+                                pn.add(new Tresor(TypeEnumTresors.LION));
+                            break;
+                            case LUNE:
+                                pn.add(new Tresor(TypeEnumTresors.LUNE));
+                            break;
+                            case TROPHEE:
+                                pn.add(new Tresor(TypeEnumTresors.TROPHEE));
+                            break;
+                            default:
+                                pn.add(new Tresor(TypeEnumTresors.AUCUN));
+                            break;
+                        }
+                        
                     }
                 } else {
                     pn.setBackground(emptyColor);       //background en blanc
