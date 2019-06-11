@@ -7,7 +7,10 @@ package IHM;
 
 import Cartes.CarteAction;
 import Cartes.CarteRouge;
+import Cartes.CarteTresor;
 import Enumerations.TypeEnumCarteAction;
+import Enumerations.TypeEnumMessage;
+import Enumerations.TypeEnumTresors;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import javax.swing.JFrame;
@@ -38,11 +41,12 @@ public class VuDefausse implements Observe{
     private JFrame window;
     private ControlleurJeuSecondaire cj;
     private ArrayList<CarteRouge> carteDuJoueur;  //Array des cartes a disposition du joueur
-    private ArrayList<CarteRouge> carteSelectionne; //Array des cartes selectionnes
+    private ArrayList<String> carteSelectionne; //Array des cartes selectionnes
     private Observateur o;
     
     
     VuDefausse(/**ControlleurJeuSecondaire cj  A DECOMMENTER**/){
+        carteSelectionne = new ArrayList<String>();
         this.cj = cj;
         window = new JFrame();
         window.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
@@ -57,10 +61,19 @@ public class VuDefausse implements Observe{
         carteDuJoueur = new ArrayList<CarteRouge>();
         CarteAction le1 = new CarteAction("le1", TypeEnumCarteAction.HELICOPTERE);
         CarteAction le2 = new CarteAction("le2", TypeEnumCarteAction.SAC_DE_SABLE);
+        CarteAction le3 = new CarteAction("le3", TypeEnumCarteAction.HELICOPTERE);
+        CarteAction le4 = new CarteAction("le4", TypeEnumCarteAction.SAC_DE_SABLE);
+        CarteTresor le5 = new CarteTresor("le5", TypeEnumTresors.TROPHEE);
+        
         carteDuJoueur.add(le1);
         carteDuJoueur.add(le2);
+        carteDuJoueur.add(le3);
+        carteDuJoueur.add(le4);
+        carteDuJoueur.add(le5);
         
-        JPanel grilleCarte = new JPanel(new GridLayout(2, carteDuJoueur.size()));
+        
+        JPanel mainPanel = new JPanel(new BorderLayout());
+        JPanel grilleCarte = new JPanel(new GridLayout(1, carteDuJoueur.size()));
         grilleCarte.setBorder(BorderFactory.createLineBorder(Color.BLACK)); 
         
         for(int i = 0; i < carteDuJoueur.size(); i++)
@@ -114,9 +127,15 @@ public class VuDefausse implements Observe{
                 {
                     if(grilleCarte.getComponent(i).getBackground() == Color.red)
                     {
-                        carteSelectionne.add(carteDuJoueur.get(i));
+                        carteSelectionne.add(carteDuJoueur.get(i).getDescription());
                     }
                 }
+                for(int i = 0; i < carteSelectionne.size(); i++)
+                {
+                    System.out.println(carteSelectionne.get(i));
+                }
+                
+                notifierObservateur(new Message(TypeEnumMessage.DEFAUSSE_CARTE, carteSelectionne));
             }
 
             @Override
@@ -136,10 +155,9 @@ public class VuDefausse implements Observe{
             }
         });
         
-        
-        grilleCarte.add(terminer);
-        
-        window.add(grilleCarte);
+        mainPanel.add(grilleCarte, BorderLayout.CENTER);
+        mainPanel.add(terminer, BorderLayout.SOUTH);
+        window.add(mainPanel);
     }
 
     public void afficher(){
@@ -152,7 +170,9 @@ public class VuDefausse implements Observe{
     
     public void notifierObservateur(Message m){
             if (o != null) {
-            o.traiterMessage(m);
+                
+                
+                o.traiterMessage(m);
         }
     }
     
