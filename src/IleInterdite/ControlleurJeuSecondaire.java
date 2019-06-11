@@ -245,6 +245,12 @@ public class ControlleurJeuSecondaire implements Observe{
         }
     }
     
+    //fonction de débug, ne doit pas être utiliser normalement !
+    public void augmenterFrise() {
+        niveauEau++;
+        notifierObservateur(new Message(TypeEnumMessage.CHANGEMENT_NIVEAU_EAU));
+    }
+    
     //cherche une tuile et si il la trouve, augement sont inondation
     public void augementerInondation(String s) {
         for (Tuile t : getListeCarte()) {
