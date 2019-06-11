@@ -35,6 +35,7 @@ import java.util.Set;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.SwingConstants;
+import javax.swing.text.StyleConstants;
 
 /**
  *
@@ -300,37 +301,38 @@ public class Plateau implements Observateur {
                         pn.add(new Tresor());
                     }
                 } else {
-                    pn.setBackground(emptyColor);       //background en bleu
+                    pn.setBackground(emptyColor);       //background en blanc
                 }
+                
+                if (pn.getBackground() != emptyColor) {
+                    final JPanel xjp = pn;
+                    final Tuile xt = plateau[i][j];
+                    final int xi = i;
+                    final int xj = j;
 
-                final JPanel xjp = pn;
-                final Tuile xt = plateau[i][j];
-                final int xi = i;
-                final int xj = j;
+                    pn.addMouseListener(new MouseListener() {
+                        @Override
+                        public void mouseClicked(MouseEvent e) {
+                            panelClick(xjp, xt, xi, xj);
+                        }
 
-                pn.addMouseListener(new MouseListener() {
-                    @Override
-                    public void mouseClicked(MouseEvent e) {
-                        panelClick(xjp, xt, xi, xj);
-                    }
+                        @Override
+                        public void mousePressed(MouseEvent e) {
+                        }
 
-                    @Override
-                    public void mousePressed(MouseEvent e) {
-                    }
+                        @Override
+                        public void mouseReleased(MouseEvent e) {
+                        }
 
-                    @Override
-                    public void mouseReleased(MouseEvent e) {
-                    }
+                        @Override
+                        public void mouseEntered(MouseEvent e) {
+                        }
 
-                    @Override
-                    public void mouseEntered(MouseEvent e) {
-                    }
-
-                    @Override
-                    public void mouseExited(MouseEvent e) {
-                    }
-                });
-
+                        @Override
+                        public void mouseExited(MouseEvent e) {
+                        }
+                    });
+                }
                 panel[i][j] = pn;
                 grille.add(pn, i, j);        //Ajout de la case a la grille de jeu (panelGrille)
 
