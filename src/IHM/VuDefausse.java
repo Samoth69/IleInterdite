@@ -9,6 +9,7 @@ import Cartes.CarteAction;
 import Cartes.CarteRouge;
 import Cartes.CarteTresor;
 import Enumerations.TypeEnumCarteAction;
+import Enumerations.TypeEnumMessage;
 import Enumerations.TypeEnumTresors;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -40,12 +41,12 @@ public class VuDefausse implements Observe{
     private JFrame window;
     private ControlleurJeuSecondaire cj;
     private ArrayList<CarteRouge> carteDuJoueur;  //Array des cartes a disposition du joueur
-    private ArrayList<CarteRouge> carteSelectionne; //Array des cartes selectionnes
+    private ArrayList<String> carteSelectionne; //Array des cartes selectionnes
     private Observateur o;
     
     
     VuDefausse(/**ControlleurJeuSecondaire cj  A DECOMMENTER**/){
-        carteSelectionne = new ArrayList<CarteRouge>();
+        carteSelectionne = new ArrayList<String>();
         this.cj = cj;
         window = new JFrame();
         window.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
@@ -126,13 +127,15 @@ public class VuDefausse implements Observe{
                 {
                     if(grilleCarte.getComponent(i).getBackground() == Color.red)
                     {
-                        carteSelectionne.add(carteDuJoueur.get(i));
+                        carteSelectionne.add(carteDuJoueur.get(i).getDescription());
                     }
                 }
                 for(int i = 0; i < carteSelectionne.size(); i++)
                 {
-                    System.out.println(carteSelectionne.get(i).getDescription());
+                    System.out.println(carteSelectionne.get(i));
                 }
+                
+                notifierObservateur(new Message(TypeEnumMessage.DEFAUSSE_CARTE, carteSelectionne));
             }
 
             @Override
@@ -167,7 +170,9 @@ public class VuDefausse implements Observe{
     
     public void notifierObservateur(Message m){
             if (o != null) {
-            o.traiterMessage(m);
+                
+                
+                o.traiterMessage(m);
         }
     }
     

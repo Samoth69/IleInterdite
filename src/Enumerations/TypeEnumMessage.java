@@ -13,5 +13,6 @@ public enum TypeEnumMessage {
     NA,             // = non applicable
     ACTION,         //action à éffectuer par la vue du plateau (sera préciser par TypeEnumAction)
     CARTE,          // ?
-    JOUEUR_SUIVANT  //indique à l'IHM que l'on change de joueur
+    JOUEUR_SUIVANT,  //indique à l'IHM que l'on change de joueur
+    DEFAUSSE_CARTE  //message pour defausser des cartes
 }
