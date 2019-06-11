@@ -220,7 +220,7 @@ public class ControlleurJeuSecondaire implements Observe{
     
     public int passerJoueurSuivant() {
         numJoueurEnCours++;
-        if (nombreJoueurDansPartie > numJoueurEnCours){
+        if (nombreJoueurDansPartie <= numJoueurEnCours){
             numJoueurEnCours = 0;
         }
         notifierObservateur(new Message(TypeEnumMessage.JOUEUR_SUIVANT));

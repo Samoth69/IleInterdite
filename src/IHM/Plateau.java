@@ -60,6 +60,7 @@ public class Plateau implements Observateur {
 
     JButton buttonDeplacement;
     JButton buttonAssecher;
+    JButton buttonPasserTour;
 
     //boolean deplacementMode = false; //Devient vrai si le joueur à cliquer sur la case de son emplacement et voit donc les cases sur lesquels il peut aller
     //indique le "mode" de l'interface cad, comment elle doit afficher la grille en fonction du bouton cliquer par l'utilisateur
@@ -246,18 +247,27 @@ public class Plateau implements Observateur {
                 gamePadClick();
             }
         });
-
+        
+        buttonPasserTour = new JButton("Passer Tour");
+        buttonPasserTour.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                cj.passerJoueurSuivant();
+            }
+        });
+        
         joueurActuel = new JLabel("");
         ActionRestante = new JLabel();
 
         JPanel panelGamePad = new JPanel(new BorderLayout());
-        JPanel panelHautGamePad = new JPanel(new GridLayout(3, 2));
+        JPanel panelHautGamePad = new JPanel(new GridLayout(4, 2));
         panelHautGamePad.add(new JLabel("Tour du joueur "));
         panelHautGamePad.add(joueurActuel);
         panelHautGamePad.add(buttonDeplacement);
         panelHautGamePad.add(buttonAssecher);
         panelHautGamePad.add(new JLabel("Action restante:"));
         panelHautGamePad.add(ActionRestante);
+        panelHautGamePad.add(buttonPasserTour);
 
         panelGamePad.add(panelHautGamePad, BorderLayout.NORTH);
         mainPanel.add(panelGamePad, BorderLayout.EAST);
@@ -265,10 +275,6 @@ public class Plateau implements Observateur {
 
         affecterCase(plateau, listPion, panelGrille);
         updateGamePad();
-    }
-    
-    public class customGraphic extends JComponent {
-        
     }
 
     public void affecterCase(Tuile plateau[][], ArrayList<Pion> listPion, JPanel grille) {
@@ -393,12 +399,12 @@ public class Plateau implements Observateur {
 
     //ce déclenche quand une case sur l'écran est cliquer
     private void panelClick(JPanel jp, Tuile emplacement, int i, int j) {
-        System.out.println("panelClick: " + i + ", " + j);
-        System.out.println("deplacement = " + mode);
+        //System.out.println("panelClick: " + i + ", " + j);
+        //System.out.println("deplacement = " + mode);
         if (jp.getBackground() != nonSelectedColor) {
             switch (mode) {
                 case 1: //se deplacer
-                    System.out.println("Moving");
+                    //System.out.println("Moving");
                     cj.deplacerJoueurEnCour(emplacement);
                     int x = cj.getJoueurEntrainDeJouer().getEmplacement().getX();
                     int y = cj.getJoueurEntrainDeJouer().getEmplacement().getX();
@@ -407,7 +413,7 @@ public class Plateau implements Observateur {
 
                     break;
                 case 2:
-                    System.out.println("Assechement");
+                    //System.out.println("Assechement");
                     cj.assecher(emplacement);
                     break;
             }
@@ -475,7 +481,9 @@ public class Plateau implements Observateur {
 
                 break;
             case JOUEUR_SUIVANT:
-
+                System.out.println("joueur suivant");
+                updateGamePad();
+                System.out.println(cj.getJoueurNum());
                 break;
         }
     }

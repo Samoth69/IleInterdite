@@ -26,7 +26,9 @@ public class Pilote extends Personnage{
         ArrayList<Tuile> out = new ArrayList<>();
         for (int i = 0; i <= 5; i++) {
             for (int j = 0; j <= 5; j++) {
-                out.add(tb[i][j]);
+                if (i != super.getEmplacement().getX() || j != super.getEmplacement().getY()) {
+                    out.add(tb[i][j]);
+                }
             }
         }
         return out;
