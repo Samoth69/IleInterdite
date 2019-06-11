@@ -5,17 +5,12 @@
  */
 package IHM;
 
-import Cartes.CarteAction;
 import Cartes.CarteRouge;
-import Cartes.CarteTresor;
-import Enumerations.TypeEnumCarteAction;
 import Enumerations.TypeEnumMessage;
-import Enumerations.TypeEnumTresors;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import javax.swing.JFrame;
 import IleInterdite.ControlleurJeuSecondaire;
-import IleInterdite.Grille;
 import IleInterdite.Message;
 import java.awt.Color;
 import java.awt.GridLayout;
@@ -57,9 +52,10 @@ public class VuDefausse implements Observe{
         window.setLocation(dim.width/2-window.getSize().width/2, dim.height/2-window.getSize().height/2);
         
         //get les cartes en mains du joueur
-        //carteDuJoueur = cj.getJoueurEntrainDeJouer().getCartes();     A DECOMMENTER
         carteDuJoueur = new ArrayList<CarteRouge>();
-        CarteAction le1 = new CarteAction("le1", TypeEnumCarteAction.HELICOPTERE);
+        //carteDuJoueur = cj.getJoueurEntrainDeJouer().getCartes();     //A DECOMMENTER
+        
+        /**CarteAction le1 = new CarteAction("le1", TypeEnumCarteAction.HELICOPTERE);
         CarteAction le2 = new CarteAction("le2", TypeEnumCarteAction.SAC_DE_SABLE);
         CarteAction le3 = new CarteAction("le3", TypeEnumCarteAction.HELICOPTERE);
         CarteAction le4 = new CarteAction("le4", TypeEnumCarteAction.SAC_DE_SABLE);
@@ -69,7 +65,7 @@ public class VuDefausse implements Observe{
         carteDuJoueur.add(le2);
         carteDuJoueur.add(le3);
         carteDuJoueur.add(le4);
-        carteDuJoueur.add(le5);
+        carteDuJoueur.add(le5);  **/    //Code pour tester la vue 
         
         
         JPanel mainPanel = new JPanel(new BorderLayout());
@@ -130,10 +126,10 @@ public class VuDefausse implements Observe{
                         carteSelectionne.add(carteDuJoueur.get(i).getDescription());
                     }
                 }
-                for(int i = 0; i < carteSelectionne.size(); i++)
+                /**for(int i = 0; i < carteSelectionne.size(); i++)
                 {
                     System.out.println(carteSelectionne.get(i));
-                }
+                }**/
                 
                 notifierObservateur(new Message(TypeEnumMessage.DEFAUSSE_CARTE, carteSelectionne));
             }
@@ -170,8 +166,6 @@ public class VuDefausse implements Observe{
     
     public void notifierObservateur(Message m){
             if (o != null) {
-                
-                
                 o.traiterMessage(m);
         }
     }
