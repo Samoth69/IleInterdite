@@ -265,7 +265,7 @@ public class Plateau implements Observateur {
         jb.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
-                cj.augmenterFrise();
+                cj.augmenterNiveauEau();
             }
         });
         
@@ -312,7 +312,7 @@ public class Plateau implements Observateur {
                     }
 
                     if (plateau[i][j].getTresor() != TypeEnumTresors.AUCUN) {
-                        pn.add(new Tresor());
+                        //pn.add(new Tresor());
                     }
                 } else {
                     pn.setBackground(emptyColor);       //background en blanc
@@ -358,6 +358,7 @@ public class Plateau implements Observateur {
     //met à jour les informations du gamepad en fonction de l'état du jeu
     private void updateGamePad() {
         joueurActuel.setText(cj.getNomJoueur());
+        ActionRestante.setText(Integer.toString(cj.getNbActionRestante()));
     }
 
     //est appeller quand une action est fini

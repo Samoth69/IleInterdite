@@ -36,7 +36,6 @@ public class ControlleurJeuSecondaire implements Observe{
     private int nombreJoueurDansPartie;
     private int nombreAction;
     private Grille grille;    
-    private CarteRouge carteselectionne;
     private ArrayList<Personnage>personnages = new ArrayList<>();
     private ArrayList<CarteRouge>pileCarteRouge = new ArrayList<>();
     private ArrayList<CarteRouge>defauseCarteRouge = new ArrayList<>();
@@ -162,11 +161,12 @@ public class ControlleurJeuSecondaire implements Observe{
     }
     
     public CarteRouge getCarteSelectionne() {
-        return carteselectionne;
+        //return carteselectionne;
+        return null;
     }
     
-    public void addNiveauEau() {
-        niveauEau++;
+    public int getNbActionRestante() {
+        return nombreAction;
     }
     
     public CarteRouge PiocherCarteRouge() {
@@ -245,8 +245,8 @@ public class ControlleurJeuSecondaire implements Observe{
         }
     }
     
-    //fonction de débug, ne doit pas être utiliser normalement !
-    public void augmenterFrise() {
+    //doit être privée. est mis en public pour débug
+    public void augmenterNiveauEau() {
         niveauEau++;
         notifierObservateur(new Message(TypeEnumMessage.CHANGEMENT_NIVEAU_EAU));
     }
@@ -271,11 +271,15 @@ public class ControlleurJeuSecondaire implements Observe{
         }
     }
     
+    private void actionDebutTour() {
+        //CODE DE VERIF NB CARTE
+        VerifNbCarte(personnages.get(numJoueurEnCours));
+    }
+    
     //Gerer le tour de Jeu
     public void TourDeJeu() {
         
-        //CODE DE VERIF NB CARTE
-        VerifNbCarte(personnages.get(numJoueurEnCours));
+        
         
         //ACTION NUMERO 1 : FAIRE SES ACTIONS
         int nbaction = 3;
@@ -288,7 +292,7 @@ public class ControlleurJeuSecondaire implements Observe{
             pileCarteRouge.remove(pileCarteRouge.size()-1);
             
             if(cartepioche.getNom() == "CarteMonteeDesEaux") {
-                addNiveauEau();
+                augmenterNiveauEau();
                 if (defauseCarteInondation.size()!=0){
                     MelangeCarteInnondation();
                 }

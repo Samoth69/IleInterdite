@@ -5,8 +5,12 @@
  */
 package IHM;
 
+import Cartes.CarteAction;
 import Cartes.CarteRouge;
+import Cartes.CarteTresor;
+import Enumerations.TypeEnumCarteAction;
 import Enumerations.TypeEnumMessage;
+import Enumerations.TypeEnumTresors;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import javax.swing.JFrame;
@@ -24,6 +28,10 @@ import java.awt.event.MouseListener;
 import javax.swing.UIManager;
 import IleInterdite.Observe;
 import IleInterdite.Observateur;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 
 
@@ -39,6 +47,7 @@ public class VuDefausse implements Observe{
     private ArrayList<String> carteSelectionne; //Array des cartes selectionnes
     private Observateur o;
     
+    private static Object lock = new Object();
     
     VuDefausse(/**ControlleurJeuSecondaire cj  A DECOMMENTER**/){
         carteSelectionne = new ArrayList<String>();
@@ -55,7 +64,7 @@ public class VuDefausse implements Observe{
         carteDuJoueur = new ArrayList<CarteRouge>();
         //carteDuJoueur = cj.getJoueurEntrainDeJouer().getCartes();     //A DECOMMENTER
         
-        /**CarteAction le1 = new CarteAction("le1", TypeEnumCarteAction.HELICOPTERE);
+        CarteAction le1 = new CarteAction("le1", TypeEnumCarteAction.HELICOPTERE);
         CarteAction le2 = new CarteAction("le2", TypeEnumCarteAction.SAC_DE_SABLE);
         CarteAction le3 = new CarteAction("le3", TypeEnumCarteAction.HELICOPTERE);
         CarteAction le4 = new CarteAction("le4", TypeEnumCarteAction.SAC_DE_SABLE);
@@ -65,7 +74,7 @@ public class VuDefausse implements Observe{
         carteDuJoueur.add(le2);
         carteDuJoueur.add(le3);
         carteDuJoueur.add(le4);
-        carteDuJoueur.add(le5);  **/    //Code pour tester la vue 
+        carteDuJoueur.add(le5);      //Code pour tester la vue 
         
         
         JPanel mainPanel = new JPanel(new BorderLayout());
@@ -158,6 +167,37 @@ public class VuDefausse implements Observe{
 
     public void afficher(){
         this.window.setVisible(true);
+        
+        Thread t = new Thread() {
+        public void run() {
+            synchronized(lock) {
+                while (window.isVisible())
+                    try {
+                        lock.wait();
+                    } catch (InterruptedException e) {
+                        //e.printStackTrace();
+                    }
+                System.out.println("Working now");
+                }
+            }
+        };
+        t.start();
+
+        this.window.addWindowListener(new WindowAdapter() {
+
+            @Override
+            public void windowClosing(WindowEvent arg0) {
+                synchronized (lock) {
+                    window.setVisible(false);
+                    lock.notify();
+                }
+            }
+
+        });
+        try {
+            t.join();
+        } catch (InterruptedException ex) {
+        }
     }
     
     public void addObservateur(Observateur o){
@@ -171,7 +211,9 @@ public class VuDefausse implements Observe{
     }
     
     public static void main(String[] args) {
-        new VuDefausse().afficher();
+        VuDefausse vd = new VuDefausse();
+        vd.afficher();
+        System.out.println("FINI");
     }
     
 }
