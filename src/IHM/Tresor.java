@@ -8,6 +8,7 @@ package IHM;
 import java.awt.Color;
 import java.awt.Graphics;
 import javax.swing.JComponent;
+import Enumerations.TypeEnumTresors;
 
 /**
  *
@@ -15,12 +16,32 @@ import javax.swing.JComponent;
  */
 public class Tresor extends JComponent{
     
-    Tresor(){
-        
+    TypeEnumTresors type;
+    
+    Tresor(TypeEnumTresors typeTresor){
+        this.type = typeTresor;
     }
     
     public void paint(Graphics g){
-        g.setColor(Color.red);
+        
+        switch(type)
+        {
+            case FEU:
+                g.setColor(Color.red);
+            break;
+            case LION:
+                g.setColor(Color.YELLOW);
+            break;
+            case LUNE:
+                g.setColor(new Color(153, 51, 153));    // Violet
+            break;
+            case TROPHEE:
+                g.setColor(Color.CYAN);
+            break;
+            case AUCUN:
+                // Ne pas traiter
+            break;
+        }
         
         g.fillRect(0, 0, 10, 10);
     }
