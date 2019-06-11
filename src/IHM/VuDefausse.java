@@ -7,7 +7,9 @@ package IHM;
 
 import Cartes.CarteAction;
 import Cartes.CarteRouge;
+import Cartes.CarteTresor;
 import Enumerations.TypeEnumCarteAction;
+import Enumerations.TypeEnumTresors;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import javax.swing.JFrame;
@@ -43,6 +45,7 @@ public class VuDefausse implements Observe{
     
     
     VuDefausse(/**ControlleurJeuSecondaire cj  A DECOMMENTER**/){
+        carteSelectionne = new ArrayList<CarteRouge>();
         this.cj = cj;
         window = new JFrame();
         window.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
@@ -57,10 +60,19 @@ public class VuDefausse implements Observe{
         carteDuJoueur = new ArrayList<CarteRouge>();
         CarteAction le1 = new CarteAction("le1", TypeEnumCarteAction.HELICOPTERE);
         CarteAction le2 = new CarteAction("le2", TypeEnumCarteAction.SAC_DE_SABLE);
+        CarteAction le3 = new CarteAction("le3", TypeEnumCarteAction.HELICOPTERE);
+        CarteAction le4 = new CarteAction("le4", TypeEnumCarteAction.SAC_DE_SABLE);
+        CarteTresor le5 = new CarteTresor("le5", TypeEnumTresors.TROPHEE);
+        
         carteDuJoueur.add(le1);
         carteDuJoueur.add(le2);
+        carteDuJoueur.add(le3);
+        carteDuJoueur.add(le4);
+        carteDuJoueur.add(le5);
         
-        JPanel grilleCarte = new JPanel(new GridLayout(2, carteDuJoueur.size()));
+        
+        JPanel mainPanel = new JPanel(new BorderLayout());
+        JPanel grilleCarte = new JPanel(new GridLayout(1, carteDuJoueur.size()));
         grilleCarte.setBorder(BorderFactory.createLineBorder(Color.BLACK)); 
         
         for(int i = 0; i < carteDuJoueur.size(); i++)
@@ -117,6 +129,10 @@ public class VuDefausse implements Observe{
                         carteSelectionne.add(carteDuJoueur.get(i));
                     }
                 }
+                for(int i = 0; i < carteSelectionne.size(); i++)
+                {
+                    System.out.println(carteSelectionne.get(i).getDescription());
+                }
             }
 
             @Override
@@ -136,10 +152,9 @@ public class VuDefausse implements Observe{
             }
         });
         
-        
-        grilleCarte.add(terminer);
-        
-        window.add(grilleCarte);
+        mainPanel.add(grilleCarte, BorderLayout.CENTER);
+        mainPanel.add(terminer, BorderLayout.SOUTH);
+        window.add(mainPanel);
     }
 
     public void afficher(){
