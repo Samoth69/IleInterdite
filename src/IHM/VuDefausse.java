@@ -40,10 +40,9 @@ import javax.swing.JButton;
  *
  * @author mariottp
  */
-public class VuDefausse implements Observe{
+public class VuDefausse<T> implements Observe{
     
     private JFrame window;
-    private ControlleurJeuSecondaire cj;
     private ArrayList<CarteRouge> carteDuJoueur = new ArrayList<CarteRouge>();  //Array des cartes a disposition du joueur
     private ArrayList<CarteInondation> carteInondation = new ArrayList<CarteInondation>();  //Array des cartes inondées a afficher
     private ArrayList<String> carteSelectionne = new ArrayList<String>(); //Array des cartes selectionnes
@@ -51,40 +50,40 @@ public class VuDefausse implements Observe{
     
     private static Object lock = new Object();
     
-    VuDefausse(ArrayList<Object> carte){
-        
-        if(!carte.isEmpty() && carte.get(0) instanceof CarteRouge)
-        {
-            window = new JFrame();
-            window.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
-            window.setTitle("Defaussez une carte");
-            // Définit la taille de la fenêtre en pixels
-            window.setSize(600, 200);
-            Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-            window.setLocation(dim.width/2-window.getSize().width/2, dim.height/2-window.getSize().height/2);
+    VuDefausse(ArrayList<T> carte){
+        if (!carte.isEmpty()) {
+            if(carte.get(0) instanceof CarteRouge)
+            {
+                window = new JFrame();
+                window.setDefaultCloseOperation(javax.swing.JFrame.HIDE_ON_CLOSE);
+                window.setTitle("Defaussez une carte");
+                // Définit la taille de la fenêtre en pixels
+                window.setSize(600, 200);
+                Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+                window.setLocation(dim.width/2-window.getSize().width/2, dim.height/2-window.getSize().height/2);
 
-            vuDefausse(carteDuJoueur);
+                vuDefausse((ArrayList<CarteRouge>) carte);
+            }
+            else/* if (carte.get(0) instanceof CarteInondation)*/
+            {
+                window = new JFrame();
+                window.setDefaultCloseOperation(javax.swing.JFrame.HIDE_ON_CLOSE);
+                window.setTitle("CarteInondation");
+                // Définit la taille de la fenêtre en pixels
+                window.setSize(600, 200);
+                Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+                window.setLocation(dim.width/2-window.getSize().width/2, dim.height/2-window.getSize().height/2);
+
+                vuInondation((ArrayList<CarteInondation>) carte);
+            }
         }
-        else
-        {
-            window = new JFrame();
-            window.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
-            window.setTitle("CarteInondation");
-            // Définit la taille de la fenêtre en pixels
-            window.setSize(600, 200);
-            Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-            window.setLocation(dim.width/2-window.getSize().width/2, dim.height/2-window.getSize().height/2);
-
-            vuInondation(carteInondation);
-        }
-
     }
     
     public void vuDefausse(ArrayList<CarteRouge> carteJoueur){
         
-        //carteDuJoueur = carteJoueur;
+        carteDuJoueur = carteJoueur;
         
-        carteDuJoueur.add(new CarteAction("lul", TypeEnumCarteAction.HELICOPTERE));
+        //carteDuJoueur.add(new CarteAction("lul", TypeEnumCarteAction.HELICOPTERE));
         
         JPanel mainPanel = new JPanel(new BorderLayout());
         JPanel grilleCarte = new JPanel(new GridLayout(1, carteDuJoueur.size()));
@@ -219,11 +218,11 @@ public class VuDefausse implements Observe{
         
         mainPanel.add(grilleCarte, BorderLayout.CENTER);
         mainPanel.add(ok, BorderLayout.SOUTH);
-        window.add(mainPanel);
+        this.window.add(mainPanel);
     }
 
     public void afficher(){
-        this.window.setVisible(true);
+        window.setVisible(true);
         
         Thread t = new Thread() {
         public void run() {
@@ -240,7 +239,7 @@ public class VuDefausse implements Observe{
         };
         t.start();
 
-        this.window.addWindowListener(new WindowAdapter() {
+        window.addWindowListener(new WindowAdapter() {
 
             @Override
             public void windowClosing(WindowEvent arg0) {
@@ -253,8 +252,7 @@ public class VuDefausse implements Observe{
         });
         try {
             t.join();
-        } catch (InterruptedException ex) {
-        }
+        } catch (InterruptedException ex) {}
     }
     
     public void addObservateur(Observateur o){
@@ -266,11 +264,11 @@ public class VuDefausse implements Observe{
                 o.traiterMessage(m);
         }
     }
-    
+    /*
     public static void main(String[] args) {
         VuDefausse vd = new VuDefausse();
         vd.afficher();
         System.out.println("FINI");
-    }
+    }*/
     
 }

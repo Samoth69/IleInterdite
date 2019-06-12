@@ -557,6 +557,11 @@ public class Plateau implements Observateur {
             case CHANGEMENT_NIVEAU_EAU:
                 ColoriserNiveauEau();
                 break;
+            case PIOCHE_CARTE_INONDATION:
+                VuDefausse vd = new VuDefausse(m.getAdditionnal());
+                vd.afficher();
+                System.out.println("fuk");
+                break;
         }
     }
 

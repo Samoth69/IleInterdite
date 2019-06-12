@@ -5,6 +5,7 @@
  */
 package IleInterdite;
 
+import Cartes.CarteInondation;
 import Enumerations.TypeEnumAction;
 import Enumerations.TypeEnumMenuPrincipal;
 import Enumerations.TypeEnumMessage;
@@ -13,19 +14,20 @@ import java.util.ArrayList;
 /**
  *
  * @author violentt
+ * @param <T>
  */
-public class Message {
+public class Message<T> {
     TypeEnumMessage type = TypeEnumMessage.NA;
     TypeEnumMenuPrincipal type2 = TypeEnumMenuPrincipal.NA;
     TypeEnumAction action = TypeEnumAction.NA;
-    ArrayList<String> additionnal; //donnée additionnel au message (aucune règle de formatage, à traiter au cas par cas)
+    ArrayList<T> additionnal; //donnée additionnel au message (aucune règle de formatage, à traiter au cas par cas)
     
     public Message(TypeEnumMessage type) {
         this.type = type;
         additionnal = null;
     }
     
-    public Message(TypeEnumMessage type, ArrayList<String> ad) {
+    public Message(TypeEnumMessage type, ArrayList<T> ad) {
         this.type = type;
         additionnal = ad;
     }
@@ -36,7 +38,7 @@ public class Message {
         additionnal = null;
     }   
     
-    public Message(TypeEnumMessage type, TypeEnumAction ac, ArrayList<String> ad) {
+    public Message(TypeEnumMessage type, TypeEnumAction ac, ArrayList<T> ad) {
         this.type = type;
         action = ac;
         additionnal = ad;
@@ -58,11 +60,11 @@ public class Message {
         return action;
     }
     
-    public ArrayList<String> getAdditionnal() {
+    public ArrayList<T> getAdditionnal() {
         return additionnal;
     }
     
-    public void setAdditionnal(ArrayList<String> ad) {
+    public void setAdditionnal(ArrayList<T> ad) {
         additionnal = ad;
     }
 }

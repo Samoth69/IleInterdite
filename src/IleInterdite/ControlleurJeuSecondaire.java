@@ -244,10 +244,12 @@ public class ControlleurJeuSecondaire implements Observe{
     }
     
     private void NouveauTourDeJeu() {
-        for (int i = 1; i < getNiveauEau(); i++) {
-            
+        ArrayList<CarteInondation> aci = new ArrayList<>();
+        for (int i = 0; i < getNombreCarteInondationAPiocher(); i++) {
+            aci.add(PiocherCarteInond());
         }
-        CarteInondation ci1 = PiocherCarteInond();
+        notifierObservateur(new Message(TypeEnumMessage.PIOCHE_CARTE_INONDATION, aci));
+        System.out.println("");
         
     }
     
