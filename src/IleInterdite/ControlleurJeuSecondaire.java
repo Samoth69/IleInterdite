@@ -113,6 +113,7 @@ public class ControlleurJeuSecondaire implements Observe{
     
     public void deplacerJoueurEnCour(Tuile newPos) {
         personnages.get(numJoueurEnCours).deplacement(newPos);
+        decrementAction();
     }
     
     public Personnage getJoueurEntrainDeJouer() {
@@ -125,6 +126,7 @@ public class ControlleurJeuSecondaire implements Observe{
     
     public void assecher(Tuile t) {
         t.reduireInondation();
+        decrementAction();
     }
     
     //cherche dans un arraylist si num est trouvé, renvoie true. sinon renvoie faux.
@@ -155,9 +157,22 @@ public class ControlleurJeuSecondaire implements Observe{
         return personnages.get(numJoueurEnCours).getNom();
     }  
     
-    //Gerer le niveau d'eau
+    //Get le niveau d'eau
     public int getNiveauEau() {
         return niveauEau;
+    }
+    
+    //récupère le nombre de carte inondation à piocher en fonction de l'état de la frise inondation
+    public int getNombreCarteInondationAPiocher() {
+        if (niveauEau < 2) {
+            return 2;
+        } else if (niveauEau >=2 && niveauEau < 5) {
+            return 3;
+        } else if (niveauEau >=5 && niveauEau < 7) {
+            return 4;
+        } else { //niveauEau >= 9
+            return 5;
+        }
     }
     
     public CarteRouge getCarteSelectionne() {
@@ -218,14 +233,22 @@ public class ControlleurJeuSecondaire implements Observe{
         }
     }
     
-    public int passerJoueurSuivant() {
+    public void passerJoueurSuivant() {
         numJoueurEnCours++;
         if (nombreJoueurDansPartie <= numJoueurEnCours){
             numJoueurEnCours = 0;
+            NouveauTourDeJeu();
         }
-        notifierObservateur(new Message(TypeEnumMessage.JOUEUR_SUIVANT));
         nombreAction = 3;
-        return numJoueurEnCours;
+        notifierObservateur(new Message(TypeEnumMessage.JOUEUR_SUIVANT));
+    }
+    
+    private void NouveauTourDeJeu() {
+        for (int i = 1; i < getNiveauEau(); i++) {
+            
+        }
+        CarteInondation ci1 = PiocherCarteInond();
+        
     }
     
     private void MelangeCarteRouge() {

@@ -144,10 +144,10 @@ public class Plateau implements Observateur {
         //MENU GAUCHE
         niveauEau = new JLabel[max + 1];
         for(int i = 0; i <= max; i++){
-            System.out.println(i);
-            System.out.println(max - i);
-            System.out.println();
-            niveauEau[max - i]=new JLabel(Integer.toString(i), SwingConstants.CENTER);
+            //System.out.println(i);
+            //System.out.println(max - i);
+            //System.out.println();
+            niveauEau[max - i]=new JLabel(/*Integer.toString(i)*/"", SwingConstants.CENTER);
             //niveauEau[max - i].setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
             niveauEau[max - i].setPreferredSize(new Dimension(150, contenantNiveauEauGauche.getHeight()/12));
         }
@@ -266,6 +266,7 @@ public class Plateau implements Observateur {
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 cj.augmenterNiveauEau();
+                System.out.println(cj.getNombreCarteInondationAPiocher());
             }
         });
         
@@ -443,12 +444,11 @@ public class Plateau implements Observateur {
             switch (mode) {
                 case 1: //se deplacer
                     //System.out.println("Moving");
-                    cj.deplacerJoueurEnCour(emplacement);
                     int x = cj.getJoueurEntrainDeJouer().getEmplacement().getX();
-                    int y = cj.getJoueurEntrainDeJouer().getEmplacement().getX();
+                    int y = cj.getJoueurEntrainDeJouer().getEmplacement().getY();
                     panel[x][y].remove(listPion.get(cj.getJoueurNum()));
                     panel[i][j].add(listPion.get(cj.getJoueurNum()));
-
+                    cj.deplacerJoueurEnCour(emplacement);
                     break;
                 case 2:
                     //System.out.println("Assechement");
@@ -534,7 +534,7 @@ public class Plateau implements Observateur {
 
     @Override
     public void traiterMessage(Message m) {
-        System.out.println("MESSAGE");
+        //System.out.println("MESSAGE");
         switch (m.getMessageType()) {
             case ACTION:
                 switch (m.getActionType()) {
@@ -550,7 +550,7 @@ public class Plateau implements Observateur {
 
                 break;
             case JOUEUR_SUIVANT:
-                System.out.println("joueur suivant");
+                //System.out.println("joueur suivant");
                 updateGamePad();
                 System.out.println(cj.getJoueurNum());
                 break;
