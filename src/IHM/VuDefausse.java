@@ -6,6 +6,7 @@
 package IHM;
 
 import Cartes.CarteAction;
+import Cartes.CarteInondation;
 import Cartes.CarteRouge;
 import Cartes.CarteTresor;
 import Enumerations.TypeEnumCarteAction;
@@ -43,39 +44,47 @@ public class VuDefausse implements Observe{
     
     private JFrame window;
     private ControlleurJeuSecondaire cj;
-    private ArrayList<CarteRouge> carteDuJoueur;  //Array des cartes a disposition du joueur
-    private ArrayList<String> carteSelectionne; //Array des cartes selectionnes
+    private ArrayList<CarteRouge> carteDuJoueur = new ArrayList<CarteRouge>();  //Array des cartes a disposition du joueur
+    private ArrayList<CarteInondation> carteInondation = new ArrayList<CarteInondation>();  //Array des cartes inondées a afficher
+    private ArrayList<String> carteSelectionne = new ArrayList<String>(); //Array des cartes selectionnes
     private Observateur o;
     
     private static Object lock = new Object();
     
-    VuDefausse(/**ControlleurJeuSecondaire cj  A DECOMMENTER**/){
-        carteSelectionne = new ArrayList<String>();
-        this.cj = cj;
-        window = new JFrame();
-        window.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
-        // Définit la taille de la fenêtre en pixels
-        window.setSize(600, 200);
-        window.setTitle("Defaussez une carte");
-        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        window.setLocation(dim.width/2-window.getSize().width/2, dim.height/2-window.getSize().height/2);
+    VuDefausse(ArrayList<Object> carte){
         
-        //get les cartes en mains du joueur
-        carteDuJoueur = new ArrayList<CarteRouge>();
-        //carteDuJoueur = cj.getJoueurEntrainDeJouer().getCartes();     //A DECOMMENTER
+        if(!carte.isEmpty() && carte.get(0) instanceof CarteRouge)
+        {
+            window = new JFrame();
+            window.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
+            window.setTitle("Defaussez une carte");
+            // Définit la taille de la fenêtre en pixels
+            window.setSize(600, 200);
+            Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+            window.setLocation(dim.width/2-window.getSize().width/2, dim.height/2-window.getSize().height/2);
+
+            vuDefausse(carteDuJoueur);
+        }
+        else
+        {
+            window = new JFrame();
+            window.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
+            window.setTitle("CarteInondation");
+            // Définit la taille de la fenêtre en pixels
+            window.setSize(600, 200);
+            Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+            window.setLocation(dim.width/2-window.getSize().width/2, dim.height/2-window.getSize().height/2);
+
+            vuInondation(carteInondation);
+        }
+
+    }
+    
+    public void vuDefausse(ArrayList<CarteRouge> carteJoueur){
         
-        CarteAction le1 = new CarteAction("le1", TypeEnumCarteAction.HELICOPTERE);
-        CarteAction le2 = new CarteAction("le2", TypeEnumCarteAction.SAC_DE_SABLE);
-        CarteAction le3 = new CarteAction("le3", TypeEnumCarteAction.HELICOPTERE);
-        CarteAction le4 = new CarteAction("le4", TypeEnumCarteAction.SAC_DE_SABLE);
-        CarteTresor le5 = new CarteTresor("le5", TypeEnumTresors.TROPHEE);
+        //carteDuJoueur = carteJoueur;
         
-        carteDuJoueur.add(le1);
-        carteDuJoueur.add(le2);
-        carteDuJoueur.add(le3);
-        carteDuJoueur.add(le4);
-        carteDuJoueur.add(le5);      //Code pour tester la vue 
-        
+        carteDuJoueur.add(new CarteAction("lul", TypeEnumCarteAction.HELICOPTERE));
         
         JPanel mainPanel = new JPanel(new BorderLayout());
         JPanel grilleCarte = new JPanel(new GridLayout(1, carteDuJoueur.size()));
@@ -162,6 +171,54 @@ public class VuDefausse implements Observe{
         
         mainPanel.add(grilleCarte, BorderLayout.CENTER);
         mainPanel.add(terminer, BorderLayout.SOUTH);
+        window.add(mainPanel);
+    }
+    
+    public void vuInondation(ArrayList<CarteInondation> carteInonder){
+        
+        carteInondation = carteInonder;
+        
+        JPanel mainPanel = new JPanel(new BorderLayout());
+        JPanel grilleCarte = new JPanel(new GridLayout(1, carteInondation.size()));
+        grilleCarte.setBorder(BorderFactory.createLineBorder(Color.BLACK)); 
+        
+        for(int i = 0; i < carteInondation.size(); i++)
+        {
+            JPanel pn = new JPanel(new BorderLayout());
+            JLabel lb = new JLabel(carteInondation.get(i).getNom());
+            
+            pn.setBorder(BorderFactory.createLineBorder(Color.BLACK)); 
+            pn.add(lb);
+            grilleCarte.add(pn);
+        }
+        
+        JButton ok = new JButton("ok");
+        
+        ok.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent arg0) {
+                window.setVisible(false);
+            }
+
+            @Override
+            public void mousePressed(MouseEvent arg0) {
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent arg0) {
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent arg0) {
+            }
+
+            @Override
+            public void mouseExited(MouseEvent arg0) {
+            }
+        });
+        
+        mainPanel.add(grilleCarte, BorderLayout.CENTER);
+        mainPanel.add(ok, BorderLayout.SOUTH);
         window.add(mainPanel);
     }
 
