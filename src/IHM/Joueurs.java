@@ -333,6 +333,20 @@ public class Joueurs extends JFrame implements ActionListener {
             this.joueurs.setVisible(false);
             Message msg = new Message(TypeEnumMenuPrincipal.MENU_JOUER);
             ArrayList<String> infos = new ArrayList<>();
+            switch ((String)niveauDepart.getSelectedItem()) {
+                case "Novice":
+                    infos.add("0");
+                    break;
+                case "Normal":
+                    infos.add("1");
+                    break;
+                case "Elite":
+                    infos.add("2");
+                    break;
+                case "Légendaire":
+                    infos.add("3");
+                    break;
+            }
             infos.add(String.valueOf(nbJoueurs.getSelectedItem()));
             infos.add(pseudo1.getText());
             infos.add((String)role1.getSelectedItem());

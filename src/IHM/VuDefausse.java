@@ -5,17 +5,14 @@
  */
 package IHM;
 
-import Cartes.CarteAction;
 import Cartes.CarteInondation;
 import Cartes.CarteRouge;
-import Cartes.CarteTresor;
-import Enumerations.TypeEnumCarteAction;
 import Enumerations.TypeEnumMessage;
-import Enumerations.TypeEnumTresors;
+
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import javax.swing.JFrame;
-import IleInterdite.ControlleurJeuSecondaire;
+
 import IleInterdite.Message;
 import java.awt.Color;
 import java.awt.GridLayout;
@@ -29,13 +26,9 @@ import java.awt.event.MouseListener;
 import javax.swing.UIManager;
 import IleInterdite.Observe;
 import IleInterdite.Observateur;
-import java.awt.event.WindowAdapter;
+
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JButton;
 
 

@@ -24,7 +24,7 @@ import java.util.concurrent.ThreadLocalRandom;
  *
  * @author violentt
  */
-public class ControlleurJeuSecondaire implements Observe{
+public class ControleurJeuSecondaire implements Observe{
 
     /**
      * @param args the command line arguments
@@ -45,20 +45,21 @@ public class ControlleurJeuSecondaire implements Observe{
     //-----------------------------------------------------------------------------------
     
     //METHODES
-
-    public ControlleurJeuSecondaire(int nbJoueur) {
+/*
+    public ControleurJeuSecondaire(int nbJoueur) {
         if (nbJoueur < 2 || nbJoueur > 4) {
             throw new Error("Le nombre de joueur doit être compris entre 2 et 4 (inclus)");
         }
         nombreJoueurDansPartie = nbJoueur;
         personnages.addAll(getPersonnagesDebutDePartie(nombreJoueurDansPartie));
         grille = new Grille(personnages);
-    }
+    }*/
     
-    public ControlleurJeuSecondaire(ArrayList<Personnage> perso) {
+    public ControleurJeuSecondaire(ArrayList<Personnage> perso, int niveauEau) {
         if (perso.size() < 2 || perso.size() > 4) {
             throw new Error("Le nombre de joueur doit être compris entre 2 et 4 (inclus)");
         }
+        this.niveauEau = niveauEau;
         nombreJoueurDansPartie = perso.size();
         personnages = perso;
         grille = new Grille(personnages);
@@ -113,7 +114,7 @@ public class ControlleurJeuSecondaire implements Observe{
     
     public void deplacerJoueurEnCour(Tuile newPos) {
         if (nombreAction != Math.round(nombreAction)) { //si le nombre d'action est décimal on le rend entier
-            nombreAction = Math.round(nombreAction);
+            nombreAction = (int)nombreAction;
         }
         personnages.get(numJoueurEnCours).deplacement(newPos);
         decrementAction();
@@ -241,6 +242,7 @@ public class ControlleurJeuSecondaire implements Observe{
     }
     
     public void passerJoueurSuivant() {
+        getJoueurEntrainDeJouer().passageJoueurSuivant();
         numJoueurEnCours++;
         if (nombreJoueurDansPartie <= numJoueurEnCours){
             numJoueurEnCours = 0;
@@ -259,6 +261,7 @@ public class ControlleurJeuSecondaire implements Observe{
             DefausserCarte(ci);
         }
         notifierObservateur(new Message(TypeEnumMessage.PIOCHE_CARTE_INONDATION, aci));
+        notifierObservateur(new Message(TypeEnumMessage.NOUVEAU_TOUR));
         //System.out.println("");
         
     }
@@ -295,9 +298,9 @@ public class ControlleurJeuSecondaire implements Observe{
     
     //vérification après avoir enlever un certain nombre d'action dispo
     private void decrementActionAfterCheck() {
-        if (grille.getTuilesAutoursMouille(getJoueurEntrainDeJouer()).isEmpty() && grille.getTuilesAutoursPraticable(getJoueurEntrainDeJouer()).isEmpty()) {
+        if (nombreAction < 1.0 && getJoueurEntrainDeJouer().getTuileQuiPeutSecher().isEmpty()) {
             ArrayList<String> t = new ArrayList<>();
-            t.add("Le joueur ne peux plus rien faire");
+            t.add("Le joueur ne peux plus assécher de tuile.");
             notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, t));
             passerJoueurSuivant();
         }

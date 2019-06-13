@@ -28,6 +28,7 @@ public abstract class Personnage {
     private ArrayList<CarteRouge> cartes = new ArrayList<>();
     //couleur pion associé au personnage
     private TypeEnumCouleurPion pion = TypeEnumCouleurPion.AUCUN;
+    private boolean pouvoirDeplacementUtilise = false; //devient vrai quand l'utilisateur à utilisé sont pouvoir de déplacement (déplacement diagonal pour explorateur, déplacement sur la carte pour le pilote) redevient faux quand le joueur en cour change
 
     Personnage(String nom, Grille ile, TypeEnumCouleurPion pion) {
         this.nom = nom;
@@ -166,5 +167,17 @@ public abstract class Personnage {
 
     public String getNom() {
         return nom;
+    }
+
+    public void passageJoueurSuivant() {
+        pouvoirDeplacementUtilise = false;
+    }
+
+    protected boolean getPouvoirDeplacementUtilise() {
+        return pouvoirDeplacementUtilise;
+    }
+
+    protected void setPouvoirDeplacementUtilise(boolean v) {
+        pouvoirDeplacementUtilise = v;
     }
 }

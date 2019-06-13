@@ -6,10 +6,8 @@
 package IHM;
 
 import Cartes.CarteInondation;
-import Enumerations.TypeEnumAction;
-import Enumerations.TypeEnumInondation;
 import Enumerations.TypeEnumTresors;
-import IleInterdite.ControlleurJeuSecondaire;
+import IleInterdite.ControleurJeuSecondaire;
 import IleInterdite.Grille;
 import IleInterdite.Message;
 import IleInterdite.Observateur;
@@ -19,7 +17,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -31,13 +28,10 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import java.util.ArrayList;
-import java.util.HashSet;
 import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
-import javax.swing.text.StyleConstants;
 
 /**
  *
@@ -50,45 +44,45 @@ public class Plateau implements Observateur {
     //Ingenieur inge;
     //Grille grille;
     //Pion pion, pion2, pion3;
-    ArrayList<Personnage> listPerso;
-    ArrayList<Pion> listPion;
-    Tuile plateau[][] = new Tuile[6][6];
-    JPanel panel[][] = new JPanel[6][6];
+    private ArrayList<Personnage> listPerso;
+    private ArrayList<Pion> listPion;
+    private Tuile plateau[][] = new Tuile[6][6];
+    private JPanel panel[][] = new JPanel[6][6];
 
-    ControlleurJeuSecondaire cj;
-    Grille grille;
+    private ControleurJeuSecondaire cj;
+    private Grille grille;
 
-    JLabel joueurActuel;
-    JLabel ActionRestante;
+    private JLabel joueurActuel;
+    private JLabel ActionRestante;
 
-    JButton buttonDeplacement;
-    JButton buttonAssecher;
-    JButton buttonPasserTour;
+    private JButton buttonDeplacement;
+    private JButton buttonAssecher;
+    private JButton buttonPasserTour;
 
     //boolean deplacementMode = false; //Devient vrai si le joueur à cliquer sur la case de son emplacement et voit donc les cases sur lesquels il peut aller
     //indique le "mode" de l'interface cad, comment elle doit afficher la grille en fonction du bouton cliquer par l'utilisateur
     int mode = 0; //0: aucun, 1: deplacement, 2: assecher
     int oldMode = 0; //permet de détecter les changement dans la variable mode
 
-    final Color emptyColor = new Color(255, 255, 255); //couleur case vide
-    final Color tuileMouilee = new Color(52, 152, 219);
-    final Color tuileInondee = new Color(86, 101, 115);
-    final Color selectColor = new Color(12, 175, 12);
-    final Color tuileColor = new Color(243, 156, 18);
-    final Color nonSelectedColor = Color.gray;
+    private final static Color emptyColor = new Color(255, 255, 255); //couleur case vide
+    private final static Color tuileMouilee = new Color(52, 152, 219);
+    private final static Color tuileInondee = new Color(86, 101, 115);
+    private final static Color selectColor = new Color(12, 175, 12);
+    private final static Color tuileColor = new Color(243, 156, 18);
+    private final static Color nonSelectedColor = Color.gray;
 
-    final Color echelleDeath = Color.white;
-    final Color echelleBleu5 = new Color(27, 79, 114);
-    final Color echelleBleu4 = new Color(40, 116, 166);
-    final Color echelleBleu3 = new Color(46, 134, 193);
-    final Color echelleBleu2 = new Color(52, 152, 219);
-    final Color echelleMarqueur = Color.yellow;
-    final Color echetteText = Color.white;
-    final Color echetteRed = Color.red;
+    private final static Color echelleDeath = Color.white;
+    private final static Color echelleBleu5 = new Color(27, 79, 114);
+    private final static Color echelleBleu4 = new Color(40, 116, 166);
+    private final static Color echelleBleu3 = new Color(46, 134, 193);
+    private final static Color echelleBleu2 = new Color(52, 152, 219);
+    private final static Color echelleMarqueur = Color.yellow;
+    private final static Color echetteText = Color.white;
+    private final static Color echetteRed = Color.red;
 
-    final String nomButtonDeplacement = "Se Déplacer";
-    final String nomButtonAssecher = "Assécher";
-    final String nomAnnulé = "Annuler";
+    private final static String nomButtonDeplacement = "Se Déplacer";
+    private final static String nomButtonAssecher = "Assécher";
+    private final static String nomAnnulé = "Annuler";
 
     private final JFrame window;
     private JLabel niveauEau[];
@@ -108,7 +102,7 @@ public class Plateau implements Observateur {
     private final int max = 9; //taille frise inondation
     //private int niveauEaucompteur = max;
 
-    public Plateau(ArrayList<Personnage> persos, ControlleurJeuSecondaire cj) {
+    public Plateau(ArrayList<Personnage> persos, ControleurJeuSecondaire cj) {
         plateau = cj.getGrille();
         this.cj = cj;
         grille = cj.getIle();
@@ -328,26 +322,7 @@ public class Plateau implements Observateur {
                     }
 
                     if (plateau[i][j].getTresor() != TypeEnumTresors.AUCUN) {
-                        /*
-                        switch(plateau[i][j].getTresor())
-                        {
-                            case FEU:
-                                pn.add(new Tresor(TypeEnumTresors.FEU));
-                            break;
-                            case LION:
-                                pn.add(new Tresor(TypeEnumTresors.LION));
-                            break;
-                            case LUNE:
-                                pn.add(new Tresor(TypeEnumTresors.LUNE));
-                            break;
-                            case TROPHEE:
-                                pn.add(new Tresor(TypeEnumTresors.TROPHEE));
-                            break;
-                            default:
-                                pn.add(new Tresor(TypeEnumTresors.AUCUN));
-                            break;
-                        }
-                        */
+
                         pn.add(new Tresor(plateau[i][j].getTresor()));
                         
                     }
@@ -395,7 +370,7 @@ public class Plateau implements Observateur {
     //met à jour les informations du gamepad en fonction de l'état du jeu
     private void updateGamePad() {
         joueurActuel.setText(cj.getNomJoueur());
-        ActionRestante.setText(Double.toString(cj.getNbActionRestante()));
+        ActionRestante.setText(Integer.toString((int)cj.getNbActionRestante()));
         listBasGamePad.setListData(historiqueAction.toArray());
     }
 
@@ -579,7 +554,7 @@ public class Plateau implements Observateur {
 
                 break;
             case JOUEUR_SUIVANT:
-                //System.out.println("joueur suivant");
+                ajouterMessageHistorique("Passage au joueur suivant");
                 updateGamePad();
                 System.out.println(cj.getJoueurNum());
                 break;
@@ -587,9 +562,6 @@ public class Plateau implements Observateur {
                 ColoriserNiveauEau();
                 break;
             case PIOCHE_CARTE_INONDATION:
-                //VuDefausse vd = new VuDefausse(m.getAdditionnal());
-                //vd.afficher();
-                //window.setEnabled(false);
                 ArrayList t = new ArrayList<>();
                 t.add("Carte Inondation piocher:");
                 for (CarteInondation ci : (ArrayList<CarteInondation>)m.getAdditionnal()) {
@@ -599,6 +571,11 @@ public class Plateau implements Observateur {
                 ajouterMessageHistorique(t);
                 paintNormal();
                 break;
+            case HISTORIQUE:
+                ajouterMessageHistorique(m.getAdditionnal());
+            case NOUVEAU_TOUR:
+                ajouterMessageHistorique("\n");
+                ajouterMessageHistorique("Nouveau tour");
         }
     }
 

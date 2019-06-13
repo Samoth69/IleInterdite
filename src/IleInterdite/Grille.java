@@ -19,7 +19,7 @@ import java.util.concurrent.ThreadLocalRandom; //pour générer nombre aléatoir
  *
  * @author violentt
  */
-public class Grille {
+public class Grille{
     
    
     private final Tuile tabTuile[][] = new Tuile[6][6]; // A potentiellement changer pour mettre des cases vides --- par quoi mdr ?
@@ -234,5 +234,18 @@ public class Grille {
     public ArrayList <Tuile> getTuilesAutoursMouille(Personnage personnage) {
         return getTuilesAutoursMouille(personnage.getEmplacement());
     }
-        
+
+    public ArrayList <Tuile> getTuilesAutours(Tuile tuile) {
+        ArrayList<Tuile> tuilesAutourMouille = new ArrayList<>();
+        for (int i = -1; i <= 1; i++) {
+            for (int j = -1; j <= 1; j++) {
+                //System.out.println("i=" + i + "\tj=" + j);
+                if(((tuile.getX()+i) >= 0 && (tuile.getX() + i) <= 5) && ((tuile.getY() + j) >= 0 && (tuile.getY() + j) <= 5) && tabTuile[tuile.getX()+i][tuile.getY()+j] != null)
+                {
+                    tuilesAutourMouille.add(tabTuile[tuile.getX()+i][tuile.getY()+j]);
+                }
+            }
+        }
+        return tuilesAutourMouille;
+    }
 }
