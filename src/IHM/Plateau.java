@@ -260,7 +260,7 @@ public class Plateau implements Observateur {
             }
         });
         
-        buttonPasserTour = new JButton("Passer Tour");
+        buttonPasserTour = new JButton("Passer tour");
         buttonPasserTour.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
@@ -268,7 +268,7 @@ public class Plateau implements Observateur {
             }
         });
         
-        JButton jb = new JButton("augementer niveau eau");
+        JButton jb = new JButton("Augmenter niveau eau");
         jb.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
