@@ -34,7 +34,7 @@ public class ControlleurJeuSecondaire implements Observe{
     private int niveauEau;
     private int numJoueurEnCours;
     private int nombreJoueurDansPartie;
-    private int nombreAction;
+    private double nombreAction;
     private Grille grille;    
     private ArrayList<Personnage>personnages = new ArrayList<>();
     private ArrayList<CarteRouge>pileCarteRouge = new ArrayList<>();
@@ -112,6 +112,9 @@ public class ControlleurJeuSecondaire implements Observe{
     }
     
     public void deplacerJoueurEnCour(Tuile newPos) {
+        if (nombreAction != Math.round(nombreAction)) { //si le nombre d'action est décimal on le rend entier
+            nombreAction = Math.round(nombreAction);
+        }
         personnages.get(numJoueurEnCours).deplacement(newPos);
         decrementAction();
     }
@@ -126,7 +129,11 @@ public class ControlleurJeuSecondaire implements Observe{
     
     public void assecher(Tuile t) {
         t.reduireInondation();
-        decrementAction();
+        if (getJoueurEntrainDeJouer() instanceof Ingenieur) {
+            decrementAction(0.5);
+        } else {
+            decrementAction();
+        }
     }
     
     //cherche dans un arraylist si num est trouvé, renvoie true. sinon renvoie faux.
@@ -180,7 +187,7 @@ public class ControlleurJeuSecondaire implements Observe{
         return null;
     }
     
-    public int getNbActionRestante() {
+    public double getNbActionRestante() {
         return nombreAction;
     }
     
@@ -252,7 +259,7 @@ public class ControlleurJeuSecondaire implements Observe{
             DefausserCarte(ci);
         }
         notifierObservateur(new Message(TypeEnumMessage.PIOCHE_CARTE_INONDATION, aci));
-        System.out.println("");
+        //System.out.println("");
         
     }
     
@@ -266,9 +273,32 @@ public class ControlleurJeuSecondaire implements Observe{
     }
     
     private void decrementAction(){
+        if (nombreAction != Math.round(nombreAction)) {
+            nombreAction = Math.round(nombreAction);
+        }
         nombreAction--;
         if(nombreAction <= 0)
         {
+            passerJoueurSuivant();
+        }
+        decrementActionAfterCheck();
+    }
+    
+    private void decrementAction(double reducVal){
+        nombreAction -= reducVal;
+        if(nombreAction <= 0)
+        {
+            passerJoueurSuivant();
+        }
+        decrementActionAfterCheck();
+    }
+    
+    //vérification après avoir enlever un certain nombre d'action dispo
+    private void decrementActionAfterCheck() {
+        if (grille.getTuilesAutoursMouille(getJoueurEntrainDeJouer()).isEmpty() && grille.getTuilesAutoursPraticable(getJoueurEntrainDeJouer()).isEmpty()) {
+            ArrayList<String> t = new ArrayList<>();
+            t.add("Le joueur ne peux plus rien faire");
+            notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, t));
             passerJoueurSuivant();
         }
     }

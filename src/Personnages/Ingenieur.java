@@ -18,9 +18,4 @@ public class Ingenieur extends Personnage{
     public Ingenieur(String nom, Grille ile) {
         super(nom, ile, TypeEnumCouleurPion.ROUGE);
     }
-    
-    @Override
-    public int getNbTuileSechable() {
-        return 2;
-    }
 }

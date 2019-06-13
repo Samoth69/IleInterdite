@@ -106,7 +106,7 @@ public class Plateau implements Observateur {
     private ArrayList<String> historiqueAction = new ArrayList<>();
     
     private final int max = 9; //taille frise inondation
-    private int niveauEaucompteur = max;
+    //private int niveauEaucompteur = max;
 
     public Plateau(ArrayList<Personnage> persos, ControlleurJeuSecondaire cj) {
         plateau = cj.getGrille();
@@ -328,7 +328,7 @@ public class Plateau implements Observateur {
                     }
 
                     if (plateau[i][j].getTresor() != TypeEnumTresors.AUCUN) {
-                        
+                        /*
                         switch(plateau[i][j].getTresor())
                         {
                             case FEU:
@@ -347,6 +347,8 @@ public class Plateau implements Observateur {
                                 pn.add(new Tresor(TypeEnumTresors.AUCUN));
                             break;
                         }
+                        */
+                        pn.add(new Tresor(plateau[i][j].getTresor()));
                         
                     }
                 } else {
@@ -393,7 +395,7 @@ public class Plateau implements Observateur {
     //met à jour les informations du gamepad en fonction de l'état du jeu
     private void updateGamePad() {
         joueurActuel.setText(cj.getNomJoueur());
-        ActionRestante.setText(Integer.toString(cj.getNbActionRestante()));
+        ActionRestante.setText(Double.toString(cj.getNbActionRestante()));
         listBasGamePad.setListData(historiqueAction.toArray());
     }
 

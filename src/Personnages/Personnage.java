@@ -116,10 +116,12 @@ public abstract class Personnage {
         tuileAssechable.reduireInondation();
     }
 
+    /*
     //renvoie le nombre de case qui peuvent être sécher en une action
     public int getNbTuileSechable() {
         return 1;
     }
+    */
 
     //donne une (ou plusieur) carte(s) à un autre personnage
     public void donnerCarteAJoueur(Personnage personnage, ArrayList<CarteRouge> cartes) {
