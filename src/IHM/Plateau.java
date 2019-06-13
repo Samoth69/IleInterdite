@@ -5,6 +5,7 @@
  */
 package IHM;
 
+import Cartes.CarteInondation;
 import Enumerations.TypeEnumAction;
 import Enumerations.TypeEnumInondation;
 import Enumerations.TypeEnumTresors;
@@ -31,9 +32,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Set;
 import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JList;
+import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 import javax.swing.text.StyleConstants;
 
@@ -97,6 +99,11 @@ public class Plateau implements Observateur {
     private JPanel contenantNiveauEauDroite;
     
     private JButton augmenterniveauEau;
+    
+    //objet liste
+    private JList listBasGamePad = new JList();
+    //liste contenant l'historique du jeu
+    private ArrayList<String> historiqueAction = new ArrayList<>();
     
     private final int max = 9; //taille frise inondation
     private int niveauEaucompteur = max;
@@ -274,7 +281,8 @@ public class Plateau implements Observateur {
         ActionRestante = new JLabel();
 
         JPanel panelGamePad = new JPanel(new BorderLayout());
-        JPanel panelHautGamePad = new JPanel(new GridLayout(4, 2));
+        JPanel panelHautGamePad = new JPanel(new GridLayout(4, 2)); 
+        
         panelHautGamePad.add(new JLabel("Tour du joueur "));
         panelHautGamePad.add(joueurActuel);
         panelHautGamePad.add(buttonDeplacement);
@@ -286,8 +294,13 @@ public class Plateau implements Observateur {
         panelHautGamePad.add(jb);
 
         panelGamePad.add(panelHautGamePad, BorderLayout.NORTH);
+        
+        JScrollPane scrollPane = new JScrollPane();
+        scrollPane.setViewportView(listBasGamePad);
+        scrollPane.setPreferredSize(new Dimension(scrollPane.getWidth(), 250));
+        
+        panelGamePad.add(scrollPane, BorderLayout.SOUTH);
         mainPanel.add(panelGamePad, BorderLayout.EAST);
-
 
         affecterCase(plateau, listPion, panelGrille);
         updateGamePad();
@@ -381,6 +394,7 @@ public class Plateau implements Observateur {
     private void updateGamePad() {
         joueurActuel.setText(cj.getNomJoueur());
         ActionRestante.setText(Integer.toString(cj.getNbActionRestante()));
+        listBasGamePad.setListData(historiqueAction.toArray());
     }
 
     //est appeller quand une action est fini
@@ -527,6 +541,19 @@ public class Plateau implements Observateur {
         }
         window.repaint();
     }
+    
+    //ajoute un message à l'historique de partie ET met à jour l'interface (pour afficher les majs
+    public void ajouterMessageHistorique(String text) {
+        historiqueAction.add(text);
+        updateGamePad();
+    }
+    
+    public void ajouterMessageHistorique(ArrayList<String> text) {
+        for (String t : text) {
+            historiqueAction.add(t);
+        }
+        updateGamePad();
+    }
 
     public void afficher() {
         this.window.setVisible(true);
@@ -558,13 +585,18 @@ public class Plateau implements Observateur {
                 ColoriserNiveauEau();
                 break;
             case PIOCHE_CARTE_INONDATION:
-                VuDefausse vd = new VuDefausse(m.getAdditionnal());
-                vd.afficher();
-                window.setEnabled(false);
-                System.out.println("fuk");
+                //VuDefausse vd = new VuDefausse(m.getAdditionnal());
+                //vd.afficher();
+                //window.setEnabled(false);
+                ArrayList t = new ArrayList<>();
+                t.add("Carte Inondation piocher:");
+                for (CarteInondation ci : (ArrayList<CarteInondation>)m.getAdditionnal()) {
+                    t.add(" - " + ci.getNom());
+                }
+                t.add("\n");
+                ajouterMessageHistorique(t);
+                paintNormal();
                 break;
-            case UNLOCK_PLATEAU:
-                window.setEnabled(true);
         }
     }
 

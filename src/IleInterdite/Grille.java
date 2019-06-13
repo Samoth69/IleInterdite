@@ -155,15 +155,22 @@ public class Grille {
     //Prend un nom de carte en parametre. Augmente le niveau d'inondation d'une tuile en
     //fonction du nom d'une carte innondation
     public void AugmenterInnondation(String nom){
-        for(int i = 0; i<6; i++)
+        /*for(int i = 0; i < 5; i++)
         {
-            for(int j = 0; i<6; j++)
+            for(int j = 0; j < 5; j++)
             {
-                if(tabTuile[i][j].getNom().equals(nom))
+                if(tabTuile[i][j] != null && tabTuile[i][j].getNom().equals(nom))
                 {
                     tabTuile[i][j].augmenterInondation();
                     return;
                 }
+            }
+        }*/
+        
+        for (Tuile t : listTuile) {
+            if (t.getNom().equals(nom)) {
+                t.augmenterInondation();
+                break;
             }
         }
     }
