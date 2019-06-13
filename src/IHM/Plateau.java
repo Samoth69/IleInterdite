@@ -560,8 +560,11 @@ public class Plateau implements Observateur {
             case PIOCHE_CARTE_INONDATION:
                 VuDefausse vd = new VuDefausse(m.getAdditionnal());
                 vd.afficher();
+                window.setEnabled(false);
                 System.out.println("fuk");
                 break;
+            case UNLOCK_PLATEAU:
+                window.setEnabled(true);
         }
     }
 

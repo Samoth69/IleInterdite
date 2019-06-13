@@ -31,6 +31,9 @@ import IleInterdite.Observe;
 import IleInterdite.Observateur;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
@@ -40,52 +43,71 @@ import javax.swing.JButton;
  *
  * @author mariottp
  */
-public class VuDefausse<T> implements Observe{
+public class VuDefausse implements Observe{
     
-    private JFrame window;
+    private final JFrame window = new JFrame();
+    private JPanel mainPanel;
     private ArrayList<CarteRouge> carteDuJoueur = new ArrayList<CarteRouge>();  //Array des cartes a disposition du joueur
     private ArrayList<CarteInondation> carteInondation = new ArrayList<CarteInondation>();  //Array des cartes inondées a afficher
     private ArrayList<String> carteSelectionne = new ArrayList<String>(); //Array des cartes selectionnes
     private Observateur o;
     
-    private static Object lock = new Object();
-    
-    VuDefausse(ArrayList<T> carte){
+    VuDefausse(ArrayList carte){
+        window.setDefaultCloseOperation(javax.swing.JFrame.HIDE_ON_CLOSE);
+        window.setTitle("Defaussez une carte");
+        // Définit la taille de la fenêtre en pixels
+        window.setSize(600, 200);
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        window.setLocation(dim.width/2-window.getSize().width/2, dim.height/2-window.getSize().height/2);
+        
+        mainPanel = new JPanel(new BorderLayout());
+        
         if (!carte.isEmpty()) {
             if(carte.get(0) instanceof CarteRouge)
             {
-                window = new JFrame();
-                window.setDefaultCloseOperation(javax.swing.JFrame.HIDE_ON_CLOSE);
-                window.setTitle("Defaussez une carte");
-                // Définit la taille de la fenêtre en pixels
-                window.setSize(600, 200);
-                Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-                window.setLocation(dim.width/2-window.getSize().width/2, dim.height/2-window.getSize().height/2);
-
+                //mainPanel.add(new JLabel("CarteRouge"), BorderLayout.NORTH);
                 vuDefausse((ArrayList<CarteRouge>) carte);
             }
             else/* if (carte.get(0) instanceof CarteInondation)*/
             {
-                window = new JFrame();
-                window.setDefaultCloseOperation(javax.swing.JFrame.HIDE_ON_CLOSE);
-                window.setTitle("CarteInondation");
-                // Définit la taille de la fenêtre en pixels
-                window.setSize(600, 200);
-                Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-                window.setLocation(dim.width/2-window.getSize().width/2, dim.height/2-window.getSize().height/2);
-
+                //mainPanel.add(new JLabel("CarteInondation"), BorderLayout.NORTH);
                 vuInondation((ArrayList<CarteInondation>) carte);
             }
         }
+        window.add(mainPanel);
+        window.addWindowListener(new WindowListener() {
+            @Override
+            public void windowOpened(WindowEvent arg0) {}
+
+            @Override
+            public void windowClosing(WindowEvent arg0) {
+                notifierObservateur(new Message(TypeEnumMessage.UNLOCK_PLATEAU));
+            }
+
+            @Override
+            public void windowClosed(WindowEvent arg0) {}
+
+            @Override
+            public void windowIconified(WindowEvent arg0) {}
+
+            @Override
+            public void windowDeiconified(WindowEvent arg0) {}
+
+            @Override
+            public void windowActivated(WindowEvent arg0) {}
+
+            @Override
+            public void windowDeactivated(WindowEvent arg0) {}
+        });
     }
     
-    public void vuDefausse(ArrayList<CarteRouge> carteJoueur){
+    private void vuDefausse(ArrayList<CarteRouge> carteJoueur){
         
         carteDuJoueur = carteJoueur;
         
         //carteDuJoueur.add(new CarteAction("lul", TypeEnumCarteAction.HELICOPTERE));
         
-        JPanel mainPanel = new JPanel(new BorderLayout());
+        //JPanel mainPanel = new JPanel(new BorderLayout());
         JPanel grilleCarte = new JPanel(new GridLayout(1, carteDuJoueur.size()));
         grilleCarte.setBorder(BorderFactory.createLineBorder(Color.BLACK)); 
         
@@ -173,11 +195,11 @@ public class VuDefausse<T> implements Observe{
         window.add(mainPanel);
     }
     
-    public void vuInondation(ArrayList<CarteInondation> carteInonder){
+    private void vuInondation(ArrayList<CarteInondation> carteInonder){
         
         carteInondation = carteInonder;
         
-        JPanel mainPanel = new JPanel(new BorderLayout());
+        //JPanel mainPanel = new JPanel();
         JPanel grilleCarte = new JPanel(new GridLayout(1, carteInondation.size()));
         grilleCarte.setBorder(BorderFactory.createLineBorder(Color.BLACK)); 
         
@@ -223,36 +245,6 @@ public class VuDefausse<T> implements Observe{
 
     public void afficher(){
         window.setVisible(true);
-        
-        Thread t = new Thread() {
-        public void run() {
-            synchronized(lock) {
-                while (window.isVisible())
-                    try {
-                        lock.wait();
-                    } catch (InterruptedException e) {
-                        //e.printStackTrace();
-                    }
-                System.out.println("Working now");
-                }
-            }
-        };
-        t.start();
-
-        window.addWindowListener(new WindowAdapter() {
-
-            @Override
-            public void windowClosing(WindowEvent arg0) {
-                synchronized (lock) {
-                    window.setVisible(false);
-                    lock.notify();
-                }
-            }
-
-        });
-        try {
-            t.join();
-        } catch (InterruptedException ex) {}
     }
     
     public void addObservateur(Observateur o){
@@ -264,11 +256,5 @@ public class VuDefausse<T> implements Observe{
                 o.traiterMessage(m);
         }
     }
-    /*
-    public static void main(String[] args) {
-        VuDefausse vd = new VuDefausse();
-        vd.afficher();
-        System.out.println("FINI");
-    }*/
     
 }
