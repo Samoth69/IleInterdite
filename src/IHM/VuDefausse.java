@@ -51,28 +51,24 @@ public class VuDefausse<T> implements Observe{
     private static Object lock = new Object();
     
     VuDefausse(ArrayList<T> carte){
+        
+        window = new JFrame();
+        window.setDefaultCloseOperation(javax.swing.JFrame.HIDE_ON_CLOSE);
+         // Définit la taille de la fenêtre en pixels
+        window.setSize(600, 200);
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        window.setLocation(dim.width/2-window.getSize().width/2, dim.height/2-window.getSize().height/2);
+        
         if (!carte.isEmpty()) {
             if(carte.get(0) instanceof CarteRouge)
             {
-                window = new JFrame();
-                window.setDefaultCloseOperation(javax.swing.JFrame.HIDE_ON_CLOSE);
                 window.setTitle("Defaussez une carte");
-                // Définit la taille de la fenêtre en pixels
-                window.setSize(600, 200);
-                Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-                window.setLocation(dim.width/2-window.getSize().width/2, dim.height/2-window.getSize().height/2);
 
                 vuDefausse((ArrayList<CarteRouge>) carte);
             }
             else/* if (carte.get(0) instanceof CarteInondation)*/
             {
-                window = new JFrame();
-                window.setDefaultCloseOperation(javax.swing.JFrame.HIDE_ON_CLOSE);
                 window.setTitle("CarteInondation");
-                // Définit la taille de la fenêtre en pixels
-                window.setSize(600, 200);
-                Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-                window.setLocation(dim.width/2-window.getSize().width/2, dim.height/2-window.getSize().height/2);
 
                 vuInondation((ArrayList<CarteInondation>) carte);
             }
