@@ -65,12 +65,14 @@ public class VuDefausse implements Observe{
         if (!carte.isEmpty()) {
             if(carte.get(0) instanceof CarteRouge)
             {
-                //mainPanel.add(new JLabel("CarteRouge"), BorderLayout.NORTH);
+                window.setTitle("Defaussez une carte");
+
                 vuDefausse((ArrayList<CarteRouge>) carte);
             }
             else/* if (carte.get(0) instanceof CarteInondation)*/
             {
-                //mainPanel.add(new JLabel("CarteInondation"), BorderLayout.NORTH);
+                window.setTitle("CarteInondation");
+
                 vuInondation((ArrayList<CarteInondation>) carte);
             }
         }
