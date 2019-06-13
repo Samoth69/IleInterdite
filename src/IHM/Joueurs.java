@@ -55,11 +55,13 @@ public class Joueurs extends JFrame implements ActionListener {
     private JComboBox role3;
     private JComboBox role4;
     private JComboBox nbJoueurs;
+    private JComboBox niveauDepart;
     
     private ArrayList<JTextField> listPseudo;
     private ArrayList<JComboBox> listRole;
     private final Integer[] nombreJoueur = {2, 3, 4};
     private final String[] nomRoles = {"Explorateur", "Ingénieur", "Navigateur", "Pilote", "Plongeur"};
+    private final String[] niveauEau = {"Novice", "Normal", "Elite", "Légendaire"};
     
     public Joueurs() {
 
@@ -143,6 +145,8 @@ public class Joueurs extends JFrame implements ActionListener {
         
         role4 = new JComboBox(nomRoles);
         role4.setSelectedIndex(3);
+        
+        niveauDepart = new JComboBox(niveauEau);
         
         listRole = new ArrayList<>();
         listRole.add(role1);
@@ -269,7 +273,13 @@ public class Joueurs extends JFrame implements ActionListener {
                     break;
                 case 70:
                     panelCentre.add(role4);
-                    break;
+                break;
+                case 39:
+                    panelCentre.add(new JLabel("Niveau de depart :"));
+                break;
+                case 46:
+                    panelCentre.add(niveauDepart);
+                break;
                 default:
                     panelCentre.add(getCellule(i));
                     break;
