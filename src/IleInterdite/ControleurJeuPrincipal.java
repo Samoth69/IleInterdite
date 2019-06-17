@@ -8,6 +8,7 @@ package IleInterdite;
 import IHM.Joueurs;
 import IHM.Menu;
 import IHM.Plateau;
+import IHM.ReglesDuJeu;
 import Personnages.*;
 import java.util.ArrayList;
 
@@ -23,6 +24,7 @@ public class ControleurJeuPrincipal implements Observateur{
     private Joueurs joueurs = new Joueurs();
     private Menu menu = new Menu();
     private Plateau plateau;
+    private ReglesDuJeu rdj = new ReglesDuJeu();
     private ControleurJeuSecondaire cj;
     
     public static void main(String[] args) {
@@ -32,6 +34,7 @@ public class ControleurJeuPrincipal implements Observateur{
     private ControleurJeuPrincipal() {
         menu.addObservateur(this);
         joueurs.addObservateur(this);
+        rdj.addObservateur(this);
         
         menu.afficher();
     }
@@ -44,6 +47,9 @@ public class ControleurJeuPrincipal implements Observateur{
                 break;
             case MENU_PRINCIPAL:
                 menu.afficher();
+                break;
+            case MENU_REGLES:
+                rdj.afficher();
                 break;
             case MENU_JOUER:
                 ArrayList<String> infos = m.getAdditionnal();

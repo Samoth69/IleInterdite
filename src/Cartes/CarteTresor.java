@@ -12,7 +12,7 @@ import Enumerations.TypeEnumTresors;
  * @author violentt
  */
 public class CarteTresor extends CarteRouge{
-    
+    private TypeEnumTresors typeTresor;
         public CarteTresor(String nom, TypeEnumTresors typeTresor){
             super(nom, typeTresor.toString());
         }
@@ -20,5 +20,9 @@ public class CarteTresor extends CarteRouge{
         @Override
         public String getNom(){
             return "CarteTresor";
+        }
+        
+        public String getTypeTresor(){
+            return typeTresor.toString();
         }
 }

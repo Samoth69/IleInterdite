@@ -6,7 +6,6 @@
 package IHM;
 
 import Enumerations.TypeEnumMenuPrincipal;
-import Enumerations.TypeEnumMessage;
 import IleInterdite.Message;
 import IleInterdite.Observateur;
 import java.awt.BorderLayout;
@@ -21,7 +20,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 
 /**
  *
@@ -36,6 +34,7 @@ public class Menu extends JFrame implements ActionListener {
     private JFrame menu;
     private JButton jouer;
     private JButton quitter;
+    private JButton regles;
     
     public Menu() {
             
@@ -50,7 +49,7 @@ public class Menu extends JFrame implements ActionListener {
         JPanel mainPanel = new JPanel(new BorderLayout());
         menu.add(mainPanel);
         
-        JPanel panelCentre = new JPanel(new GridLayout(4, 3));
+        JPanel panelCentre = new JPanel(new GridLayout(5, 3));
         mainPanel.add(panelCentre, BorderLayout.CENTER);
         
         JPanel panelHaut = new JPanel() ;
@@ -62,11 +61,14 @@ public class Menu extends JFrame implements ActionListener {
         
         jouer = new JButton("Jouer");
         jouer.addActionListener(this);
+        regles = new JButton("Règles du jeu");
+        regles.addActionListener(this);
         quitter = new JButton("Quitter");
         quitter.addActionListener(this);
         
         panelCentre.add(new JLabel(""));
         panelCentre.add(jouer);
+        panelCentre.add(regles);
         panelCentre.add(quitter);  
     
     }
@@ -74,20 +76,17 @@ public class Menu extends JFrame implements ActionListener {
     public void afficher() {
         this.menu.setVisible(true);
     }
-    
-     public static void main(String[] args) {
-        // TODO code application logic here
-        Menu m = new Menu();
-        m.afficher();
-    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == jouer) {
             this.menu.setVisible(false);
-            //Joueurs j = new Joueurs();
-            //j.afficher();
             notifierObservateur(new Message(TypeEnumMenuPrincipal.MENU_JOUEURS));
+        }
+        
+        if (e.getSource() == regles) {
+            this.menu.setVisible(false);
+            notifierObservateur(new Message(TypeEnumMenuPrincipal.MENU_REGLES));
         }
         
         if (e.getSource() == quitter) {
@@ -96,6 +95,7 @@ public class Menu extends JFrame implements ActionListener {
                 System.exit(0);
             }
         }
+     
     }
     
     private Observateur observateur;    
