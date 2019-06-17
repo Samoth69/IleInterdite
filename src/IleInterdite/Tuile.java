@@ -27,6 +27,14 @@ public class Tuile extends CarteInondation {
         setY(Y);
     }
     
+    public TypeEnumTresors getTresor() {
+        return super.getTresor();
+    }
+    
+    public void setTresor(TypeEnumTresors tresor) {
+        super.setTresor(tresor);
+    }
+    
     public int getX(){
         return X;
     }
