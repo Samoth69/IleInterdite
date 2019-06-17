@@ -8,7 +8,9 @@ package IleInterdite;
 import Cartes.CarteInondation;
 import Cartes.CarteMonteeDesEaux;
 import Cartes.CarteRouge;
+import Enumerations.TypeEnumInondation;
 import Enumerations.TypeEnumMessage;
+import Enumerations.TypeEnumTresors;
 import Personnages.Explorateur;
 import Personnages.Ingenieur;
 import Personnages.Messager;
@@ -36,6 +38,10 @@ public class ControleurJeuSecondaire implements Observe{
     private int nombreJoueurDansPartie;
     private double nombreAction;
     private Grille grille;    
+    
+    //  Variables qui indiques si les tresors on etait pris ou non
+    private boolean pierreSacre, statueZephyr, cristalArdent, caliceOnde;
+    
     private ArrayList<Personnage>personnages = new ArrayList<>();
     private ArrayList<CarteRouge>pileCarteRouge = new ArrayList<>();
     private ArrayList<CarteRouge>defauseCarteRouge = new ArrayList<>();
@@ -71,6 +77,13 @@ public class ControleurJeuSecondaire implements Observe{
             augementerInondation(ci.getNom());
         } 
         
+        //  Initialise les variables pour indiquer qu'aucun tresor n'est possédé 
+        pierreSacre = false;
+        statueZephyr = false;
+        cristalArdent = false;
+        caliceOnde = false;
+        
+        //  initialise nombre d'action
         nombreAction = 3;
     }
     
@@ -374,6 +387,99 @@ public class ControleurJeuSecondaire implements Observe{
             grille.AugmenterInnondation(cartepiocheinond.getNom());
             defauseCarteInondation.add(cartepiocheinond);
         }
+    }
+    
+    public void verifFinDePartie(){
+        Message m = new Message(TypeEnumMessage.FIN_PARTIE);    //Message pour les fins de partie
+        
+        //  Si le niveau d'eau est au max, alors fin de partie
+        if(niveauEau >= 10)
+        {
+            notifierObservateur(m);
+        }
+        
+        //  ------------------------------------------------------
+        
+        //  La boucle regarde si un personnage est mort
+        for(int i = 0; i < personnages.size(); i++)
+        {
+            if(personnages.get(i).getEstVivant() == false)
+            {
+                notifierObservateur(m);
+            }
+        }
+        
+        //  -------------------------------------------------------
+        
+        //  Verifie si l'heliport n'est pas Inondé, sinon fin de partie
+        for(int i = 0; i < grille.getListTuile().size(); i++)
+        {
+            if(grille.getListTuile().get(i).getNom() == "Heliport")
+            {
+                if(grille.getListTuile().get(i).getInondation() == TypeEnumInondation.INONDE)
+                {
+                    notifierObservateur(m);
+                }
+                break; // vas peut-etre poser probleme suite au notifierObservateur
+            }
+        }
+        
+        //  -------------------------------------------------------
+        
+        
+        //  Verifie
+        for(int i = 0; i < grille.getListTuile().size(); i++)
+        {
+            if(grille.getListTuile().get(i).getNom() == "La Caverne des Ombres" && grille.getListTuile().get(i).getInondation() == TypeEnumInondation.INONDE && cristalArdent == false)
+            {
+                for(int j = 0; j < grille.getListTuile().size(); j++)
+                {
+                    if(grille.getListTuile().get(i).getNom() == "La Caverne du Brasier" && grille.getListTuile().get(i).getInondation() == TypeEnumInondation.INONDE)
+                    {
+                        notifierObservateur(m);
+                        break;  //  peut-etre problematique
+                    }
+                }
+            }
+            
+            if(grille.getListTuile().get(i).getNom() == "Le Temple du Soleil" && grille.getListTuile().get(i).getInondation() == TypeEnumInondation.INONDE && pierreSacre == false)
+            {
+                for(int j = 0; j < grille.getListTuile().size(); j++)
+                {
+                    if(grille.getListTuile().get(i).getNom() == "Le Temple de La Lune" && grille.getListTuile().get(i).getInondation() == TypeEnumInondation.INONDE)
+                    {
+                        notifierObservateur(m);
+                        break;  //  peut-etre problematique
+                    }
+                }
+            }
+            
+            if(grille.getListTuile().get(i).getNom() == "Le Palais de Corail" && grille.getListTuile().get(i).getInondation() == TypeEnumInondation.INONDE && caliceOnde == false)
+            {
+                for(int j = 0; j < grille.getListTuile().size(); j++)
+                {
+                    if(grille.getListTuile().get(i).getNom() == "Le Palais des Marees" && grille.getListTuile().get(i).getInondation() == TypeEnumInondation.INONDE)
+                    {
+                        notifierObservateur(m);
+                        break;  //  peut-etre problematique
+                    }
+                }
+            }
+            
+            if(grille.getListTuile().get(i).getNom() == "Le Jardin des Hurlements" && grille.getListTuile().get(i).getInondation() == TypeEnumInondation.INONDE && statueZephyr == false)
+            {
+                for(int j = 0; j < grille.getListTuile().size(); j++)
+                {
+                    if(grille.getListTuile().get(i).getNom() == "Le Jardin des Murmures" && grille.getListTuile().get(i).getInondation() == TypeEnumInondation.INONDE)
+                    {
+                        notifierObservateur(m);
+                        break;  //  peut-etre problematique
+                    }
+                }
+            }
+            
+        }
+        
     }
 
     private Observateur observateur;    
