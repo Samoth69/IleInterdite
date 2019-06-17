@@ -263,6 +263,7 @@ public class ControleurJeuSecondaire implements Observe{
         }
         nombreAction = 3;
         notifierObservateur(new Message(TypeEnumMessage.JOUEUR_SUIVANT));
+        verifFinDePartie();
     }
     
     private void NouveauTourDeJeu() {
@@ -323,6 +324,7 @@ public class ControleurJeuSecondaire implements Observe{
     public void augmenterNiveauEau() {
         niveauEau++;
         notifierObservateur(new Message(TypeEnumMessage.CHANGEMENT_NIVEAU_EAU));
+        verifFinDePartie();
     }
     
     //cherche une tuile et si il la trouve, augement sont inondation
@@ -352,7 +354,7 @@ public class ControleurJeuSecondaire implements Observe{
     
     //Gerer le tour de Jeu
     public void TourDeJeu() {
-        
+        verifFinDePartie();
         
         
         //ACTION NUMERO 1 : FAIRE SES ACTIONS
@@ -403,7 +405,7 @@ public class ControleurJeuSecondaire implements Observe{
         //  La boucle regarde si un personnage est mort
         for(int i = 0; i < personnages.size(); i++)
         {
-            if(personnages.get(i).getEstVivant() == false)
+            if(personnages.get(i).getDeplacements().isEmpty())
             {
                 notifierObservateur(m);
             }
