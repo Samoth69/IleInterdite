@@ -392,12 +392,10 @@ public class ControleurJeuSecondaire implements Observe{
     }
     
     public void verifFinDePartie(){
-        Message m = new Message(TypeEnumMessage.FIN_PARTIE);    //Message pour les fins de partie
-        
         //  Si le niveau d'eau est au max, alors fin de partie
         if(niveauEau >= 10)
         {
-            notifierObservateur(m);
+            notifierObservateur(new Message(TypeEnumMessage.FIN_PARTIE, "Niveau d'eau maximum atteint"));
         }
         
         //  ------------------------------------------------------
@@ -407,7 +405,7 @@ public class ControleurJeuSecondaire implements Observe{
         {
             if(personnages.get(i).getDeplacements().isEmpty())
             {
-                notifierObservateur(m);
+                notifierObservateur(new Message(TypeEnumMessage.FIN_PARTIE, personnages.get(i).getNom()+" est mort"));
             }
         }
         
@@ -420,7 +418,7 @@ public class ControleurJeuSecondaire implements Observe{
             {
                 if(grille.getListTuile().get(i).getInondation() == TypeEnumInondation.INONDE)
                 {
-                    notifierObservateur(m);
+                    notifierObservateur(new Message(TypeEnumMessage.FIN_PARTIE, "Heliport Inondé"));
                 }
                 break; // vas peut-etre poser probleme suite au notifierObservateur
             }
@@ -438,7 +436,7 @@ public class ControleurJeuSecondaire implements Observe{
                 {
                     if(grille.getListTuile().get(i).getNom() == "La Caverne du Brasier" && grille.getListTuile().get(i).getInondation() == TypeEnumInondation.INONDE)
                     {
-                        notifierObservateur(m);
+                        notifierObservateur(new Message(TypeEnumMessage.FIN_PARTIE, "Les 2 cases caverne sont inondé et les trésors avec"));
                         break;  //  peut-etre problematique
                     }
                 }
@@ -450,7 +448,7 @@ public class ControleurJeuSecondaire implements Observe{
                 {
                     if(grille.getListTuile().get(i).getNom() == "Le Temple de La Lune" && grille.getListTuile().get(i).getInondation() == TypeEnumInondation.INONDE)
                     {
-                        notifierObservateur(m);
+                        notifierObservateur(new Message(TypeEnumMessage.FIN_PARTIE, "Les 2 cases Temple sont inondé et les trésors avec"));
                         break;  //  peut-etre problematique
                     }
                 }
@@ -462,7 +460,7 @@ public class ControleurJeuSecondaire implements Observe{
                 {
                     if(grille.getListTuile().get(i).getNom() == "Le Palais des Marees" && grille.getListTuile().get(i).getInondation() == TypeEnumInondation.INONDE)
                     {
-                        notifierObservateur(m);
+                        notifierObservateur(new Message(TypeEnumMessage.FIN_PARTIE, "Les 2 cases palais sont inondé et les trésors avec"));
                         break;  //  peut-etre problematique
                     }
                 }
@@ -474,7 +472,7 @@ public class ControleurJeuSecondaire implements Observe{
                 {
                     if(grille.getListTuile().get(i).getNom() == "Le Jardin des Murmures" && grille.getListTuile().get(i).getInondation() == TypeEnumInondation.INONDE)
                     {
-                        notifierObservateur(m);
+                        notifierObservateur(new Message(TypeEnumMessage.FIN_PARTIE, "Les 2 cases jardins sont inondé et les trésors avec"));
                         break;  //  peut-etre problematique
                     }
                 }
