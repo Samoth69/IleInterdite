@@ -29,7 +29,7 @@ public abstract class Personnage {
     //couleur pion associé au personnage
     private TypeEnumCouleurPion pion = TypeEnumCouleurPion.AUCUN;
     private boolean pouvoirDeplacementUtilise = false; //devient vrai quand l'utilisateur à utilisé sont pouvoir de déplacement (déplacement diagonal pour explorateur, déplacement sur la carte pour le pilote) redevient faux quand le joueur en cour change
-
+    
     Personnage(String nom, Grille ile, TypeEnumCouleurPion pion) {
         this.nom = nom;
         this.ile = ile;
