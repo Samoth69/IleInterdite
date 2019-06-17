@@ -6,6 +6,7 @@
 package IHM;
 
 import Cartes.CarteRouge;
+import Enumerations.TypeEnumCouleurPion;
 import Personnages.Personnage;
 import java.awt.*;
 import java.util.HashSet;
@@ -27,11 +28,17 @@ public class AffichagePersonnage extends JPanel{
     private JPanel smallPanelDroiteCarte;
     
     private JLabel pseudoJoueur;
+
+    private JPanel bigPion;
+    private Pion pion;
     private Personnage perso;
     
     public AffichagePersonnage(Boolean small) {
-        super(new BorderLayout(), true);
+        super(true);
+        super.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
         pseudoJoueur = new JLabel();
+        bigPion = new JPanel();
+        pion = new Pion(TypeEnumCouleurPion.AUCUN);
         
         if (small) {
             smallMainPanel = new JPanel(new BorderLayout());
@@ -50,14 +57,23 @@ public class AffichagePersonnage extends JPanel{
             
             this.add(smallMainPanel);
         } else {
-            bigMainPanel = new JPanel();
-            
+            bigMainPanel = new JPanel(new BorderLayout());
+            JPanel panelHaut = new JPanel(new BorderLayout());
+
+            panelHaut.add(new JLabel("Joueur: "), BorderLayout.WEST);
+            panelHaut.add(pseudoJoueur, BorderLayout.EAST);
+            bigPion.add(pion);
+            panelHaut.add(bigPion, BorderLayout.SOUTH);
+
+            bigMainPanel.add(panelHaut, BorderLayout.NORTH);
+
             this.add(bigMainPanel);
         }
     }
     
     //met à jour les éléments de la fenêtre avec le joueur passé en paramètre
-    public void update(Personnage perso) {
+    public void update(Personnage perso, TypeEnumCouleurPion p) {
         pseudoJoueur.setText(perso.getNom());
+        pion.setCouleur(p);
     }
 }

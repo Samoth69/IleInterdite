@@ -23,15 +23,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import javax.swing.BorderFactory;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.*;
 import java.util.ArrayList;
-import javax.swing.JButton;
-import javax.swing.JList;
-import javax.swing.JScrollPane;
-import javax.swing.SwingConstants;
+import javax.swing.border.Border;
 
 /**
  *
@@ -311,12 +305,17 @@ public class Plateau implements Observateur {
         affichagePerso3 = new AffichagePersonnage(true);
         
         panelGamePad.add(affichagePersoActuel, BorderLayout.CENTER);
-        
+
+        JPanel panelGamePadBas = new JPanel();
+        panelGamePadBas.setLayout(new BoxLayout(panelGamePadBas, BoxLayout.Y_AXIS));
+
         JScrollPane scrollPane = new JScrollPane();
         scrollPane.setViewportView(listBasGamePad);
         scrollPane.setPreferredSize(new Dimension(scrollPane.getWidth(), 250));
-        
-        panelGamePad.add(scrollPane, BorderLayout.SOUTH);
+
+        panelGamePadBas.add(new JLabel("Historique:", SwingConstants.CENTER));
+        panelGamePadBas.add(scrollPane, BorderLayout.SOUTH);
+        panelGamePad.add(panelGamePadBas, BorderLayout.SOUTH);
         mainPanel.add(panelGamePad, BorderLayout.EAST);
 
         affecterCase(plateau, listPion, panelGrille);
@@ -396,7 +395,7 @@ public class Plateau implements Observateur {
         ActionRestante.setText(Integer.toString((int)cj.getNbActionRestante()));
         listBasGamePad.setListData(historiqueAction.toArray());
         
-        affichagePersoActuel.update(cj.getJoueurEntrainDeJouer());
+        affichagePersoActuel.update(cj.getJoueurEntrainDeJouer(), cj.getJoueurEntrainDeJouer().getCouleurPion());
         
     }
 

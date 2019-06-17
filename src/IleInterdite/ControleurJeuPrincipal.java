@@ -88,7 +88,6 @@ public class ControleurJeuPrincipal implements Observateur{
                 }
                 
                 plateau.afficher();
-                //System.out.println("coucou");
         }
     }
 }

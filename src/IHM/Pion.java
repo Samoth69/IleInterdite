@@ -10,6 +10,7 @@ import Personnages.*;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.lang.reflect.Type;
 import javax.swing.JComponent;
 
 /**
@@ -19,17 +20,21 @@ import javax.swing.JComponent;
 public class Pion extends JComponent{
     
     
-    Personnage perso;
+    //Personnage perso;
+    TypeEnumCouleurPion couleur;
     
     public Pion(Personnage perso){
-        this.perso = perso;
+        this.couleur = perso.getCouleurPion();
+    }
+    public Pion(TypeEnumCouleurPion couleur){
+        this.couleur = couleur;
     }
     
     //Fonction appelé par defaut pour dessiner le pion
     public void paint(Graphics g){
         Dimension dim = getSize();
         
-        switch(perso.getCouleurPion())
+        switch(couleur)
         {
             case BLEU:
                 g.setColor(Color.BLUE);
@@ -59,6 +64,10 @@ public class Pion extends JComponent{
     
     //getteur pour la couleur du pion en fonction du personnage
     public TypeEnumCouleurPion getCouleurPion(){
-        return perso.getCouleurPion();
+        return couleur;
+    }
+
+    public void setCouleur(TypeEnumCouleurPion couleur) {
+        this.couleur = couleur;
     }
 }
