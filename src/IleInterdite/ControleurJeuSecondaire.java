@@ -132,6 +132,14 @@ public class ControleurJeuSecondaire implements Observe{
         personnages.get(numJoueurEnCours).deplacement(newPos);
         decrementAction();
     }
+     /*-------  A COMPLETER LORSQUE LES CARTES SONT CREES ---------------------------------------------
+    /*public void recupererTresor(Personnage personnage){
+        if(personnage.getEmplacement().getTresor() != null){
+             for(int i=0; i<personnage.getCartes().size(); i++){
+                 if(personnage.getCartes().get(i).)
+             }
+        }
+    }*/
     
     public Personnage getJoueurEntrainDeJouer() {
         return personnages.get(numJoueurEnCours);
@@ -481,6 +489,7 @@ public class ControleurJeuSecondaire implements Observe{
         }
         
     }
+    
 
     private Observateur observateur;    
     public void addObservateur(Observateur o) {

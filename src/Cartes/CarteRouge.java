@@ -10,8 +10,8 @@ package Cartes;
  * @author violentt
  */
 public abstract class CarteRouge {
-   private String nom; //Montée des eaux, carte 
-   private String description; //Dscription de la carte, si nécessaire
+   private String nom; //Montée des eaux ou carte tresor ou carte action
+   private String description; //Description de la carte, si nécessaire
    
    public CarteRouge(String nom){     // instancation CarteRouge
         this.nom=nom;
