@@ -66,7 +66,7 @@ public class Plateau implements Observateur {
 
     private final static Color emptyColor = new Color(255, 255, 255); //couleur case vide
     private final static Color tuileMouilee = new Color(52, 152, 219);
-    private final static Color tuileInondee = new Color(86, 101, 115);
+    private final static Color tuileInondee = emptyColor;
     private final static Color selectColor = new Color(12, 175, 12);
     private final static Color tuileColor = new Color(243, 156, 18);
     private final static Color nonSelectedColor = Color.gray;
@@ -91,6 +91,11 @@ public class Plateau implements Observateur {
     private JPanel contenantNiveauEauMain;
     private JPanel contenantNiveauEauGauche;
     private JPanel contenantNiveauEauDroite;
+    
+    private JPanel contenantCarteRouge1;
+    private JPanel contenantCarteRouge2;
+    private JPanel contenantCarteRouge3;
+    private JPanel contenantCarteRougeActuel;
     
     private JButton augmenterniveauEau;
     
@@ -573,9 +578,14 @@ public class Plateau implements Observateur {
                 break;
             case HISTORIQUE:
                 ajouterMessageHistorique(m.getAdditionnal());
+            break;
             case NOUVEAU_TOUR:
                 ajouterMessageHistorique("\n");
                 ajouterMessageHistorique("Nouveau tour");
+            break;
+            case FIN_PARTIE:
+                System.out.println("Fin partie : "+m.getMessage());
+            break;
         }
     }
 

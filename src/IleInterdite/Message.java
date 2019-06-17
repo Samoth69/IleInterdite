@@ -21,10 +21,16 @@ public class Message<T> {
     TypeEnumMenuPrincipal type2 = TypeEnumMenuPrincipal.NA;
     TypeEnumAction action = TypeEnumAction.NA;
     ArrayList<T> additionnal; //donnée additionnel au message (aucune règle de formatage, à traiter au cas par cas)
+    String message;
     
     public Message(TypeEnumMessage type) {
         this.type = type;
         additionnal = null;
+    }
+    
+    public Message(TypeEnumMessage type, String message){
+        this.type = type;
+        this.message = message;
     }
     
     public Message(TypeEnumMessage type, ArrayList<T> ad) {
@@ -66,5 +72,9 @@ public class Message<T> {
     
     public void setAdditionnal(ArrayList<T> ad) {
         additionnal = ad;
+    }
+    
+    public String getMessage(){
+        return message;
     }
 }
