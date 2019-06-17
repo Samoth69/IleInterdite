@@ -58,6 +58,8 @@ public class Plateau implements Observateur {
     private JButton buttonDeplacement;
     private JButton buttonAssecher;
     private JButton buttonPasserTour;
+    
+    private JPanel panelGamePad;
 
     //boolean deplacementMode = false; //Devient vrai si le joueur à cliquer sur la case de son emplacement et voit donc les cases sur lesquels il peut aller
     //indique le "mode" de l'interface cad, comment elle doit afficher la grille en fonction du bouton cliquer par l'utilisateur
@@ -97,6 +99,13 @@ public class Plateau implements Observateur {
     private JPanel contenantCarteRouge3;
     private JPanel contenantCarteRougeActuel;
     
+    private AffichagePersonnage affichagePerso1;
+    private AffichagePersonnage affichagePerso2;
+    private AffichagePersonnage affichagePerso3;
+    private AffichagePersonnage affichagePersoActuel;
+    
+    private ArrayList<AffichagePersonnage> affichagePersonnage;
+    
     private JButton augmenterniveauEau;
     
     //objet liste
@@ -116,6 +125,8 @@ public class Plateau implements Observateur {
         for (Personnage p : listPerso) {
             listPion.add(new Pion(p));
         }
+        
+        affichagePersonnage = new ArrayList<>();
 
         /**
          * PARTIE SWING *
@@ -279,7 +290,7 @@ public class Plateau implements Observateur {
         joueurActuel = new JLabel("");
         ActionRestante = new JLabel();
 
-        JPanel panelGamePad = new JPanel(new BorderLayout());
+        panelGamePad = new JPanel(new BorderLayout());
         JPanel panelHautGamePad = new JPanel(new GridLayout(4, 2)); 
         
         panelHautGamePad.add(new JLabel("Tour du joueur "));
@@ -293,6 +304,13 @@ public class Plateau implements Observateur {
         panelHautGamePad.add(jb);
 
         panelGamePad.add(panelHautGamePad, BorderLayout.NORTH);
+  
+        affichagePersoActuel = new AffichagePersonnage(false);
+        affichagePerso1 = new AffichagePersonnage(true);
+        affichagePerso2 = new AffichagePersonnage(true);
+        affichagePerso3 = new AffichagePersonnage(true);
+        
+        panelGamePad.add(affichagePersoActuel, BorderLayout.CENTER);
         
         JScrollPane scrollPane = new JScrollPane();
         scrollPane.setViewportView(listBasGamePad);
@@ -377,6 +395,9 @@ public class Plateau implements Observateur {
         joueurActuel.setText(cj.getNomJoueur());
         ActionRestante.setText(Integer.toString((int)cj.getNbActionRestante()));
         listBasGamePad.setListData(historiqueAction.toArray());
+        
+        affichagePersoActuel.update(cj.getJoueurEntrainDeJouer());
+        
     }
 
     //est appeller quand une action est fini
@@ -578,14 +599,14 @@ public class Plateau implements Observateur {
                 break;
             case HISTORIQUE:
                 ajouterMessageHistorique(m.getAdditionnal());
-            break;
+                break;
             case NOUVEAU_TOUR:
                 ajouterMessageHistorique("\n");
                 ajouterMessageHistorique("Nouveau tour");
-            break;
+                break;
             case FIN_PARTIE:
                 System.out.println("Fin partie : "+m.getMessage());
-            break;
+                break;
         }
     }
 
