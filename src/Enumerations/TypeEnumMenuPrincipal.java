@@ -13,5 +13,6 @@ public enum TypeEnumMenuPrincipal {
     MENU_PRINCIPAL,
     MENU_JOUEURS,
     MENU_JOUER,
+    MENU_REGLES,
     NA
 }
