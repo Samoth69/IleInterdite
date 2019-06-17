@@ -352,6 +352,11 @@ public class ControleurJeuSecondaire implements Observe{
         VerifNbCarte(personnages.get(numJoueurEnCours));
     }
     
+    //renvoie le nombre de joueur dans la partie
+    public int getNombreJoueurDansPartie() {
+        return nombreJoueurDansPartie;
+    }
+    
     //Gerer le tour de Jeu
     public void TourDeJeu() {
         verifFinDePartie();
