@@ -9,6 +9,7 @@ import Cartes.CarteInondation;
 import Enumerations.TypeEnumAction;
 import Enumerations.TypeEnumMenuPrincipal;
 import Enumerations.TypeEnumMessage;
+import Enumerations.TypeEnumTresors;
 import java.util.ArrayList;
 
 /**
@@ -22,6 +23,7 @@ public class Message<T> {
     TypeEnumAction action = TypeEnumAction.NA;
     ArrayList<T> additionnal; //donnée additionnel au message (aucune règle de formatage, à traiter au cas par cas)
     String message;
+    Tuile emplacementJoueur;
     
     public Message(TypeEnumMessage type) {
         this.type = type;
@@ -50,6 +52,11 @@ public class Message<T> {
         additionnal = ad;
     } 
     
+    public Message(TypeEnumMessage type, Tuile emplacementJoueur){
+        this.type = type;
+        this.emplacementJoueur = emplacementJoueur;
+    }
+    
     public Message(TypeEnumMenuPrincipal type) {
         type2 = type;
     }
@@ -76,5 +83,9 @@ public class Message<T> {
     
     public String getMessage(){
         return message;
+    }
+    
+    public Tuile getEmplacementJoueur(){
+        return emplacementJoueur;
     }
 }

@@ -46,5 +46,7 @@ public class Tresor extends JComponent{
         g.fillRect(0, 0, 10, 10);
     }
     
-    
+    public TypeEnumTresors getTypeTresor(){
+        return type;
+    }
 }

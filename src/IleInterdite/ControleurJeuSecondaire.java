@@ -171,29 +171,38 @@ public class ControleurJeuSecondaire implements Observe{
             {
                 switch(emplacementJoueur.getTresor())
                 {
-                    case FEU:
-                        cristalArdent = true;
+                    case FEU:   //si le tresor = feu
+                        cristalArdent = true;   //tresor est possédé
                         notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Le tresor Cristal Ardent a été récupéré"));
+                        //message qui indique la tuile où le tresor doit etre supprimé
+                        notifierObservateur(new Message(TypeEnumMessage.RM_TRESOR, emplacementJoueur));
+                        
                     break;
-                    case LION:
+                    case LION:  // idem
                         statueZephyr = true;
                         notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Le tresor Statue de Zephyr a été récupéré"));
+                        notifierObservateur(new Message(TypeEnumMessage.RM_TRESOR, emplacementJoueur));
                     break;
-                    case LUNE:
+                    case LUNE:  //idem
                         pierreSacre = true;
                         notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Le tresor Pierre Sacré a été récupéré"));
+                        notifierObservateur(new Message(TypeEnumMessage.RM_TRESOR, emplacementJoueur));
                     break;
-                    case TROPHEE:
+                    case TROPHEE:   //idem
                         caliceOnde = true;
                         notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Le tresor Calice des Ondes a été récupéré"));
+                        notifierObservateur(new Message(TypeEnumMessage.RM_TRESOR, emplacementJoueur));
                     break;
                 }
                 //  retire le tresor de la case
                 emplacementJoueur.setTresor(TypeEnumTresors.AUCUN);
             
                 decrementAction();
-                
             }
+        }
+        else
+        {
+            notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Pas possible de recup tresor"));
         }
     }
     
@@ -528,8 +537,9 @@ public class ControleurJeuSecondaire implements Observe{
         //  Si le niveau d'eau est au max, alors fin de partie
         if(niveauEau >= 9)
         {
+            notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Fin de partie : Niveau d'eau maximum atteint"));
             notifierObservateur(new Message(TypeEnumMessage.FIN_PARTIE, "Niveau d'eau maximum atteint"));
-        }
+        }   
         
         //  ------------------------------------------------------
         
@@ -538,7 +548,8 @@ public class ControleurJeuSecondaire implements Observe{
         {
             if(personnages.get(i).getDeplacements().isEmpty())
             {
-                notifierObservateur(new Message(TypeEnumMessage.FIN_PARTIE, personnages.get(i).getNom()+" est mort"));
+                notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Fin de partie : "+personnages.get(i).getNom()+" est mort"));
+                notifierObservateur(new Message(TypeEnumMessage.FIN_PARTIE));
             }
         }
         
@@ -551,7 +562,8 @@ public class ControleurJeuSecondaire implements Observe{
             {
                 if(grille.getListTuile().get(i).getInondation() == TypeEnumInondation.INONDE)
                 {
-                    notifierObservateur(new Message(TypeEnumMessage.FIN_PARTIE, "Heliport Inondé"));
+                    notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Fin de partie : Heliport Inondé"));
+                    notifierObservateur(new Message(TypeEnumMessage.FIN_PARTIE));
                 }
                 break; // vas peut-etre poser probleme suite au notifierObservateur
             }
@@ -560,52 +572,58 @@ public class ControleurJeuSecondaire implements Observe{
         //  -------------------------------------------------------
         
         
-        //  Verifie si le tresor n'est pas recupéré, que les 2 cases où il est ne sont pas inondées
+        //  Verifie si le tresor n'est pas recupéré et que les 2 cases où il est ne sont pas inondées
         for(int i = 0; i < grille.getListTuile().size(); i++)
         {
+            // Si la caverne est inondé et que l'on a pas recupéré le trésor alors...
             if(grille.getListTuile().get(i).getNom() == "La Caverne des Ombres" && grille.getListTuile().get(i).getInondation() == TypeEnumInondation.INONDE && cristalArdent == false)
             {
                 for(int j = 0; j < grille.getListTuile().size(); j++)
                 {
+                    //  Si l'autre caverne est inondé et que l'on a pas recupéré le trésor la partie est fini
                     if(grille.getListTuile().get(i).getNom() == "La Caverne du Brasier" && grille.getListTuile().get(i).getInondation() == TypeEnumInondation.INONDE)
                     {
-                        notifierObservateur(new Message(TypeEnumMessage.FIN_PARTIE, "Les 2 cases caverne sont inondé et les trésors avec"));
+                        notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Fin de partie : Les 2 cases caverne sont inondé et les trésors avec"));
+                        notifierObservateur(new Message(TypeEnumMessage.FIN_PARTIE));
                         break;  //  peut-etre problematique
                     }
                 }
             }
-            
+            //  idem precedent
             if(grille.getListTuile().get(i).getNom() == "Le Temple du Soleil" && grille.getListTuile().get(i).getInondation() == TypeEnumInondation.INONDE && pierreSacre == false)
             {
                 for(int j = 0; j < grille.getListTuile().size(); j++)
                 {
                     if(grille.getListTuile().get(i).getNom() == "Le Temple de La Lune" && grille.getListTuile().get(i).getInondation() == TypeEnumInondation.INONDE)
                     {
-                        notifierObservateur(new Message(TypeEnumMessage.FIN_PARTIE, "Les 2 cases Temple sont inondé et les trésors avec"));
+                        notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Fin de partie : Les 2 cases Temple sont inondé et les trésors avec"));
+                        notifierObservateur(new Message(TypeEnumMessage.FIN_PARTIE));
                         break;  //  peut-etre problematique
                     }
                 }
             }
-            
+            //  idem precedent
             if(grille.getListTuile().get(i).getNom() == "Le Palais de Corail" && grille.getListTuile().get(i).getInondation() == TypeEnumInondation.INONDE && caliceOnde == false)
             {
                 for(int j = 0; j < grille.getListTuile().size(); j++)
                 {
                     if(grille.getListTuile().get(i).getNom() == "Le Palais des Marees" && grille.getListTuile().get(i).getInondation() == TypeEnumInondation.INONDE)
                     {
-                        notifierObservateur(new Message(TypeEnumMessage.FIN_PARTIE, "Les 2 cases palais sont inondé et les trésors avec"));
+                        notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Fin de partie : Les 2 cases palais sont inondé et les trésors avec"));
+                        notifierObservateur(new Message(TypeEnumMessage.FIN_PARTIE));
                         break;  //  peut-etre problematique
                     }
                 }
             }
-            
+            //  idem precedent
             if(grille.getListTuile().get(i).getNom() == "Le Jardin des Hurlements" && grille.getListTuile().get(i).getInondation() == TypeEnumInondation.INONDE && statueZephyr == false)
             {
                 for(int j = 0; j < grille.getListTuile().size(); j++)
                 {
                     if(grille.getListTuile().get(i).getNom() == "Le Jardin des Murmures" && grille.getListTuile().get(i).getInondation() == TypeEnumInondation.INONDE)
                     {
-                        notifierObservateur(new Message(TypeEnumMessage.FIN_PARTIE, "Les 2 cases jardins sont inondé et les trésors avec"));
+                        notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Fin de partie : Les 2 cases jardins sont inondé et les trésors avec"));
+                        notifierObservateur(new Message(TypeEnumMessage.FIN_PARTIE));
                         break;  //  peut-etre problematique
                     }
                 }
