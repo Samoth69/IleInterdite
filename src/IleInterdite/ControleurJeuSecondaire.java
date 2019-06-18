@@ -5,9 +5,12 @@
  */
 package IleInterdite;
 
+import Cartes.CarteAction;
 import Cartes.CarteInondation;
 import Cartes.CarteMonteeDesEaux;
 import Cartes.CarteRouge;
+import Cartes.CarteTresor;
+import Enumerations.TypeEnumCarteAction;
 import Enumerations.TypeEnumInondation;
 import Enumerations.TypeEnumMessage;
 import Enumerations.TypeEnumTresors;
@@ -586,5 +589,43 @@ public class ControleurJeuSecondaire implements Observe{
     
     public ArrayList<Personnage> getPerso(){
         return personnages;
+    }
+    
+    
+    
+    public ArrayList<CarteRouge> getListCarteRouge() {
+        ArrayList<CarteRouge> out = new ArrayList<>();
+        
+        out.add(new CarteTresor("CarteTresor",TypeEnumTresors.LION));
+        out.add(new CarteTresor("CarteTresor",TypeEnumTresors.LION));
+        out.add(new CarteTresor("CarteTresor",TypeEnumTresors.LION));
+        out.add(new CarteTresor("CarteTresor",TypeEnumTresors.LION));
+        out.add(new CarteTresor("CarteTresor",TypeEnumTresors.LION));
+        out.add(new CarteTresor("CarteTresor",TypeEnumTresors.LUNE));
+        out.add(new CarteTresor("CarteTresor",TypeEnumTresors.LUNE));
+        out.add(new CarteTresor("CarteTresor",TypeEnumTresors.LUNE));
+        out.add(new CarteTresor("CarteTresor",TypeEnumTresors.LUNE));
+        out.add(new CarteTresor("CarteTresor",TypeEnumTresors.LUNE));
+        out.add(new CarteTresor("CarteTresor",TypeEnumTresors.FEU));
+        out.add(new CarteTresor("CarteTresor",TypeEnumTresors.FEU));
+        out.add(new CarteTresor("CarteTresor",TypeEnumTresors.FEU));
+        out.add(new CarteTresor("CarteTresor",TypeEnumTresors.FEU));
+        out.add(new CarteTresor("CarteTresor",TypeEnumTresors.FEU));
+        out.add(new CarteTresor("CarteTresor",TypeEnumTresors.TROPHEE));
+        out.add(new CarteTresor("CarteTresor",TypeEnumTresors.TROPHEE));
+        out.add(new CarteTresor("CarteTresor",TypeEnumTresors.TROPHEE));
+        out.add(new CarteTresor("CarteTresor",TypeEnumTresors.TROPHEE));
+        out.add(new CarteTresor("CarteTresor",TypeEnumTresors.TROPHEE));
+        out.add(new CarteMonteeDesEaux("CarteMonteeDesEaux1"));
+        out.add(new CarteMonteeDesEaux("CarteMonteeDesEaux2"));
+        out.add(new CarteMonteeDesEaux("CarteMonteeDesEaux3"));
+        out.add(new CarteAction("CarteAction1",TypeEnumCarteAction.HELICOPTERE));
+        out.add(new CarteAction("CarteAction2",TypeEnumCarteAction.HELICOPTERE));
+        out.add(new CarteAction("CarteAction3",TypeEnumCarteAction.HELICOPTERE));
+        out.add(new CarteAction("CarteAction1",TypeEnumCarteAction.SAC_DE_SABLE));
+        out.add(new CarteAction("CarteAction1",TypeEnumCarteAction.SAC_DE_SABLE));
+        
+        
+        return out;
     }
 }

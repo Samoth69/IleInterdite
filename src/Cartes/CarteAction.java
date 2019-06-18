@@ -20,7 +20,7 @@ public class CarteAction extends CarteRouge{
          
         @Override
         public String getNom(){
-            return "CarteAction";
+            return super.getNom();
         }
 
     @Override
