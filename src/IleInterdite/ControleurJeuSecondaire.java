@@ -131,52 +131,53 @@ public class ControleurJeuSecondaire implements Observe{
         }
         personnages.get(numJoueurEnCours).deplacement(newPos);
         decrementAction();
+        notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Deplacement de "+getJoueurEntrainDeJouer().getNom()+" sur "+newPos.getNom()));
+
     }
 
-    public void recupererTresor(Personnage personnage){
-      int QuatreCartesTresors=0;
-    
-      if(personnage.getEmplacement().getTresor() != TypeEnumTresors.AUCUN){
+    public void recupererTresor(Tuile emplacementJoueur){
+        int nbCarteTresor = 0;
+        
+        //  Si il y a bien un tresor
+        if(emplacementJoueur.getTresor() != TypeEnumTresors.AUCUN)
+        {
+            //  Compte le nombre de carte tresor du joueur correspondant au tresor de la case
+            for(int i = 0; i < getJoueurEntrainDeJouer().getCartes().size(); i++)
+            {
+                if(getJoueurEntrainDeJouer().getCartes().get(i).getTypeTresor() == emplacementJoueur.getTresor())
+                {
+                    nbCarteTresor++;
+                }
+            }
+            //  Si le joueur a 4 carte du tresor de la case alors...
+            if(nbCarteTresor == 4)
+            {
+                switch(emplacementJoueur.getTresor())
+                {
+                    case FEU:
+                        cristalArdent = true;
+                        notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Le tresor Cristal Ardent a été récupéré"));
+                    break;
+                    case LION:
+                        statueZephyr = true;
+                        notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Le tresor Statue de Zephyr a été récupéré"));
+                    break;
+                    case LUNE:
+                        pierreSacre = true;
+                        notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Le tresor Pierre Sacré a été récupéré"));
+                    break;
+                    case TROPHEE:
+                        caliceOnde = true;
+                        notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Le tresor Calice des Ondes a été récupéré"));
+                    break;
+                }
+                //  retire le tresor de la case
+                emplacementJoueur.setTresor(TypeEnumTresors.AUCUN);
             
-          for(int i=0; i<personnage.getCartes().size(); i++){
-                 if(personnage.getCartes().get(i).getTypeTresor().contentEquals(personnage.getEmplacement().getTresor().toString())){
-                     QuatreCartesTresors = QuatreCartesTresors +1;
-                 }
-             }
-             
-            if(QuatreCartesTresors>=4){
-                   for(int i=0; i<grille.getListTuile().size(); i++){
-                          if(grille.getListTuile().get(i).getNom().equals(personnage.getEmplacement().getNom())){
-
-                              switch(grille.getListTuile().get(i).getTresor()){
-                                  case LUNE : pierreSacre=true;
-                                              break;
-
-                                  case LION : statueZephyr=true;
-                                              break;
-
-                                  case FEU : cristalArdent=true;
-                                                 break;
-
-                                  case TROPHEE :caliceOnde=true;
-                                                break;
-
-                                  default:        System.out.println("REVERIFIER CONTROLLEURJEU2");;    
-
-
-                                          }
-                    
-                    
-                                grille.getListTuile().get(i).setTresor(TypeEnumTresors.AUCUN);
-                         }
-                     }
-             } else{
-                 System.out.println("Vous n'avez pas 4 cartes correspondant à cet trésor");
-            } 
-            
-     }else{
-            System.out.println("Aucun trésor sur la tuile actuelle");
-       }
+                decrementAction();
+                
+            }
+        }
     }
     
     public Personnage getJoueurEntrainDeJouer() {
@@ -194,6 +195,8 @@ public class ControleurJeuSecondaire implements Observe{
         } else {
             decrementAction();
         }
+        
+        notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "La case "+t.getNom()+" à été asséché"));
     }
     
     //cherche dans un arraylist si num est trouvé, renvoie true. sinon renvoie faux.
@@ -305,14 +308,7 @@ public class ControleurJeuSecondaire implements Observe{
         numJoueurEnCours++;
         if (nombreJoueurDansPartie <= numJoueurEnCours){
             numJoueurEnCours = 0;
-            NouveauTourDeJeu();
         }
-        nombreAction = 3;
-        notifierObservateur(new Message(TypeEnumMessage.JOUEUR_SUIVANT));
-        verifFinDePartie();
-    }
-    
-    private void NouveauTourDeJeu() {
         ArrayList<CarteInondation> aci = new ArrayList<>();
         for (int i = 0; i < getNombreCarteInondationAPiocher(); i++) {
             CarteInondation ci = PiocherCarteInond();
@@ -321,10 +317,11 @@ public class ControleurJeuSecondaire implements Observe{
             DefausserCarte(ci);
         }
         notifierObservateur(new Message(TypeEnumMessage.PIOCHE_CARTE_INONDATION, aci));
-        notifierObservateur(new Message(TypeEnumMessage.NOUVEAU_TOUR));
-        //System.out.println("");
-        
+        nombreAction = 3;
+        notifierObservateur(new Message(TypeEnumMessage.JOUEUR_SUIVANT));
+        verifFinDePartie();
     }
+    
     
     private void MelangeCarteRouge() {
         Collections.shuffle(pileCarteRouge);
@@ -370,6 +367,7 @@ public class ControleurJeuSecondaire implements Observe{
     public void augmenterNiveauEau() {
         niveauEau++;
         notifierObservateur(new Message(TypeEnumMessage.CHANGEMENT_NIVEAU_EAU));
+        notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Le niveau d'eau a augmenté"));
         verifFinDePartie();
     }
     
@@ -442,9 +440,45 @@ public class ControleurJeuSecondaire implements Observe{
         }
     }
     
+    public void partieGagne(){
+        int nbJoueurSurHeliport = 0;
+        
+        //  Si tous les tresors ont été récupérés
+        if(pierreSacre == true && caliceOnde == true && cristalArdent == true && statueZephyr == true)
+        {
+            for(int i = 0; i < personnages.size(); i++)
+            {
+                //  Compte le nombre de joueurs sur l'heliport
+                if(personnages.get(i).getEmplacement().getNom() == "Heliport")
+                {
+                    nbJoueurSurHeliport++;
+                }
+            }
+            //  Si tous les joueurs sont sur l'heliport
+            //  On regarde si un des joueurs a une carte helicoptere
+            if(nbJoueurSurHeliport == personnages.size())
+            {
+                for(int i = 0; i < personnages.size(); i++)
+                {
+                    ArrayList<CarteRouge> lesCartesDuJoueur = personnages.get(i).getCartes();
+                    
+                    for(int j = 0; j < lesCartesDuJoueur.size(); j++)
+                    {
+                        //  Si un joueur a une carte helicoptere, partie gagne
+                        if(lesCartesDuJoueur.get(j).getDescription() == "Hélicopère")
+                        {
+                            notifierObservateur(new Message(TypeEnumMessage.PARTIE_GAGNE, "Partie Gagnée"));
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
     public void verifFinDePartie(){
         //  Si le niveau d'eau est au max, alors fin de partie
-        if(niveauEau >= 10)
+        if(niveauEau >= 9)
         {
             notifierObservateur(new Message(TypeEnumMessage.FIN_PARTIE, "Niveau d'eau maximum atteint"));
         }
@@ -478,7 +512,7 @@ public class ControleurJeuSecondaire implements Observe{
         //  -------------------------------------------------------
         
         
-        //  Verifie
+        //  Verifie si le tresor n'est pas recupéré, que les 2 cases où il est ne sont pas inondées
         for(int i = 0; i < grille.getListTuile().size(); i++)
         {
             if(grille.getListTuile().get(i).getNom() == "La Caverne des Ombres" && grille.getListTuile().get(i).getInondation() == TypeEnumInondation.INONDE && cristalArdent == false)
@@ -530,10 +564,8 @@ public class ControleurJeuSecondaire implements Observe{
             }
             
         }
-        
     }
     
-
     private Observateur observateur;    
     public void addObservateur(Observateur o) {
         this.observateur = o;

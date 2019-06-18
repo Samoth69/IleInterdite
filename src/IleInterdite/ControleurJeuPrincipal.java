@@ -74,6 +74,125 @@ public class ControleurJeuPrincipal implements Observateur{
                         case "Plongeur":
                             perso.add(new Plongeur(infos.get(counter), null));
                             break;
+                        case "Aléatoire":
+                            
+                            int valAle = 1 + (int)(Math.random() * ((5 - 1) + 1));
+                            boolean joueurOk = true;
+                            
+                            do
+                            {
+                                joueurOk = true;
+                                
+                                switch(valAle)
+                                {
+                                    case 1:
+                                        for(Personnage p : perso)
+                                        {
+                                            if(p instanceof Explorateur)
+                                            {
+                                                joueurOk = false;
+                                                if(valAle<=4)
+                                                {
+                                                    valAle++;
+                                                }
+                                                else
+                                                {
+                                                    valAle = 1;
+                                                }
+                                            }
+                                        }
+                                        if(joueurOk)
+                                        {
+                                           perso.add(new Explorateur(infos.get(counter), null)); 
+                                        }
+                                        break;
+                                    case 2:
+                                        for(Personnage p : perso)
+                                        {
+                                            if(p instanceof Ingenieur)
+                                            {
+                                                joueurOk = false;
+                                                if(valAle<=4)
+                                                {
+                                                    valAle++;
+                                                }
+                                                else
+                                                {
+                                                    valAle = 1;
+                                                }
+                                            }
+                                        }
+                                        if(joueurOk)
+                                        {
+                                           perso.add(new Ingenieur(infos.get(counter), null)); 
+                                        }
+                                        break;
+                                    case 3:
+                                        for(Personnage p : perso)
+                                        {
+                                            if(p instanceof Navigateur)
+                                            {
+                                                joueurOk = false;
+                                                if(valAle<=4)
+                                                {
+                                                    valAle++;
+                                                }
+                                                else
+                                                {
+                                                    valAle = 1;
+                                                }
+                                            }
+                                        }
+                                        if(joueurOk)
+                                        {
+                                           perso.add(new Navigateur(infos.get(counter), null)); 
+                                        }
+                                        break;
+                                    case 4:
+                                        for(Personnage p : perso)
+                                        {
+                                            if(p instanceof Pilote)
+                                            {
+                                                joueurOk = false;
+                                                if(valAle<=4)
+                                                {
+                                                    valAle++;
+                                                }
+                                                else
+                                                {
+                                                    valAle = 1;
+                                                }
+                                            }
+                                        }
+                                        if(joueurOk)
+                                        {
+                                           perso.add(new Pilote(infos.get(counter), null)); 
+                                        }
+                                        break;
+                                    case 5:
+                                        for(Personnage p : perso)
+                                        {
+                                            if(p instanceof Plongeur)
+                                            {
+                                                joueurOk = false;
+                                                if(valAle<=4)
+                                                {
+                                                    valAle++;
+                                                }
+                                                else
+                                                {
+                                                    valAle = 1;
+                                                }
+                                            }
+                                        }
+                                        if(joueurOk)
+                                        {
+                                           perso.add(new Plongeur(infos.get(counter), null)); 
+                                        }
+                                        break;
+                                }
+                            }while(joueurOk != true);
+                            break;
                     }
                     joueurCompter++;
                     counter += 2;

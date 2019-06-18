@@ -693,13 +693,23 @@ public class Plateau implements Observateur {
                 paintNormal();
                 break;
             case HISTORIQUE:
-                ajouterMessageHistorique(m.getAdditionnal());
+                if(!m.getMessage().isEmpty())
+                {
+                    ajouterMessageHistorique(m.getMessage());
+                }
+                else
+                {
+                    ajouterMessageHistorique(m.getAdditionnal());
+                }
                 break;
             case NOUVEAU_TOUR:
                 ajouterMessageHistorique("\n");
                 ajouterMessageHistorique("Nouveau tour");
                 break;
             case FIN_PARTIE:
+                System.out.println("Fin partie : "+m.getMessage());
+                break;
+            case PARTIE_GAGNE:
                 System.out.println("Fin partie : "+m.getMessage());
                 break;
         }

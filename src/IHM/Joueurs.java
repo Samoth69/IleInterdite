@@ -61,7 +61,7 @@ public class Joueurs extends JFrame implements ActionListener {
     private ArrayList<JTextField> listPseudo;
     private ArrayList<JComboBox> listRole;
     private final Integer[] nombreJoueur = {2, 3, 4};
-    private final String[] nomRoles = {"Explorateur", "Ingénieur", "Navigateur", "Pilote", "Plongeur"};
+    private final String[] nomRoles = {"Explorateur", "Ingénieur", "Navigateur", "Pilote", "Plongeur","Aléatoire"};
     private final String[] niveauEau = {"Novice", "Normal", "Elite", "Légendaire"};
     
     public Joueurs() {
@@ -241,11 +241,6 @@ public class Joueurs extends JFrame implements ActionListener {
     public void afficher() {
         this.joueurs.setVisible(true);
     }
-     
-    public static void main(String[] args) {
-        Joueurs j = new Joueurs();
-        j.afficher();
-    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -271,7 +266,9 @@ public class Joueurs extends JFrame implements ActionListener {
                     JOptionPane.showMessageDialog(null, "Chaque joueur doit avoir un rôle différent");
                     return; //quitte la fonction
                 }
-                usedRole.add((String)listRole.get(i).getSelectedItem());
+                if ((String)listRole.get(i).getSelectedItem() != nomRoles[nomRoles.length-1]) {
+                    usedRole.add((String)listRole.get(i).getSelectedItem());
+                }   
             }
             for (int i = 0; i < (int)nbJoueurs.getSelectedItem(); i++) {
                 if (listPseudo.get(i).getText().isEmpty()) {
