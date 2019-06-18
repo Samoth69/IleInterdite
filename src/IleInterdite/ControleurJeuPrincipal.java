@@ -74,6 +74,9 @@ public class ControleurJeuPrincipal implements Observateur{
                         case "Plongeur":
                             perso.add(new Plongeur(infos.get(counter), null));
                             break;
+                        case "Aléatoire":
+                            perso.add(null);
+                            break;
                     }
                     joueurCompter++;
                     counter += 2;
