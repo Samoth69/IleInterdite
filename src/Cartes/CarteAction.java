@@ -14,17 +14,24 @@ import Enumerations.TypeEnumTresors;
  */
 public class CarteAction extends CarteRouge{
         
-        public CarteAction(String nom, TypeEnumCarteAction typeAction){     //Enlever String nom car inutile (?)
-            super(nom, typeAction.toString());
-        }
-         
-        @Override
-        public String getNom(){
-            return super.getNom();
-        }
+    private TypeEnumCarteAction type;
+    
+    public CarteAction(String nom, TypeEnumCarteAction typeAction){     //Enlever String nom car inutile (?)
+        super(nom, typeAction.toString());
+        type = typeAction;
+    }
+
+    @Override
+    public String getNom(){
+        return super.getNom();
+    }
+
+    public TypeEnumCarteAction getTypeAction() {
+        return type;
+    }
 
     @Override
     public TypeEnumTresors getTypeTresor() {
-        return TypeEnumTresors.AUCUN; //    A changer si besoin
+        return TypeEnumTresors.AUCUN;
     }
 }

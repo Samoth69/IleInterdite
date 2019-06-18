@@ -30,6 +30,8 @@ public class AffichagePersonnage extends JPanel{
     private Pion pion;
     private Personnage perso;
     
+    private JPanel panelMilieu;
+    
     private JButton buttonDeplacement;
     private JButton buttonAssecher;
     private JButton buttonPasserTour;
@@ -40,6 +42,8 @@ public class AffichagePersonnage extends JPanel{
     public final static String nomButtonDeplacement = "Se Déplacer";
     public final static String nomButtonAssecher = "Assécher";
     public final static String nomAnnulé = "Annuler";
+    
+    private final static String imgFolder = System.getProperty("user.dir") + "/src/RessourcesPlateau/";
     
     public AffichagePersonnage(Plateau pl, Personnage perso) {
         super(true);
@@ -65,7 +69,7 @@ public class AffichagePersonnage extends JPanel{
         bigPion.add(pion);
         panelHaut.add(bigPion, BorderLayout.SOUTH);
         
-        JPanel panelMilieu = new JPanel(new FlowLayout());
+        panelMilieu = new JPanel(new FlowLayout());
         
         JPanel panelBas = new JPanel(new GridLayout(2,3));
         
@@ -117,7 +121,7 @@ public class AffichagePersonnage extends JPanel{
         bigMainPanel.add(panelHaut, BorderLayout.NORTH);
         bigMainPanel.add(panelMilieu, BorderLayout.CENTER);
         bigMainPanel.add(panelBas, BorderLayout.SOUTH);
-        System.out.println(bigPion.getSize());
+        //System.out.println(bigPion.getSize());
         this.add(bigMainPanel);
         
     }
@@ -132,13 +136,21 @@ public class AffichagePersonnage extends JPanel{
             labelJoueur.setForeground(Color.black);
             this.setBorder(BorderFactory.createLineBorder(perso.getCouleurPion().getColor(), 2));
             if (perso != null) {
-                pion.setCouleur(perso.getCouleurPion());    
+                pion.setCouleur(perso.getCouleurPion());
             }
         } else {
             labelPseudoJoueur.setForeground(Color.gray);
             labelJoueur.setForeground(Color.gray);
             this.setBorder(BorderFactory.createLineBorder(Color.gray, 2));
             pion.setCouleur(TypeEnumCouleurPion.AUCUN);
+        }
+        if (perso != null) {
+            panelMilieu.removeAll();
+            panelMilieu.revalidate();
+            for (CarteRouge cr: perso.getCartes()) {
+                panelMilieu.add(new JLabel(cr.getNom()));
+            }
+            panelMilieu.repaint();
         }
         
     }

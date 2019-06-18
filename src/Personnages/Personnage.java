@@ -179,7 +179,7 @@ public abstract class Personnage {
 
     //enlève une carte de ce joueur
     public void removeCarte(CarteRouge carte) {
-        this.cartes.add(carte);
+        this.cartes.remove(carte);
     }
 
     public String getNom() {
