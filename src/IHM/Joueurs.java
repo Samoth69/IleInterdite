@@ -1,4 +1,4 @@
-/*
+ /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -14,7 +14,6 @@ import Enumerations.TypeEnumMenuPrincipal;
 import Enumerations.TypeEnumMessage;
 import IleInterdite.Message;
 import IleInterdite.Observateur;
-//import com.sun.tools.javac.util.StringUtils;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -40,17 +39,20 @@ public class Joueurs extends JFrame implements ActionListener {
      * @param args the command line arguments
      */
     
+    //ATTRIBUTS
+    //JFrame et JButton
     private JFrame joueurs;
     private JButton retour;
     private JButton lancer;
     private JButton quitter;
     
+    //JTextField
     private JTextField pseudo1;
     private JTextField pseudo2;
     private JTextField pseudo3;
     private JTextField pseudo4;
-    private JTextField choisirnbjoueur;
     
+    //JComboBox
     private JComboBox role1;
     private JComboBox role2;
     private JComboBox role3;
@@ -58,23 +60,25 @@ public class Joueurs extends JFrame implements ActionListener {
     private JComboBox nbJoueurs;
     private JComboBox niveauDepart;
     
+    //Listes
     private ArrayList<JTextField> listPseudo;
     private ArrayList<JComboBox> listRole;
     private final Integer[] nombreJoueur = {2, 3, 4};
     private final String[] nomRoles = {"Explorateur", "Ingénieur", "Navigateur", "Pilote", "Plongeur","Aléatoire"};
     private final String[] niveauEau = {"Novice", "Normal", "Elite", "Légendaire"};
     
+    //CONSTRUCTEURS
     public Joueurs() {
 
     /**
      * @param args the command line arguments
      */
-    
+        //Creation de la fenetre
         joueurs = new JFrame();
         joueurs.setTitle("Joueurs");
         joueurs.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
         joueurs.setSize(600, 300);
-        /*menu.setExtendedState(JFrame.MAXIMIZED_BOTH);*/
+        
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         joueurs.setLocation(dim.width/2-joueurs.getSize().width/2, dim.height/2-joueurs.getSize().height/2);
         
@@ -123,12 +127,10 @@ public class Joueurs extends JFrame implements ActionListener {
         listPseudo.add(pseudo4);
         
         JLabel labeljoueur1 = new JLabel(" Joueur n°1", SwingConstants.LEFT);
-        JLabel labeljoueurPseudo1 = new JLabel(" Pseudonyme : ", SwingConstants.LEFT);
         
         JLabel choisirnbjoueur = new JLabel("Nombre de Joueurs :", SwingConstants.LEFT);
         
         JLabel labeljoueur2 = new JLabel(" Joueur n°2", SwingConstants.LEFT);
-        JLabel labeljoueurPseudo2 = new JLabel(" Pseudonyme : ", SwingConstants.LEFT);
         
         JLabel labeljoueur3 = new JLabel(" Joueur n°3", SwingConstants.LEFT);
         JLabel labeljoueurPseudo3 = new JLabel(" Pseudonyme : ", SwingConstants.LEFT);     
@@ -240,6 +242,9 @@ public class Joueurs extends JFrame implements ActionListener {
        
     }     
     
+    //METHODES
+    
+    //Affiche la fenetre
     public void afficher() {
         this.joueurs.setVisible(true);
     }
@@ -315,12 +320,6 @@ public class Joueurs extends JFrame implements ActionListener {
             notifierObservateur(msg);
         }
     
-    }
-    
-    private JPanel getCellule(int i) {
-        JPanel panelCellule = new JPanel();
-        int numLigne = (int) (i+4)/4 ;
-        return panelCellule ;
     }
     
     private Observateur observateur;    
