@@ -21,5 +21,6 @@ public enum TypeEnumMessage {
     HISTORIQUE, //pour ajouté un message à l'historique de la partie (si l'IHM implémente ceci)
     NOUVEAU_TOUR, //indique à l'IHM que un nouveau tour de jeu démare
     FIN_PARTIE,  //indique une fin de partie
-    PARTIE_GAGNE    //indique que les joueurs ont gagnés
+    PARTIE_GAGNE,    //indique que les joueurs ont gagnés
+    RM_TRESOR   //Supprime un tresor d'une case
 }

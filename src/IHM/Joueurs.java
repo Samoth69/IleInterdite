@@ -84,13 +84,15 @@ public class Joueurs extends JFrame implements ActionListener {
         
         JPanel panelCentre = new JPanel(new GridLayout(7, 4,5,5));
         mainPanel.add(panelCentre, BorderLayout.CENTER);
-        
+        panelCentre.setBackground(Color.WHITE);
         
         JPanel panelBas = new JPanel(new GridLayout(1, 6));
         mainPanel.add(panelBas, BorderLayout.SOUTH);
+        panelBas.setBackground(Color.WHITE);
         
         JPanel panelHaut = new JPanel();
         mainPanel.add(panelHaut, BorderLayout.NORTH);
+  
         
         JLabel labelTitre = new JLabel("Joueurs");
         labelTitre.setFont(new Font(labelTitre.getFont().getName(), labelTitre.getFont().getStyle(), (int) (labelTitre.getFont().getSize() * 2.0)));

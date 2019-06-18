@@ -153,25 +153,30 @@ public class ControleurJeuSecondaire implements Observe{
                 }
             }
             //  Si le joueur a 4 carte du tresor de la case alors...
-            if(nbCarteTresor == 4)
-            {
+            //if(nbCarteTresor == 4)
+            //{
                 switch(emplacementJoueur.getTresor())
                 {
                     case FEU:
                         cristalArdent = true;
                         notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Le tresor Cristal Ardent a été récupéré"));
+                        notifierObservateur(new Message(TypeEnumMessage.RM_TRESOR, emplacementJoueur));
+                        
                     break;
                     case LION:
                         statueZephyr = true;
                         notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Le tresor Statue de Zephyr a été récupéré"));
+                        notifierObservateur(new Message(TypeEnumMessage.RM_TRESOR, emplacementJoueur));
                     break;
                     case LUNE:
                         pierreSacre = true;
                         notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Le tresor Pierre Sacré a été récupéré"));
+                        notifierObservateur(new Message(TypeEnumMessage.RM_TRESOR, emplacementJoueur));
                     break;
                     case TROPHEE:
                         caliceOnde = true;
                         notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Le tresor Calice des Ondes a été récupéré"));
+                        notifierObservateur(new Message(TypeEnumMessage.RM_TRESOR, emplacementJoueur));
                     break;
                 }
                 //  retire le tresor de la case
@@ -179,7 +184,11 @@ public class ControleurJeuSecondaire implements Observe{
             
                 decrementAction();
                 
-            }
+            //}
+        }
+        else
+        {
+            notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Pas possible de recup tresor"));
         }
     }
     
