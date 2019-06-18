@@ -732,15 +732,13 @@ public class Plateau implements Observateur {
                 break;
             case RM_TRESOR:
                 
-                
                 for(String i : listTresor.keySet())
                 {
                     if(m.getEmplacementJoueur().getNom() == i)
                     {
-                        listTresor.remove(i);
+                        listTresor.get(i).setVisible(false);
                     }
                 }
-                 
                 
                 break;
         }
