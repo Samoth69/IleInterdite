@@ -569,7 +569,7 @@ public class ControleurJeuSecondaire implements Observe{
         
     }
     
-
+    
     private Observateur observateur;    
     public void addObservateur(Observateur o) {
         this.observateur = o;
