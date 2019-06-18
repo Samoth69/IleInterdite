@@ -25,6 +25,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.*;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 import javax.swing.border.Border;
 
 /**
@@ -49,16 +51,14 @@ public class Plateau implements Observateur {
     private JLabel joueurActuel;
     private JLabel ActionRestante;
 
-    private JButton buttonDeplacement;
-    private JButton buttonAssecher;
-    private JButton buttonPasserTour;
+    
     
     private JPanel panelGamePad;
 
     //boolean deplacementMode = false; //Devient vrai si le joueur à cliquer sur la case de son emplacement et voit donc les cases sur lesquels il peut aller
     //indique le "mode" de l'interface cad, comment elle doit afficher la grille en fonction du bouton cliquer par l'utilisateur
-    int mode = 0; //0: aucun, 1: deplacement, 2: assecher
-    int oldMode = 0; //permet de détecter les changement dans la variable mode
+    private int mode = 0; //0: aucun, 1: deplacement, 2: assecher
+    private int oldMode = 0; //permet de détecter les changement dans la variable mode
 
     private final static Color emptyColor = new Color(255, 255, 255); //couleur case vide
     private final static Color tuileMouilee = new Color(52, 152, 219);
@@ -76,10 +76,6 @@ public class Plateau implements Observateur {
     private final static Color echetteText = Color.white;
     private final static Color echetteRed = Color.red;
 
-    private final static String nomButtonDeplacement = "Se Déplacer";
-    private final static String nomButtonAssecher = "Assécher";
-    private final static String nomAnnulé = "Annuler";
-
     private final JFrame window;
     private JLabel niveauEau[];
     private JLabel niveauEau2[];
@@ -88,17 +84,14 @@ public class Plateau implements Observateur {
     private JPanel contenantNiveauEauGauche;
     private JPanel contenantNiveauEauDroite;
     
-    private JPanel contenantCarteRouge1;
-    private JPanel contenantCarteRouge2;
-    private JPanel contenantCarteRouge3;
-    private JPanel contenantCarteRougeActuel;
-    
     private AffichagePersonnage affichagePerso1;
     private AffichagePersonnage affichagePerso2;
     private AffichagePersonnage affichagePerso3;
-    private AffichagePersonnage affichagePersoActuel;
+    private AffichagePersonnage affichagePerso4;
     
-    private ArrayList<AffichagePersonnage> affichagePersonnage;
+    private final static String nomButtonDeplacement = AffichagePersonnage.nomButtonDeplacement;
+    private final static String nomButtonAssecher = AffichagePersonnage.nomButtonAssecher;
+    private final static String nomAnnulé = AffichagePersonnage.nomAnnulé;
     
     private JButton augmenterniveauEau;
     
@@ -119,8 +112,6 @@ public class Plateau implements Observateur {
         for (Personnage p : listPerso) {
             listPion.add(new Pion(p));
         }
-        
-        affichagePersonnage = new ArrayList<>();
 
         /**
          * PARTIE SWING *
@@ -243,34 +234,6 @@ public class Plateau implements Observateur {
          */
         JPanel panelGrille = new JPanel(new GridLayout(6, 6));
         mainPanel.add(panelGrille, BorderLayout.CENTER);
-
-        buttonDeplacement = new JButton(nomButtonDeplacement);
-        buttonDeplacement.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                oldMode = mode;
-                mode = 1;
-                gamePadClick();
-            }
-        });
-
-        buttonAssecher = new JButton(nomButtonAssecher);
-        buttonAssecher.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                oldMode = mode;
-                mode = 2;
-                gamePadClick();
-            }
-        });
-        
-        buttonPasserTour = new JButton("Passer tour");
-        buttonPasserTour.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                cj.passerJoueurSuivant();
-            }
-        });
         
         JButton jb = new JButton("Augmenter niveau eau");
         jb.addActionListener(new ActionListener() {
@@ -285,33 +248,43 @@ public class Plateau implements Observateur {
         ActionRestante = new JLabel();
 
         panelGamePad = new JPanel(new BorderLayout());
-        JPanel panelHautGamePad = new JPanel(new GridLayout(4, 2)); 
-        
-        panelHautGamePad.add(new JLabel("Tour du joueur "));
-        panelHautGamePad.add(joueurActuel);
-        panelHautGamePad.add(buttonDeplacement);
-        panelHautGamePad.add(buttonAssecher);
+        JPanel panelHautGamePad = new JPanel(new GridLayout(0, 2)); 
         panelHautGamePad.add(new JLabel("Action restante:"));
         panelHautGamePad.add(ActionRestante);
-        panelHautGamePad.add(buttonPasserTour);
         
         panelHautGamePad.add(jb);
 
         panelGamePad.add(panelHautGamePad, BorderLayout.NORTH);
   
-        affichagePersoActuel = new AffichagePersonnage(false);
-        affichagePerso1 = new AffichagePersonnage(true);
-        affichagePerso2 = new AffichagePersonnage(true);
-        affichagePerso3 = new AffichagePersonnage(true);
+        JPanel panelMilieuGamePad = new JPanel(new GridLayout(4,1));
         
-        panelGamePad.add(affichagePersoActuel, BorderLayout.CENTER);
+        affichagePerso1 = new AffichagePersonnage(this, listPerso.get(0));
+        affichagePerso2 = new AffichagePersonnage(this, listPerso.get(1));
+        
+        if (cj.getNombreJoueurDansPartie() > 2) {
+            affichagePerso3 = new AffichagePersonnage(this, listPerso.get(2));
+        } else {
+            affichagePerso3 = new AffichagePersonnage(this, null);
+        }
+        if (cj.getNombreJoueurDansPartie() > 3) {
+            affichagePerso4 = new AffichagePersonnage(this, listPerso.get(3));
+        } else {
+            affichagePerso4 = new AffichagePersonnage(this, null);
+        }
+        
+        panelMilieuGamePad.add(affichagePerso1);
+        panelMilieuGamePad.add(affichagePerso2);
+        panelMilieuGamePad.add(affichagePerso3);
+        panelMilieuGamePad.add(affichagePerso4);
 
+        panelGamePad.add(panelMilieuGamePad, BorderLayout.CENTER);
+        
         JPanel panelGamePadBas = new JPanel();
         panelGamePadBas.setLayout(new BoxLayout(panelGamePadBas, BoxLayout.Y_AXIS));
 
         JScrollPane scrollPane = new JScrollPane();
         scrollPane.setViewportView(listBasGamePad);
-        scrollPane.setPreferredSize(new Dimension(scrollPane.getWidth(), 250));
+        scrollPane.setPreferredSize(new Dimension(scrollPane.getWidth(), 150));
 
         panelGamePadBas.add(new JLabel("Historique:", SwingConstants.CENTER));
         panelGamePadBas.add(scrollPane, BorderLayout.SOUTH);
@@ -383,7 +356,6 @@ public class Plateau implements Observateur {
                 }
                 panel[i][j] = pn;
                 grille.add(pn, i, j);        //Ajout de la case a la grille de jeu (panelGrille)
-
             }
         }
         paintNormal();
@@ -395,8 +367,42 @@ public class Plateau implements Observateur {
         ActionRestante.setText(Integer.toString((int)cj.getNbActionRestante()));
         listBasGamePad.setListData(historiqueAction.toArray());
         
-        affichagePersoActuel.update(cj.getJoueurEntrainDeJouer(), cj.getJoueurEntrainDeJouer().getCouleurPion());
-        
+        switch (cj.getJoueurNum()) {
+            case 0:
+                affichagePerso1.update(true);
+                affichagePerso2.update(false);
+                affichagePerso3.update(false);
+                affichagePerso4.update(false);
+                break;
+            case 1:
+                affichagePerso1.update(false);
+                affichagePerso2.update(true);
+                affichagePerso3.update(false);
+                affichagePerso4.update(false);
+                break;
+            case 2:
+                affichagePerso1.update(false);
+                affichagePerso2.update(false);
+                affichagePerso3.update(true);
+                affichagePerso4.update(false);
+                break;
+            case 3:
+                affichagePerso1.update(false);
+                affichagePerso2.update(false);
+                affichagePerso3.update(false);
+                affichagePerso4.update(true);
+                break;
+        }
+    }
+    
+    //indique l'état de l'interface plateau.
+    public void changeMode(int mode) {
+        oldMode = this.mode;
+        this.mode = mode;
+    }
+    
+    public ControleurJeuSecondaire getControleurJeu()  {
+        return cj;
     }
 
     //est appeller quand une action est fini
@@ -404,14 +410,16 @@ public class Plateau implements Observateur {
         paintNormal();
         mode = 0;
         updateGamePad();
-        buttonAssecher.setText(nomButtonAssecher);
-        buttonDeplacement.setText(nomButtonDeplacement);
-        buttonAssecher.setEnabled(true);
-        buttonDeplacement.setEnabled(true);
+        setBtAssecherText(nomButtonAssecher);
+        setBtDeplacementText(nomButtonDeplacement);
+        setBtAssecherEnabled(true);
+        setBtDeplacementEnabled(true);
+        setBtPasserJoueurEnabled(true);
         window.repaint();
     }
 
-    private void gamePadClick() {
+    //utilisé par les boutons déplacer et assécher afin de changer l'affichage du plateau
+    public void gamePadClick() {
         //System.out.println("deplacement = " + mode + " OLD:" + oldMode);
 
         //si jamais l'ancien et le mode actuel sont égaux (donc potentiellement, l'utilisateur appuie deux fois sur "se deplacer")
@@ -427,9 +435,10 @@ public class Plateau implements Observateur {
                 break;
             case 1: //se deplacer
                 paintNonSelected();
-                buttonAssecher.setEnabled(false);
-                buttonDeplacement.setEnabled(true);
-                buttonDeplacement.setText(nomAnnulé);
+                setBtAssecherEnabled(false);
+                setBtDeplacementEnabled(true);
+                setBtPasserJoueurEnabled(false);
+                setBtDeplacementText(nomAnnulé);
 
                 for (Tuile t : cj.getJoueurEntrainDeJouer().getDeplacements()) {
                     JPanel jpa = panel[t.getX()][t.getY()];
@@ -439,9 +448,11 @@ public class Plateau implements Observateur {
                 break;
             case 2:
                 paintNonSelected();
-                buttonAssecher.setEnabled(true);
-                buttonDeplacement.setEnabled(false);
-                buttonAssecher.setText(nomAnnulé);
+                
+                setBtAssecherEnabled(true);
+                setBtDeplacementEnabled(false);
+                setBtPasserJoueurEnabled(false);
+                setBtAssecherText(nomAnnulé);
 
                 for (Tuile t : cj.getJoueurEntrainDeJouer().getTuileQuiPeutSecher()) {
                     JPanel jpa = panel[t.getX()][t.getY()];
@@ -474,6 +485,91 @@ public class Plateau implements Observateur {
             actionFinished();
         }
 
+    }
+    
+    private void setBtAssecherText(String t) {
+        switch (cj.getJoueurNum()) {
+            case 0:
+                affichagePerso1.setButtonAssecherText(t);
+                break;
+            case 1:
+                affichagePerso2.setButtonAssecherText(t);
+                break;
+            case 2:
+                affichagePerso3.setButtonAssecherText(t);
+                break;
+            case 3:
+                affichagePerso4.setButtonAssecherText(t);
+                break;
+        }
+    }
+    
+    private void setBtAssecherEnabled(boolean b) {
+        switch (cj.getJoueurNum()) {
+            case 0:
+                affichagePerso1.setButtonAssecherEnabled(b);      
+                break;
+            case 1:
+                affichagePerso2.setButtonAssecherEnabled(b);
+                break;
+            case 2:
+                affichagePerso3.setButtonAssecherEnabled(b);
+                break;
+            case 3:
+                affichagePerso4.setButtonAssecherEnabled(b);
+                break;
+        }
+    }
+    
+    private void setBtDeplacementText(String t) {
+        switch (cj.getJoueurNum()) {
+            case 0:
+                affichagePerso1.setButtonDeplacementText(t);
+                break;
+            case 1:
+                affichagePerso2.setButtonDeplacementText(t);
+                break;
+            case 2:
+                affichagePerso3.setButtonDeplacementText(t);
+                break;
+            case 3:
+                affichagePerso4.setButtonDeplacementText(t);
+                break;
+        }
+    }
+    
+    private void setBtDeplacementEnabled(boolean b) {
+        switch (cj.getJoueurNum()) {
+            case 0:
+                affichagePerso1.setButtonDeplacementEnabled(b);      
+                break;
+            case 1:
+                affichagePerso2.setButtonDeplacementEnabled(b);
+                break;
+            case 2:
+                affichagePerso3.setButtonDeplacementEnabled(b);
+                break;
+            case 3:
+                affichagePerso4.setButtonDeplacementEnabled(b);
+                break;
+        }
+    }
+    
+    private void setBtPasserJoueurEnabled(boolean b) {
+        switch (cj.getJoueurNum()) {
+            case 0:
+                affichagePerso1.setButtonPasserTourEnabled(b);
+                break;
+            case 1:
+                affichagePerso2.setButtonPasserTourEnabled(b);
+                break;
+            case 2:
+                affichagePerso3.setButtonPasserTourEnabled(b);
+                break;
+            case 3:
+                affichagePerso4.setButtonPasserTourEnabled(b);
+                break;
+        }
     }
     
     private void ColoriserNiveauEau() {
