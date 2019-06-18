@@ -442,6 +442,41 @@ public class ControleurJeuSecondaire implements Observe{
         }
     }
     
+    public void partieGagne(){
+        int nbJoueurSurHeliport = 0;
+        
+        //  Si tous les tresors ont été récupérés
+        if(pierreSacre == true && caliceOnde == true && cristalArdent == true && statueZephyr == true)
+        {
+            for(int i = 0; i < personnages.size(); i++)
+            {
+                //  Compte le nombre de joueurs sur l'heliport
+                if(personnages.get(i).getEmplacement().getNom() == "Heliport")
+                {
+                    nbJoueurSurHeliport++;
+                }
+            }
+            //  Si tous les joueurs sont sur l'heliport
+            //  On regarde si un des joueurs a une carte helicoptere
+            if(nbJoueurSurHeliport == personnages.size())
+            {
+                for(int i = 0; i < personnages.size(); i++)
+                {
+                    ArrayList<CarteRouge> lesCartesDuJoueur = personnages.get(i).getCartes();
+                    
+                    for(int j = 0; j < lesCartesDuJoueur.size(); j++)
+                    {
+                        //  Si un joueur a une carte helicoptere, partie gagne
+                        if(lesCartesDuJoueur.get(j).getDescription() == "Hélicopère")
+                        {
+                            notifierObservateur(new Message(TypeEnumMessage.PARTIE_GAGNE, "Partie Gagnée"));
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
     public void verifFinDePartie(){
         //  Si le niveau d'eau est au max, alors fin de partie
         if(niveauEau >= 10)

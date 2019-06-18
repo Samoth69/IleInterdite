@@ -20,5 +20,6 @@ public enum TypeEnumMessage {
     UNLOCK_PLATEAU, //envoyer par VuDefausse. indique au plateau qu'il peut set Enabled sur true pour pouvoir continuer à jouer
     HISTORIQUE, //pour ajouté un message à l'historique de la partie (si l'IHM implémente ceci)
     NOUVEAU_TOUR, //indique à l'IHM que un nouveau tour de jeu démare
-    FIN_PARTIE  //indique une fin de partie
+    FIN_PARTIE,  //indique une fin de partie
+    PARTIE_GAGNE    //indique que les joueurs ont gagnés
 }
