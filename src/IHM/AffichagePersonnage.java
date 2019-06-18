@@ -99,6 +99,13 @@ public class AffichagePersonnage extends JPanel{
         buttonPrendreRelique = new JButton("Prendre relique");;
         buttonCarteSpecial = new JButton("Carte Spécial");
         
+        buttonPrendreRelique.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                pl.getControleurJeu().recupererTresor(pl.getControleurJeu().getJoueurEntrainDeJouer().getEmplacement());
+            }
+        });
+        
         panelBas.add(buttonDeplacement);
         panelBas.add(buttonAssecher);
         panelBas.add(buttonPasserTour);

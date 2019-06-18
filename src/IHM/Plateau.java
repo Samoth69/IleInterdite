@@ -44,6 +44,7 @@ public class Plateau implements Observateur {
     private ArrayList<Pion> listPion;
     private Tuile plateau[][] = new Tuile[6][6];
     private JPanel panel[][] = new JPanel[6][6];
+    private ArrayList<Tresor> listTresor = new ArrayList<>();
 
     private ControleurJeuSecondaire cj;
     private Grille grille;
@@ -711,6 +712,9 @@ public class Plateau implements Observateur {
                 break;
             case PARTIE_GAGNE:
                 System.out.println("Fin partie : "+m.getMessage());
+                break;
+            case RM_TRESOR:
+                
                 break;
         }
     }
