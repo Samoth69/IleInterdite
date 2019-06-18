@@ -597,7 +597,14 @@ public class Plateau implements Observateur {
                 paintNormal();
                 break;
             case HISTORIQUE:
-                ajouterMessageHistorique(m.getAdditionnal());
+                if(!m.getMessage().isEmpty())
+                {
+                    ajouterMessageHistorique(m.getMessage());
+                }
+                else
+                {
+                    ajouterMessageHistorique(m.getAdditionnal());
+                }
                 break;
             case NOUVEAU_TOUR:
                 ajouterMessageHistorique("\n");
