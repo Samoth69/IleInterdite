@@ -305,14 +305,7 @@ public class ControleurJeuSecondaire implements Observe{
         numJoueurEnCours++;
         if (nombreJoueurDansPartie <= numJoueurEnCours){
             numJoueurEnCours = 0;
-            NouveauTourDeJeu();
         }
-        nombreAction = 3;
-        notifierObservateur(new Message(TypeEnumMessage.JOUEUR_SUIVANT));
-        verifFinDePartie();
-    }
-    
-    private void NouveauTourDeJeu() {
         ArrayList<CarteInondation> aci = new ArrayList<>();
         for (int i = 0; i < getNombreCarteInondationAPiocher(); i++) {
             CarteInondation ci = PiocherCarteInond();
@@ -321,10 +314,11 @@ public class ControleurJeuSecondaire implements Observe{
             DefausserCarte(ci);
         }
         notifierObservateur(new Message(TypeEnumMessage.PIOCHE_CARTE_INONDATION, aci));
-        notifierObservateur(new Message(TypeEnumMessage.NOUVEAU_TOUR));
-        //System.out.println("");
-        
+        nombreAction = 3;
+        notifierObservateur(new Message(TypeEnumMessage.JOUEUR_SUIVANT));
+        verifFinDePartie();
     }
+    
     
     private void MelangeCarteRouge() {
         Collections.shuffle(pileCarteRouge);
