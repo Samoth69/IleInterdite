@@ -16,6 +16,7 @@ public class CarteTresor extends CarteRouge{
     
         public CarteTresor(String nom, TypeEnumTresors typeTresor){
             super(nom, typeTresor.toString());
+            this.typeTresor = typeTresor;
         }
          
         @Override

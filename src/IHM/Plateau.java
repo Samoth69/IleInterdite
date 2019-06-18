@@ -661,23 +661,10 @@ public class Plateau implements Observateur {
     public void traiterMessage(Message m) {
         //System.out.println("MESSAGE");
         switch (m.getMessageType()) {
-            case ACTION:
-                switch (m.getActionType()) {
-                    case PIOCHER_CARTE_MONTEE_DES_EAUX:
-
-                        break;
-                    case PIOCHER_DEUX_CARTE_TRESOR:
-
-                        break;
-                }
-                break;
-            case CARTE:
-
-                break;
             case JOUEUR_SUIVANT:
                 ajouterMessageHistorique("Passage au joueur suivant");
                 updateGamePad();
-                System.out.println(cj.getJoueurNum());
+                //System.out.println(cj.getJoueurNum());
                 break;
             case CHANGEMENT_NIVEAU_EAU:
                 ColoriserNiveauEau();
@@ -705,6 +692,9 @@ public class Plateau implements Observateur {
             case NOUVEAU_TOUR:
                 ajouterMessageHistorique("\n");
                 ajouterMessageHistorique("Nouveau tour");
+                break;
+            case UPDATE_GUI:
+                updateGamePad();
                 break;
             case FIN_PARTIE:
                 System.out.println("Fin partie : "+m.getMessage());
