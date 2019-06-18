@@ -266,7 +266,9 @@ public class Joueurs extends JFrame implements ActionListener {
                     JOptionPane.showMessageDialog(null, "Chaque joueur doit avoir un rôle différent");
                     return; //quitte la fonction
                 }
-                usedRole.add((String)listRole.get(i).getSelectedItem());
+                if ((String)listRole.get(i).getSelectedItem() != nomRoles[nomRoles.length-1]) {
+                    usedRole.add((String)listRole.get(i).getSelectedItem());
+                }   
             }
             for (int i = 0; i < (int)nbJoueurs.getSelectedItem(); i++) {
                 if (listPseudo.get(i).getText().isEmpty()) {
