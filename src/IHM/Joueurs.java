@@ -241,11 +241,6 @@ public class Joueurs extends JFrame implements ActionListener {
     public void afficher() {
         this.joueurs.setVisible(true);
     }
-     
-    public static void main(String[] args) {
-        Joueurs j = new Joueurs();
-        j.afficher();
-    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
