@@ -24,7 +24,7 @@ public class CarteMonteeDesEaux extends CarteRouge{
         @Override
          
         public String getNom(){
-            return "Carte MonteeDesEaux";
+            return super.getNom();
         }
          
       

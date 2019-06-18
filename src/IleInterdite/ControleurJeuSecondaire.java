@@ -5,9 +5,12 @@
  */
 package IleInterdite;
 
+import Cartes.CarteAction;
 import Cartes.CarteInondation;
 import Cartes.CarteMonteeDesEaux;
 import Cartes.CarteRouge;
+import Cartes.CarteTresor;
+import Enumerations.TypeEnumCarteAction;
 import Enumerations.TypeEnumInondation;
 import Enumerations.TypeEnumMessage;
 import Enumerations.TypeEnumTresors;
@@ -480,8 +483,9 @@ public class ControleurJeuSecondaire implements Observe{
         //  Si le niveau d'eau est au max, alors fin de partie
         if(niveauEau >= 9)
         {
+            notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Fin de partie : Niveau d'eau maximum atteint"));
             notifierObservateur(new Message(TypeEnumMessage.FIN_PARTIE, "Niveau d'eau maximum atteint"));
-        }
+        }   
         
         //  ------------------------------------------------------
         
@@ -490,7 +494,8 @@ public class ControleurJeuSecondaire implements Observe{
         {
             if(personnages.get(i).getDeplacements().isEmpty())
             {
-                notifierObservateur(new Message(TypeEnumMessage.FIN_PARTIE, personnages.get(i).getNom()+" est mort"));
+                notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Fin de partie : "+personnages.get(i).getNom()+" est mort"));
+                notifierObservateur(new Message(TypeEnumMessage.FIN_PARTIE));
             }
         }
         
@@ -503,7 +508,8 @@ public class ControleurJeuSecondaire implements Observe{
             {
                 if(grille.getListTuile().get(i).getInondation() == TypeEnumInondation.INONDE)
                 {
-                    notifierObservateur(new Message(TypeEnumMessage.FIN_PARTIE, "Heliport Inondé"));
+                    notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Fin de partie : Heliport Inondé"));
+                    notifierObservateur(new Message(TypeEnumMessage.FIN_PARTIE));
                 }
                 break; // vas peut-etre poser probleme suite au notifierObservateur
             }
@@ -521,7 +527,8 @@ public class ControleurJeuSecondaire implements Observe{
                 {
                     if(grille.getListTuile().get(i).getNom() == "La Caverne du Brasier" && grille.getListTuile().get(i).getInondation() == TypeEnumInondation.INONDE)
                     {
-                        notifierObservateur(new Message(TypeEnumMessage.FIN_PARTIE, "Les 2 cases caverne sont inondé et les trésors avec"));
+                        notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Fin de partie : Les 2 cases caverne sont inondé et les trésors avec"));
+                        notifierObservateur(new Message(TypeEnumMessage.FIN_PARTIE));
                         break;  //  peut-etre problematique
                     }
                 }
@@ -533,7 +540,8 @@ public class ControleurJeuSecondaire implements Observe{
                 {
                     if(grille.getListTuile().get(i).getNom() == "Le Temple de La Lune" && grille.getListTuile().get(i).getInondation() == TypeEnumInondation.INONDE)
                     {
-                        notifierObservateur(new Message(TypeEnumMessage.FIN_PARTIE, "Les 2 cases Temple sont inondé et les trésors avec"));
+                        notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Fin de partie : Les 2 cases Temple sont inondé et les trésors avec"));
+                        notifierObservateur(new Message(TypeEnumMessage.FIN_PARTIE));
                         break;  //  peut-etre problematique
                     }
                 }
@@ -545,7 +553,8 @@ public class ControleurJeuSecondaire implements Observe{
                 {
                     if(grille.getListTuile().get(i).getNom() == "Le Palais des Marees" && grille.getListTuile().get(i).getInondation() == TypeEnumInondation.INONDE)
                     {
-                        notifierObservateur(new Message(TypeEnumMessage.FIN_PARTIE, "Les 2 cases palais sont inondé et les trésors avec"));
+                        notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Fin de partie : Les 2 cases palais sont inondé et les trésors avec"));
+                        notifierObservateur(new Message(TypeEnumMessage.FIN_PARTIE));
                         break;  //  peut-etre problematique
                     }
                 }
@@ -557,7 +566,8 @@ public class ControleurJeuSecondaire implements Observe{
                 {
                     if(grille.getListTuile().get(i).getNom() == "Le Jardin des Murmures" && grille.getListTuile().get(i).getInondation() == TypeEnumInondation.INONDE)
                     {
-                        notifierObservateur(new Message(TypeEnumMessage.FIN_PARTIE, "Les 2 cases jardins sont inondé et les trésors avec"));
+                        notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Fin de partie : Les 2 cases jardins sont inondé et les trésors avec"));
+                        notifierObservateur(new Message(TypeEnumMessage.FIN_PARTIE));
                         break;  //  peut-etre problematique
                     }
                 }
@@ -579,5 +589,43 @@ public class ControleurJeuSecondaire implements Observe{
     
     public ArrayList<Personnage> getPerso(){
         return personnages;
+    }
+    
+    
+    
+    public ArrayList<CarteRouge> getListCarteRouge() {
+        ArrayList<CarteRouge> out = new ArrayList<>();
+        
+        out.add(new CarteTresor("CarteTresor",TypeEnumTresors.LION));
+        out.add(new CarteTresor("CarteTresor",TypeEnumTresors.LION));
+        out.add(new CarteTresor("CarteTresor",TypeEnumTresors.LION));
+        out.add(new CarteTresor("CarteTresor",TypeEnumTresors.LION));
+        out.add(new CarteTresor("CarteTresor",TypeEnumTresors.LION));
+        out.add(new CarteTresor("CarteTresor",TypeEnumTresors.LUNE));
+        out.add(new CarteTresor("CarteTresor",TypeEnumTresors.LUNE));
+        out.add(new CarteTresor("CarteTresor",TypeEnumTresors.LUNE));
+        out.add(new CarteTresor("CarteTresor",TypeEnumTresors.LUNE));
+        out.add(new CarteTresor("CarteTresor",TypeEnumTresors.LUNE));
+        out.add(new CarteTresor("CarteTresor",TypeEnumTresors.FEU));
+        out.add(new CarteTresor("CarteTresor",TypeEnumTresors.FEU));
+        out.add(new CarteTresor("CarteTresor",TypeEnumTresors.FEU));
+        out.add(new CarteTresor("CarteTresor",TypeEnumTresors.FEU));
+        out.add(new CarteTresor("CarteTresor",TypeEnumTresors.FEU));
+        out.add(new CarteTresor("CarteTresor",TypeEnumTresors.TROPHEE));
+        out.add(new CarteTresor("CarteTresor",TypeEnumTresors.TROPHEE));
+        out.add(new CarteTresor("CarteTresor",TypeEnumTresors.TROPHEE));
+        out.add(new CarteTresor("CarteTresor",TypeEnumTresors.TROPHEE));
+        out.add(new CarteTresor("CarteTresor",TypeEnumTresors.TROPHEE));
+        out.add(new CarteMonteeDesEaux("CarteMonteeDesEaux1"));
+        out.add(new CarteMonteeDesEaux("CarteMonteeDesEaux2"));
+        out.add(new CarteMonteeDesEaux("CarteMonteeDesEaux3"));
+        out.add(new CarteAction("CarteAction1",TypeEnumCarteAction.HELICOPTERE));
+        out.add(new CarteAction("CarteAction2",TypeEnumCarteAction.HELICOPTERE));
+        out.add(new CarteAction("CarteAction3",TypeEnumCarteAction.HELICOPTERE));
+        out.add(new CarteAction("CarteAction1",TypeEnumCarteAction.SAC_DE_SABLE));
+        out.add(new CarteAction("CarteAction1",TypeEnumCarteAction.SAC_DE_SABLE));
+        
+        
+        return out;
     }
 }

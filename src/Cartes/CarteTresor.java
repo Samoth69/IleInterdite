@@ -20,7 +20,7 @@ public class CarteTresor extends CarteRouge{
          
         @Override
         public String getNom(){
-            return "CarteTresor";
+            return super.getNom();
         }
         
         public TypeEnumTresors getTypeTresor(){
