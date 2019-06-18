@@ -135,8 +135,7 @@ public class Page1 extends JLayeredPane implements ActionListener {
         if (e.getSource() == retour) {
             int rep = JOptionPane.showConfirmDialog(null, "Etes-vous sûr(e) de vouloir revenir au menu ?", "Message de confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
             if (rep == JOptionPane.YES_OPTION) {
-                Menu menu = new Menu();
-                menu.afficher();
+                //todo notifier observateur controlleur principal menu_principal
                 this.pg1.setVisible(false);
             }
         }
