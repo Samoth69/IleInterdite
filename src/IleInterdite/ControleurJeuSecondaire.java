@@ -470,6 +470,7 @@ public class ControleurJeuSecondaire implements Observe{
                         if(lesCartesDuJoueur.get(j).getDescription() == "Hélicopère")
                         {
                             notifierObservateur(new Message(TypeEnumMessage.PARTIE_GAGNE, "Partie Gagnée"));
+                            break;
                         }
                     }
                 }

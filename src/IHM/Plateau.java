@@ -606,6 +606,9 @@ public class Plateau implements Observateur {
             case FIN_PARTIE:
                 System.out.println("Fin partie : "+m.getMessage());
                 break;
+            case PARTIE_GAGNE:
+                System.out.println("Fin partie : "+m.getMessage());
+                break;
         }
     }
 
