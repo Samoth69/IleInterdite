@@ -25,6 +25,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 import javax.swing.border.Border;
@@ -44,7 +45,7 @@ public class Plateau implements Observateur {
     private ArrayList<Pion> listPion;
     private Tuile plateau[][] = new Tuile[6][6];
     private JPanel panel[][] = new JPanel[6][6];
-    private ArrayList<Tresor> listTresor = new ArrayList<>();
+    private HashMap<String, Tresor> listTresor = new HashMap<>();
 
     private ControleurJeuSecondaire cj;
     private Grille grille;
@@ -112,6 +113,14 @@ public class Plateau implements Observateur {
         listPerso = persos;
         for (Personnage p : listPerso) {
             listPion.add(new Pion(p));
+        }
+        
+        for(int i = 0; i < grille.getListTuile().size(); i++)
+        {
+            if(grille.getListTuile().get(i).getTresor() != TypeEnumTresors.AUCUN)
+            {
+                listTresor.put(grille.getListTuile().get(i).getNom(), new Tresor(grille.getListTuile().get(i).getTresor()));
+            }
         }
 
         /**
@@ -319,7 +328,15 @@ public class Plateau implements Observateur {
 
                     if (plateau[i][j].getTresor() != TypeEnumTresors.AUCUN) {
 
-                        pn.add(new Tresor(plateau[i][j].getTresor()));
+                        for(String k : listTresor.keySet())
+                        {
+                            if(plateau[i][j].getNom() == k)
+                            {
+                                pn.add(listTresor.get(k));
+                            }
+                        }
+                        
+                        //pn.add(new Tresor(plateau[i][j].getTresor()));
                         
                     }
                 } else {
@@ -714,6 +731,16 @@ public class Plateau implements Observateur {
                 System.out.println("Fin partie : "+m.getMessage());
                 break;
             case RM_TRESOR:
+                
+                
+                for(String i : listTresor.keySet())
+                {
+                    if(m.getEmplacementJoueur().getNom() == i)
+                    {
+                        listTresor.remove(i);
+                    }
+                }
+                 
                 
                 break;
         }
