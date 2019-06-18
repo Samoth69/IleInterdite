@@ -75,22 +75,29 @@ public class ControleurJeuPrincipal implements Observateur{
                             perso.add(new Plongeur(infos.get(counter), null));
                             break;
                         case "Aléatoire":
-                            
+                            //  Variable aléatoire pour le switch
                             int valAle = 1 + (int)(Math.random() * ((5 - 1) + 1));
+                            //  Variable qui indique si un role de joueur (ex : Explo) est disponible
                             boolean joueurOk = true;
                             
+                            //  boucle do while
                             do
                             {
+                                //  reset de la variable sur true
                                 joueurOk = true;
                                 
                                 switch(valAle)
                                 {
                                     case 1:
+                                        //  Verifie que le role est bien dispo
                                         for(Personnage p : perso)
                                         {
+                                            //  Si il y a deja un role Explo
                                             if(p instanceof Explorateur)
                                             {
+                                                //  variable qui indique si un role est dispo est passé sur false
                                                 joueurOk = false;
+                                                //  si la variable aléatoire depasse les cas du switch
                                                 if(valAle<=4)
                                                 {
                                                     valAle++;
@@ -101,12 +108,14 @@ public class ControleurJeuPrincipal implements Observateur{
                                                 }
                                             }
                                         }
+                                        //  si le role est dispo
                                         if(joueurOk)
                                         {
+                                            //  Ajout du personnage avec son role
                                            perso.add(new Explorateur(infos.get(counter), null)); 
                                         }
                                         break;
-                                    case 2:
+                                    case 2: //  idem cas 1
                                         for(Personnage p : perso)
                                         {
                                             if(p instanceof Ingenieur)
@@ -127,7 +136,7 @@ public class ControleurJeuPrincipal implements Observateur{
                                            perso.add(new Ingenieur(infos.get(counter), null)); 
                                         }
                                         break;
-                                    case 3:
+                                    case 3: //  idem cas 1
                                         for(Personnage p : perso)
                                         {
                                             if(p instanceof Navigateur)
@@ -148,7 +157,7 @@ public class ControleurJeuPrincipal implements Observateur{
                                            perso.add(new Navigateur(infos.get(counter), null)); 
                                         }
                                         break;
-                                    case 4:
+                                    case 4: //  idem cas 1
                                         for(Personnage p : perso)
                                         {
                                             if(p instanceof Pilote)
@@ -169,7 +178,7 @@ public class ControleurJeuPrincipal implements Observateur{
                                            perso.add(new Pilote(infos.get(counter), null)); 
                                         }
                                         break;
-                                    case 5:
+                                    case 5: //  idem cas 1
                                         for(Personnage p : perso)
                                         {
                                             if(p instanceof Plongeur)
@@ -191,7 +200,7 @@ public class ControleurJeuPrincipal implements Observateur{
                                         }
                                         break;
                                 }
-                            }while(joueurOk != true);
+                            }while(joueurOk != true);   //  Tan que l'on a pas trouvé de role dispo on cherche
                             break;
                     }
                     joueurCompter++;
