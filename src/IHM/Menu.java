@@ -9,12 +9,17 @@ import Enumerations.TypeEnumMenuPrincipal;
 import IleInterdite.Message;
 import IleInterdite.Observateur;
 import java.awt.BorderLayout;
+import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -79,17 +84,21 @@ public class Menu extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == jouer) {
+        if(e.getSource() == jouer) {
             this.menu.setVisible(false);
             notifierObservateur(new Message(TypeEnumMenuPrincipal.MENU_JOUEURS));
         }
         
-        if (e.getSource() == regles) {
-            this.menu.setVisible(false);
-            notifierObservateur(new Message(TypeEnumMenuPrincipal.MENU_REGLES));
+        if(e.getSource() == regles) {
+                try {
+                    Desktop.getDesktop().open(new File(System.getProperty("user.dir") + "/src/RessourcesRegles/regles.pdf"));
+                } catch (IOException ex) {
+                    Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                notifierObservateur(new Message(TypeEnumMenuPrincipal.MENU_REGLES));
         }
-        
-        if (e.getSource() == quitter) {
+          
+        if(e.getSource() == quitter) {
             int rep = JOptionPane.showConfirmDialog(null,"Etes-vous sûr(e) de vouloir quitter le jeu ?", "Message de confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);                   
             if (rep == JOptionPane.YES_OPTION) {
                 System.exit(0);
