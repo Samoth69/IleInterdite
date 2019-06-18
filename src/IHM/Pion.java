@@ -10,7 +10,6 @@ import Personnages.*;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.lang.reflect.Type;
 import javax.swing.JComponent;
 
 /**
@@ -18,19 +17,32 @@ import javax.swing.JComponent;
  * @author mariottp
  */
 public class Pion extends JComponent{
-    
-    
+
     //Personnage perso;
-    TypeEnumCouleurPion couleur;
+    private TypeEnumCouleurPion couleur;
+    private int width;
+    private int height;
     
     public Pion(Personnage perso){
         this.couleur = perso.getCouleurPion();
+        width = 30;
+        height = 30;
     }
+    
     public Pion(TypeEnumCouleurPion couleur){
         this.couleur = couleur;
+        width = 30;
+        height = 30;
+    }
+    
+    public Pion(TypeEnumCouleurPion couleur, int width, int height) {
+        this.couleur = couleur;
+        this.width = width;
+        this.height = height;
     }
     
     //Fonction appelé par defaut pour dessiner le pion
+    @Override
     public void paint(Graphics g){
         Dimension dim = getSize();
         
@@ -55,12 +67,17 @@ public class Pion extends JComponent{
                 g.setColor(Color.MAGENTA);
             break;
             default:
-                g.setColor(Color.GRAY);
+                g.setColor(Color.WHITE);
             break;
         }
         
-        g.fillOval((int)dim.getWidth()/2, 0, 30, 30);
+        g.fillOval(/*(int)dim.getWidth()/2*/0, 0, 30, 30);
     }
+    
+    @Override
+    public Dimension getPreferredSize() {
+        return new Dimension(width, height);
+    }   
     
     //getteur pour la couleur du pion en fonction du personnage
     public TypeEnumCouleurPion getCouleurPion(){

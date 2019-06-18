@@ -5,6 +5,8 @@
  */
 package Enumerations;
 
+import java.awt.Color;
+
 /**
  *
  * @author Thomas
@@ -27,6 +29,26 @@ public enum TypeEnumCouleurPion {
     @Override
     public String toString(){
         return nom;
+    }
+    
+    public Color getColor() {
+        switch (this) {
+            case AUCUN:
+                return Color.WHITE;
+            case BLEU:
+                return Color.BLUE;
+            case JAUNE:
+                return Color.YELLOW;
+            case ORANGE:
+                return Color.ORANGE;
+            case ROUGE:
+                return Color.RED;
+            case VERT:
+                return Color.GREEN;
+            case VIOLET:
+                return new Color(238, 130, 238);
+        }
+        return Color.WHITE; //suppresion de warning, normalement jamais atteind.
     }
     
 }
