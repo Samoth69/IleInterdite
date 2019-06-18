@@ -6,6 +6,10 @@
 package Personnages;
 
 import Cartes.CarteRouge;
+import Cartes.CarteAction;
+import Cartes.CarteTresor;
+import Cartes.CarteInondation;
+import Cartes.CarteMonteeDesEaux;
 import Enumerations.TypeEnumCouleurPion;
 import Enumerations.TypeEnumInondation;
 import IleInterdite.Grille;
@@ -24,8 +28,21 @@ public abstract class Personnage {
     private Tuile emplacementJoueur;
     //grille du jeu
     public Grille ile;
-    //cartes que le joueur possède
+    //TOUTES cartes que le joueur possède
     private ArrayList<CarteRouge> cartes = new ArrayList<>();
+    
+    /*
+    // cartes trésors que le joueur possede
+    private ArrayList<CarteTresor> cartesTresors = new ArrayList<>();
+    // cartes action spéciales que le joueur possede
+    private ArrayList<CarteAction> cartesAction = new ArrayList<>();    
+    // cartes inondation que le joueur possede
+    private ArrayList<CarteInondation> cartesinnondations = new ArrayList<>();    
+    // carte montée des eaux que le joeur peut avoir lors du pioche
+    private CarteMonteeDesEaux carteMonteeEau;
+    */
+
+    
     //couleur pion associé au personnage
     private TypeEnumCouleurPion pion = TypeEnumCouleurPion.AUCUN;
     private boolean pouvoirDeplacementUtilise = false; //devient vrai quand l'utilisateur à utilisé sont pouvoir de déplacement (déplacement diagonal pour explorateur, déplacement sur la carte pour le pilote) redevient faux quand le joueur en cour change

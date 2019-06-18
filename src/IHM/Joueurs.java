@@ -49,6 +49,7 @@ public class Joueurs extends JFrame implements ActionListener {
     private JTextField pseudo2;
     private JTextField pseudo3;
     private JTextField pseudo4;
+    private JTextField choisirnbjoueur;
     
     private JComboBox role1;
     private JComboBox role2;
@@ -72,7 +73,7 @@ public class Joueurs extends JFrame implements ActionListener {
         joueurs = new JFrame();
         joueurs.setTitle("Joueurs");
         joueurs.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
-        joueurs.setSize(1000, 500);
+        joueurs.setSize(600, 300);
         /*menu.setExtendedState(JFrame.MAXIMIZED_BOTH);*/
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         joueurs.setLocation(dim.width/2-joueurs.getSize().width/2, dim.height/2-joueurs.getSize().height/2);
@@ -80,8 +81,10 @@ public class Joueurs extends JFrame implements ActionListener {
         JPanel mainPanel = new JPanel(new BorderLayout());
         joueurs.add(mainPanel);
         
-        JPanel panelCentre = new JPanel(new GridLayout(13, 7));
+        
+        JPanel panelCentre = new JPanel(new GridLayout(7, 4,5,5));
         mainPanel.add(panelCentre, BorderLayout.CENTER);
+        
         
         JPanel panelBas = new JPanel(new GridLayout(1, 6));
         mainPanel.add(panelBas, BorderLayout.SOUTH);
@@ -117,22 +120,24 @@ public class Joueurs extends JFrame implements ActionListener {
         listPseudo.add(pseudo3);
         listPseudo.add(pseudo4);
         
-        JLabel labeljoueur1 = new JLabel(" Joueur n°1", SwingConstants.CENTER);
+        JLabel labeljoueur1 = new JLabel(" Joueur n°1", SwingConstants.LEFT);
         JLabel labeljoueurPseudo1 = new JLabel(" Pseudonyme : ", SwingConstants.LEFT);
         
-        JLabel labeljoueur2 = new JLabel(" Joueur n°2", SwingConstants.CENTER);
+        JLabel choisirnbjoueur = new JLabel("Nombre de Joueurs :", SwingConstants.LEFT);
+        
+        JLabel labeljoueur2 = new JLabel(" Joueur n°2", SwingConstants.LEFT);
         JLabel labeljoueurPseudo2 = new JLabel(" Pseudonyme : ", SwingConstants.LEFT);
         
-        JLabel labeljoueur3 = new JLabel(" Joueur n°3", SwingConstants.CENTER);
+        JLabel labeljoueur3 = new JLabel(" Joueur n°3", SwingConstants.LEFT);
         JLabel labeljoueurPseudo3 = new JLabel(" Pseudonyme : ", SwingConstants.LEFT);     
         
-        JLabel labeljoueur4 = new JLabel(" Joueur n°4", SwingConstants.CENTER);
+        JLabel labeljoueur4 = new JLabel(" Joueur n°4", SwingConstants.LEFT);
         JLabel labeljoueurPseudo4 = new JLabel(" Pseudonyme : ", SwingConstants.LEFT);
         
-        JLabel labeljoueurRole1 = new JLabel(" Rôle:", SwingConstants.LEFT);
-        JLabel labeljoueurRole2 = new JLabel(" Rôle:", SwingConstants.LEFT);
-        JLabel labeljoueurRole3 = new JLabel(" Rôle:", SwingConstants.LEFT);
-        JLabel labeljoueurRole4 = new JLabel(" Rôle:", SwingConstants.LEFT);
+        JLabel labeljoueurRole1 = new JLabel(" Rôle:", SwingConstants.CENTER);
+        JLabel labeljoueurRole2 = new JLabel(" Rôle:", SwingConstants.CENTER);
+        JLabel labeljoueurRole3 = new JLabel(" Rôle:", SwingConstants.CENTER);
+        JLabel labeljoueurRole4 = new JLabel(" Rôle:", SwingConstants.CENTER);
         
         role1 = new JComboBox(nomRoles);
         role1.setSelectedIndex(0);
@@ -154,7 +159,7 @@ public class Joueurs extends JFrame implements ActionListener {
         listRole.add(role3);
         listRole.add(role4);
         
-        
+        //ACTION DU JCOMBOX NB JOUEURS
         nbJoueurs = new JComboBox(nombreJoueur);
         nbJoueurs.addActionListener(new ActionListener() {
             @Override
@@ -202,90 +207,36 @@ public class Joueurs extends JFrame implements ActionListener {
                 }
             }
         });
-        
-        nbJoueurs.setSelectedIndex(0);
-        
-        
-        for (int i=1; i<91; i++) {
-            switch (i) {
-                case 9:
-                    panelCentre.add(labeljoueur1);
-                    break;
-                case 11:
-                    panelCentre.add(new JLabel("Nombre de joueurs:"));
-                    break;
-                case 13:
-                    panelCentre.add(labeljoueur2);
-                    break;
-                case 18:
-                    panelCentre.add(nbJoueurs);
-                    break;
-                case 22:
-                    panelCentre.add(labeljoueurPseudo1);
-                    break;
-                case 23:
-                    panelCentre.add(pseudo1);
-                    break;
-                case 27:
-                    panelCentre.add(labeljoueurPseudo2);
-                    break;
-                case 28:
-                    panelCentre.add(pseudo2);
-                    break;
-                case 29:
-                    panelCentre.add(labeljoueurRole1);
-                    break;
-                case 30:
-                    panelCentre.add(role1);
-                    break;
-                case 34:
-                    panelCentre.add(labeljoueurRole2);
-                    break;
-                case 35:
-                    panelCentre.add(role2);
-                    break;
-                case 44:
-                    panelCentre.add(labeljoueur3);
-                    break;
-                case 48:
-                    panelCentre.add(labeljoueur4);
-                    break;
-                case 57:
-                    panelCentre.add(labeljoueurPseudo3);
-                    break;
-                case 58:
-                    panelCentre.add(pseudo3);
-                    break;
-                case 62:
-                    panelCentre.add(labeljoueurPseudo4);
-                    break;
-                case 63:
-                    panelCentre.add(pseudo4);
-                    break;
-                case 64:
-                    panelCentre.add(labeljoueurRole3);
-                    break;
-                case 65:
-                    panelCentre.add(role3);
-                    break;
-                case 69:
-                    panelCentre.add(labeljoueurRole4);
-                    break;
-                case 70:
-                    panelCentre.add(role4);
-                break;
-                case 39:
-                    panelCentre.add(new JLabel("Niveau de depart :"));
-                break;
-                case 46:
-                    panelCentre.add(niveauDepart);
-                break;
-                default:
-                    panelCentre.add(getCellule(i));
-                    break;
-            }
-        }    
-    }
+       
+       nbJoueurs.setSelectedIndex(0);
+   
+       panelCentre.add(new JLabel("Difficulté : "));
+       panelCentre.add(niveauDepart);
+       for (int i=0;i<6;i++ ){
+            panelCentre.add(new JLabel(" "));
+       }
+       panelCentre.add(choisirnbjoueur);
+       panelCentre.add(nbJoueurs);
+       panelCentre.add(new JLabel(" "));
+       panelCentre.add(new JLabel(" "));
+       panelCentre.add(labeljoueur1);
+       panelCentre.add(pseudo1);
+       panelCentre.add(labeljoueurRole1);
+       panelCentre.add(role1);
+       panelCentre.add(labeljoueur2);
+       panelCentre.add(pseudo2);
+       panelCentre.add(labeljoueurRole2);
+       panelCentre.add(role2);
+       panelCentre.add(labeljoueur3);
+       panelCentre.add(pseudo3);
+       panelCentre.add(labeljoueurRole3);
+       panelCentre.add(role3);
+       panelCentre.add(labeljoueur4);
+       panelCentre.add(pseudo4);
+       panelCentre.add(labeljoueurRole4);
+       panelCentre.add(role4);
+       
+    }     
     
     public void afficher() {
         this.joueurs.setVisible(true);

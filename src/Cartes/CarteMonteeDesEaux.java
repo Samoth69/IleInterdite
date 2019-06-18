@@ -24,4 +24,10 @@ public class CarteMonteeDesEaux extends CarteRouge{
          public String getNom(){
              return "Carte MonteeDesEaux";
          }
+         
+      
+         @Override
+         public String getTypeTresor() {
+           return("Pas de trésor, c'est une  carte montee des eaux");
+        }
 }

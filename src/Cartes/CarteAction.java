@@ -21,4 +21,9 @@ public class CarteAction extends CarteRouge{
         public String getNom(){
             return "CarteAction";
         }
+
+    @Override
+    public String getTypeTresor() {
+        return("Pas de trésor, c'est une  carte action");
+    }
 }

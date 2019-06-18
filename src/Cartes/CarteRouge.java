@@ -43,4 +43,7 @@ public abstract class CarteRouge {
     public void setDescription(String description) {
         this.description = description;
     }
+    
+    public abstract String getTypeTresor();
+    
 }

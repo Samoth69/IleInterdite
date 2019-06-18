@@ -132,14 +132,52 @@ public class ControleurJeuSecondaire implements Observe{
         personnages.get(numJoueurEnCours).deplacement(newPos);
         decrementAction();
     }
-     /*-------  A COMPLETER LORSQUE LES CARTES SONT CREES ---------------------------------------------
-    /*public void recupererTresor(Personnage personnage){
-        if(personnage.getEmplacement().getTresor() != null){
-             for(int i=0; i<personnage.getCartes().size(); i++){
-                 if(personnage.getCartes().get(i).)
+
+    public void recupererTresor(Personnage personnage){
+      int QuatreCartesTresors=0;
+    
+      if(personnage.getEmplacement().getTresor() != TypeEnumTresors.AUCUN){
+            
+          for(int i=0; i<personnage.getCartes().size(); i++){
+                 if(personnage.getCartes().get(i).getTypeTresor().contentEquals(personnage.getEmplacement().getTresor().toString())){
+                     QuatreCartesTresors = QuatreCartesTresors +1;
+                 }
              }
-        }
-    }*/
+             
+            if(QuatreCartesTresors>=4){
+                   for(int i=0; i<grille.getListTuile().size(); i++){
+                          if(grille.getListTuile().get(i).getNom().equals(personnage.getEmplacement().getNom())){
+
+                              switch(grille.getListTuile().get(i).getTresor()){
+                                  case LUNE : pierreSacre=true;
+                                              break;
+
+                                  case LION : statueZephyr=true;
+                                              break;
+
+                                  case FEU : cristalArdent=true;
+                                                 break;
+
+                                  case TROPHEE :caliceOnde=true;
+                                                break;
+
+                                  default:        System.out.println("REVERIFIER CONTROLLEURJEU2");;    
+
+
+                                          }
+                    
+                    
+                                grille.getListTuile().get(i).setTresor(TypeEnumTresors.AUCUN);
+                         }
+                     }
+             } else{
+                 System.out.println("Vous n'avez pas 4 cartes correspondant à cet trésor");
+            } 
+            
+     }else{
+            System.out.println("Aucun trésor sur la tuile actuelle");
+       }
+    }
     
     public Personnage getJoueurEntrainDeJouer() {
         return personnages.get(numJoueurEnCours);
@@ -358,6 +396,11 @@ public class ControleurJeuSecondaire implements Observe{
     private void actionDebutTour() {
         //CODE DE VERIF NB CARTE
         VerifNbCarte(personnages.get(numJoueurEnCours));
+    }
+    
+    //renvoie le nombre de joueur dans la partie
+    public int getNombreJoueurDansPartie() {
+        return nombreJoueurDansPartie;
     }
     
     //Gerer le tour de Jeu

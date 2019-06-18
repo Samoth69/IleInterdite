@@ -14,7 +14,7 @@ import Enumerations.TypeEnumTresors;
  */
 public class CarteInondation {
     private final String nom;
-    private final TypeEnumTresors tresor;
+    private  TypeEnumTresors tresor;
     private final TypeEnumCouleurPion couleurPion;
     
     public CarteInondation(String nom){
@@ -52,4 +52,9 @@ public class CarteInondation {
     public TypeEnumTresors getTresor() {
         return tresor;
     }
+    
+   public void setTresor(TypeEnumTresors tresor){
+       this.tresor= tresor;
+   }
+   
 }
