@@ -6,6 +6,7 @@
 package Cartes;
 
 import Enumerations.TypeEnumCarteAction;
+import Enumerations.TypeEnumTresors;
 
 /**
  *
@@ -23,7 +24,7 @@ public class CarteAction extends CarteRouge{
         }
 
     @Override
-    public String getTypeTresor() {
-        return("Pas de trésor, c'est une  carte action");
+    public TypeEnumTresors getTypeTresor() {
+        return TypeEnumTresors.AUCUN; //    A changer si besoin
     }
 }

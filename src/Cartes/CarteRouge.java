@@ -5,6 +5,8 @@
  */
 package Cartes;
 
+import Enumerations.TypeEnumTresors;
+
 /**
  *
  * @author violentt
@@ -44,6 +46,6 @@ public abstract class CarteRouge {
         this.description = description;
     }
     
-    public abstract String getTypeTresor();
+    public abstract TypeEnumTresors getTypeTresor();
     
 }

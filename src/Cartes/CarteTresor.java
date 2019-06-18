@@ -13,6 +13,7 @@ import Enumerations.TypeEnumTresors;
  */
 public class CarteTresor extends CarteRouge{
     private TypeEnumTresors typeTresor;
+    
         public CarteTresor(String nom, TypeEnumTresors typeTresor){
             super(nom, typeTresor.toString());
         }
@@ -22,7 +23,7 @@ public class CarteTresor extends CarteRouge{
             return "CarteTresor";
         }
         
-        public String getTypeTresor(){
-            return typeTresor.toString();
+        public TypeEnumTresors getTypeTresor(){
+            return typeTresor;
         }
 }

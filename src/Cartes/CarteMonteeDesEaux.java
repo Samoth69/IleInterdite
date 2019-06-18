@@ -5,6 +5,8 @@
  */
 package Cartes;
 
+import Enumerations.TypeEnumTresors;
+
 /**
  *
  * @author violentt
@@ -15,19 +17,19 @@ public class CarteMonteeDesEaux extends CarteRouge{
             super(nom);
         }
 
-         public CarteMonteeDesEaux(String nom, String description){
+        public CarteMonteeDesEaux(String nom, String description){
             super(nom,description);
         }
          
-         @Override
+        @Override
          
-         public String getNom(){
-             return "Carte MonteeDesEaux";
-         }
+        public String getNom(){
+            return "Carte MonteeDesEaux";
+        }
          
       
-         @Override
-         public String getTypeTresor() {
-           return("Pas de trésor, c'est une  carte montee des eaux");
+        @Override
+        public TypeEnumTresors getTypeTresor() {
+             return TypeEnumTresors.AUCUN; // A changer si besoin
         }
 }

@@ -133,50 +133,44 @@ public class ControleurJeuSecondaire implements Observe{
         decrementAction();
     }
 
-    public void recupererTresor(Personnage personnage){
-      int QuatreCartesTresors=0;
-    
-      if(personnage.getEmplacement().getTresor() != TypeEnumTresors.AUCUN){
+    public void recupererTresor(Tuile emplacementJoueur){
+        int nbCarteTresor = 0;
+        
+        //  Si il y a bien un tresor
+        if(emplacementJoueur.getTresor() != TypeEnumTresors.AUCUN)
+        {
+            //  Compte le nombre de carte tresor du joueur correspondant au tresor de la case
+            for(int i = 0; i < getJoueurEntrainDeJouer().getCartes().size(); i++)
+            {
+                if(getJoueurEntrainDeJouer().getCartes().get(i).getTypeTresor() == emplacementJoueur.getTresor())
+                {
+                    nbCarteTresor++;
+                }
+            }
+            //  Si le joueur a 4 carte du tresor de la case alors...
+            if(nbCarteTresor == 4)
+            {
+                switch(emplacementJoueur.getTresor())
+                {
+                    case FEU:
+                        cristalArdent = true;
+                    break;
+                    case LION:
+                        statueZephyr = true;
+                    break;
+                    case LUNE:
+                        pierreSacre = true;
+                    break;
+                    case TROPHEE:
+                        caliceOnde = true;
+                    break;
+                }
+            }
+            //  retire le tresor de la case
+            emplacementJoueur.setTresor(TypeEnumTresors.AUCUN);
             
-          for(int i=0; i<personnage.getCartes().size(); i++){
-                 if(personnage.getCartes().get(i).getTypeTresor().contentEquals(personnage.getEmplacement().getTresor().toString())){
-                     QuatreCartesTresors = QuatreCartesTresors +1;
-                 }
-             }
-             
-            if(QuatreCartesTresors>=4){
-                   for(int i=0; i<grille.getListTuile().size(); i++){
-                          if(grille.getListTuile().get(i).getNom().equals(personnage.getEmplacement().getNom())){
-
-                              switch(grille.getListTuile().get(i).getTresor()){
-                                  case LUNE : pierreSacre=true;
-                                              break;
-
-                                  case LION : statueZephyr=true;
-                                              break;
-
-                                  case FEU : cristalArdent=true;
-                                                 break;
-
-                                  case TROPHEE :caliceOnde=true;
-                                                break;
-
-                                  default:        System.out.println("REVERIFIER CONTROLLEURJEU2");;    
-
-
-                                          }
-                    
-                    
-                                grille.getListTuile().get(i).setTresor(TypeEnumTresors.AUCUN);
-                         }
-                     }
-             } else{
-                 System.out.println("Vous n'avez pas 4 cartes correspondant à cet trésor");
-            } 
-            
-     }else{
-            System.out.println("Aucun trésor sur la tuile actuelle");
-       }
+            decrementAction();
+        }
     }
     
     public Personnage getJoueurEntrainDeJouer() {
@@ -560,9 +554,7 @@ public class ControleurJeuSecondaire implements Observe{
             }
             
         }
-        
     }
-    
     
     private Observateur observateur;    
     public void addObservateur(Observateur o) {
