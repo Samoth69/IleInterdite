@@ -62,7 +62,6 @@ public class Menu extends JFrame implements ActionListener {
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         menu.setLocation(dim.width/2-menu.getSize().width/2, dim.height/2-menu.getSize().height/2);
         
-        JPanel mainPanel = new JPanel(new GridLayout(8,1));
         
 
         jouer = new JButton("Jouer");
@@ -72,24 +71,28 @@ public class Menu extends JFrame implements ActionListener {
         quitter = new JButton("Quitter");
         quitter.addActionListener(this);
         
-        background.setLayout(new GridLayout(6,1));
+        background.setLayout(new GridLayout(11,3));
         menu.setContentPane(background);
         
 
-      
-        /*jouer.setSize(menu.getWidth()/2, menu.getHeight()/8);
-        vide1.setSize(menu.getWidth()/2, menu.getHeight()/8);
-        regles.setSize(menu.getWidth()/2, menu.getHeight()/8);
-        vide2.setSize(menu.getWidth()/2, menu.getHeight()/8);
-        quitter.setSize(menu.getWidth()/2, menu.getHeight()/8);
-        vide3.setSize(menu.getWidth()/2, menu.getHeight()/8);*/
-        background.add(new JLabel(""));       
-        background.add(new JLabel(""));       
-        background.add(new JLabel(""));       
-        background.add(jouer);
-        background.add(regles);
-        background.add(quitter);
-        //background.add(mainPanel, BorderLayout.CENTER);
+          jouer.setFont(new Font(jouer.getFont().getName(), jouer.getFont().getStyle(), (int) (jouer.getFont().getSize()*1.5)));
+          regles.setFont(new Font(regles.getFont().getName(), regles.getFont().getStyle(), (int) (regles.getFont().getSize()*1.5)));
+          quitter.setFont(new Font(quitter.getFont().getName(), quitter.getFont().getStyle(), (int) (quitter.getFont().getSize()*1.5)));
+
+        for(int i=0; i<33; i++){
+            if(i==16 ){
+               background.add(jouer); 
+            } else if(i==22){
+               background.add(regles); 
+            } else if(i==28){
+               background.add(quitter); 
+            } else{
+            background.add(new JLabel(""));
+            }
+        }
+
+        
+    
         
         
     }
