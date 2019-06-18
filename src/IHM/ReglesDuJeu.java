@@ -68,7 +68,7 @@ public class ReglesDuJeu extends JFrame implements ActionListener {
     panelBas.add(quitter);*/
     
     //Creating an ImageIcon object to create a JLabel with image
-    ImageIcon image = new ImageIcon("C:\\Users\\laraicha\\Downloads\\Page1.jpg");
+    ImageIcon image = new ImageIcon("src/RessourcesRegles/Page1.jpg");
     JLabel label = new JLabel(image, JLabel.CENTER);
 
     //Creating a JPanel and adding JLabel that contains the image
