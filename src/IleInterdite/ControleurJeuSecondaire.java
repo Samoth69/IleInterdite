@@ -478,7 +478,7 @@ public class ControleurJeuSecondaire implements Observe{
     
     public void verifFinDePartie(){
         //  Si le niveau d'eau est au max, alors fin de partie
-        if(niveauEau >= 10)
+        if(niveauEau >= 9)
         {
             notifierObservateur(new Message(TypeEnumMessage.FIN_PARTIE, "Niveau d'eau maximum atteint"));
         }
@@ -512,7 +512,7 @@ public class ControleurJeuSecondaire implements Observe{
         //  -------------------------------------------------------
         
         
-        //  Verifie
+        //  Verifie si le tresor n'est pas recupéré, que les 2 cases où il est ne sont pas inondées
         for(int i = 0; i < grille.getListTuile().size(); i++)
         {
             if(grille.getListTuile().get(i).getNom() == "La Caverne des Ombres" && grille.getListTuile().get(i).getInondation() == TypeEnumInondation.INONDE && cristalArdent == false)
