@@ -20,7 +20,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
 
 /**
  *
@@ -32,7 +32,6 @@ public class ReglesDuJeu extends JFrame implements ActionListener {
   private JButton suivant;
   private JButton retour;
   private JButton quitter;
-  private JScrollBar images;
   
    public ReglesDuJeu() {
             
@@ -47,24 +46,12 @@ public class ReglesDuJeu extends JFrame implements ActionListener {
     JPanel mainPanel = new JPanel(new BorderLayout());
     regles.add(mainPanel);
     
-    JPanel panelHaut = new JPanel() ;
-    mainPanel.add(panelHaut, BorderLayout.NORTH);
-    
     JPanel panelCentre = new JPanel();
     mainPanel.add(panelCentre, BorderLayout.CENTER);
     
-    JPanel panelDroit = new JPanel() ;
-    mainPanel.add(panelDroit, BorderLayout.EAST);
-    
-    JPanel panelGauche = new JPanel() ;
-    mainPanel.add(panelGauche, BorderLayout.WEST);
-    
-    JPanel panelBas = new JPanel(new GridLayout(2, 6));
-    mainPanel.add(panelBas, BorderLayout.SOUTH);
-    
-    JLabel labelTitre = new JLabel("Règles du jeu");
+    /*JLabel labelTitre = new JLabel("Règles du jeu");
     labelTitre.setFont(new Font(labelTitre.getFont().getName(), labelTitre.getFont().getStyle(), (int) (labelTitre.getFont().getSize() * 2.0)));
-    panelHaut.add(labelTitre);
+    panelHaut.add(labelTitre);*/
     
     retour = new JButton("Retour");
     retour.addActionListener(this);
@@ -73,22 +60,26 @@ public class ReglesDuJeu extends JFrame implements ActionListener {
     quitter = new JButton("Quitter");
     quitter.addActionListener(this);
     
-    panelBas.add(new JLabel(""));
+    /*panelBas.add(new JLabel(""));
     panelBas.add(new JLabel(""));
     panelBas.add(new JLabel(""));
     panelBas.add(retour);
     panelBas.add(suivant);
-    panelBas.add(quitter);
+    panelBas.add(quitter);*/
     
-    images = new JScrollBar();
-    
+    //Creating an ImageIcon object to create a JLabel with image
     ImageIcon image = new ImageIcon("C:\\Users\\laraicha\\Downloads\\Page1.jpg");
-    JLabel label = new JLabel("", image, JLabel.CENTER);
-    /*label.setBounds(0, 0, this.getWidth(), this.getHeight());*/
-    /*label.setPreferredSize(dim);*/
+    JLabel label = new JLabel(image, JLabel.CENTER);
+
+    //Creating a JPanel and adding JLabel that contains the image
     panelCentre.add(label);
-    panelDroit.add(images);
-   
+
+    //Adding JPanel to JScrollPane
+    JScrollPane scrollP = new JScrollPane(panelCentre);
+
+    //Adding JLabel and JScrollPane to JFrame
+    regles.add(scrollP,BorderLayout.CENTER);
+    
 }
    
     public void afficher() {
