@@ -34,7 +34,6 @@ public class Menu extends JFrame implements ActionListener {
     /**
      * @param args the command line arguments
      */
-    
     //ATTRIBUTS
     private JFrame menu;
     private JButton jouer;
@@ -43,20 +42,20 @@ public class Menu extends JFrame implements ActionListener {
 
     //CONSTRUCTEUR
     public Menu() {
-        
+
         // Fond avec image
         ImageIcon img = new ImageIcon("src/RessourcesMenu/FondMenu.jpg");
         JLabel background = new JLabel("", img, JLabel.CENTER);
-        
+
         //Creation de la fenetre
         menu = new JFrame("Menu");
         menu.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
         menu.setSize(553, 709);
-        
+
         //dimension fenetre
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         menu.setLocation(dim.width / 2 - menu.getSize().width / 2, dim.height / 2 - menu.getSize().height / 2);
-        
+
         //Construction bouton jouer/regles/quitter
         jouer = new JButton("Jouer");
         jouer.addActionListener(this);
@@ -64,16 +63,16 @@ public class Menu extends JFrame implements ActionListener {
         regles.addActionListener(this);
         quitter = new JButton("Quitter");
         quitter.addActionListener(this);
-        
+
         //grille de 11 lignes, 3 colonnes
         background.setLayout(new GridLayout(11, 3));
         menu.setContentPane(background);
-        
+
         //Augmentation de la taille du texte des boutons
         jouer.setFont(new Font(jouer.getFont().getName(), jouer.getFont().getStyle(), (int) (jouer.getFont().getSize() * 1.5)));
         regles.setFont(new Font(regles.getFont().getName(), regles.getFont().getStyle(), (int) (regles.getFont().getSize() * 1.5)));
         quitter.setFont(new Font(quitter.getFont().getName(), quitter.getFont().getStyle(), (int) (quitter.getFont().getSize() * 1.5)));
-        
+
         //Mise en place des boutons dans des cases du gridlayout
         for (int i = 0; i < 33; i++) { // boucle 33 fois car il y a 33 cases
             if (i == 16) {
@@ -90,12 +89,11 @@ public class Menu extends JFrame implements ActionListener {
     }
 
     //METHODES
-    
     //Affiche le menu
     public void afficher() {
         this.menu.setVisible(true);
     }
-    
+
     //Action des boutons
     @Override
     public void actionPerformed(ActionEvent e) {

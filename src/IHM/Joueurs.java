@@ -67,27 +67,26 @@ public class Joueurs extends JFrame implements ActionListener {
 
         joueur = new JFrame("Joueur");
         joueur.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
-      //  joueur.setSize(775, 330);
+        //  joueur.setSize(775, 330);
         joueur.setSize(800, 455);
 
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         joueur.setLocation(dim.width / 2 - joueur.getSize().width / 2, dim.height / 2 - joueur.getSize().height / 2);
 
-      //  background.setLayout(new GridLayout(9, 4, 5, 5));
-         panelcenter.setLayout(new BorderLayout());
-        
-         JPanel background = new JPanel(new GridLayout(9, 4, 5, 5));
-         panelcenter.add(background,BorderLayout.CENTER);
-         background.setOpaque(false);
-         
-         JPanel panelHaut = new JPanel();
-         panelcenter.add(panelHaut, BorderLayout.NORTH);
-         panelHaut.setOpaque(false);
-         
-         JPanel panelBas = new JPanel(new GridLayout(1, 6));
-         panelcenter.add(panelBas, BorderLayout.SOUTH);
-         panelBas.setOpaque(false);
-         
+        panelcenter.setLayout(new BorderLayout());
+
+        JPanel background = new JPanel(new GridLayout(9, 4, 5, 5));
+        panelcenter.add(background, BorderLayout.CENTER);
+        background.setOpaque(false);
+
+        JPanel panelHaut = new JPanel();
+        panelcenter.add(panelHaut, BorderLayout.NORTH);
+        panelHaut.setOpaque(false);
+
+        JPanel panelBas = new JPanel(new GridLayout(1, 6));
+        panelcenter.add(panelBas, BorderLayout.SOUTH);
+        panelBas.setOpaque(false);
+
         joueur.setContentPane(panelcenter);
 
         retour = new JButton("Retour");
@@ -101,7 +100,7 @@ public class Joueurs extends JFrame implements ActionListener {
         pseudo2 = new JTextField();
         pseudo3 = new JTextField();
         pseudo4 = new JTextField();
-        
+
         pseudo1.setFont(new Font(pseudo1.getFont().getName(), pseudo1.getFont().getStyle(), (int) (pseudo1.getFont().getSize() * 1.5)));
         pseudo2.setFont(new Font(pseudo2.getFont().getName(), pseudo2.getFont().getStyle(), (int) (pseudo2.getFont().getSize() * 1.5)));
         pseudo3.setFont(new Font(pseudo3.getFont().getName(), pseudo3.getFont().getStyle(), (int) (pseudo3.getFont().getSize() * 1.5)));
@@ -112,12 +111,12 @@ public class Joueurs extends JFrame implements ActionListener {
         listPseudo.add(pseudo2);
         listPseudo.add(pseudo3);
         listPseudo.add(pseudo4);
-        
-        JLabel labelTitre = new JLabel("Joueurs") ;
+
+        JLabel labelTitre = new JLabel("Joueurs");
         labelTitre.setFont(new Font(labelTitre.getFont().getName(), labelTitre.getFont().getStyle(), (int) (labelTitre.getFont().getSize() * 2.0)));
         panelHaut.add(labelTitre);
         labelTitre.setForeground(Color.WHITE);
-        
+
         JLabel labeljoueur1 = new JLabel(" Joueur n°1 : ", SwingConstants.LEFT);
         labeljoueur1.setFont(new Font(jouer.getFont().getName(), jouer.getFont().getStyle(), (int) (jouer.getFont().getSize() * 1.5)));
 
@@ -129,11 +128,11 @@ public class Joueurs extends JFrame implements ActionListener {
 
         JLabel labeljoueur3 = new JLabel(" Joueur n°3 : ", SwingConstants.LEFT);
         labeljoueur3.setFont(new Font(jouer.getFont().getName(), jouer.getFont().getStyle(), (int) (jouer.getFont().getSize() * 1.5)));
-        
+
         JLabel labeljoueurPseudo3 = new JLabel(" Pseudonyme : ", SwingConstants.LEFT);
         labeljoueurPseudo3.setFont(new Font(jouer.getFont().getName(), jouer.getFont().getStyle(), (int) (jouer.getFont().getSize() * 1.5)));
 
-        JLabel labeljoueur4 = new JLabel(" Joueur n°4 : ", SwingConstants.LEFT);              
+        JLabel labeljoueur4 = new JLabel(" Joueur n°4 : ", SwingConstants.LEFT);
         labeljoueur4.setFont(new Font(jouer.getFont().getName(), jouer.getFont().getStyle(), (int) (jouer.getFont().getSize() * 1.5)));
 
         JLabel labeljoueurPseudo4 = new JLabel(" Pseudonyme : ", SwingConstants.LEFT);
@@ -152,21 +151,21 @@ public class Joueurs extends JFrame implements ActionListener {
         labeldifficulte.setFont(new Font(jouer.getFont().getName(), jouer.getFont().getStyle(), (int) (jouer.getFont().getSize() * 1.5)));
 
         role1 = new JComboBox(nomRoles);
-        role1.setSelectedIndex(0);
+        role1.setSelectedIndex(5);
         role1.setBackground(Color.WHITE);
         role1.setFont(new Font(role1.getFont().getName(), role1.getFont().getStyle(), (int) (role1.getFont().getSize() * 1.5)));
 
         role2 = new JComboBox(nomRoles);
-        role2.setSelectedIndex(1);
+        role2.setSelectedIndex(5);
         role2.setBackground(Color.WHITE);
         role2.setFont(new Font(role2.getFont().getName(), role2.getFont().getStyle(), (int) (role2.getFont().getSize() * 1.5)));
 
         role3 = new JComboBox(nomRoles);
-        role3.setSelectedIndex(2);
+        role3.setSelectedIndex(5);
         role3.setFont(new Font(role3.getFont().getName(), role3.getFont().getStyle(), (int) (role3.getFont().getSize() * 1.5)));
 
         role4 = new JComboBox(nomRoles);
-        role4.setSelectedIndex(3);
+        role4.setSelectedIndex(5);
         role4.setFont(new Font(role4.getFont().getName(), role4.getFont().getStyle(), (int) (role4.getFont().getSize() * 1.5)));
 
         niveauDepart = new JComboBox(niveauEau);
@@ -255,7 +254,7 @@ public class Joueurs extends JFrame implements ActionListener {
         });
 
         nbJoueurs.setSelectedIndex(0);
-        
+
         background.add(new JLabel(" "));
         background.add(new JLabel(" "));
         background.add(new JLabel(" "));
@@ -265,7 +264,7 @@ public class Joueurs extends JFrame implements ActionListener {
         for (int i = 0; i < 6; i++) {
             background.add(new JLabel(" "));
         }
-        
+
         background.add(choisirnbjoueur);
         background.add(nbJoueurs);
         background.add(new JLabel(" "));
@@ -320,7 +319,7 @@ public class Joueurs extends JFrame implements ActionListener {
             ArrayList<String> usedRole = new ArrayList<>();
             for (int i = 0; i < (int) nbJoueurs.getSelectedItem(); i++) {
                 if (usedRole.contains((String) listRole.get(i).getSelectedItem())) {
-                    JOptionPane.showMessageDialog(null, "Chaque joueur doit avoir un rôle différent", "Erreur", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Chaque joueur doit avoir un rôle différent", "Message d'erreur", JOptionPane.ERROR_MESSAGE);
                     return; //quitte la fonction
                 }
                 if ((String) listRole.get(i).getSelectedItem() != nomRoles[nomRoles.length - 1]) {
@@ -329,7 +328,7 @@ public class Joueurs extends JFrame implements ActionListener {
             }
             for (int i = 0; i < (int) nbJoueurs.getSelectedItem(); i++) {
                 if (listPseudo.get(i).getText().isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "Le champ joueur ne peut pas être vide", "Erreur", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Le champ joueur ne peut pas être vide", "Message d'erreur", JOptionPane.ERROR_MESSAGE);
                     return; //quitte la fonction
                 }
             }
