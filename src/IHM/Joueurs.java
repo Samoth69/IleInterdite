@@ -63,17 +63,32 @@ public class Joueurs extends JFrame implements ActionListener {
 
     public Joueurs() {
         ImageIcon img = new ImageIcon("src/RessourcesJoueur/FondJoueur.jpg");
-        JLabel background = new JLabel("", img, JLabel.CENTER);
+        JLabel panelcenter = new JLabel("", img, JLabel.CENTER);
 
         joueur = new JFrame("Joueur");
         joueur.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
-        joueur.setSize(775, 330);
+      //  joueur.setSize(775, 330);
+        joueur.setSize(800, 455);
 
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         joueur.setLocation(dim.width / 2 - joueur.getSize().width / 2, dim.height / 2 - joueur.getSize().height / 2);
 
-        background.setLayout(new GridLayout(9, 4, 5, 5));
-        joueur.setContentPane(background);
+      //  background.setLayout(new GridLayout(9, 4, 5, 5));
+         panelcenter.setLayout(new BorderLayout());
+        
+         JPanel background = new JPanel(new GridLayout(9, 4, 5, 5));
+         panelcenter.add(background,BorderLayout.CENTER);
+         background.setOpaque(false);
+         
+         JPanel panelHaut = new JPanel();
+         panelcenter.add(panelHaut, BorderLayout.NORTH);
+         panelHaut.setOpaque(false);
+         
+         JPanel panelBas = new JPanel(new GridLayout(1, 6));
+         panelcenter.add(panelBas, BorderLayout.SOUTH);
+         panelBas.setOpaque(false);
+         
+        joueur.setContentPane(panelcenter);
 
         retour = new JButton("Retour");
         retour.addActionListener(this);
@@ -92,7 +107,12 @@ public class Joueurs extends JFrame implements ActionListener {
         listPseudo.add(pseudo2);
         listPseudo.add(pseudo3);
         listPseudo.add(pseudo4);
-
+        
+        JLabel labelTitre = new JLabel("Joueurs") ;
+        labelTitre.setFont(new Font(labelTitre.getFont().getName(), labelTitre.getFont().getStyle(), (int) (labelTitre.getFont().getSize() * 2.0)));
+        panelHaut.add(labelTitre);
+        labelTitre.setForeground(Color.WHITE);
+        
         JLabel labeljoueur1 = new JLabel(" Joueur n°1", SwingConstants.LEFT);
         labeljoueur1.setFont(new Font(jouer.getFont().getName(), jouer.getFont().getStyle(), (int) (jouer.getFont().getSize() * 1.5)));
 
@@ -224,13 +244,17 @@ public class Joueurs extends JFrame implements ActionListener {
         });
 
         nbJoueurs.setSelectedIndex(0);
-
+        
+        background.add(new JLabel(" "));
+        background.add(new JLabel(" "));
+        background.add(new JLabel(" "));
+        background.add(new JLabel(" "));
         background.add(labeldifficulte);
         background.add(niveauDepart);
         for (int i = 0; i < 6; i++) {
             background.add(new JLabel(" "));
         }
-
+        
         background.add(choisirnbjoueur);
         background.add(nbJoueurs);
         background.add(new JLabel(" "));
@@ -251,13 +275,11 @@ public class Joueurs extends JFrame implements ActionListener {
         background.add(pseudo4);
         background.add(labeljoueurRole4);
         background.add(role4);
-        background.add(new JLabel(""));
-        background.add(new JLabel(""));
-        background.add(new JLabel(""));
-        background.add(new JLabel(""));
-        background.add(retour);
-        background.add(jouer);
-        background.add(quitter);
+        panelBas.add(retour);
+        panelBas.add(new JLabel(" "));
+        panelBas.add(jouer);
+        panelBas.add(new JLabel(" "));
+        panelBas.add(quitter);
     }
 
     //METHODES
