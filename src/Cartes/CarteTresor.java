@@ -13,19 +13,23 @@ import Enumerations.TypeEnumTresors;
  * @author violentt
  */
 public class CarteTresor extends CarteRouge {
-
+    
+    //ATTRIBUT
     private TypeEnumTresors typeTresor;
-
-    public CarteTresor(String nom, TypeEnumTresors typeTresor, String img) {
+    
+    //CONSTRUCTEUR
+    public CarteTresor(String nom, TypeEnumTresors typeTresor, String img) { //instanciation
         super(nom, typeTresor.toString(), img);
         this.typeTresor = typeTresor;
     }
-
+    
+    //retourne le nom (voir super)
     @Override
     public String getNom() {
         return super.getNom();
     }
-
+    
+    //retourne qu il s'agit d une carte action et non d une carte tresor
     public TypeEnumCarteAction getTypeCarteAction() {
         return TypeEnumCarteAction.NA;
     }
