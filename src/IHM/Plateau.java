@@ -6,6 +6,7 @@
 package IHM;
 
 import Cartes.CarteInondation;
+import Enumerations.TypeEnumCouleurPion;
 import Enumerations.TypeEnumTresors;
 import IleInterdite.ControleurJeuSecondaire;
 import IleInterdite.Grille;
@@ -256,25 +257,30 @@ public class Plateau implements Observateur {
         });
         
         joueurActuel = new JLabel("");
-        ActionRestante = new JLabel();
+        ActionRestante = new JLabel("",SwingConstants.CENTER);
         
 
         //*****PANELGAMEPAD *********************
         panelGamePad = new JPanel(new BorderLayout());
         
         JPanel paneltreshaut = new JPanel(new GridLayout(4,1));
-        JLabel labelpion = new JLabel("Tour du joueur :");
-        Font font1 = new Font("Arial",Font.BOLD,20);
+        JLabel labelpion = new JLabel("Tour du joueur :",SwingConstants.CENTER);
+        Font font1 = new Font("Arial",Font.BOLD,25);
         labelpion.setFont(font1);
         paneltreshaut.add(labelpion);
+        JLabel joueurActuelbis = new JLabel("",SwingConstants.CENTER);
+        joueurActuelbis.setText(cj.getNomJoueur());
+        joueurActuelbis.setFont(font1);
+        paneltreshaut.add(new JLabel (" "));
+        paneltreshaut.add(joueurActuelbis);       
         panelGamePad.add(paneltreshaut, BorderLayout.NORTH);
         
         JPanel panelHautGamePad = new JPanel(new GridLayout(4,1)); 
-        JLabel labelaction = new JLabel("Action(s) restante(s):");
+        JLabel labelaction = new JLabel("Action(s) restante(s):",SwingConstants.CENTER);
         labelaction.setFont(font1);
         panelHautGamePad.add(labelaction);             
         panelHautGamePad.add(ActionRestante); 
-        Font font2 = new Font("Arial",Font.BOLD,120);
+        Font font2 = new Font("Arial",Font.BOLD,100);
         ActionRestante.setFont(font2);
         panelGamePad.add(panelHautGamePad, BorderLayout.CENTER); 
         
