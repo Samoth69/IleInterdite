@@ -10,6 +10,7 @@ package Enumerations;
  * @author violentt
  */
 public enum TypeEnumMessage {
+
     NA, // = non applicable
     JOUEUR_SUIVANT, //indique à l'IHM que l'on change de joueur
     DEFAUSSE_CARTE, //message pour defausser des cartes
@@ -19,7 +20,7 @@ public enum TypeEnumMessage {
     HISTORIQUE, //pour ajouté un message à l'historique de la partie (si l'IHM implémente ceci)
     NOUVEAU_TOUR, //indique à l'IHM que un nouveau tour de jeu démare
     UPDATE_GUI, //indique à l'interface de mettre à jour son affichage
-    FIN_PARTIE,  //indique une fin de partie
-    PARTIE_GAGNE,    //indique que les joueurs ont gagnés
+    FIN_PARTIE, //indique une fin de partie
+    PARTIE_GAGNE, //indique que les joueurs ont gagnés
     RM_TRESOR   //Supprime un tresor d'une case
 }

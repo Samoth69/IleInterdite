@@ -18,74 +18,75 @@ import java.util.ArrayList;
  * @param <T>
  */
 public class Message<T> {
+
     TypeEnumMessage type = TypeEnumMessage.NA;
     TypeEnumMenuPrincipal type2 = TypeEnumMenuPrincipal.NA;
     TypeEnumAction action = TypeEnumAction.NA;
     ArrayList<T> additionnal; //donnée additionnel au message (aucune règle de formatage, à traiter au cas par cas)
     String message;
     Tuile emplacementJoueur;
-    
+
     public Message(TypeEnumMessage type) {
         this.type = type;
         additionnal = null;
     }
-    
-    public Message(TypeEnumMessage type, String message){
+
+    public Message(TypeEnumMessage type, String message) {
         this.type = type;
         this.message = message;
     }
-    
+
     public Message(TypeEnumMessage type, ArrayList<T> ad) {
         this.type = type;
         additionnal = ad;
     }
-    
+
     public Message(TypeEnumMessage type, TypeEnumAction ac) {
         this.type = type;
         action = ac;
         additionnal = null;
-    }   
-    
+    }
+
     public Message(TypeEnumMessage type, TypeEnumAction ac, ArrayList<T> ad) {
         this.type = type;
         action = ac;
         additionnal = ad;
-    } 
-    
-    public Message(TypeEnumMessage type, Tuile emplacementJoueur){
+    }
+
+    public Message(TypeEnumMessage type, Tuile emplacementJoueur) {
         this.type = type;
         this.emplacementJoueur = emplacementJoueur;
     }
-    
+
     public Message(TypeEnumMenuPrincipal type) {
         type2 = type;
     }
-    
+
     public TypeEnumMessage getMessageType() {
         return type;
     }
-    
+
     public TypeEnumMenuPrincipal getMessageType2() {
         return type2;
     }
-    
+
     public TypeEnumAction getActionType() {
         return action;
     }
-    
+
     public ArrayList<T> getAdditionnal() {
         return additionnal;
     }
-    
+
     public void setAdditionnal(ArrayList<T> ad) {
         additionnal = ad;
     }
-    
-    public String getMessage(){
+
+    public String getMessage() {
         return message;
     }
-    
-    public Tuile getEmplacementJoueur(){
+
+    public Tuile getEmplacementJoueur() {
         return emplacementJoueur;
     }
 }

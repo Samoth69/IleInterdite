@@ -16,12 +16,12 @@ import java.util.ArrayList;
  * @author violentt
  */
 public class Explorateur extends Personnage {
-    
+
     //CONSTRUCTEUR
     public Explorateur(String nom, Grille ile) {
         super(nom, ile, TypeEnumCouleurPion.VERT);
     }
-    
+
     //METHODES
     @Override
     public ArrayList<Tuile> getDeplacements() {

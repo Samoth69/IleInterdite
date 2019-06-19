@@ -75,10 +75,10 @@ public class CarteInondation {
     public String getCheminTuile() {
         return cheminTuile;
     }
-    
+
     public String getCheminTuileInondee() {
         String tmp = cheminTuile;
-        tmp.replace(".png","_Inonde.png");
+        tmp.replace(".png", "_Inonde.png");
         return tmp;
     }
 

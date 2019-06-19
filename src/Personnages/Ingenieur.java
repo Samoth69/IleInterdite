@@ -14,13 +14,13 @@ import IleInterdite.Tuile;
  *
  * @author violentt
  */
-public class Ingenieur extends Personnage{
-    
+public class Ingenieur extends Personnage {
+
     //CONSTRUCTEUR
     public Ingenieur(String nom, Grille ile) {
         super(nom, ile, TypeEnumCouleurPion.ROUGE);
     }
-    
+
     //METHODE
     @Override
     public TypeEnumPersonnages getType() {

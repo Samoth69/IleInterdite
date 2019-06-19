@@ -143,7 +143,7 @@ public class Menu extends JFrame implements ActionListener {
         
         if (e.getSource() == music) { // si clique sur Musique on/off
             if (on == false) {
-                Media hit = new Media(new File("src/RessourcesSon/SilverForMonsters.mp3").toURI().toString());
+                Media hit = new Media(new File("src/RessourcesMenu/SilverForMonsters.mp3").toURI().toString());
                 mediaPlayer = new MediaPlayer(hit);          //créer le media player
                 mediaPlayer.play();  
                 on=true;

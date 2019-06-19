@@ -10,6 +10,7 @@ package Enumerations;
  * @author violentt
  */
 public enum TypeEnumMenuPrincipal {
+
     MENU_PRINCIPAL,
     MENU_JOUEURS,
     MENU_JOUER,
