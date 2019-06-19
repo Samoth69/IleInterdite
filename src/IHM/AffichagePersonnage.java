@@ -124,9 +124,10 @@ public class AffichagePersonnage extends JPanel{
                 {
                     listPersoEmplacement.addAll(perso.getEmplacement().getPersonnages());
                     listPersoEmplacement.remove(perso);
-                    VuDefausse vd = new VuDefausse(perso.getCartes(), "Donner carte", 1, listPersoEmplacement);
+                    VuDefausse vd = new VuDefausse(perso.getCartes(), "Donner carte", 1, listPersoEmplacement,pl.getControleurJeu().getNbActionRestante());
                     vd.setVisible(true);
                     perso.donnerCarteAJoueur(vd.getPersoQuiRecoitCartes(), vd.getSelectedItems());
+                    pl.getControleurJeu().setNbAction(vd.getNbActionRestante());
                     listPersoEmplacement.clear();
                     buttonDonnerCarte.setEnabled(false);
                     //dejaDonne = true;

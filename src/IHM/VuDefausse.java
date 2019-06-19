@@ -8,6 +8,7 @@ package IHM;
 import Cartes.CarteInondation;
 import Cartes.CarteRouge;
 import Enumerations.TypeEnumMessage;
+import Enumerations.TypeEnumTresors;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -50,6 +51,8 @@ public class VuDefausse extends JDialog {
     private int nombreDeCarteADel; //nombre de carte à enlever de la main actuel
     private JDialog window;
     private Personnage persoQuiRecoitCarte;
+    private double actionRestante = 0;
+    private boolean modeDefausse = false;
     
     
     //carteJoueur: liste des cartes à afficher
@@ -57,6 +60,7 @@ public class VuDefausse extends JDialog {
     //nombreDeCarteADel: nombre de carte à supprimer
     public VuDefausse(ArrayList<CarteRouge> carteJoueur, String titre, int nombreDeCarteADel){
         initialisation(carteJoueur, titre, nombreDeCarteADel);
+        modeDefausse = true;
     }
     
     //Constructeur pour la vu donner carte
@@ -64,7 +68,7 @@ public class VuDefausse extends JDialog {
     //titre: titre de la fenêtre
     //nombreDeCarteADel: nombre de carte à supprimer
     //persos : liste des personnages sur la meme case du joueur en train de jouer
-    public VuDefausse(ArrayList<CarteRouge> carteJoueur, String titre, int nombreDeCarteADel, ArrayList<Personnage> persos){
+    public VuDefausse(ArrayList<CarteRouge> carteJoueur, String titre, int nombreDeCarteADel, ArrayList<Personnage> persos, double nbAction){
         
         String[] nomDesPersos = new String[persos.size()];
         
@@ -86,6 +90,19 @@ public class VuDefausse extends JDialog {
         
         mainPanel.add(boxPersos, BorderLayout.NORTH);
         
+        for(CarteRouge i : carteJoueur)
+        {
+            if(i.getTypeTresor() != TypeEnumTresors.AUCUN)
+            {
+                carteDuJoueur.add(i);
+            }
+        }
+        carteJoueur.clear();
+        carteJoueur.addAll(carteDuJoueur);
+        carteDuJoueur.clear();
+        
+        actionRestante = nbAction;
+        
         initialisation(carteJoueur, titre, nombreDeCarteADel);
     }
     
@@ -105,6 +122,9 @@ public class VuDefausse extends JDialog {
         
         this.add(mainPanel);
 
+        
+        
+        
         //grid layout qui contient les cartes
         JPanel grilleCarte = new JPanel(new GridLayout(1, carteJoueur.size()));
         grilleCarte.setBorder(BorderFactory.createLineBorder(Color.BLACK));
@@ -124,13 +144,47 @@ public class VuDefausse extends JDialog {
             ic.addMouseListener(new MouseListener() {
                 @Override
                 public void mouseClicked(MouseEvent arg0) {
-                    if (pn.getBackground() != Color.red) {
-                        pn.setBackground(Color.red);
-                        carteSelectionne.add(carte);
-                    } else {
-                        pn.setBackground(UIManager.getColor("Panel.background"));   //couleur par defaut
-                        carteSelectionne.remove(carte);
+                    if(modeDefausse)
+                    {
+                        if (pn.getBackground() != Color.red) 
+                        {
+                            pn.setBackground(Color.red);
+                            carteSelectionne.add(carte);
+                        }
+                        else 
+                        {
+                            pn.setBackground(UIManager.getColor("Panel.background"));   //couleur par defaut
+                            carteSelectionne.remove(carte);
+                        } 
                     }
+                    else
+                    {
+                        if(actionRestante > 0)
+                        {
+                            if (pn.getBackground() != Color.red) 
+                            {
+                                pn.setBackground(Color.red);
+                                carteSelectionne.add(carte);
+                                actionRestante--;
+                            }
+                            else 
+                            {
+                                pn.setBackground(UIManager.getColor("Panel.background"));   //couleur par defaut
+                                carteSelectionne.remove(carte);
+                                actionRestante++;
+                            } 
+                        }
+                        else
+                        {
+                            if(pn.getBackground() == Color.red)
+                            {
+                                pn.setBackground(UIManager.getColor("Panel.background"));   //couleur par defaut
+                                carteSelectionne.remove(carte);
+                                actionRestante++;
+                            }
+                        }
+                    }
+                    
                 }
                 @Override
                 public void mousePressed(MouseEvent arg0) {}
@@ -209,5 +263,9 @@ public class VuDefausse extends JDialog {
     
     public Personnage getPersoQuiRecoitCartes(){
         return persoQuiRecoitCarte;
+    }
+    
+    public double getNbActionRestante(){
+        return actionRestante;
     }
 }
