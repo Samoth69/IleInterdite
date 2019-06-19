@@ -389,7 +389,7 @@ public class ControleurJeuSecondaire implements Observe{
     
     public void VerifNbCarte(Personnage perso) {
         if (perso.getCartes().size()>5){
-            VuDefausse vd = new VuDefausse(perso.getCartes(), "Defaussez une carte");
+            VuDefausse vd = new VuDefausse(perso.getCartes(), "Defaussez une carte", 5 - perso.getCartes().size());
             while (vd.getSelectedItems().isEmpty()) {
                 vd.setVisible(true);
             }
