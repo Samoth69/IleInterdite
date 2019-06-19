@@ -55,6 +55,7 @@ public class VuDefausse extends JDialog {
     private double actionRestante = 0;
     private boolean modeDefausse = false;
     private boolean modeActionSpe = false;
+    private boolean carteActionIsSelected = false;
     
     
     //carteJoueur: liste des cartes à afficher
@@ -179,30 +180,60 @@ public class VuDefausse extends JDialog {
                     }
                     else
                     {
-                        if(actionRestante > 0)
+                        if(modeActionSpe)
                         {
-                            if (pn.getBackground() != Color.red) 
+                            if(!carteActionIsSelected)
                             {
-                                pn.setBackground(Color.red);
-                                carteSelectionne.add(carte);
-                                actionRestante--;
+                                if (pn.getBackground() != Color.red) 
+                                {
+                                    pn.setBackground(Color.red);
+                                    carteSelectionne.add(carte);
+                                    carteActionIsSelected = true;
+                                }
+                                else 
+                                {
+                                    pn.setBackground(UIManager.getColor("Panel.background"));   //couleur par defaut
+                                    carteSelectionne.remove(carte);
+                                } 
                             }
-                            else 
+                            else
                             {
-                                pn.setBackground(UIManager.getColor("Panel.background"));   //couleur par defaut
-                                carteSelectionne.remove(carte);
-                                actionRestante++;
-                            } 
+                                if(pn.getBackground() == Color.red)
+                                {
+                                    pn.setBackground(UIManager.getColor("Panel.background"));   //couleur par defaut
+                                    carteSelectionne.remove(carte);
+                                    carteActionIsSelected = false;
+                                }
+                            }
                         }
                         else
                         {
-                            if(pn.getBackground() == Color.red)
+                            if(actionRestante > 0)
                             {
-                                pn.setBackground(UIManager.getColor("Panel.background"));   //couleur par defaut
-                                carteSelectionne.remove(carte);
-                                actionRestante++;
+                                if (pn.getBackground() != Color.red) 
+                                {
+                                    pn.setBackground(Color.red);
+                                    carteSelectionne.add(carte);
+                                    actionRestante--;
+                                }
+                                else 
+                                {
+                                    pn.setBackground(UIManager.getColor("Panel.background"));   //couleur par defaut
+                                    carteSelectionne.remove(carte);
+                                    actionRestante++;
+                                } 
+                            }
+                            else
+                            {
+                                if(pn.getBackground() == Color.red)
+                                {
+                                    pn.setBackground(UIManager.getColor("Panel.background"));   //couleur par defaut
+                                    carteSelectionne.remove(carte);
+                                    actionRestante++;
+                                }
                             }
                         }
+                        
                     }
                     
                 }
