@@ -149,7 +149,7 @@ public class ControleurJeuSecondaire implements Observe{
         personnages.get(numJoueurEnCours).deplacement(newPos);
         decrementAction();
         notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Deplacement de "+getJoueurEntrainDeJouer().getNom()+" sur "+newPos.getNom()));
-
+        partieGagne();  // regarde si la partie est gagnée
     }
 
     public void recupererTresor(Tuile emplacementJoueur){
@@ -379,6 +379,7 @@ public class ControleurJeuSecondaire implements Observe{
         nombreAction = 3;
         notifierObservateur(new Message(TypeEnumMessage.JOUEUR_SUIVANT));
         verifFinDePartie();
+        partieGagne();
         actionDebutTour();
     }
     
@@ -467,7 +468,7 @@ public class ControleurJeuSecondaire implements Observe{
     //Gerer le tour de Jeu
     public void TourDeJeu() {
         verifFinDePartie();
-        
+        partieGagne();
         
         //ACTION NUMERO 1 : FAIRE SES ACTIONS
         int nbaction = 3;
@@ -500,9 +501,11 @@ public class ControleurJeuSecondaire implements Observe{
     public void partieGagne(){
         int nbJoueurSurHeliport = 0;
         
+        System.out.println("YO!");
         //  Si tous les tresors ont été récupérés
         if(pierreSacre == true && caliceOnde == true && cristalArdent == true && statueZephyr == true)
         {
+            System.out.println("Les tresor sont recuperé");
             for(int i = 0; i < personnages.size(); i++)
             {
                 //  Compte le nombre de joueurs sur l'heliport
@@ -515,6 +518,7 @@ public class ControleurJeuSecondaire implements Observe{
             //  On regarde si un des joueurs a une carte helicoptere
             if(nbJoueurSurHeliport == personnages.size())
             {
+                System.out.println("Tous les persos sont sur lheliport");
                 for(int i = 0; i < personnages.size(); i++)
                 {
                     ArrayList<CarteRouge> lesCartesDuJoueur = personnages.get(i).getCartes();
@@ -526,6 +530,7 @@ public class ControleurJeuSecondaire implements Observe{
                         {
                             if(lesCartesDuJoueur.get(j).getTypeCarteAction() == TypeEnumCarteAction.HELICOPTERE)
                             {
+                                notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Partie Gagnée !"));
                                 notifierObservateur(new Message(TypeEnumMessage.PARTIE_GAGNE, "Partie Gagnée"));
                                 break;
                             } 
