@@ -5,6 +5,7 @@
  */
 package Cartes;
 
+import Enumerations.TypeEnumCarteAction;
 import Enumerations.TypeEnumTresors;
 
 /**
@@ -26,7 +27,11 @@ public class CarteMonteeDesEaux extends CarteRouge{
         public String getNom(){
             return super.getNom();
         }
-         
+        
+        @Override
+        public TypeEnumCarteAction getTypeCarteAction(){
+            return TypeEnumCarteAction.NA;
+        }
       
         @Override
         public TypeEnumTresors getTypeTresor() {

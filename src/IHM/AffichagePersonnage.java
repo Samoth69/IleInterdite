@@ -110,6 +110,13 @@ public class AffichagePersonnage extends JPanel{
             }
         });
         
+        buttonDonnerCarte.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                //pl.getControleurJeu().getJoueurEntrainDeJouer().donnerCarteAJoueur(perso, cartes);
+            }
+        });
+        
         panelBas.add(buttonDeplacement);
         panelBas.add(buttonAssecher);
         panelBas.add(buttonPasserTour);
