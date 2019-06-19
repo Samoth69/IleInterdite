@@ -371,41 +371,41 @@ public class Joueurs extends JFrame implements ActionListener {
                     return;
                 }
             }
-        }
 
-        this.joueur.setVisible(false);
-        Message msg = new Message(TypeEnumMenuPrincipal.MENU_JOUER);
-        ArrayList<String> infos = new ArrayList<>();
-        switch ((String) niveauDepart.getSelectedItem()) {
-            case "Novice":
-                infos.add("0");
-                break;
-            case "Normal":
-                infos.add("1");
-                break;
-            case "Elite":
-                infos.add("2");
-                break;
-            case "Légendaire":
-                infos.add("3");
-                break;
-        }
-        infos.add(String.valueOf(nbJoueurs.getSelectedItem()));
-        infos.add(pseudo1.getText());
-        infos.add((String) role1.getSelectedItem());
-        infos.add(pseudo2.getText());
-        infos.add((String) role2.getSelectedItem());
+            this.joueur.setVisible(false);
+            Message msg = new Message(TypeEnumMenuPrincipal.MENU_JOUER);
+            ArrayList<String> infos = new ArrayList<>();
+            switch ((String) niveauDepart.getSelectedItem()) {
+                case "Novice":
+                    infos.add("0");
+                    break;
+                case "Normal":
+                    infos.add("1");
+                    break;
+                case "Elite":
+                    infos.add("2");
+                    break;
+                case "Légendaire":
+                    infos.add("3");
+                    break;
+            }
+            infos.add(String.valueOf(nbJoueurs.getSelectedItem()));
+            infos.add(pseudo1.getText());
+            infos.add((String) role1.getSelectedItem());
+            infos.add(pseudo2.getText());
+            infos.add((String) role2.getSelectedItem());
 
-        if ((int) nbJoueurs.getSelectedItem() >= 3) {
-            infos.add(pseudo3.getText());
-            infos.add((String) role3.getSelectedItem());
+            if ((int) nbJoueurs.getSelectedItem() >= 3) {
+                infos.add(pseudo3.getText());
+                infos.add((String) role3.getSelectedItem());
+            }
+            if ((int) nbJoueurs.getSelectedItem() >= 4) {
+                infos.add(pseudo4.getText());
+                infos.add((String) role4.getSelectedItem());
+            }
+            msg.setAdditionnal(infos);
+            notifierObservateur(msg);
         }
-        if ((int) nbJoueurs.getSelectedItem() >= 4) {
-            infos.add(pseudo4.getText());
-            infos.add((String) role4.getSelectedItem());
-        }
-        msg.setAdditionnal(infos);
-        notifierObservateur(msg);
     }
 
     private void ErreurDoublePseudo() {
