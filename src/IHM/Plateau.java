@@ -701,7 +701,10 @@ public class Plateau implements Observateur {
                 }
                 else
                 {
-                    ajouterMessageHistorique(m.getAdditionnal());
+                    if(!m.getAdditionnal().isEmpty())
+                    {
+                        ajouterMessageHistorique(m.getAdditionnal());
+                    }
                 }
                 break;
             case NOUVEAU_TOUR:
