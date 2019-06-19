@@ -59,27 +59,28 @@ public class VuDefausse extends JDialog {
         //action à faire quand on ferme la fenêtre (on indique de ne rien faire car la fermeture est géré plus bas)
         this.setDefaultCloseOperation(javax.swing.JFrame.DO_NOTHING_ON_CLOSE);
         this.setTitle(titre);
-        // Définit la taille de la fenêtre en pixels
-        this.setSize(600, 200);
-
-        //permet de mettre la fenêtre au milieu de l'écran
-        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
-
+        
+        //panel principal
         mainPanel = new JPanel(new BorderLayout());
-
         this.add(mainPanel);
 
+        //grid layout qui contient les cartes
         JPanel grilleCarte = new JPanel(new GridLayout(1, carteJoueur.size()));
         grilleCarte.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        mainPanel.add(grilleCarte, BorderLayout.CENTER);
 
+        int size = 0; //taille de la fenêtre (sera additionné par la boucle for en dessous)
+        
         for (int i = 0; i < carteJoueur.size(); i++) {
-            JPanel pn = new JPanel(new BorderLayout());
-            JLabel lb = new JLabel(carteJoueur.get(i).getDescription());
-
+            JPanel pn = new JPanel();
+            
+            //JLabel lb = new JLabel(carteJoueur.get(i).getDescription());
+            ImageContainer ic = new ImageContainer(carteJoueur.get(i).getImage(), 0, 0, 190, 300);
+            size += 205;
+            
             final CarteRouge carte = carteJoueur.get(i);
             
-            lb.addMouseListener(new MouseListener() {
+            ic.addMouseListener(new MouseListener() {
                 @Override
                 public void mouseClicked(MouseEvent arg0) {
                     if (pn.getBackground() != Color.red) {
@@ -101,7 +102,7 @@ public class VuDefausse extends JDialog {
             });
 
             pn.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-            pn.add(lb);
+            pn.add(ic);
             grilleCarte.add(pn);
         }
 
@@ -142,9 +143,12 @@ public class VuDefausse extends JDialog {
             public void windowDeactivated(WindowEvent e) {}
         });
 
-        mainPanel.add(grilleCarte, BorderLayout.CENTER);
         mainPanel.add(terminer, BorderLayout.SOUTH);
-        this.add(mainPanel);
+        this.setSize(size, 380);
+        
+        //permet de mettre la fenêtre au milieu de l'écran
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
     }
     
     //est appellé avant la fermeture de la fenêtre
