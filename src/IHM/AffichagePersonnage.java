@@ -5,6 +5,7 @@
  */
 package IHM;
 
+import Cartes.CarteAction;
 import Cartes.CarteRouge;
 import Cartes.CarteTresor;
 import Enumerations.TypeEnumCarteAction;
@@ -43,7 +44,7 @@ public class AffichagePersonnage extends JPanel{
     
     private ArrayList<Personnage> listPersoEmplacement = new ArrayList<>();
     private ArrayList<CarteRouge> carteTresorDuJoueur = new ArrayList<>();
-    private ArrayList<CarteRouge> cartesActionsDujoueur= new ArrayList<>();
+    private ArrayList<CarteRouge> carteActionDuJoueur = new ArrayList<>();
     
     private JButton buttonDeplacement;
     private JButton buttonAssecher;
@@ -196,9 +197,6 @@ public class AffichagePersonnage extends JPanel{
         
         carteTresorDuJoueur.clear();
         
-       
-        
-        
         if (perso != null) {
             //  Si il y a une personne en plus du joueur en train de jouer sur la case
             //  On active la commande pour donner les cartes
@@ -268,6 +266,35 @@ public class AffichagePersonnage extends JPanel{
             {
                 buttonPrendreRelique.setEnabled(false);
             }
+            
+            carteActionDuJoueur.clear();
+            
+            //-------------------------
+            
+            for(CarteRouge i : perso.getCartes())
+            {
+                if(i instanceof CarteAction)
+                {
+                    carteActionDuJoueur.add(i);
+                }
+            }
+            
+            if(perso == pl.getControleurJeu().getJoueurEntrainDeJouer())
+            {
+                if(carteActionDuJoueur.isEmpty())
+                {
+                    buttonCarteSpecial.setEnabled(false);
+                }
+                else
+                {
+                    buttonCarteSpecial.setEnabled(true);
+                }
+            }
+            else
+            {
+                buttonCarteSpecial.setEnabled(false);
+            }
+            
             
             panelMilieu.removeAll();
             panelMilieu.revalidate();

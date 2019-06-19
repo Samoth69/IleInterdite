@@ -37,6 +37,8 @@ import javax.swing.border.Border;
  */
 public class Plateau implements Observateur {
 
+    //ATTRIBUTS
+    
     //Explorateur explo;
     //Messager testP;
     //Ingenieur inge;
@@ -61,13 +63,15 @@ public class Plateau implements Observateur {
     private int mode = 0; //0: aucun, 1: deplacement, 2: assecher
     private int oldMode = 0; //permet de détecter les changement dans la variable mode
 
+    //couleur des tuiles
     private final static Color emptyColor = new Color(255, 255, 255); //couleur case vide
-    private final static Color tuileMouilee = new Color(52, 152, 219);
+    private final static Color tuileMouilee = new Color(52, 152, 219);  
     private final static Color tuileInondee = emptyColor;
     private final static Color selectColor = new Color(12, 175, 12);
     private final static Color tuileColor = new Color(243, 156, 18);
     private final static Color nonSelectedColor = Color.gray;
-
+    
+    //Marqueur sur le niveau d'eau
     private final static Color echelleDeath = Color.white;
     private final static Color echelleBleu5 = new Color(27, 79, 114);
     private final static Color echelleBleu4 = new Color(40, 116, 166);
@@ -76,7 +80,8 @@ public class Plateau implements Observateur {
     private final static Color echelleMarqueur = Color.yellow;
     private final static Color echetteText = Color.white;
     private final static Color echetteRed = Color.red;
-
+    
+    //Fenetre et label
     private final JFrame window;
     private JLabel niveauEau[];
     private JLabel niveauEau2[];
@@ -85,6 +90,7 @@ public class Plateau implements Observateur {
     private JPanel contenantNiveauEauGauche;
     private JPanel contenantNiveauEauDroite;
     
+    //affichage perso => pion, nom , role, carte
     private AffichagePersonnage affichagePerso1;
     private AffichagePersonnage affichagePerso2;
     private AffichagePersonnage affichagePerso3;
@@ -102,15 +108,18 @@ public class Plateau implements Observateur {
     private final int max = 9; //taille frise inondation
     //private int niveauEaucompteur = max;
 
+    //CONSTRUCTEUR
     public Plateau(ArrayList<Personnage> persos, ControleurJeuSecondaire cj) {
+        //initialisation plateau
         plateau = cj.getGrille();
         this.cj = cj;
         grille = cj.getIle();
         listPion = new ArrayList<Pion>();
         listPerso = persos;
-        for (Personnage p : listPerso) {
+        for (Personnage p : listPerso) { //Attribution pion/role
             listPion.add(new Pion(p));
         }
+        
         
         for(int i = 0; i < grille.getListTuile().size(); i++)
         {
