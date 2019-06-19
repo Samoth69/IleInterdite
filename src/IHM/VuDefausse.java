@@ -33,6 +33,7 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -44,15 +45,19 @@ public class VuDefausse extends JDialog {
     private JPanel mainPanel;
     private ArrayList<CarteRouge> carteDuJoueur = new ArrayList<>();  //Array des cartes a disposition du joueur
     private ArrayList<CarteRouge> carteSelectionne = new ArrayList<>(); //Array des cartes selectionnes
+    private int nombreDeCarteADel; //nombre de carte à enlever de la main actuel
+    private JDialog window;
 
     //carteJoueur: liste des cartes à afficher
     //titre: titre de la fenêtre
     //nombreDeCarteADel: nombre de carte à supprimer
     public VuDefausse(ArrayList<CarteRouge> carteJoueur, String titre, int nombreDeCarteADel) {
+        this.window = this;
+        this.nombreDeCarteADel = nombreDeCarteADel;
         //indique que ceci est un dialogue et va attendre que la fenêtre soit fermer AVANT de continuer le code.
         this.setModal(true);
-        //action à faire quand on ferme la fenêtre
-        this.setDefaultCloseOperation(javax.swing.JFrame.HIDE_ON_CLOSE);
+        //action à faire quand on ferme la fenêtre (on indique de ne rien faire car la fermeture est géré plus bas)
+        this.setDefaultCloseOperation(javax.swing.JFrame.DO_NOTHING_ON_CLOSE);
         this.setTitle(titre);
         // Définit la taille de la fenêtre en pixels
         this.setSize(600, 200);
@@ -85,24 +90,14 @@ public class VuDefausse extends JDialog {
                         carteSelectionne.remove(carte);
                     }
                 }
-
                 @Override
-                public void mousePressed(MouseEvent arg0) {
-
-                }
-
+                public void mousePressed(MouseEvent arg0) {}
                 @Override
-                public void mouseReleased(MouseEvent arg0) {
-
-                }
-
+                public void mouseReleased(MouseEvent arg0) {}
                 @Override
-                public void mouseEntered(MouseEvent arg0) {
-                }
-
+                public void mouseEntered(MouseEvent arg0) {}
                 @Override
-                public void mouseExited(MouseEvent arg0) {
-                }
+                public void mouseExited(MouseEvent arg0) {}
             });
 
             pn.setBorder(BorderFactory.createLineBorder(Color.BLACK));
@@ -114,15 +109,53 @@ public class VuDefausse extends JDialog {
         terminer.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //if (carteSelectionne.size() != )
-                dialog.setVisible(false);
+                verifAvantFermeture();
+               
             }
 
+        });
+        
+        this.addWindowListener(new WindowListener() {
+            @Override
+            public void windowOpened(WindowEvent e) {}
+
+            @Override
+            public void windowClosing(WindowEvent e) {
+                if(verifAvantFermeture()) {
+                    window.dispose();
+                }
+            }
+
+            @Override
+            public void windowClosed(WindowEvent e) {}
+
+            @Override
+            public void windowIconified(WindowEvent e) {}
+
+            @Override
+            public void windowDeiconified(WindowEvent e) {}
+
+            @Override
+            public void windowActivated(WindowEvent e) {}
+
+            @Override
+            public void windowDeactivated(WindowEvent e) {}
         });
 
         mainPanel.add(grilleCarte, BorderLayout.CENTER);
         mainPanel.add(terminer, BorderLayout.SOUTH);
         this.add(mainPanel);
+    }
+    
+    //est appellé avant la fermeture de la fenêtre
+    private boolean verifAvantFermeture() {
+        if (carteSelectionne.size() >= nombreDeCarteADel) {
+            dialog.setVisible(false);
+            return true;
+        } else {
+            JOptionPane.showMessageDialog(null, "Veuillez sélectionner au moins " + nombreDeCarteADel + " carte(s)");
+            return false;
+        }
     }
 
     public ArrayList<CarteRouge> getSelectedItems() {
