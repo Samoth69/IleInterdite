@@ -264,4 +264,8 @@ public class VuDefausse extends JDialog {
     public Personnage getPersoQuiRecoitCartes(){
         return persoQuiRecoitCarte;
     }
+    
+    public double getNbActionRestante(){
+        return actionRestante;
+    }
 }
