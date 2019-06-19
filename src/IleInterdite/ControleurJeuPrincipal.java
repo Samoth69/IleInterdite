@@ -20,32 +20,36 @@ public class ControleurJeuPrincipal implements Observateur {
     /**
      * @param args the command line arguments
      */
-    private Joueurs joueurs = new Joueurs();
-    private Menu menu = new Menu();
-    private Plateau plateau;
-    private ControleurJeuSecondaire cj;
-
+    
+    //ATTRIBUTS
+    private Joueurs joueurs = new Joueurs(); //joueurs
+    private Menu menu = new Menu();   //menu
+    private Plateau plateau;  //plateau
+    private ControleurJeuSecondaire cj;  //controleursecondaire
+ 
     public static void main(String[] args) {
         new ControleurJeuPrincipal();
     }
 
+    //CONSTRUCTEUR
     private ControleurJeuPrincipal() {
         menu.addObservateur(this);
         joueurs.addObservateur(this);
 
         menu.afficher();
     }
-
+    
+    //traite le message
     @Override
     public void traiterMessage(Message m) {
         switch (m.getMessageType2()) {
-            case MENU_JOUEURS:
+            case MENU_JOUEURS:     // si le message est MENU_JOUEURS => affiche le fenetre joueurs
                 joueurs.afficher();
                 break;
-            case MENU_PRINCIPAL:
+            case MENU_PRINCIPAL:   //si le message est MENU_PRINCIAPL => affiche le menu
                 menu.afficher();
                 break;
-            case MENU_JOUER:
+            case MENU_JOUER:                // si les message est MENU_JOUER
                 ArrayList<String> infos = m.getAdditionnal();
                 ArrayList<Personnage> perso = new ArrayList<>();
                 int counter = 2;
@@ -162,7 +166,7 @@ public class ControleurJeuPrincipal implements Observateur {
                                         }
                                         break;
                                 }
-                            } while (joueurOk != true);   //  Tan que l'on a pas trouvé de role dispo on cherche
+                            } while (joueurOk != true);   //  Tant que l'on n' a pas trouvé de role dispo on cherche
                             break;
                     }
                     joueurCompter++;
