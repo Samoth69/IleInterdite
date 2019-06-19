@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package democalques;
+package IHM;
 
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.io.File;
@@ -49,5 +50,10 @@ public class ImageContainer extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.drawImage(image, x, y, width, height, null, this);
+    }
+    
+    @Override
+    public Dimension getPreferredSize() {
+        return new Dimension(width, height);
     }
 }

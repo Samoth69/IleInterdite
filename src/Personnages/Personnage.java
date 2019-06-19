@@ -12,6 +12,7 @@ import Cartes.CarteInondation;
 import Cartes.CarteMonteeDesEaux;
 import Enumerations.TypeEnumCouleurPion;
 import Enumerations.TypeEnumInondation;
+import Enumerations.TypeEnumPersonnages;
 import IleInterdite.Grille;
 import IleInterdite.Tuile;
 import java.util.ArrayList;
@@ -21,7 +22,8 @@ import java.util.ArrayList;
  * @author violentt
  */
 public abstract class Personnage {
-
+ 
+    //ATTRIBUTS
     //nom du joueur
     private String nom;
     //emplacement du Joueur (liée à la tuille sur laquel le personnage est)
@@ -47,13 +49,15 @@ public abstract class Personnage {
     private TypeEnumCouleurPion pion = TypeEnumCouleurPion.AUCUN;
     private boolean pouvoirDeplacementUtilise = false; //devient vrai quand l'utilisateur à utilisé sont pouvoir de déplacement (déplacement diagonal pour explorateur, déplacement sur la carte pour le pilote) redevient faux quand le joueur en cour change
     
+    //CONSTRUCTEUR
     Personnage(String nom, Grille ile, TypeEnumCouleurPion pion) {
         this.nom = nom;
         this.ile = ile;
         this.pion = pion;
         //System.out.println("init perso");
     }
-
+    
+    //METHODES
     //utiliser uniquement pour définir l'emplacement de départ du joueur.
     //utiliser la fonction deplacement pour déplacer le personnage sur la grille
     public void setEmplacementJoueur(Tuile emplacementJoueur) {
@@ -89,21 +93,25 @@ public abstract class Personnage {
         }
         return out;
     }
-
+    
+    //change l'emplacement du joueur
     public void deplacement(Tuile nouvelleTuille) {
         emplacementJoueur.removeJoueur(this);
         emplacementJoueur = nouvelleTuille;
         emplacementJoueur.addJoueur(this);
     }
-
+    
+    //Renvoie la tuile sur laquelle est le joueur
     public Tuile getEmplacement() {
         return emplacementJoueur;
     }
-
+    
+    //Renvoie la grille
     protected Grille getGrille() {
         return ile;
     }
-
+    
+    //setter grille
     public void setGrille(Grille g) {
         ile = g;
     }
@@ -111,22 +119,22 @@ public abstract class Personnage {
     //renvoie les iles qui peuvent être sécher autour du joueur
     //peut être renvoyer une arraylist vide
     public ArrayList<Tuile> getTuileQuiPeutSecher() {
-        ArrayList<Tuile> tmp = ile.getTuilesAutoursMouille(this);
+        ArrayList<Tuile> tmp = ile.getTuilesAutoursMouille(this); //liste contenant les tuiles qui sont mouillées autour du joueur
         ArrayList<Tuile> out = new ArrayList<>();
 
-        int currentX = this.emplacementJoueur.getX();
+        int currentX = this.emplacementJoueur.getX();     //X et Y prennent la position actuel du joueur
         int currentY = this.emplacementJoueur.getY();
 
-        if (tmp != null) {
+        if (tmp != null) {      
             if (tmp.size() != 0) {
                 for (Tuile t : tmp) {
-                    if (t.getX() == currentX || t.getY() == currentY) {
-                        out.add(t);
+                    if (t.getX() == currentX || t.getY() == currentY) {  
+                        out.add(t);   // ajoute a la liste out, les tuiles qu'un personnage peut assecher
                     }
                 }
             }
         }
-        return out;
+        return out; 
     }
 
     //assecher une tuile
@@ -181,19 +189,25 @@ public abstract class Personnage {
     public void removeCarte(CarteRouge carte) {
         this.cartes.remove(carte);
     }
-
+    
+    // retourne le nom du personnage
     public String getNom() {
         return nom;
     }
+    
+    //indique de quel type est la classe (explorateur, ingénieur....)
+    public abstract TypeEnumPersonnages getType();
 
     public void passageJoueurSuivant() {
         pouvoirDeplacementUtilise = false;
     }
-
+    
+    //Renvoie true si le personnage peut se deplacer, sinon false
     protected boolean getPouvoirDeplacementUtilise() {
         return pouvoirDeplacementUtilise;
     }
-
+    
+    //Permet de donner le pouvoir de deplacement au personnage
     protected void setPouvoirDeplacementUtilise(boolean v) {
         pouvoirDeplacementUtilise = v;
     }

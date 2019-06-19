@@ -16,15 +16,18 @@ import Enumerations.TypeEnumTresors;
 public abstract class CarteRouge {
    private String nom; //Montée des eaux ou carte tresor ou carte action
    private String description; //Description de la carte, si nécessaire
+   private final String image; //nom fichier image
    
-   public CarteRouge(String nom){     // instancation CarteRouge
+   public CarteRouge(String nom, String image){     // instancation CarteRouge
         this.nom=nom;
+        this.image = image;
     }
    
    
-    public CarteRouge(String nom, String description){     //instancation CarteRoug
+    public CarteRouge(String nom, String description, String image){     //instancation CarteRoug
         this.nom=nom;
         this.description=description;
+        this.image = image;
     }
 
     
@@ -46,6 +49,10 @@ public abstract class CarteRouge {
     // set description
     public void setDescription(String description) {
         this.description = description;
+    }
+    
+    public String getImage() {
+        return image;
     }
     
     public abstract TypeEnumCarteAction getTypeCarteAction();

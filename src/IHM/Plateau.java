@@ -95,8 +95,6 @@ public class Plateau implements Observateur {
     private final static String nomButtonAssecher = AffichagePersonnage.nomButtonAssecher;
     private final static String nomAnnulé = AffichagePersonnage.nomAnnulé;
     
-    private JButton augmenterniveauEau;
-    
     //objet liste
     private JList listBasGamePad = new JList();
     //liste contenant l'historique du jeu
@@ -266,26 +264,25 @@ public class Plateau implements Observateur {
 
         panelGamePad.add(panelHautGamePad, BorderLayout.NORTH);
   
-        JPanel panelMilieuGamePad = new JPanel(new GridLayout(4,1));
+        JPanel panelMilieuGamePad = new JPanel(new GridLayout(cj.getNombreJoueurDansPartie(),0));
         
         affichagePerso1 = new AffichagePersonnage(this, listPerso.get(0));
         affichagePerso2 = new AffichagePersonnage(this, listPerso.get(1));
+        panelMilieuGamePad.add(affichagePerso1);
+        panelMilieuGamePad.add(affichagePerso2);
         
         if (cj.getNombreJoueurDansPartie() > 2) {
             affichagePerso3 = new AffichagePersonnage(this, listPerso.get(2));
+            panelMilieuGamePad.add(affichagePerso3);
         } else {
             affichagePerso3 = new AffichagePersonnage(this, null);
         }
         if (cj.getNombreJoueurDansPartie() > 3) {
             affichagePerso4 = new AffichagePersonnage(this, listPerso.get(3));
+            panelMilieuGamePad.add(affichagePerso4);
         } else {
             affichagePerso4 = new AffichagePersonnage(this, null);
         }
-        
-        panelMilieuGamePad.add(affichagePerso1);
-        panelMilieuGamePad.add(affichagePerso2);
-        panelMilieuGamePad.add(affichagePerso3);
-        panelMilieuGamePad.add(affichagePerso4);
 
         panelGamePad.add(panelMilieuGamePad, BorderLayout.CENTER);
         
@@ -704,7 +701,10 @@ public class Plateau implements Observateur {
                 }
                 else
                 {
-                    ajouterMessageHistorique(m.getAdditionnal());
+                    if(!m.getAdditionnal().isEmpty())
+                    {
+                        ajouterMessageHistorique(m.getAdditionnal());
+                    }
                 }
                 break;
             case NOUVEAU_TOUR:

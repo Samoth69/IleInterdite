@@ -23,6 +23,7 @@ import Personnages.Personnage;
 import Personnages.Pilote;
 import Personnages.Plongeur;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -49,9 +50,9 @@ public class ControleurJeuSecondaire implements Observe{
     
     private ArrayList<Personnage>personnages = new ArrayList<>();
     private ArrayList<CarteRouge>pileCarteRouge = new ArrayList<>();
-    private ArrayList<CarteRouge>defauseCarteRouge = new ArrayList<>();
+    private ArrayList<CarteRouge>defausseCarteRouge = new ArrayList<>();
     private ArrayList<CarteInondation>pileCarteInondation = new ArrayList<>();
-    private ArrayList<CarteInondation>defauseCarteInondation = new ArrayList<>();
+    private ArrayList<CarteInondation>defausseCarteInondation = new ArrayList<>();
     
     //-----------------------------------------------------------------------------------
     
@@ -82,7 +83,7 @@ public class ControleurJeuSecondaire implements Observe{
         for (int i = 0; i <= 5; i++) {
             CarteInondation ci = PiocherCarteInond();
             augementerInondation(ci.getNom());
-            DefausserCarte(ci);
+            ControleurJeuSecondaire.this.defausserCarte(ci);
         } 
         for (int i = 1; i <= 2; i++) {
             for (Personnage p : perso) {
@@ -149,11 +150,12 @@ public class ControleurJeuSecondaire implements Observe{
         personnages.get(numJoueurEnCours).deplacement(newPos);
         decrementAction();
         notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Deplacement de "+getJoueurEntrainDeJouer().getNom()+" sur "+newPos.getNom()));
-
+        partieGagne();  // regarde si la partie est gagnée
     }
 
     public void recupererTresor(Tuile emplacementJoueur){
         int nbCarteTresor = 0;
+        ArrayList<CarteRouge> carteUtilise = new ArrayList<>();
         
         //  Si il y a bien un tresor
         if(emplacementJoueur.getTresor() != TypeEnumTresors.AUCUN)
@@ -176,22 +178,86 @@ public class ControleurJeuSecondaire implements Observe{
                         notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Le tresor Cristal Ardent a été récupéré"));
                         //message qui indique la tuile où le tresor doit etre supprimé
                         notifierObservateur(new Message(TypeEnumMessage.RM_TRESOR, emplacementJoueur));
+                        for(CarteRouge i : getJoueurEntrainDeJouer().getCartes())
+                        {
+                            if(i.getTypeTresor() == TypeEnumTresors.FEU)
+                            {
+                                if(nbCarteTresor <= 0)
+                                {
+                                    break;
+                                }
+                                
+                                carteUtilise.add(i);
+                                
+                                nbCarteTresor--;
+                            }
+                        }
+                        getJoueurEntrainDeJouer().getCartes().removeAll(carteUtilise);
+                        defausserCarte(carteUtilise);
                         
                     break;
                     case LION:  // idem
                         statueZephyr = true;
                         notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Le tresor Statue de Zephyr a été récupéré"));
                         notifierObservateur(new Message(TypeEnumMessage.RM_TRESOR, emplacementJoueur));
+                        for(CarteRouge i : getJoueurEntrainDeJouer().getCartes())
+                        {
+                            if(i.getTypeTresor() == TypeEnumTresors.LION)
+                            {
+                                if(nbCarteTresor <= 0)
+                                {
+                                    break;
+                                }
+                                
+                                carteUtilise.add(i);
+                                
+                                nbCarteTresor--;
+                            }
+                        }
+                        getJoueurEntrainDeJouer().getCartes().removeAll(carteUtilise);
+                        defausserCarte(carteUtilise);
                     break;
                     case LUNE:  //idem
                         pierreSacre = true;
                         notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Le tresor Pierre Sacré a été récupéré"));
                         notifierObservateur(new Message(TypeEnumMessage.RM_TRESOR, emplacementJoueur));
+                        for(CarteRouge i : getJoueurEntrainDeJouer().getCartes())
+                        {
+                            if(i.getTypeTresor() == TypeEnumTresors.LUNE)
+                            {
+                                if(nbCarteTresor <= 0)
+                                {
+                                    break;
+                                }
+                                
+                                carteUtilise.add(i);
+                                
+                                nbCarteTresor--;
+                            }
+                        }
+                        getJoueurEntrainDeJouer().getCartes().removeAll(carteUtilise);
+                        defausserCarte(carteUtilise);
                     break;
                     case TROPHEE:   //idem
                         caliceOnde = true;
                         notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Le tresor Calice des Ondes a été récupéré"));
                         notifierObservateur(new Message(TypeEnumMessage.RM_TRESOR, emplacementJoueur));
+                        for(CarteRouge i : getJoueurEntrainDeJouer().getCartes())
+                        {
+                            if(i.getTypeTresor() == TypeEnumTresors.TROPHEE)
+                            {
+                                if(nbCarteTresor <= 0)
+                                {
+                                    break;
+                                }
+                                
+                                carteUtilise.add(i);
+                                
+                                nbCarteTresor--;
+                            }
+                        }
+                        getJoueurEntrainDeJouer().getCartes().removeAll(carteUtilise);
+                        defausserCarte(carteUtilise);
                     break;
                 }
                 //  retire le tresor de la case
@@ -285,8 +351,8 @@ public class ControleurJeuSecondaire implements Observe{
     public CarteRouge PiocherCarteRouge() {
         if(pileCarteRouge.isEmpty())
         {
-            pileCarteRouge.addAll(defauseCarteRouge);
-            defauseCarteRouge.clear();
+            pileCarteRouge.addAll(defausseCarteRouge);
+            defausseCarteRouge.clear();
             MelangeCarteRouge();
         }
         CarteRouge cr = pileCarteRouge.get(pileCarteRouge.size() - 1);
@@ -299,7 +365,7 @@ public class ControleurJeuSecondaire implements Observe{
             } else {
                 augmenterNiveauEau();
                 viderDefausseCarteInondation();
-                defauseCarteRouge.add(cr);
+                defausseCarteRouge.add(cr);
                 return null;
             }
         } else {
@@ -319,19 +385,23 @@ public class ControleurJeuSecondaire implements Observe{
     
     private void viderDefausseCarteInondation() {
         MelangeDefausseCarteInnondation();
-        pileCarteInondation.addAll(defauseCarteInondation);
-        defauseCarteInondation.clear();
+        pileCarteInondation.addAll(defausseCarteInondation);
+        defausseCarteInondation.clear();
         for (CarteInondation ci : pileCarteInondation) {
             System.out.println(ci.getNom());
         }
     }
     
-    public void DefausserCarte(CarteInondation ci) {
-        defauseCarteInondation.add(ci);
+    public void defausserCarte(CarteInondation ci) {
+        defausseCarteInondation.add(ci);
     }
     
-    public void DefausserCarte(CarteRouge cr) {
-        defauseCarteRouge.add(cr);
+    public void defausserCarte(Collection<CarteRouge> cr){
+        defausseCarteRouge.addAll(cr);
+    }
+    
+    public void defausserCarte(CarteRouge cr) {
+        defausseCarteRouge.add(cr);
     }
     
     public Tuile[][] getGrille() {
@@ -344,13 +414,11 @@ public class ControleurJeuSecondaire implements Observe{
     
     public void VerifNbCarte(Personnage perso) {
         if (perso.getCartes().size()>5){
-            VuDefausse vd = new VuDefausse(perso.getCartes());
-            while (vd.getSelectedItems().isEmpty()) {
-                vd.setVisible(true);
-            }
+            VuDefausse vd = new VuDefausse(perso.getCartes(), "Defaussez une carte", perso.getCartes().size() - 5);
+            vd.setVisible(true);
             for (CarteRouge cr : vd.getSelectedItems()) {
                 perso.removeCarte(cr);
-                DefausserCarte(cr);
+                defausserCarte(cr);
             }
             notifierObservateur(new Message(TypeEnumMessage.UPDATE_GUI));
         }
@@ -373,12 +441,13 @@ public class ControleurJeuSecondaire implements Observe{
             CarteInondation ci = PiocherCarteInond();
             aci.add(ci);
             grille.AugmenterInnondation(ci.getNom());
-            DefausserCarte(ci);
+            ControleurJeuSecondaire.this.defausserCarte(ci);
         }
         notifierObservateur(new Message(TypeEnumMessage.PIOCHE_CARTE_INONDATION, aci));
         nombreAction = 3;
         notifierObservateur(new Message(TypeEnumMessage.JOUEUR_SUIVANT));
         verifFinDePartie();
+        partieGagne();
         actionDebutTour();
     }
     
@@ -389,7 +458,7 @@ public class ControleurJeuSecondaire implements Observe{
     
     private void MelangeDefausseCarteInnondation() {
         //defausecarteinondatio
-        Collections.shuffle(defauseCarteInondation);
+        Collections.shuffle(defausseCarteInondation);
     }
     
     private void decrementAction(){
@@ -467,7 +536,7 @@ public class ControleurJeuSecondaire implements Observe{
     //Gerer le tour de Jeu
     public void TourDeJeu() {
         verifFinDePartie();
-        
+        partieGagne();
         
         //ACTION NUMERO 1 : FAIRE SES ACTIONS
         int nbaction = 3;
@@ -493,7 +562,7 @@ public class ControleurJeuSecondaire implements Observe{
             i++;
             CarteInondation cartepiocheinond = this.PiocherCarteInond();
             grille.AugmenterInnondation(cartepiocheinond.getNom());
-            defauseCarteInondation.add(cartepiocheinond);
+            defausseCarteInondation.add(cartepiocheinond);
         }
     }
     
@@ -526,6 +595,7 @@ public class ControleurJeuSecondaire implements Observe{
                         {
                             if(lesCartesDuJoueur.get(j).getTypeCarteAction() == TypeEnumCarteAction.HELICOPTERE)
                             {
+                                notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Partie Gagnée !"));
                                 notifierObservateur(new Message(TypeEnumMessage.PARTIE_GAGNE, "Partie Gagnée"));
                                 break;
                             } 
@@ -656,34 +726,36 @@ public class ControleurJeuSecondaire implements Observe{
     public ArrayList<CarteRouge> getListCarteRouge() {
         ArrayList<CarteRouge> out = new ArrayList<>();
         
-        out.add(new CarteTresor("Lion",TypeEnumTresors.LION));
-        out.add(new CarteTresor("Lion",TypeEnumTresors.LION));
-        out.add(new CarteTresor("Lion",TypeEnumTresors.LION));
-        out.add(new CarteTresor("Lion",TypeEnumTresors.LION));
-        out.add(new CarteTresor("Lion",TypeEnumTresors.LION));
-        out.add(new CarteTresor("Lune",TypeEnumTresors.LUNE));
-        out.add(new CarteTresor("Lune",TypeEnumTresors.LUNE));
-        out.add(new CarteTresor("Lune",TypeEnumTresors.LUNE));
-        out.add(new CarteTresor("Lune",TypeEnumTresors.LUNE));
-        out.add(new CarteTresor("Lune",TypeEnumTresors.LUNE));
-        out.add(new CarteTresor("Feu",TypeEnumTresors.FEU));
-        out.add(new CarteTresor("Feu",TypeEnumTresors.FEU));
-        out.add(new CarteTresor("Feu",TypeEnumTresors.FEU));
-        out.add(new CarteTresor("Feu",TypeEnumTresors.FEU));
-        out.add(new CarteTresor("Feu",TypeEnumTresors.FEU));
-        out.add(new CarteTresor("Trophee",TypeEnumTresors.TROPHEE));
-        out.add(new CarteTresor("Trophee",TypeEnumTresors.TROPHEE));
-        out.add(new CarteTresor("Trophee",TypeEnumTresors.TROPHEE));
-        out.add(new CarteTresor("Trophee",TypeEnumTresors.TROPHEE));
-        out.add(new CarteTresor("Trophee",TypeEnumTresors.TROPHEE));
-        out.add(new CarteMonteeDesEaux("CarteMonteeDesEaux1"));
-        out.add(new CarteMonteeDesEaux("CarteMonteeDesEaux2"));
-        out.add(new CarteMonteeDesEaux("CarteMonteeDesEaux3"));
-        out.add(new CarteAction("Helicoptere",TypeEnumCarteAction.HELICOPTERE));
-        out.add(new CarteAction("Helicoptere",TypeEnumCarteAction.HELICOPTERE));
-        out.add(new CarteAction("Helicoptere",TypeEnumCarteAction.HELICOPTERE));
-        out.add(new CarteAction("sac",TypeEnumCarteAction.SAC_DE_SABLE));
-        out.add(new CarteAction("sac",TypeEnumCarteAction.SAC_DE_SABLE));
+        final String chemin = System.getProperty("user.dir") + "/src/RessourcesCarteTresor/";
+        
+        out.add(new CarteTresor("Lion",TypeEnumTresors.LION, chemin + "Zephyr.png"));
+        out.add(new CarteTresor("Lion",TypeEnumTresors.LION, chemin + "Zephyr.png"));
+        out.add(new CarteTresor("Lion",TypeEnumTresors.LION, chemin + "Zephyr.png"));
+        out.add(new CarteTresor("Lion",TypeEnumTresors.LION, chemin + "Zephyr.png"));
+        out.add(new CarteTresor("Lion",TypeEnumTresors.LION, chemin + "Zephyr.png"));
+        out.add(new CarteTresor("Lune",TypeEnumTresors.LUNE, chemin + "Pierre.png"));
+        out.add(new CarteTresor("Lune",TypeEnumTresors.LUNE, chemin + "Pierre.png"));
+        out.add(new CarteTresor("Lune",TypeEnumTresors.LUNE, chemin + "Pierre.png"));
+        out.add(new CarteTresor("Lune",TypeEnumTresors.LUNE, chemin + "Pierre.png"));
+        out.add(new CarteTresor("Lune",TypeEnumTresors.LUNE, chemin + "Pierre.png"));
+        out.add(new CarteTresor("Feu",TypeEnumTresors.FEU, chemin + "Cristal.png"));
+        out.add(new CarteTresor("Feu",TypeEnumTresors.FEU, chemin + "Cristal.png"));
+        out.add(new CarteTresor("Feu",TypeEnumTresors.FEU, chemin + "Cristal.png"));
+        out.add(new CarteTresor("Feu",TypeEnumTresors.FEU, chemin + "Cristal.png"));
+        out.add(new CarteTresor("Feu",TypeEnumTresors.FEU, chemin + "Cristal.png"));
+        out.add(new CarteTresor("Trophee",TypeEnumTresors.TROPHEE, chemin + "Calice.png"));
+        out.add(new CarteTresor("Trophee",TypeEnumTresors.TROPHEE, chemin + "Calice.png"));
+        out.add(new CarteTresor("Trophee",TypeEnumTresors.TROPHEE, chemin + "Calice.png"));
+        out.add(new CarteTresor("Trophee",TypeEnumTresors.TROPHEE, chemin + "Calice.png"));
+        out.add(new CarteTresor("Trophee",TypeEnumTresors.TROPHEE, chemin + "Calice.png"));
+        out.add(new CarteMonteeDesEaux("CarteMonteeDesEaux1", chemin + "MonteeDesEaux.png"));
+        out.add(new CarteMonteeDesEaux("CarteMonteeDesEaux2", chemin + "MonteeDesEaux.png"));
+        out.add(new CarteMonteeDesEaux("CarteMonteeDesEaux3", chemin + "MonteeDesEaux.png"));
+        out.add(new CarteAction("Helicoptere",TypeEnumCarteAction.HELICOPTERE, chemin + "Helicoptere.png"));
+        out.add(new CarteAction("Helicoptere",TypeEnumCarteAction.HELICOPTERE, chemin + "Helicoptere.png"));
+        out.add(new CarteAction("Helicoptere",TypeEnumCarteAction.HELICOPTERE, chemin + "Helicoptere.png"));
+        out.add(new CarteAction("sac",TypeEnumCarteAction.SAC_DE_SABLE, chemin + "SacsDeSable.png"));
+        out.add(new CarteAction("sac",TypeEnumCarteAction.SAC_DE_SABLE, chemin + "SacsDeSable.png"));
         
         
         return out;
