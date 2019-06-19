@@ -114,6 +114,8 @@ public class AffichagePersonnage extends JPanel{
         buttonDonnerCarte.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
+                VuDefausse vd = new VuDefausse(perso.getCartes(), "Defaussez une carte", perso.getCartes().size() - 5);
+                vd.setVisible(true);
                 //pl.getControleurJeu().getJoueurEntrainDeJouer().donnerCarteAJoueur(perso, cartes);
             }
         });
@@ -189,4 +191,14 @@ public class AffichagePersonnage extends JPanel{
     public void setButtonPasserTourEnabled(boolean b) {
         buttonPasserTour.setEnabled(b);
     }
+    
+    public void setButtonDonnerCarteText(String text){
+        buttonDonnerCarte.setText(text);
+    }
+    
+    public void setButtonDonnerCarteEnabled(boolean b){
+        buttonDonnerCarte.setEnabled(b);
+    }
+    
+    
 }
