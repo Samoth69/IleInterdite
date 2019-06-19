@@ -15,8 +15,8 @@ import Enumerations.TypeEnumTresors;
 public class CarteTresor extends CarteRouge{
     private TypeEnumTresors typeTresor;
     
-        public CarteTresor(String nom, TypeEnumTresors typeTresor){
-            super(nom, typeTresor.toString());
+        public CarteTresor(String nom, TypeEnumTresors typeTresor, String img){
+            super(nom, typeTresor.toString(), img);
             this.typeTresor = typeTresor;
         }
          

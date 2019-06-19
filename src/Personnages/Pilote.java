@@ -6,6 +6,7 @@
 package Personnages;
 
 import Enumerations.TypeEnumCouleurPion;
+import Enumerations.TypeEnumPersonnages;
 import IleInterdite.Grille;
 import IleInterdite.Tuile;
 import java.util.ArrayList;
@@ -50,5 +51,10 @@ public class Pilote extends Personnage{
             setPouvoirDeplacementUtilise(true);
         }
         super.deplacement(nouvelleTuille);
+    }
+    
+    @Override
+    public TypeEnumPersonnages getType() {
+        return TypeEnumPersonnages.PILOTE;
     }
 }

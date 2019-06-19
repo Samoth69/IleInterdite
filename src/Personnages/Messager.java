@@ -7,6 +7,7 @@ package Personnages;
 
 import Cartes.CarteRouge;
 import Enumerations.TypeEnumCouleurPion;
+import Enumerations.TypeEnumPersonnages;
 import IleInterdite.Grille;
 import IleInterdite.Tuile;
 import java.util.ArrayList;
@@ -29,5 +30,10 @@ public class Messager extends Personnage{
     @Override
     public void donnerCarteAJoueur(Personnage personnage, CarteRouge carte) {
         
+    }
+    
+    @Override
+    public TypeEnumPersonnages getType() {
+        return TypeEnumPersonnages.MESSAGER;
     }
 }
