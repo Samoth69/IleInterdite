@@ -45,7 +45,10 @@ public class VuDefausse extends JDialog {
     private ArrayList<CarteRouge> carteDuJoueur = new ArrayList<>();  //Array des cartes a disposition du joueur
     private ArrayList<CarteRouge> carteSelectionne = new ArrayList<>(); //Array des cartes selectionnes
 
-    public VuDefausse(ArrayList<CarteRouge> carteJoueur, String titre) {
+    //carteJoueur: liste des cartes à afficher
+    //titre: titre de la fenêtre
+    //nombreDeCarteADel: nombre de carte à supprimer
+    public VuDefausse(ArrayList<CarteRouge> carteJoueur, String titre, int nombreDeCarteADel) {
         //indique que ceci est un dialogue et va attendre que la fenêtre soit fermer AVANT de continuer le code.
         this.setModal(true);
         //action à faire quand on ferme la fenêtre
@@ -111,6 +114,7 @@ public class VuDefausse extends JDialog {
         terminer.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                //if (carteSelectionne.size() != )
                 dialog.setVisible(false);
             }
 
