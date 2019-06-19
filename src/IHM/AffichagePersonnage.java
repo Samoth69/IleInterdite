@@ -34,6 +34,8 @@ public class AffichagePersonnage extends JPanel{
     
     private JPanel panelMilieu;
     
+    boolean dejaDonne = false;
+    
     ArrayList<Personnage> listPersoEmplacement = new ArrayList<>();
     
     private JButton buttonDeplacement;
@@ -125,6 +127,9 @@ public class AffichagePersonnage extends JPanel{
                     VuDefausse vd = new VuDefausse(perso.getCartes(), "Donner carte", 1, listPersoEmplacement);
                     vd.setVisible(true);
                     perso.donnerCarteAJoueur(vd.getPersoQuiRecoitCartes(), vd.getSelectedItems());
+                    listPersoEmplacement.clear();
+                    buttonDonnerCarte.setEnabled(false);
+                    //dejaDonne = true;
                 }
             }
         });
@@ -167,14 +172,29 @@ public class AffichagePersonnage extends JPanel{
             pion.setCouleur(TypeEnumCouleurPion.AUCUN);
         }
         if (perso != null) {
-            if(perso.getEmplacement().getPersonnages().size() > 1)
+            //  Si il y a une personne en plus du joueur en train de jouer sur la case
+            //  On active la commande pour donner les cartes
+            //  Sinon non
+            if(!dejaDonne)
             {
-                buttonDonnerCarte.setEnabled(true);
+                if(perso.getEmplacement().getPersonnages().size() > 1)
+                {
+                    buttonDonnerCarte.setEnabled(true);
+                }
+                else
+                {
+                    buttonDonnerCarte.setEnabled(false);
+                }
             }
             else
             {
                 buttonDonnerCarte.setEnabled(false);
             }
+            
+            
+            //  Si le personnage en train de jouer est sur une case avec un tresor
+            //  et qu'il posséde 4 carte du meme type que le tresor
+            //  la commande pour prendre le tresor est activee
             if(perso.getEmplacement().getTresor() != TypeEnumTresors.AUCUN)
             {
                 int comptTresor =0;
@@ -194,6 +214,7 @@ public class AffichagePersonnage extends JPanel{
             {
                 buttonPrendreRelique.setEnabled(false);
             }
+            
             panelMilieu.removeAll();
             panelMilieu.revalidate();
             labelJoueur.setText(perso.getNom());
