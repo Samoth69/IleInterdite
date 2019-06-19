@@ -82,7 +82,7 @@ public class ControleurJeuSecondaire implements Observe{
         for (int i = 0; i <= 5; i++) {
             CarteInondation ci = PiocherCarteInond();
             augementerInondation(ci.getNom());
-            DefausserCarte(ci);
+            ControleurJeuSecondaire.this.defausserCarte(ci);
         } 
         for (int i = 1; i <= 2; i++) {
             for (Personnage p : perso) {
@@ -184,7 +184,8 @@ public class ControleurJeuSecondaire implements Observe{
                                 {
                                     break;
                                 }
-                                getJoueurEntrainDeJouer().getCartes().remove(i);
+                                getJoueurEntrainDeJouer().removeCarte(i);
+                                defausserCarte(i);
                                 nbCarteTresor--;
                             }
                         }
@@ -202,7 +203,9 @@ public class ControleurJeuSecondaire implements Observe{
                                 {
                                     break;
                                 }
-                                getJoueurEntrainDeJouer().getCartes().remove(i);
+                                getJoueurEntrainDeJouer().removeCarte(i);
+                                defausserCarte(i);
+                                nbCarteTresor--;
                             }
                         }
                     break;
@@ -218,7 +221,9 @@ public class ControleurJeuSecondaire implements Observe{
                                 {
                                     break;
                                 }
-                                getJoueurEntrainDeJouer().getCartes().remove(i);
+                                getJoueurEntrainDeJouer().removeCarte(i);
+                                defausserCarte(i);
+                                nbCarteTresor--;
                             }
                         }
                     break;
@@ -234,7 +239,9 @@ public class ControleurJeuSecondaire implements Observe{
                                 {
                                     break;
                                 }
-                                getJoueurEntrainDeJouer().getCartes().remove(i);
+                                getJoueurEntrainDeJouer().removeCarte(i);
+                                defausserCarte(i);
+                                nbCarteTresor--;
                             }
                         }
                     break;
@@ -371,11 +378,11 @@ public class ControleurJeuSecondaire implements Observe{
         }
     }
     
-    public void DefausserCarte(CarteInondation ci) {
+    public void defausserCarte(CarteInondation ci) {
         defauseCarteInondation.add(ci);
     }
     
-    public void DefausserCarte(CarteRouge cr) {
+    public void defausserCarte(CarteRouge cr) {
         defauseCarteRouge.add(cr);
     }
     
@@ -395,7 +402,7 @@ public class ControleurJeuSecondaire implements Observe{
             }
             for (CarteRouge cr : vd.getSelectedItems()) {
                 perso.removeCarte(cr);
-                DefausserCarte(cr);
+                defausserCarte(cr);
             }
             notifierObservateur(new Message(TypeEnumMessage.UPDATE_GUI));
         }
@@ -418,7 +425,7 @@ public class ControleurJeuSecondaire implements Observe{
             CarteInondation ci = PiocherCarteInond();
             aci.add(ci);
             grille.AugmenterInnondation(ci.getNom());
-            DefausserCarte(ci);
+            ControleurJeuSecondaire.this.defausserCarte(ci);
         }
         notifierObservateur(new Message(TypeEnumMessage.PIOCHE_CARTE_INONDATION, aci));
         nombreAction = 3;
