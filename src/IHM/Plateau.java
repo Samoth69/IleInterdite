@@ -130,8 +130,9 @@ public class Plateau implements Observateur {
         window = new JFrame();
         window.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
         // Définit la taille de la fenêtre en pixels
-        window.setSize(1500, 900);
-        window.setTitle("Ile Interdite");
+        /*window.setSize(1500, 900);*/
+        window.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        window.setTitle("Plateau");
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         window.setLocation(dim.width / 2 - window.getSize().width / 2, dim.height / 2 - window.getSize().height / 2);
 
@@ -264,7 +265,7 @@ public class Plateau implements Observateur {
 
         panelGamePad.add(panelHautGamePad, BorderLayout.NORTH);
   
-        JPanel panelMilieuGamePad = new JPanel(new GridLayout(cj.getNombreJoueurDansPartie(),0));
+        JPanel panelMilieuGamePad = new JPanel(new GridLayout(0,cj.getNombreJoueurDansPartie()));
         
         affichagePerso1 = new AffichagePersonnage(this, listPerso.get(0));
         affichagePerso2 = new AffichagePersonnage(this, listPerso.get(1));
@@ -284,7 +285,7 @@ public class Plateau implements Observateur {
             affichagePerso4 = new AffichagePersonnage(this, null);
         }
 
-        panelGamePad.add(panelMilieuGamePad, BorderLayout.CENTER);
+        mainPanel.add(panelMilieuGamePad, BorderLayout.SOUTH);
         
         JPanel panelGamePadBas = new JPanel();
         panelGamePadBas.setLayout(new BoxLayout(panelGamePadBas, BoxLayout.Y_AXIS));
