@@ -33,6 +33,8 @@ public class AffichagePersonnage extends JPanel{
     
     private JPanel panelMilieu;
     
+    ArrayList<Personnage> listPersoEmplacement = new ArrayList<>();
+    
     private JButton buttonDeplacement;
     private JButton buttonAssecher;
     private JButton buttonPasserTour;
@@ -125,7 +127,7 @@ public class AffichagePersonnage extends JPanel{
             public void actionPerformed(ActionEvent arg0) {
                 if(perso.getEmplacement().getPersonnages().size() != 1)
                 {
-                    ArrayList<Personnage> listPersoEmplacement = perso.getEmplacement().getPersonnages();
+                    listPersoEmplacement.addAll(perso.getEmplacement().getPersonnages());
                     listPersoEmplacement.remove(perso);
                     VuDefausse vd = new VuDefausse(perso.getCartes(), "Donner carte", 1, listPersoEmplacement);
                     vd.setVisible(true);
