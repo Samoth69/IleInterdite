@@ -5,6 +5,8 @@
  */
 package Cartes;
 
+import Enumerations.TypeEnumAction;
+import Enumerations.TypeEnumCarteAction;
 import Enumerations.TypeEnumTresors;
 
 /**
@@ -45,6 +47,8 @@ public abstract class CarteRouge {
     public void setDescription(String description) {
         this.description = description;
     }
+    
+    public abstract TypeEnumCarteAction getTypeCarteAction();
     
     public abstract TypeEnumTresors getTypeTresor();
     

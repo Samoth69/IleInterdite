@@ -11,7 +11,8 @@ package Enumerations;
  */
 public enum TypeEnumCarteAction {
     HELICOPTERE("Hélicoptère"),
-    SAC_DE_SABLE("Sac de sable");
+    SAC_DE_SABLE("Sac de sable"),
+    NA("NA");
     
     private String nom = "";
     

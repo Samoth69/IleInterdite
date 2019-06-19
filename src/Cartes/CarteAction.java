@@ -5,6 +5,7 @@
  */
 package Cartes;
 
+import Enumerations.TypeEnumAction;
 import Enumerations.TypeEnumCarteAction;
 import Enumerations.TypeEnumTresors;
 
@@ -26,7 +27,8 @@ public class CarteAction extends CarteRouge{
         return super.getNom();
     }
 
-    public TypeEnumCarteAction getTypeAction() {
+    @Override
+    public TypeEnumCarteAction getTypeCarteAction() {
         return type;
     }
 

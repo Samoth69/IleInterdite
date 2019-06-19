@@ -522,11 +522,15 @@ public class ControleurJeuSecondaire implements Observe{
                     for(int j = 0; j < lesCartesDuJoueur.size(); j++)
                     {
                         //  Si un joueur a une carte helicoptere, partie gagne
-                        if(lesCartesDuJoueur.get(j).getDescription() == "Hélicopère")
+                        if(lesCartesDuJoueur.get(j) instanceof CarteAction)
                         {
-                            notifierObservateur(new Message(TypeEnumMessage.PARTIE_GAGNE, "Partie Gagnée"));
-                            break;
+                            if(lesCartesDuJoueur.get(j).getTypeCarteAction() == TypeEnumCarteAction.HELICOPTERE)
+                            {
+                                notifierObservateur(new Message(TypeEnumMessage.PARTIE_GAGNE, "Partie Gagnée"));
+                                break;
+                            } 
                         }
+                        
                     }
                 }
             }
@@ -652,34 +656,34 @@ public class ControleurJeuSecondaire implements Observe{
     public ArrayList<CarteRouge> getListCarteRouge() {
         ArrayList<CarteRouge> out = new ArrayList<>();
         
-        out.add(new CarteTresor("CarteTresor01",TypeEnumTresors.LION));
-        out.add(new CarteTresor("CarteTresor02",TypeEnumTresors.LION));
-        out.add(new CarteTresor("CarteTresor03",TypeEnumTresors.LION));
-        out.add(new CarteTresor("CarteTresor04",TypeEnumTresors.LION));
-        out.add(new CarteTresor("CarteTresor05",TypeEnumTresors.LION));
-        out.add(new CarteTresor("CarteTresor06",TypeEnumTresors.LUNE));
-        out.add(new CarteTresor("CarteTresor07",TypeEnumTresors.LUNE));
-        out.add(new CarteTresor("CarteTresor08",TypeEnumTresors.LUNE));
-        out.add(new CarteTresor("CarteTresor09",TypeEnumTresors.LUNE));
-        out.add(new CarteTresor("CarteTresor10",TypeEnumTresors.LUNE));
-        out.add(new CarteTresor("CarteTresor11",TypeEnumTresors.FEU));
-        out.add(new CarteTresor("CarteTresor12",TypeEnumTresors.FEU));
-        out.add(new CarteTresor("CarteTresor13",TypeEnumTresors.FEU));
-        out.add(new CarteTresor("CarteTresor14",TypeEnumTresors.FEU));
-        out.add(new CarteTresor("CarteTresor15",TypeEnumTresors.FEU));
-        out.add(new CarteTresor("CarteTresor16",TypeEnumTresors.TROPHEE));
-        out.add(new CarteTresor("CarteTresor17",TypeEnumTresors.TROPHEE));
-        out.add(new CarteTresor("CarteTresor18",TypeEnumTresors.TROPHEE));
-        out.add(new CarteTresor("CarteTresor19",TypeEnumTresors.TROPHEE));
-        out.add(new CarteTresor("CarteTresor20",TypeEnumTresors.TROPHEE));
+        out.add(new CarteTresor("Lion",TypeEnumTresors.LION));
+        out.add(new CarteTresor("Lion",TypeEnumTresors.LION));
+        out.add(new CarteTresor("Lion",TypeEnumTresors.LION));
+        out.add(new CarteTresor("Lion",TypeEnumTresors.LION));
+        out.add(new CarteTresor("Lion",TypeEnumTresors.LION));
+        out.add(new CarteTresor("Lune",TypeEnumTresors.LUNE));
+        out.add(new CarteTresor("Lune",TypeEnumTresors.LUNE));
+        out.add(new CarteTresor("Lune",TypeEnumTresors.LUNE));
+        out.add(new CarteTresor("Lune",TypeEnumTresors.LUNE));
+        out.add(new CarteTresor("Lune",TypeEnumTresors.LUNE));
+        out.add(new CarteTresor("Feu",TypeEnumTresors.FEU));
+        out.add(new CarteTresor("Feu",TypeEnumTresors.FEU));
+        out.add(new CarteTresor("Feu",TypeEnumTresors.FEU));
+        out.add(new CarteTresor("Feu",TypeEnumTresors.FEU));
+        out.add(new CarteTresor("Feu",TypeEnumTresors.FEU));
+        out.add(new CarteTresor("Trophee",TypeEnumTresors.TROPHEE));
+        out.add(new CarteTresor("Trophee",TypeEnumTresors.TROPHEE));
+        out.add(new CarteTresor("Trophee",TypeEnumTresors.TROPHEE));
+        out.add(new CarteTresor("Trophee",TypeEnumTresors.TROPHEE));
+        out.add(new CarteTresor("Trophee",TypeEnumTresors.TROPHEE));
         out.add(new CarteMonteeDesEaux("CarteMonteeDesEaux1"));
         out.add(new CarteMonteeDesEaux("CarteMonteeDesEaux2"));
         out.add(new CarteMonteeDesEaux("CarteMonteeDesEaux3"));
-        out.add(new CarteAction("CarteAction1",TypeEnumCarteAction.HELICOPTERE));
-        out.add(new CarteAction("CarteAction2",TypeEnumCarteAction.HELICOPTERE));
-        out.add(new CarteAction("CarteAction3",TypeEnumCarteAction.HELICOPTERE));
-        out.add(new CarteAction("CarteAction4",TypeEnumCarteAction.SAC_DE_SABLE));
-        out.add(new CarteAction("CarteAction5",TypeEnumCarteAction.SAC_DE_SABLE));
+        out.add(new CarteAction("Helicoptere",TypeEnumCarteAction.HELICOPTERE));
+        out.add(new CarteAction("Helicoptere",TypeEnumCarteAction.HELICOPTERE));
+        out.add(new CarteAction("Helicoptere",TypeEnumCarteAction.HELICOPTERE));
+        out.add(new CarteAction("sac",TypeEnumCarteAction.SAC_DE_SABLE));
+        out.add(new CarteAction("sac",TypeEnumCarteAction.SAC_DE_SABLE));
         
         
         return out;
