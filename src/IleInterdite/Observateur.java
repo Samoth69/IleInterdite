@@ -10,5 +10,6 @@ package IleInterdite;
  * @author violentt
  */
 public interface Observateur {
+
     public void traiterMessage(Message m);
 }

@@ -14,12 +14,12 @@ import IleInterdite.Tuile;
  *
  * @author violentt
  */
-public class Navigateur extends Personnage{
-    
+public class Navigateur extends Personnage {
+
     public Navigateur(String nom, Grille ile) {
         super(nom, ile, TypeEnumCouleurPion.JAUNE);
     }
-    
+
     @Override
     public TypeEnumPersonnages getType() {
         return TypeEnumPersonnages.NAVIGATEUR;

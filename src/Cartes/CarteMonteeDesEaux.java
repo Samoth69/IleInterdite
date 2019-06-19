@@ -12,29 +12,29 @@ import Enumerations.TypeEnumTresors;
  *
  * @author violentt
  */
-public class CarteMonteeDesEaux extends CarteRouge{
-        
-        public CarteMonteeDesEaux(String nom, String img){
-            super(nom, img);
-        }
+public class CarteMonteeDesEaux extends CarteRouge {
 
-        public CarteMonteeDesEaux(String nom, String description, String img){
-            super(nom,description, img);
-        }
-         
-        @Override
-         
-        public String getNom(){
-            return super.getNom();
-        }
-        
-        @Override
-        public TypeEnumCarteAction getTypeCarteAction(){
-            return TypeEnumCarteAction.NA;
-        }
-      
-        @Override
-        public TypeEnumTresors getTypeTresor() {
-             return TypeEnumTresors.AUCUN; // A changer si besoin
-        }
+    public CarteMonteeDesEaux(String nom, String img) {
+        super(nom, img);
+    }
+
+    public CarteMonteeDesEaux(String nom, String description, String img) {
+        super(nom, description, img);
+    }
+
+    @Override
+
+    public String getNom() {
+        return super.getNom();
+    }
+
+    @Override
+    public TypeEnumCarteAction getTypeCarteAction() {
+        return TypeEnumCarteAction.NA;
+    }
+
+    @Override
+    public TypeEnumTresors getTypeTresor() {
+        return TypeEnumTresors.AUCUN; // A changer si besoin
+    }
 }

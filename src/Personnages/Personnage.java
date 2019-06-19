@@ -22,7 +22,7 @@ import java.util.ArrayList;
  * @author violentt
  */
 public abstract class Personnage {
- 
+
     //ATTRIBUTS
     //nom du joueur
     private String nom;
@@ -32,23 +32,21 @@ public abstract class Personnage {
     public Grille ile;
     //TOUTES cartes que le joueur possède
     private ArrayList<CarteRouge> cartes = new ArrayList<>();
-    
-    /*
-    // cartes trésors que le joueur possede
-    private ArrayList<CarteTresor> cartesTresors = new ArrayList<>();
-    // cartes action spéciales que le joueur possede
-    private ArrayList<CarteAction> cartesAction = new ArrayList<>();    
-    // cartes inondation que le joueur possede
-    private ArrayList<CarteInondation> cartesinnondations = new ArrayList<>();    
-    // carte montée des eaux que le joeur peut avoir lors du pioche
-    private CarteMonteeDesEaux carteMonteeEau;
-    */
 
-    
+    /*
+     // cartes trésors que le joueur possede
+     private ArrayList<CarteTresor> cartesTresors = new ArrayList<>();
+     // cartes action spéciales que le joueur possede
+     private ArrayList<CarteAction> cartesAction = new ArrayList<>();    
+     // cartes inondation que le joueur possede
+     private ArrayList<CarteInondation> cartesinnondations = new ArrayList<>();    
+     // carte montée des eaux que le joeur peut avoir lors du pioche
+     private CarteMonteeDesEaux carteMonteeEau;
+     */
     //couleur pion associé au personnage
     private TypeEnumCouleurPion pion = TypeEnumCouleurPion.AUCUN;
     private boolean pouvoirDeplacementUtilise = false; //devient vrai quand l'utilisateur à utilisé sont pouvoir de déplacement (déplacement diagonal pour explorateur, déplacement sur la carte pour le pilote) redevient faux quand le joueur en cour change
-    
+
     //CONSTRUCTEUR
     Personnage(String nom, Grille ile, TypeEnumCouleurPion pion) {
         this.nom = nom;
@@ -56,7 +54,7 @@ public abstract class Personnage {
         this.pion = pion;
         //System.out.println("init perso");
     }
-    
+
     //METHODES
     //utiliser uniquement pour définir l'emplacement de départ du joueur.
     //utiliser la fonction deplacement pour déplacer le personnage sur la grille
@@ -93,24 +91,24 @@ public abstract class Personnage {
         }
         return out;
     }
-    
+
     //change l'emplacement du joueur
     public void deplacement(Tuile nouvelleTuille) {
         emplacementJoueur.removeJoueur(this);
         emplacementJoueur = nouvelleTuille;
         emplacementJoueur.addJoueur(this);
     }
-    
+
     //Renvoie la tuile sur laquelle est le joueur
     public Tuile getEmplacement() {
         return emplacementJoueur;
     }
-    
+
     //Renvoie la grille
     protected Grille getGrille() {
         return ile;
     }
-    
+
     //setter grille
     public void setGrille(Grille g) {
         ile = g;
@@ -125,16 +123,16 @@ public abstract class Personnage {
         int currentX = this.emplacementJoueur.getX();     //X et Y prennent la position actuel du joueur
         int currentY = this.emplacementJoueur.getY();
 
-        if (tmp != null) {      
+        if (tmp != null) {
             if (tmp.size() != 0) {
                 for (Tuile t : tmp) {
-                    if (t.getX() == currentX || t.getY() == currentY) {  
+                    if (t.getX() == currentX || t.getY() == currentY) {
                         out.add(t);   // ajoute a la liste out, les tuiles qu'un personnage peut assecher
                     }
                 }
             }
         }
-        return out; 
+        return out;
     }
 
     //assecher une tuile
@@ -143,12 +141,11 @@ public abstract class Personnage {
     }
 
     /*
-    //renvoie le nombre de case qui peuvent être sécher en une action
-    public int getNbTuileSechable() {
-        return 1;
-    }
-    */
-
+     //renvoie le nombre de case qui peuvent être sécher en une action
+     public int getNbTuileSechable() {
+     return 1;
+     }
+     */
     //donne une (ou plusieur) carte(s) à un autre personnage
     public void donnerCarteAJoueur(Personnage personnage, ArrayList<CarteRouge> cartes) {
         if (personnage.getEmplacement() == this.getEmplacement()) {
@@ -189,24 +186,24 @@ public abstract class Personnage {
     public void removeCarte(CarteRouge carte) {
         this.cartes.remove(carte);
     }
-    
+
     // retourne le nom du personnage
     public String getNom() {
         return nom;
     }
-    
+
     //indique de quel type est la classe (explorateur, ingénieur....)
     public abstract TypeEnumPersonnages getType();
 
     public void passageJoueurSuivant() {
         pouvoirDeplacementUtilise = false;
     }
-    
+
     //Renvoie true si le personnage peut se deplacer, sinon false
     protected boolean getPouvoirDeplacementUtilise() {
         return pouvoirDeplacementUtilise;
     }
-    
+
     //Permet de donner le pouvoir de deplacement au personnage
     protected void setPouvoirDeplacementUtilise(boolean v) {
         pouvoirDeplacementUtilise = v;

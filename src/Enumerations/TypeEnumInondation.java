@@ -10,18 +10,19 @@ package Enumerations;
  * @author mariottp
  */
 public enum TypeEnumInondation {      //Enumeration pour les etats des tuiles
+
     SEC("Sec"),
     MOUILLE("Mouillé"),
     INONDE("Inondé");
-    
+
     private String etat = "";
-    
-    TypeEnumInondation(String etat){      //constructeur
+
+    TypeEnumInondation(String etat) {      //constructeur
         this.etat = etat;
     }
-    
+
     @Override
-    public String toString(){
+    public String toString() {
         return etat;
     }
 }

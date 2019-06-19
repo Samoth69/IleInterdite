@@ -19,21 +19,20 @@ import java.util.concurrent.ThreadLocalRandom; //pour générer nombre aléatoir
  *
  * @author violentt
  */
-public class Grille{
-    
-   
+public class Grille {
+
     private final Tuile tabTuile[][] = new Tuile[6][6]; // A potentiellement changer pour mettre des cases vides --- par quoi mdr ?
-    private final ArrayList<Tuile> listTuile = new ArrayList<>(); 
-    private ArrayList<Personnage> persos = new ArrayList<>(); 
+    private final ArrayList<Tuile> listTuile = new ArrayList<>();
+    private ArrayList<Personnage> persos = new ArrayList<>();
     private int counter = 0;
-    
+
     public Grille(Personnage perso1, Personnage perso2) {
         persos.add(perso1);
         persos.add(perso2);
         genererTableauTuiles();
         assignerJoueursATuile(persos);
     }
-    
+
     public Grille(Personnage perso1, Personnage perso2, Personnage perso3) {
         persos.add(perso1);
         persos.add(perso2);
@@ -41,7 +40,7 @@ public class Grille{
         genererTableauTuiles();
         assignerJoueursATuile(persos);
     }
-    
+
     public Grille(Personnage perso1, Personnage perso2, Personnage perso3, Personnage perso4) {
         persos.add(perso1);
         persos.add(perso2);
@@ -50,17 +49,17 @@ public class Grille{
         genererTableauTuiles();
         assignerJoueursATuile(persos);
     }
-    
+
     public Grille(ArrayList<Personnage> p) {
         persos.addAll(p);
         genererTableauTuiles();
         assignerJoueursATuile(persos);
     }
-    
+
     public Tuile[][] getTuiles() {
-        return tabTuile;    
+        return tabTuile;
     }
-    
+
     //génère le tableau des tuiles aléatoire
     private void genererTableauTuiles() {
         ArrayList<CarteInondation> tuile = getListCarteInondation();
@@ -68,7 +67,7 @@ public class Grille{
             Collections.shuffle(tuile); //mélange la liste des tuiles
         }
         counter = 0;
-        
+
         for (int x = 0; x <= 5; x++) {
             addTuile(x, 2, tuile);
             addTuile(x, 3, tuile);
@@ -82,16 +81,16 @@ public class Grille{
             }
         }
     }
-    
+
     private void addTuile(int x, int y, ArrayList<CarteInondation> tuile) {
         Tuile t = new Tuile(x, y, tuile.get(this.counter));
         tabTuile[x][y] = t;
-        listTuile.add(t);        
+        listTuile.add(t);
         //System.out.println(x + "\t" + y + "\t" + this.counter + "\t" + tuile.get(this.counter).getNom());
-        
+
         this.counter++;
     }
-    
+
     private void assignerJoueursATuile(ArrayList<Personnage> perso) {
         for (Personnage p : perso) {
             int i = 0;
@@ -106,21 +105,21 @@ public class Grille{
                 listTuile.get(i).addJoueur(p);
                 //System.out.println("Association");
             }
-            
+
         }
     }
-    
+
     public ArrayList<Tuile> getListTuile() {
         return listTuile;
     }
-    
+
     //renvoie les cartes du jeu
     public ArrayList<CarteInondation> getListCarteInondation() {
         ArrayList<CarteInondation> out = new ArrayList<>();
-        
-        final String cheminCarte= System.getProperty("user.dir") + "/src/RessourcesCarteInondations/";
+
+        final String cheminCarte = System.getProperty("user.dir") + "/src/RessourcesCarteInondations/";
         final String cheminTuile = System.getProperty("user.dir") + "/src/RessourcesTuiles/";
-        
+
         out.add(new CarteInondation("Le Pont des Abimes", cheminCarte + "LePontDesAbimes.png", cheminTuile + "LePontDesAbimes.png"));
         out.add(new CarteInondation("La Porte de Bronze", TypeEnumCouleurPion.ROUGE, cheminCarte + "LaPorteDeBronze.png", cheminTuile + "LaPorteDeBronze.png"));
         out.add(new CarteInondation("La Caverne des Ombres", TypeEnumTresors.FEU, cheminCarte + "LaCaverneDesOmbres.png", cheminTuile + "LaCaverneDesOmbres.png"));
@@ -145,31 +144,31 @@ public class Grille{
         out.add(new CarteInondation("Le Val du Crepuscule", cheminCarte + "", cheminTuile + ""));
         out.add(new CarteInondation("La Tour du Guet", cheminCarte + "", cheminTuile + ""));
         out.add(new CarteInondation("Le Jardin des Murmures", TypeEnumTresors.LION, cheminCarte + "", cheminTuile + ""));
-        
+
         return out;
     }
-    
+
     //Prend une tuile en parametre. Augmente directement le niveau d'innondation d'une tuile
     //sans passer par le tableau de tuile
     public void AugmenterInnondation(Tuile tuile) {
         tuile.augmenterInondation();
     }
-    
+
     //Prend un nom de carte en parametre. Augmente le niveau d'inondation d'une tuile en
     //fonction du nom d'une carte innondation
-    public void AugmenterInnondation(String nom){
+    public void AugmenterInnondation(String nom) {
         /*for(int i = 0; i < 5; i++)
-        {
-            for(int j = 0; j < 5; j++)
-            {
-                if(tabTuile[i][j] != null && tabTuile[i][j].getNom().equals(nom))
-                {
-                    tabTuile[i][j].augmenterInondation();
-                    return;
-                }
-            }
-        }*/
-        
+         {
+         for(int j = 0; j < 5; j++)
+         {
+         if(tabTuile[i][j] != null && tabTuile[i][j].getNom().equals(nom))
+         {
+         tabTuile[i][j].augmenterInondation();
+         return;
+         }
+         }
+         }*/
+
         for (Tuile t : listTuile) {
             if (t.getNom().equals(nom)) {
                 t.augmenterInondation();
@@ -177,54 +176,51 @@ public class Grille{
             }
         }
     }
-    
+
     //Prend une tuile en parametre. Reduit directement le niveau d'innondation d'une tuile
     //sans passer par le tableau de tuile
     public void ReduireInondation(Tuile tuile) {
         tuile.reduireInondation();
     }
 
-    
     //Prend une tuile en parametre. renvoie un arrylist de tuile.
     //Renvoie les tuile praticable(SEC ou MOUILLE) autour de la tuile en parametre
-    public ArrayList <Tuile> getTuilesAutoursPraticable(Tuile tuile) {
+    public ArrayList<Tuile> getTuilesAutoursPraticable(Tuile tuile) {
         ArrayList<Tuile> tuilesAutourPraticable = new ArrayList<>();
         //verif diagonale haut gauche
         for (int i = -1; i <= 1; i++) {
             for (int j = -1; j <= 1; j++) {
                 if (i != 0 || j != 0) {
                     //System.out.println("i=" + i + "\tj=" + j);
-                    if(((tuile.getX()+i) >= 0 && (tuile.getX() + i) <= 5) && ((tuile.getY() + j) >= 0 && (tuile.getY() + j) <= 5) && tabTuile[tuile.getX()+i][tuile.getY()+j] != null)
-                    {
+                    if (((tuile.getX() + i) >= 0 && (tuile.getX() + i) <= 5) && ((tuile.getY() + j) >= 0 && (tuile.getY() + j) <= 5) && tabTuile[tuile.getX() + i][tuile.getY() + j] != null) {
                         //System.out.println(tuile.getX() + "\t" + i + "\t" + tuile.getY() + "\t" + j);
-                        if((tabTuile[tuile.getX()+i][tuile.getY()+j].getInondation() == TypeEnumInondation.SEC) || (tabTuile[tuile.getX()+i][tuile.getY()+j].getInondation() == TypeEnumInondation.MOUILLE)) {
-                            tuilesAutourPraticable.add(tabTuile[tuile.getX()+i][tuile.getY()+j]);
+                        if ((tabTuile[tuile.getX() + i][tuile.getY() + j].getInondation() == TypeEnumInondation.SEC) || (tabTuile[tuile.getX() + i][tuile.getY() + j].getInondation() == TypeEnumInondation.MOUILLE)) {
+                            tuilesAutourPraticable.add(tabTuile[tuile.getX() + i][tuile.getY() + j]);
                         }
 
                     }
                 }
-            } 
+            }
         }
         return tuilesAutourPraticable;
     }
-    
+
     //Surcharge de la fonction precedente
-    public ArrayList <Tuile> getTuilesAutoursPraticable(Personnage personnage) {
+    public ArrayList<Tuile> getTuilesAutoursPraticable(Personnage personnage) {
         return getTuilesAutoursPraticable(personnage.getEmplacement());
     }
-    
+
     //Prend une tuile en parametre. renvoie un arrylist de tuile.
     //Renvoie les tuile MOUILLE autour de la tuile en parametre.
-    public ArrayList <Tuile> getTuilesAutoursMouille(Tuile tuile) {
+    public ArrayList<Tuile> getTuilesAutoursMouille(Tuile tuile) {
         ArrayList<Tuile> tuilesAutourMouille = new ArrayList<>();
         for (int i = -1; i <= 1; i++) {
             for (int j = -1; j <= 1; j++) {
                 //System.out.println("i=" + i + "\tj=" + j);
-                if(((tuile.getX()+i) >= 0 && (tuile.getX() + i) <= 5) && ((tuile.getY() + j) >= 0 && (tuile.getY() + j) <= 5) && tabTuile[tuile.getX()+i][tuile.getY()+j] != null)
-                {
+                if (((tuile.getX() + i) >= 0 && (tuile.getX() + i) <= 5) && ((tuile.getY() + j) >= 0 && (tuile.getY() + j) <= 5) && tabTuile[tuile.getX() + i][tuile.getY() + j] != null) {
                     //System.out.println(tuile.getX() + "\t" + i + "\t" + tuile.getY() + "\t" + j);
-                    if(tabTuile[tuile.getX()+i][tuile.getY()+j].getInondation() == TypeEnumInondation.MOUILLE) {
-                        tuilesAutourMouille.add(tabTuile[tuile.getX()+i][tuile.getY()+j]);
+                    if (tabTuile[tuile.getX() + i][tuile.getY() + j].getInondation() == TypeEnumInondation.MOUILLE) {
+                        tuilesAutourMouille.add(tabTuile[tuile.getX() + i][tuile.getY() + j]);
                     }
 
                 }
@@ -232,20 +228,19 @@ public class Grille{
         }
         return tuilesAutourMouille;
     }
-    
+
     //Surcharge de la fonction precedente
-    public ArrayList <Tuile> getTuilesAutoursMouille(Personnage personnage) {
+    public ArrayList<Tuile> getTuilesAutoursMouille(Personnage personnage) {
         return getTuilesAutoursMouille(personnage.getEmplacement());
     }
 
-    public ArrayList <Tuile> getTuilesAutours(Tuile tuile) {
+    public ArrayList<Tuile> getTuilesAutours(Tuile tuile) {
         ArrayList<Tuile> tuilesAutourMouille = new ArrayList<>();
         for (int i = -1; i <= 1; i++) {
             for (int j = -1; j <= 1; j++) {
                 //System.out.println("i=" + i + "\tj=" + j);
-                if(((tuile.getX()+i) >= 0 && (tuile.getX() + i) <= 5) && ((tuile.getY() + j) >= 0 && (tuile.getY() + j) <= 5) && tabTuile[tuile.getX()+i][tuile.getY()+j] != null)
-                {
-                    tuilesAutourMouille.add(tabTuile[tuile.getX()+i][tuile.getY()+j]);
+                if (((tuile.getX() + i) >= 0 && (tuile.getX() + i) <= 5) && ((tuile.getY() + j) >= 0 && (tuile.getY() + j) <= 5) && tabTuile[tuile.getX() + i][tuile.getY() + j] != null) {
+                    tuilesAutourMouille.add(tabTuile[tuile.getX() + i][tuile.getY() + j]);
                 }
             }
         }

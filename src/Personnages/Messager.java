@@ -16,22 +16,22 @@ import java.util.ArrayList;
  *
  * @author violentt
  */
-public class Messager extends Personnage{
-    
+public class Messager extends Personnage {
+
     public Messager(String nom, Grille ile) {
         super(nom, ile, TypeEnumCouleurPion.ORANGE);
     }
-    
+
     @Override
-    public void donnerCarteAJoueur(Personnage personnage, ArrayList<CarteRouge> cartes)  {
-        
+    public void donnerCarteAJoueur(Personnage personnage, ArrayList<CarteRouge> cartes) {
+
     }
-    
+
     @Override
     public void donnerCarteAJoueur(Personnage personnage, CarteRouge carte) {
-        
+
     }
-    
+
     @Override
     public TypeEnumPersonnages getType() {
         return TypeEnumPersonnages.MESSAGER;

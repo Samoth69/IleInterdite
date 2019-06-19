@@ -12,6 +12,7 @@ import java.awt.Color;
  * @author Thomas
  */
 public enum TypeEnumCouleurPion {
+
     AUCUN("AUCUN"),
     BLEU("Bleu"),
     JAUNE("Jaune"),
@@ -19,18 +20,18 @@ public enum TypeEnumCouleurPion {
     ROUGE("Rouge"),
     VIOLET("Violet"),
     VERT("Vert");
-    
+
     private String nom = "";
-    
-    TypeEnumCouleurPion(String nom){
+
+    TypeEnumCouleurPion(String nom) {
         this.nom = nom;
     }
-    
+
     @Override
-    public String toString(){
+    public String toString() {
         return nom;
     }
-    
+
     public Color getColor() {
         switch (this) {
             case AUCUN:
@@ -50,5 +51,5 @@ public enum TypeEnumCouleurPion {
         }
         return Color.WHITE; //suppresion de warning, normalement jamais atteind.
     }
-    
+
 }

@@ -10,22 +10,21 @@ package Enumerations;
  * @author paul m
  */
 public enum TypeEnumTresors {
-    
+
     LUNE("Lune"),
     LION("Lion"),
     TROPHEE("Trophée"),
     FEU("Feu"),
     AUCUN("AUCUN");
-    
+
     private String nom = "";
-    
-    TypeEnumTresors(String nom){
+
+    TypeEnumTresors(String nom) {
         this.nom = nom;
     }
-    
-   
+
     @Override
-    public String toString(){
+    public String toString() {
         return nom;
     }
 }

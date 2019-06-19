@@ -16,8 +16,8 @@ import java.util.ArrayList;
  *
  * @author violentt
  */
-public class Plongeur extends Personnage{
-    
+public class Plongeur extends Personnage {
+
     public Plongeur(String nom, Grille ile) {
         super(nom, ile, TypeEnumCouleurPion.VIOLET);
     }
@@ -27,7 +27,7 @@ public class Plongeur extends Personnage{
         ArrayList<Tuile> out = new ArrayList<>();
         Tuile tuileActuel = getEmplacement();
         drawChemin(out, tuileActuel);
-        
+
         //filtre pour enlever les tuiles inondée
         ArrayList<Tuile> toDelete = new ArrayList<>();
         for (Tuile t : out) {
@@ -36,15 +36,15 @@ public class Plongeur extends Personnage{
             }
         }
         out.removeAll(toDelete);
-        
+
         return out;
     }
-    
+
     private void drawChemin(ArrayList<Tuile> out, Tuile pos) {
         for (Tuile t : ile.getTuilesAutours(pos)) {
             if (!out.contains(t)) {
                 if (pos.getX() == t.getX() || pos.getY() == t.getY()) {
-                out.add(t);
+                    out.add(t);
                     if (t.getInondation() != TypeEnumInondation.SEC) {
                         drawChemin(out, t);
                     }
@@ -53,7 +53,6 @@ public class Plongeur extends Personnage{
         }
     }
 
-    
     @Override
     public TypeEnumPersonnages getType() {
         return TypeEnumPersonnages.PLONGEUR;

@@ -10,18 +10,19 @@ package Enumerations;
  * @author paul m
  */
 public enum TypeEnumCarteAction {
+
     HELICOPTERE("Hélicoptère"),
     SAC_DE_SABLE("Sac de sable"),
     NA("NA");
-    
+
     private String nom = "";
-    
-    TypeEnumCarteAction(String nom){
+
+    TypeEnumCarteAction(String nom) {
         this.nom = nom;
     }
-    
+
     @Override
-    public String toString(){
+    public String toString() {
         return nom;
     }
 }
