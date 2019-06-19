@@ -22,7 +22,7 @@ public class Tuile extends CarteInondation {
     private ArrayList<Personnage> persoSurLaTuile = new ArrayList<Personnage>();
     
     public Tuile(int X, int Y, CarteInondation ci){
-        super(ci.getNom(), ci.getCouleurPion(), ci.getTresor());
+        super(ci.getNom(), ci.getCouleurPion(), ci.getTresor(), null, null);
         setX(X);
         setY(Y);
     }

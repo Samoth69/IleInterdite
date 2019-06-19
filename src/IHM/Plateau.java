@@ -6,6 +6,7 @@
 package IHM;
 
 import Cartes.CarteInondation;
+import Enumerations.TypeEnumCouleurPion;
 import Enumerations.TypeEnumTresors;
 import IleInterdite.ControleurJeuSecondaire;
 import IleInterdite.Grille;
@@ -137,18 +138,22 @@ public class Plateau implements Observateur {
         /**
          * AJOUT PANEL PRINCIPAL + PANEL HAUT POUR TITRE FENETRE *
          */
-        JPanel mainPanel = new JPanel(new BorderLayout());
-        window.add(mainPanel);
+        //JPanel mainPanel = new JPanel();
+        //JLayeredPane  jlp = new JLayeredPane();
+        //mainPanel.setLayout(jlp);
+        
+        JPanel BorderLayoutPrincipal = new JPanel(new BorderLayout());
+        window.add(BorderLayoutPrincipal);
 
         JPanel panelHaut = new JPanel();
-        mainPanel.add(panelHaut, BorderLayout.NORTH);
+        BorderLayoutPrincipal.add(panelHaut, BorderLayout.NORTH);
         
         /*********************************** NIVEAU EAU ***************************************/
         contenantNiveauEauMain = new JPanel(new BorderLayout()); //menu principal qui sera ajouté au mainPanel
         contenantNiveauEauDroite = new JPanel(new GridLayout(10, 1)); //menu avec les chiffres indiquant le nombre de carte inondation à piocher
-        contenantNiveauEauDroite.setPreferredSize(new Dimension(25,mainPanel.getHeight()));
+        contenantNiveauEauDroite.setPreferredSize(new Dimension(25,BorderLayoutPrincipal.getHeight()));
         contenantNiveauEauGauche = new JPanel(new GridLayout(10, 1)); //niveau de l'eau
-        contenantNiveauEauGauche.setPreferredSize(new Dimension(90,mainPanel.getHeight()));
+        contenantNiveauEauGauche.setPreferredSize(new Dimension(90,BorderLayoutPrincipal.getHeight()));
         
         //MENU GAUCHE
         niveauEau = new JLabel[max + 1];
@@ -227,7 +232,7 @@ public class Plateau implements Observateur {
         
         contenantNiveauEauMain.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
         
-        mainPanel.add(contenantNiveauEauMain, BorderLayout.WEST);
+        BorderLayoutPrincipal.add(contenantNiveauEauMain, BorderLayout.WEST);
         
         ColoriserNiveauEau();
       /******************************************************************************************************/
@@ -240,7 +245,7 @@ public class Plateau implements Observateur {
          * AJOUT DE LA GRILLE DE JEU AU CENTRE DE LA FENETRE *
          */
         JPanel panelGrille = new JPanel(new GridLayout(6, 6));
-        mainPanel.add(panelGrille, BorderLayout.CENTER);
+        BorderLayoutPrincipal.add(panelGrille, BorderLayout.CENTER);
         
         JButton jb = new JButton("Augmenter niveau eau");
         jb.addActionListener(new ActionListener() {
@@ -252,38 +257,58 @@ public class Plateau implements Observateur {
         });
         
         joueurActuel = new JLabel("");
-        ActionRestante = new JLabel();
-
-        panelGamePad = new JPanel(new BorderLayout());
-        JPanel panelHautGamePad = new JPanel(new GridLayout(0, 2)); 
-        panelHautGamePad.add(new JLabel("Action restante:"));
-        panelHautGamePad.add(ActionRestante);
+        ActionRestante = new JLabel("",SwingConstants.CENTER);
         
-        panelHautGamePad.add(jb);
 
-        panelGamePad.add(panelHautGamePad, BorderLayout.NORTH);
-  
-        JPanel panelMilieuGamePad = new JPanel(new GridLayout(0,cj.getNombreJoueurDansPartie()));
+        //*****PANELGAMEPAD *********************
+        panelGamePad = new JPanel(new BorderLayout());
+        
+        JPanel paneltreshaut = new JPanel(new GridLayout(4,1));
+        JLabel labelpion = new JLabel("Tour du joueur :",SwingConstants.CENTER);
+        Font font1 = new Font("Arial",Font.BOLD,25);
+        labelpion.setFont(font1);
+        paneltreshaut.add(labelpion);
+        JLabel joueurActuelbis = new JLabel("",SwingConstants.CENTER);
+        joueurActuelbis.setText(cj.getNomJoueur());
+        joueurActuelbis.setFont(font1);
+        paneltreshaut.add(new JLabel (" "));
+        paneltreshaut.add(joueurActuelbis);       
+        panelGamePad.add(paneltreshaut, BorderLayout.NORTH);
+        
+        JPanel panelHautGamePad = new JPanel(new GridLayout(4,1)); 
+        JLabel labelaction = new JLabel("Action(s) restante(s):",SwingConstants.CENTER);
+        labelaction.setFont(font1);
+        panelHautGamePad.add(labelaction);             
+        panelHautGamePad.add(ActionRestante); 
+        Font font2 = new Font("Arial",Font.BOLD,100);
+        ActionRestante.setFont(font2);
+        panelGamePad.add(panelHautGamePad, BorderLayout.CENTER); 
+        
+       //******************************************************************
+        
+        JPanel panelBottomGamePad = new JPanel(new GridLayout(0,cj.getNombreJoueurDansPartie()));
         
         affichagePerso1 = new AffichagePersonnage(this, listPerso.get(0));
         affichagePerso2 = new AffichagePersonnage(this, listPerso.get(1));
-        panelMilieuGamePad.add(affichagePerso1);
-        panelMilieuGamePad.add(affichagePerso2);
+        panelBottomGamePad.add(affichagePerso1);
+        panelBottomGamePad.add(affichagePerso2);
         
         if (cj.getNombreJoueurDansPartie() > 2) {
             affichagePerso3 = new AffichagePersonnage(this, listPerso.get(2));
-            panelMilieuGamePad.add(affichagePerso3);
+            panelBottomGamePad.add(affichagePerso3);
         } else {
             affichagePerso3 = new AffichagePersonnage(this, null);
         }
         if (cj.getNombreJoueurDansPartie() > 3) {
             affichagePerso4 = new AffichagePersonnage(this, listPerso.get(3));
-            panelMilieuGamePad.add(affichagePerso4);
+            panelBottomGamePad.add(affichagePerso4);
         } else {
             affichagePerso4 = new AffichagePersonnage(this, null);
         }
 
-        mainPanel.add(panelMilieuGamePad, BorderLayout.SOUTH);
+        BorderLayoutPrincipal.add(panelBottomGamePad, BorderLayout.SOUTH);
+        
+        
         
         JPanel panelGamePadBas = new JPanel();
         panelGamePadBas.setLayout(new BoxLayout(panelGamePadBas, BoxLayout.Y_AXIS));
@@ -295,7 +320,7 @@ public class Plateau implements Observateur {
         panelGamePadBas.add(new JLabel("Historique:", SwingConstants.CENTER));
         panelGamePadBas.add(scrollPane, BorderLayout.SOUTH);
         panelGamePad.add(panelGamePadBas, BorderLayout.SOUTH);
-        mainPanel.add(panelGamePad, BorderLayout.EAST);
+        BorderLayoutPrincipal.add(panelGamePad, BorderLayout.EAST);
 
         affecterCase(plateau, listPion, panelGrille);
         updateGamePad();
@@ -612,19 +637,26 @@ public class Plateau implements Observateur {
         }
     }
     
-    private void setBtDonnerCarteEnabled(boolean b) {
+    private void setBtDonnerCarteParDefaut(){
+        affichagePerso1.setButtonDonnerCarteEnabled(false);
+        affichagePerso2.setButtonDonnerCarteEnabled(false);
+        affichagePerso3.setButtonDonnerCarteEnabled(false);
+        affichagePerso4.setButtonDonnerCarteEnabled(false);
+    }
+    
+    private void setBtDonnerCarteEnabled() {
         switch (cj.getJoueurNum()) {
             case 0:
-                affichagePerso1.setButtonDonnerCarteEnabled(b);
+                affichagePerso1.setButtonDonnerCarteEnabled(true);
                 break;
             case 1:
-                affichagePerso2.setButtonDonnerCarteEnabled(b);
+                affichagePerso2.setButtonDonnerCarteEnabled(true);
                 break;
             case 2:
-                affichagePerso3.setButtonDonnerCarteEnabled(b);
+                affichagePerso3.setButtonDonnerCarteEnabled(true);
                 break;
             case 3:
-                affichagePerso4.setButtonDonnerCarteEnabled(b);
+                affichagePerso4.setButtonDonnerCarteEnabled(true);
                 break;
         }
     }
