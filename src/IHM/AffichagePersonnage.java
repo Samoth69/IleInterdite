@@ -7,7 +7,9 @@ package IHM;
 
 import Cartes.CarteRouge;
 import Enumerations.TypeEnumCouleurPion;
+import Enumerations.TypeEnumMessage;
 import Enumerations.TypeEnumTresors;
+import IleInterdite.Message;
 import Personnages.Personnage;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -130,6 +132,7 @@ public class AffichagePersonnage extends JPanel{
                     pl.getControleurJeu().setNbAction(vd.getNbActionRestante());
                     listPersoEmplacement.clear();
                     buttonDonnerCarte.setEnabled(false);
+                    pl.getControleurJeu().notifierObservateur(new Message(TypeEnumMessage.UPDATE_GUI));
                     //dejaDonne = true;
                 }
             }

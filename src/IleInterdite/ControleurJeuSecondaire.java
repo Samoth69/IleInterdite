@@ -722,7 +722,14 @@ public class ControleurJeuSecondaire implements Observe{
     }
     
     public void setNbAction(double nbAction){
-        nombreAction = nbAction;
+        if(nbAction != 0)
+        {
+            nombreAction = nbAction;
+        }
+        else
+        {
+            passerJoueurSuivant();
+        }
     }
     
     
