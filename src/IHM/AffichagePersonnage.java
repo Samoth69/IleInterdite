@@ -253,6 +253,10 @@ public class AffichagePersonnage extends JPanel{
                 {
                     buttonPrendreRelique.setEnabled(true);
                 }
+                else
+                {
+                    buttonPrendreRelique.setEnabled(false);
+                }  
             }
             else
             {
