@@ -101,6 +101,11 @@ public class Joueurs extends JFrame implements ActionListener {
         pseudo2 = new JTextField();
         pseudo3 = new JTextField();
         pseudo4 = new JTextField();
+        
+        pseudo1.setFont(new Font(pseudo1.getFont().getName(), pseudo1.getFont().getStyle(), (int) (pseudo1.getFont().getSize() * 1.5)));
+        pseudo2.setFont(new Font(pseudo2.getFont().getName(), pseudo2.getFont().getStyle(), (int) (pseudo2.getFont().getSize() * 1.5)));
+        pseudo3.setFont(new Font(pseudo3.getFont().getName(), pseudo3.getFont().getStyle(), (int) (pseudo3.getFont().getSize() * 1.5)));
+        pseudo4.setFont(new Font(pseudo4.getFont().getName(), pseudo4.getFont().getStyle(), (int) (pseudo4.getFont().getSize() * 1.5)));
 
         listPseudo = new ArrayList<>();
         listPseudo.add(pseudo1);
@@ -113,22 +118,22 @@ public class Joueurs extends JFrame implements ActionListener {
         panelHaut.add(labelTitre);
         labelTitre.setForeground(Color.WHITE);
         
-        JLabel labeljoueur1 = new JLabel(" Joueur n°1", SwingConstants.LEFT);
+        JLabel labeljoueur1 = new JLabel(" Joueur n°1 : ", SwingConstants.LEFT);
         labeljoueur1.setFont(new Font(jouer.getFont().getName(), jouer.getFont().getStyle(), (int) (jouer.getFont().getSize() * 1.5)));
 
         JLabel choisirnbjoueur = new JLabel(" Nombre de joueurs :", SwingConstants.LEFT);
         choisirnbjoueur.setFont(new Font(jouer.getFont().getName(), jouer.getFont().getStyle(), (int) (jouer.getFont().getSize() * 1.5)));
 
-        JLabel labeljoueur2 = new JLabel(" Joueur n°2", SwingConstants.LEFT);
+        JLabel labeljoueur2 = new JLabel(" Joueur n°2 : ", SwingConstants.LEFT);
         labeljoueur2.setFont(new Font(jouer.getFont().getName(), jouer.getFont().getStyle(), (int) (jouer.getFont().getSize() * 1.5)));
 
-        JLabel labeljoueur3 = new JLabel(" Joueur n°3", SwingConstants.LEFT);
+        JLabel labeljoueur3 = new JLabel(" Joueur n°3 : ", SwingConstants.LEFT);
         labeljoueur3.setFont(new Font(jouer.getFont().getName(), jouer.getFont().getStyle(), (int) (jouer.getFont().getSize() * 1.5)));
         
         JLabel labeljoueurPseudo3 = new JLabel(" Pseudonyme : ", SwingConstants.LEFT);
         labeljoueurPseudo3.setFont(new Font(jouer.getFont().getName(), jouer.getFont().getStyle(), (int) (jouer.getFont().getSize() * 1.5)));
 
-        JLabel labeljoueur4 = new JLabel(" Joueur n°4", SwingConstants.LEFT);              
+        JLabel labeljoueur4 = new JLabel(" Joueur n°4 : ", SwingConstants.LEFT);              
         labeljoueur4.setFont(new Font(jouer.getFont().getName(), jouer.getFont().getStyle(), (int) (jouer.getFont().getSize() * 1.5)));
 
         JLabel labeljoueurPseudo4 = new JLabel(" Pseudonyme : ", SwingConstants.LEFT);
@@ -149,19 +154,24 @@ public class Joueurs extends JFrame implements ActionListener {
         role1 = new JComboBox(nomRoles);
         role1.setSelectedIndex(0);
         role1.setBackground(Color.WHITE);
+        role1.setFont(new Font(role1.getFont().getName(), role1.getFont().getStyle(), (int) (role1.getFont().getSize() * 1.5)));
 
         role2 = new JComboBox(nomRoles);
         role2.setSelectedIndex(1);
         role2.setBackground(Color.WHITE);
+        role2.setFont(new Font(role2.getFont().getName(), role2.getFont().getStyle(), (int) (role2.getFont().getSize() * 1.5)));
 
         role3 = new JComboBox(nomRoles);
         role3.setSelectedIndex(2);
+        role3.setFont(new Font(role3.getFont().getName(), role3.getFont().getStyle(), (int) (role3.getFont().getSize() * 1.5)));
 
         role4 = new JComboBox(nomRoles);
         role4.setSelectedIndex(3);
+        role4.setFont(new Font(role4.getFont().getName(), role4.getFont().getStyle(), (int) (role4.getFont().getSize() * 1.5)));
 
         niveauDepart = new JComboBox(niveauEau);
         niveauDepart.setBackground(Color.WHITE);
+        niveauDepart.setFont(new Font(niveauDepart.getFont().getName(), niveauDepart.getFont().getStyle(), (int) (niveauDepart.getFont().getSize() * 1.5)));
 
         listRole = new ArrayList<>();
         listRole.add(role1);
@@ -172,6 +182,7 @@ public class Joueurs extends JFrame implements ActionListener {
         //ACTION DU JCOMBOX NB JOUEURS
         nbJoueurs = new JComboBox(nombreJoueur);
         nbJoueurs.setBackground(Color.WHITE);
+        nbJoueurs.setFont(new Font(nbJoueurs.getFont().getName(), nbJoueurs.getFont().getStyle(), (int) (nbJoueurs.getFont().getSize() * 1.5)));
 
         nbJoueurs.addActionListener(new ActionListener() {
             @Override
