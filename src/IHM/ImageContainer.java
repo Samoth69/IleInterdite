@@ -91,7 +91,7 @@ public class ImageContainer extends JPanel {
     public void setImage(String path) {
         try {
             this.image = ImageIO.read( new File(path));
-            if (sizeSet) {
+            if (!sizeSet) {
                 width = image.getWidth(this);
                 height = image.getHeight(this);
             }
