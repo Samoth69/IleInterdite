@@ -257,37 +257,55 @@ public class Plateau implements Observateur {
         
         joueurActuel = new JLabel("");
         ActionRestante = new JLabel();
-
-        panelGamePad = new JPanel(new BorderLayout());
-        JPanel panelHautGamePad = new JPanel(new GridLayout(0, 2)); 
-        panelHautGamePad.add(new JLabel("Action restante:"));
-        panelHautGamePad.add(ActionRestante);
         
-        panelHautGamePad.add(jb);
 
-        panelGamePad.add(panelHautGamePad, BorderLayout.NORTH);
-  
-        JPanel panelMilieuGamePad = new JPanel(new GridLayout(0,cj.getNombreJoueurDansPartie()));
+        //*****PANELGAMEPAD *********************
+        panelGamePad = new JPanel(new BorderLayout());
+        
+        JPanel paneltreshaut = new JPanel();
+        JLabel labelpion = new JLabel("Tour du joueur :");
+        Font font1 = new Font("Arial",Font.BOLD,25);
+        labelpion.setFont(font1);
+        paneltreshaut.add(labelpion);
+        panelGamePad.add(paneltreshaut, BorderLayout.NORTH);
+        
+        JPanel panelHautGamePad = new JPanel(); 
+        JLabel labelaction = new JLabel("Action(s) restante(s):");
+        labelaction.setFont(font1);
+        panelHautGamePad.add(labelaction);        
+      //  panelHautGamePad.add(jb);
+        panelGamePad.add(panelHautGamePad, BorderLayout.CENTER);
+        
+        JPanel panelMilieuGamePad =new JPanel();
+        panelMilieuGamePad.add(ActionRestante); 
+        Font font2 = new Font("Arial",Font.BOLD,120);
+        ActionRestante.setFont(font2);
+        panelGamePad.add(panelMilieuGamePad, BorderLayout.SOUTH);
+       //******************************************************************
+        
+        JPanel panelBottomGamePad = new JPanel(new GridLayout(0,cj.getNombreJoueurDansPartie()));
         
         affichagePerso1 = new AffichagePersonnage(this, listPerso.get(0));
         affichagePerso2 = new AffichagePersonnage(this, listPerso.get(1));
-        panelMilieuGamePad.add(affichagePerso1);
-        panelMilieuGamePad.add(affichagePerso2);
+        panelBottomGamePad.add(affichagePerso1);
+        panelBottomGamePad.add(affichagePerso2);
         
         if (cj.getNombreJoueurDansPartie() > 2) {
             affichagePerso3 = new AffichagePersonnage(this, listPerso.get(2));
-            panelMilieuGamePad.add(affichagePerso3);
+            panelBottomGamePad.add(affichagePerso3);
         } else {
             affichagePerso3 = new AffichagePersonnage(this, null);
         }
         if (cj.getNombreJoueurDansPartie() > 3) {
             affichagePerso4 = new AffichagePersonnage(this, listPerso.get(3));
-            panelMilieuGamePad.add(affichagePerso4);
+            panelBottomGamePad.add(affichagePerso4);
         } else {
             affichagePerso4 = new AffichagePersonnage(this, null);
         }
 
-        BorderLayoutPrincipal.add(panelMilieuGamePad, BorderLayout.SOUTH);
+        BorderLayoutPrincipal.add(panelBottomGamePad, BorderLayout.SOUTH);
+        
+        
         
         JPanel panelGamePadBas = new JPanel();
         panelGamePadBas.setLayout(new BoxLayout(panelGamePadBas, BoxLayout.Y_AXIS));
@@ -616,19 +634,26 @@ public class Plateau implements Observateur {
         }
     }
     
-    private void setBtDonnerCarteEnabled(boolean b) {
+    private void setBtDonnerCarteParDefaut(){
+        affichagePerso1.setButtonDonnerCarteEnabled(false);
+        affichagePerso2.setButtonDonnerCarteEnabled(false);
+        affichagePerso3.setButtonDonnerCarteEnabled(false);
+        affichagePerso4.setButtonDonnerCarteEnabled(false);
+    }
+    
+    private void setBtDonnerCarteEnabled() {
         switch (cj.getJoueurNum()) {
             case 0:
-                affichagePerso1.setButtonDonnerCarteEnabled(b);
+                affichagePerso1.setButtonDonnerCarteEnabled(true);
                 break;
             case 1:
-                affichagePerso2.setButtonDonnerCarteEnabled(b);
+                affichagePerso2.setButtonDonnerCarteEnabled(true);
                 break;
             case 2:
-                affichagePerso3.setButtonDonnerCarteEnabled(b);
+                affichagePerso3.setButtonDonnerCarteEnabled(true);
                 break;
             case 3:
-                affichagePerso4.setButtonDonnerCarteEnabled(b);
+                affichagePerso4.setButtonDonnerCarteEnabled(true);
                 break;
         }
     }
