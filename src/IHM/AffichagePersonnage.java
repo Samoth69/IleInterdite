@@ -11,6 +11,7 @@ import Personnages.Personnage;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 import javax.swing.*;
@@ -101,6 +102,14 @@ public class AffichagePersonnage extends JPanel{
         });
         
         buttonDonnerCarte = new JButton("Donner carte");
+        if(perso.getEmplacement().getPersonnages().size() == 1)
+        {
+            buttonDonnerCarte.setEnabled(false);
+        }
+        else
+        {
+            buttonDonnerCarte.setEnabled(true);
+        }
         buttonPrendreRelique = new JButton("Prendre relique");;
         buttonCarteSpecial = new JButton("Carte Spécial");
         
@@ -114,9 +123,14 @@ public class AffichagePersonnage extends JPanel{
         buttonDonnerCarte.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
-                VuDefausse vd = new VuDefausse(perso.getCartes(), "Defaussez une carte", perso.getCartes().size() - 5);
-                vd.setVisible(true);
-                //pl.getControleurJeu().getJoueurEntrainDeJouer().donnerCarteAJoueur(perso, cartes);
+                if(perso.getEmplacement().getPersonnages().size() != 1)
+                {
+                    ArrayList<Personnage> listPersoEmplacement = perso.getEmplacement().getPersonnages();
+                    listPersoEmplacement.remove(perso);
+                    VuDefausse vd = new VuDefausse(perso.getCartes(), "Donner carte", 1, listPersoEmplacement);
+                    vd.setVisible(true);
+                    perso.donnerCarteAJoueur(vd.getPersoQuiRecoitCartes(), vd.getSelectedItems());
+                }
             }
         });
         

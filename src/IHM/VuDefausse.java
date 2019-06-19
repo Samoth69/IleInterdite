@@ -49,8 +49,12 @@ public class VuDefausse extends JDialog {
     private ArrayList<CarteRouge> carteSelectionne = new ArrayList<>(); //Array des cartes selectionnes
     private int nombreDeCarteADel; //nombre de carte à enlever de la main actuel
     private JDialog window;
-    private String[] nomDesPersos;
+    private Personnage persoQuiRecoitCarte;
     
+    
+    //carteJoueur: liste des cartes à afficher
+    //titre: titre de la fenêtre
+    //nombreDeCarteADel: nombre de carte à supprimer
     public VuDefausse(ArrayList<CarteRouge> carteJoueur, String titre, int nombreDeCarteADel){
         initialisation(carteJoueur, titre, nombreDeCarteADel);
     }
@@ -62,13 +66,23 @@ public class VuDefausse extends JDialog {
     //persos : liste des personnages sur la meme case du joueur en train de jouer
     public VuDefausse(ArrayList<CarteRouge> carteJoueur, String titre, int nombreDeCarteADel, ArrayList<Personnage> persos){
         
+        String[] nomDesPersos = new String[persos.size()];
+        
         for(int i = 0; i < persos.size(); i++)
         {
             nomDesPersos[i] = persos.get(i).getNom();
         }
         
-        
         JComboBox boxPersos = new JComboBox(nomDesPersos);
+        
+        for(Personnage i : persos)
+        {
+            if(i.getNom() == boxPersos.getSelectedItem().toString())
+            {
+                persoQuiRecoitCarte = i;
+            }
+        }
+        
         
         mainPanel.add(boxPersos, BorderLayout.NORTH);
         
@@ -191,5 +205,9 @@ public class VuDefausse extends JDialog {
 
     public ArrayList<CarteRouge> getSelectedItems() {
         return carteSelectionne;
+    }
+    
+    public Personnage getPersoQuiRecoitCartes(){
+        return persoQuiRecoitCarte;
     }
 }
