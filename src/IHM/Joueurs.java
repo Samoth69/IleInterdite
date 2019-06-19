@@ -329,15 +329,15 @@ public class Joueurs extends JFrame implements ActionListener {
             }
 
             for (int j = 0; j < (int) nbJoueurs.getSelectedItem(); j++) {
-                
+
                 if (listPseudo.get(j).getText().isEmpty()) {
                     JOptionPane.showMessageDialog(null, "Le champ joueur ne peut pas être vide.", "Message d'erreur", JOptionPane.ERROR_MESSAGE);
                     return; //quitte la fonction
 
                 }
-                
+
             }
-            
+
             ArrayList<String> text = new ArrayList<>();
             text.add(pseudo1.getText());
             if (text.contains(pseudo2.getText())) {
@@ -356,7 +356,7 @@ public class Joueurs extends JFrame implements ActionListener {
                 if (text.contains(pseudo4.getText())) {
                     ErreurDoublePseudo();
                     return;
-                }  
+                }
             }
         }
 
@@ -398,7 +398,7 @@ public class Joueurs extends JFrame implements ActionListener {
     private void ErreurDoublePseudo() {
         JOptionPane.showMessageDialog(null, "Deux joueurs ne peuvent pas avoir le même nom.", "Message d'erreur", JOptionPane.ERROR_MESSAGE);
     }
-    
+
     private Observateur observateur;
 
     public void addObservateur(Observateur o) {
