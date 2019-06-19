@@ -194,6 +194,7 @@ public class VuDefausse extends JDialog {
                                 {
                                     pn.setBackground(UIManager.getColor("Panel.background"));   //couleur par defaut
                                     carteSelectionne.remove(carte);
+                                    carteActionIsSelected = false;
                                 } 
                             }
                             else
