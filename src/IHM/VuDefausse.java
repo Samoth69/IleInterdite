@@ -5,6 +5,7 @@
  */
 package IHM;
 
+import Cartes.CarteAction;
 import Cartes.CarteInondation;
 import Cartes.CarteRouge;
 import Enumerations.TypeEnumMessage;
@@ -53,6 +54,7 @@ public class VuDefausse extends JDialog {
     private Personnage persoQuiRecoitCarte;
     private double actionRestante = 0;
     private boolean modeDefausse = false;
+    private boolean modeActionSpe = false;
     
     
     //carteJoueur: liste des cartes à afficher
@@ -61,6 +63,24 @@ public class VuDefausse extends JDialog {
     public VuDefausse(ArrayList<CarteRouge> carteJoueur, String titre, int nombreDeCarteADel){
         initialisation(carteJoueur, titre, nombreDeCarteADel);
         modeDefausse = true;
+    }
+    
+    public VuDefausse(ArrayList<CarteRouge> carteJoueur, String titre){
+        modeActionSpe = true;
+        
+        for(CarteRouge i : carteJoueur)
+        {
+            if(i instanceof CarteAction)
+            {
+                carteDuJoueur.add(i);
+            }
+        }
+        
+        carteJoueur.clear();
+        carteJoueur.addAll(carteDuJoueur);
+        carteDuJoueur.clear();
+        
+        initialisation(carteJoueur, titre, 1);
     }
     
     //Constructeur pour la vu donner carte
