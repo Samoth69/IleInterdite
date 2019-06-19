@@ -25,6 +25,7 @@ public class ImageContainer extends JPanel {
                         y, // Position de l'image sur la verticale avec 0 en haut
                         width, // Largeur de l'image
                         height ; // Hauteur de l'image
+    private final boolean sizeSet;
 
     public ImageContainer (String path, int x, int y, int width, int height) {
         super();
@@ -41,6 +42,7 @@ public class ImageContainer extends JPanel {
         } catch (IOException ex) {
             System.err.println("Erreur en lecture de l'image " + path);
         }
+        sizeSet = true;
     }
     
     public ImageContainer(String path, int x, int y) {
@@ -49,7 +51,6 @@ public class ImageContainer extends JPanel {
 
         this.x = x ;
         this.y = y ;
-
 
         try {
             // Transformation du fichier contenant l'image en image
@@ -61,6 +62,7 @@ public class ImageContainer extends JPanel {
             this.width = 0;
             this.height = 0;
         }
+        sizeSet = false;
     }
 
     @Override
@@ -69,11 +71,20 @@ public class ImageContainer extends JPanel {
      */
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(image, x, y, width, height, null, this);
+        if (sizeSet) {
+            g.drawImage(image, x, y, width, height, null, this);
+        } else {
+            g.drawImage(image, x, y, this.getParent().getWidth(), this.getParent().getHeight(), null, this);
+        }
+        
     }
     
     @Override
     public Dimension getPreferredSize() {
-        return new Dimension(width, height);
+        if (sizeSet) {
+            return new Dimension(width, height);
+        } else {
+            return new Dimension(this.getParent().getWidth(), this.getParent().getHeight());
+        }
     }
 }
