@@ -176,22 +176,67 @@ public class ControleurJeuSecondaire implements Observe{
                         notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Le tresor Cristal Ardent a été récupéré"));
                         //message qui indique la tuile où le tresor doit etre supprimé
                         notifierObservateur(new Message(TypeEnumMessage.RM_TRESOR, emplacementJoueur));
+                        for(CarteRouge i : getJoueurEntrainDeJouer().getCartes())
+                        {
+                            if(i.getTypeTresor() == TypeEnumTresors.FEU)
+                            {
+                                if(nbCarteTresor <= 0)
+                                {
+                                    break;
+                                }
+                                getJoueurEntrainDeJouer().getCartes().remove(i);
+                                nbCarteTresor--;
+                            }
+                        }
                         
                     break;
                     case LION:  // idem
                         statueZephyr = true;
                         notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Le tresor Statue de Zephyr a été récupéré"));
                         notifierObservateur(new Message(TypeEnumMessage.RM_TRESOR, emplacementJoueur));
+                        for(CarteRouge i : getJoueurEntrainDeJouer().getCartes())
+                        {
+                            if(i.getTypeTresor() == TypeEnumTresors.LION)
+                            {
+                                if(nbCarteTresor <= 0)
+                                {
+                                    break;
+                                }
+                                getJoueurEntrainDeJouer().getCartes().remove(i);
+                            }
+                        }
                     break;
                     case LUNE:  //idem
                         pierreSacre = true;
                         notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Le tresor Pierre Sacré a été récupéré"));
                         notifierObservateur(new Message(TypeEnumMessage.RM_TRESOR, emplacementJoueur));
+                        for(CarteRouge i : getJoueurEntrainDeJouer().getCartes())
+                        {
+                            if(i.getTypeTresor() == TypeEnumTresors.LUNE)
+                            {
+                                if(nbCarteTresor <= 0)
+                                {
+                                    break;
+                                }
+                                getJoueurEntrainDeJouer().getCartes().remove(i);
+                            }
+                        }
                     break;
                     case TROPHEE:   //idem
                         caliceOnde = true;
                         notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Le tresor Calice des Ondes a été récupéré"));
                         notifierObservateur(new Message(TypeEnumMessage.RM_TRESOR, emplacementJoueur));
+                        for(CarteRouge i : getJoueurEntrainDeJouer().getCartes())
+                        {
+                            if(i.getTypeTresor() == TypeEnumTresors.TROPHEE)
+                            {
+                                if(nbCarteTresor <= 0)
+                                {
+                                    break;
+                                }
+                                getJoueurEntrainDeJouer().getCartes().remove(i);
+                            }
+                        }
                     break;
                 }
                 //  retire le tresor de la case
