@@ -6,7 +6,6 @@
 package IHM;
 
 import Enumerations.TypeEnumMenuPrincipal;
-import IleInterdite.ControleurJeuPrincipal;
 import IleInterdite.Message;
 import IleInterdite.Observateur;
 import java.awt.BorderLayout;
