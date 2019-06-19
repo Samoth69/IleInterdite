@@ -264,7 +264,7 @@ public class Plateau implements Observateur {
 
         panelGamePad.add(panelHautGamePad, BorderLayout.NORTH);
   
-        JPanel panelMilieuGamePad = new JPanel(new GridLayout(cj.getNombreJoueurDansPartie(),0));
+        JPanel panelMilieuGamePad = new JPanel(new GridLayout(0,cj.getNombreJoueurDansPartie()));
         
         affichagePerso1 = new AffichagePersonnage(this, listPerso.get(0));
         affichagePerso2 = new AffichagePersonnage(this, listPerso.get(1));
@@ -284,7 +284,7 @@ public class Plateau implements Observateur {
             affichagePerso4 = new AffichagePersonnage(this, null);
         }
 
-        panelGamePad.add(panelMilieuGamePad, BorderLayout.CENTER);
+        mainPanel.add(panelMilieuGamePad, BorderLayout.SOUTH);
         
         JPanel panelGamePadBas = new JPanel();
         panelGamePadBas.setLayout(new BoxLayout(panelGamePadBas, BoxLayout.Y_AXIS));
