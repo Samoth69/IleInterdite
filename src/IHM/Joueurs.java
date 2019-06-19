@@ -320,7 +320,7 @@ public class Joueurs extends JFrame implements ActionListener {
             ArrayList<String> usedRole = new ArrayList<>();
             for (int i = 0; i < (int) nbJoueurs.getSelectedItem(); i++) {
                 if (usedRole.contains((String) listRole.get(i).getSelectedItem())) {
-                    JOptionPane.showMessageDialog(null, "Chaque joueur doit avoir un rôle différent", "Message d'erreur", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Chaque joueur doit avoir un rôle différent.", "Message d'erreur", JOptionPane.ERROR_MESSAGE);
                     return; //quitte la fonction
                 }
                 if ((String) listRole.get(i).getSelectedItem() != nomRoles[nomRoles.length - 1]) {
@@ -330,11 +330,46 @@ public class Joueurs extends JFrame implements ActionListener {
 
             for (int j = 0; j < (int) nbJoueurs.getSelectedItem(); j++) {
                 if (listPseudo.get(j).getText().isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "Le champ joueur ne peut pas être vide", "Message d'erreur", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Le champ joueur ne peut pas être vide.", "Message d'erreur", JOptionPane.ERROR_MESSAGE);
                     return; //quitte la fonction
 
                 }
+                /*if (listPseudo.get(j).getText().equals(listPseudo.get(j).getText())) {
+                 JOptionPane.showMessageDialog(null, "Deux joueurs ne peuvent pas avoir le même nom.", "Message d'erreur", JOptionPane.ERROR_MESSAGE);
+                 return; //quitte la fonction 
+                 }*/
             }
+
+            if (pseudo1.getText().equals(pseudo2.getText())) {
+                JOptionPane.showMessageDialog(null, "Deux joueurs ne peuvent pas avoir le même nom.", "Message d'erreur", JOptionPane.ERROR_MESSAGE);
+                return; //quitte la fonction
+            }
+
+            if (pseudo1.getText().equals(pseudo3.getText())) {
+                JOptionPane.showMessageDialog(null, "Deux joueurs ne peuvent pas avoir le même nom.", "Message d'erreur", JOptionPane.ERROR_MESSAGE);
+                return; //quitte la fonction
+            }
+
+            if (pseudo1.getText().equals(pseudo4.getText())) {
+                JOptionPane.showMessageDialog(null, "Deux joueurs ne peuvent pas avoir le même nom.", "Message d'erreur", JOptionPane.ERROR_MESSAGE);
+                return; //quitte la fonction
+            }
+
+            if (pseudo2.getText().equals(pseudo3.getText())) {
+                JOptionPane.showMessageDialog(null, "Deux joueurs ne peuvent pas avoir le même nom.", "Message d'erreur", JOptionPane.ERROR_MESSAGE);
+                return; //quitte la fonction
+            }
+
+            if (pseudo2.getText().equals(pseudo4.getText())) {
+                JOptionPane.showMessageDialog(null, "Deux joueurs ne peuvent pas avoir le même nom.", "Message d'erreur", JOptionPane.ERROR_MESSAGE);
+                return; //quitte la fonction
+            }
+
+            if (pseudo3.getText().equals(pseudo4.getText())) {
+                JOptionPane.showMessageDialog(null, "Deux joueurs ne peuvent pas avoir le même nom.", "Message d'erreur", JOptionPane.ERROR_MESSAGE);
+                return; //quitte la fonction
+            }
+
         }
 
         this.joueur.setVisible(false);
