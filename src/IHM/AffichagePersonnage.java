@@ -161,8 +161,8 @@ public class AffichagePersonnage extends JPanel{
                
                //vd1.getSelectedItems();
                //perso.deplacement(vd1.getSelectedItems());
-               pl.changeMode(1);
-               pl.gamePadClick2();
+               pl.changeMode(3);
+               pl.gamePadClick();
                     
                 }
             }
