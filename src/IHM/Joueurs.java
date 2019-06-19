@@ -53,6 +53,7 @@ public class Joueurs extends JFrame implements ActionListener {
     private JComboBox role4;
     private JComboBox nbJoueurs;
     private JComboBox niveauDepart;
+    private JComboBox mode;
 
     //Listes
     private ArrayList<JTextField> listPseudo;
@@ -60,6 +61,7 @@ public class Joueurs extends JFrame implements ActionListener {
     private final Integer[] nombreJoueur = {2, 3, 4};
     private final String[] nomRoles = {"Explorateur", "Ingénieur", "Navigateur", "Pilote", "Plongeur", "Aléatoire"};
     private final String[] niveauEau = {"Novice", "Normal", "Elite", "Légendaire"};
+    private final String[] modeJ = {"Mode normal", "Scénario n°1", "Scénario n°2"};
 
     public Joueurs() {
         ImageIcon img = new ImageIcon("src/RessourcesJoueur/FondJoueur.jpg");
@@ -118,42 +120,51 @@ public class Joueurs extends JFrame implements ActionListener {
         labelTitre.setForeground(Color.WHITE);
 
         JLabel labeljoueur1 = new JLabel(" Joueur n°1 : ", SwingConstants.LEFT);
-        labeljoueur1.setFont(new Font(jouer.getFont().getName(), jouer.getFont().getStyle(), (int) (jouer.getFont().getSize() * 1.5)));
+        labeljoueur1.setFont(new Font(labeljoueur1.getFont().getName(), labeljoueur1.getFont().getStyle(), (int) (labeljoueur1.getFont().getSize() * 1.5)));
 
         JLabel choisirnbjoueur = new JLabel(" Nombre de joueurs :", SwingConstants.LEFT);
-        choisirnbjoueur.setFont(new Font(jouer.getFont().getName(), jouer.getFont().getStyle(), (int) (jouer.getFont().getSize() * 1.5)));
+        choisirnbjoueur.setFont(new Font(choisirnbjoueur.getFont().getName(), choisirnbjoueur.getFont().getStyle(), (int) (choisirnbjoueur.getFont().getSize() * 1.5)));
 
         JLabel labeljoueur2 = new JLabel(" Joueur n°2 : ", SwingConstants.LEFT);
-        labeljoueur2.setFont(new Font(jouer.getFont().getName(), jouer.getFont().getStyle(), (int) (jouer.getFont().getSize() * 1.5)));
+        labeljoueur2.setFont(new Font(labeljoueur2.getFont().getName(), labeljoueur2.getFont().getStyle(), (int) (labeljoueur2.getFont().getSize() * 1.5)));
 
         JLabel labeljoueur3 = new JLabel(" Joueur n°3 : ", SwingConstants.LEFT);
-        labeljoueur3.setFont(new Font(jouer.getFont().getName(), jouer.getFont().getStyle(), (int) (jouer.getFont().getSize() * 1.5)));
+        labeljoueur3.setFont(new Font(labeljoueur3.getFont().getName(), labeljoueur3.getFont().getStyle(), (int) (labeljoueur3.getFont().getSize() * 1.5)));
 
         JLabel labeljoueurPseudo3 = new JLabel(" Pseudonyme : ", SwingConstants.LEFT);
-        labeljoueurPseudo3.setFont(new Font(jouer.getFont().getName(), jouer.getFont().getStyle(), (int) (jouer.getFont().getSize() * 1.5)));
+        labeljoueurPseudo3.setFont(new Font(labeljoueurPseudo3.getFont().getName(), labeljoueurPseudo3.getFont().getStyle(), (int) (labeljoueurPseudo3.getFont().getSize() * 1.5)));
 
         JLabel labeljoueur4 = new JLabel(" Joueur n°4 : ", SwingConstants.LEFT);
-        labeljoueur4.setFont(new Font(jouer.getFont().getName(), jouer.getFont().getStyle(), (int) (jouer.getFont().getSize() * 1.5)));
+        labeljoueur4.setFont(new Font(labeljoueur4.getFont().getName(), labeljoueur4.getFont().getStyle(), (int) (labeljoueur4.getFont().getSize() * 1.5)));
 
         JLabel labeljoueurPseudo4 = new JLabel(" Pseudonyme : ", SwingConstants.LEFT);
-        labeljoueurPseudo4.setFont(new Font(jouer.getFont().getName(), jouer.getFont().getStyle(), (int) (jouer.getFont().getSize() * 1.5)));
+        labeljoueurPseudo4.setFont(new Font(labeljoueurPseudo4.getFont().getName(), labeljoueurPseudo4.getFont().getStyle(), (int) (labeljoueurPseudo4.getFont().getSize() * 1.5)));
 
         JLabel labeljoueurRole1 = new JLabel("Rôle :", SwingConstants.CENTER);
-        labeljoueurRole1.setFont(new Font(jouer.getFont().getName(), jouer.getFont().getStyle(), (int) (jouer.getFont().getSize() * 1.5)));
+        labeljoueurRole1.setFont(new Font(labeljoueurRole1.getFont().getName(), labeljoueurRole1.getFont().getStyle(), (int) (labeljoueurRole1.getFont().getSize() * 1.5)));
         JLabel labeljoueurRole2 = new JLabel("Rôle :", SwingConstants.CENTER);
-        labeljoueurRole2.setFont(new Font(jouer.getFont().getName(), jouer.getFont().getStyle(), (int) (jouer.getFont().getSize() * 1.5)));
+        labeljoueurRole2.setFont(new Font(labeljoueurRole2.getFont().getName(), labeljoueurRole2.getFont().getStyle(), (int) (labeljoueurRole2.getFont().getSize() * 1.5)));
         JLabel labeljoueurRole3 = new JLabel("Rôle :", SwingConstants.CENTER);
-        labeljoueurRole3.setFont(new Font(jouer.getFont().getName(), jouer.getFont().getStyle(), (int) (jouer.getFont().getSize() * 1.5)));
+        labeljoueurRole3.setFont(new Font(labeljoueurRole3.getFont().getName(), labeljoueurRole3.getFont().getStyle(), (int) (labeljoueurRole3.getFont().getSize() * 1.5)));
         JLabel labeljoueurRole4 = new JLabel("Rôle :", SwingConstants.CENTER);
-        labeljoueurRole4.setFont(new Font(jouer.getFont().getName(), jouer.getFont().getStyle(), (int) (jouer.getFont().getSize() * 1.5)));
+        labeljoueurRole4.setFont(new Font(labeljoueurRole4.getFont().getName(), labeljoueurRole4.getFont().getStyle(), (int) (labeljoueurRole4.getFont().getSize() * 1.5)));
 
         JLabel labeldifficulte = new JLabel(" Difficulté : ");
-        labeldifficulte.setFont(new Font(jouer.getFont().getName(), jouer.getFont().getStyle(), (int) (jouer.getFont().getSize() * 1.5)));
+        labeldifficulte.setFont(new Font(labeldifficulte.getFont().getName(), labeldifficulte.getFont().getStyle(), (int) (labeldifficulte.getFont().getSize() * 1.5)));
+
+        JLabel labelMode = new JLabel("Mode de jeu : ", SwingConstants.CENTER);
+        labelMode.setFont(new Font(labelMode.getFont().getName(), labelMode.getFont().getStyle(), (int) (labelMode.getFont().getSize() * 1.5)));
+        labelMode.setForeground(Color.WHITE);
 
         role1 = new JComboBox(nomRoles);
         role1.setSelectedIndex(5);
         role1.setBackground(Color.WHITE);
         role1.setFont(new Font(role1.getFont().getName(), role1.getFont().getStyle(), (int) (role1.getFont().getSize() * 1.5)));
+
+        mode = new JComboBox(modeJ);
+        mode.setSelectedIndex(0);
+        mode.setBackground(Color.WHITE);
+        mode.setFont(new Font(mode.getFont().getName(), mode.getFont().getStyle(), (int) (mode.getFont().getSize() * 1.5)));
 
         role2 = new JComboBox(nomRoles);
         role2.setSelectedIndex(5);
@@ -261,7 +272,9 @@ public class Joueurs extends JFrame implements ActionListener {
         background.add(new JLabel(" "));
         background.add(labeldifficulte);
         background.add(niveauDepart);
-        for (int i = 0; i < 6; i++) {
+        background.add(labelMode);
+        background.add(mode);
+        for (int i = 0; i < 4; i++) {
             background.add(new JLabel(" "));
         }
 
