@@ -21,7 +21,7 @@ import javax.swing.JPanel;
  */
 public class ImageContainer extends JPanel {
     protected Image image = null;  // Image à afficher
-    protected final int x, // Position de l'image sur l'horizontale avec 0 à gauche
+    protected int x, // Position de l'image sur l'horizontale avec 0 à gauche
                         y, // Position de l'image sur la verticale avec 0 en haut
                         width, // Largeur de l'image
                         height ; // Hauteur de l'image
@@ -40,6 +40,26 @@ public class ImageContainer extends JPanel {
             this.image = ImageIO.read( new File(path));
         } catch (IOException ex) {
             System.err.println("Erreur en lecture de l'image " + path);
+        }
+    }
+    
+    public ImageContainer(String path, int x, int y) {
+        super();
+        this.setOpaque(false);
+
+        this.x = x ;
+        this.y = y ;
+
+
+        try {
+            // Transformation du fichier contenant l'image en image
+            this.image = ImageIO.read( new File(path));
+            this.width = image.getWidth(this) ;
+            this.height = image.getHeight(this) ;
+        } catch (IOException ex) {
+            System.err.println("Erreur en lecture de l'image " + path);
+            this.width = 0;
+            this.height = 0;
         }
     }
 
