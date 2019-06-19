@@ -8,6 +8,7 @@ package IHM;
 import Enumerations.TypeEnumMenuPrincipal;
 import IleInterdite.Message;
 import IleInterdite.Observateur;
+import java.awt.BorderLayout;
 import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -19,11 +20,14 @@ import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.embed.swing.JFXPanel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
 /**
  *
@@ -39,6 +43,10 @@ public class Menu extends JFrame implements ActionListener {
     private JButton jouer;
     private JButton quitter;
     private JButton regles;
+    //ATTRIBUTS POUR LE SON
+    private JButton music;
+    private boolean on;
+    private MediaPlayer mediaPlayer;
 
     //CONSTRUCTEUR
     public Menu() {
@@ -56,14 +64,20 @@ public class Menu extends JFrame implements ActionListener {
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         menu.setLocation(dim.width / 2 - menu.getSize().width / 2, dim.height / 2 - menu.getSize().height / 2);
 
-        //Construction bouton jouer/regles/quitter
+        //Construction bouton jouer/regles/quitter/musique
         jouer = new JButton("Jouer");
         jouer.addActionListener(this);
         regles = new JButton("Règles du jeu");
         regles.addActionListener(this);
         quitter = new JButton("Quitter");
         quitter.addActionListener(this);
-
+        music= new JButton("Musique ON/OFF");
+        music.addActionListener(this);
+        
+        JFXPanel fxPanel = new JFXPanel(); // necessaire pour jouer un son .mp3
+        
+        //boolean music on ou off
+        on=false;
         //grille de 11 lignes, 3 colonnes
         background.setLayout(new GridLayout(11, 3));
         menu.setContentPane(background);
@@ -81,11 +95,20 @@ public class Menu extends JFrame implements ActionListener {
                 background.add(regles);  //bouton regles à la 22eme case
             } else if (i == 28) {
                 background.add(quitter);   //bouton quitter à la 28eme case
-            } else {
+            } else if(i==32){
+                //créer un boutton musique en-bas à droite
+                JLabel musicTab= new JLabel();
+                musicTab.setLayout(new BorderLayout());
+                musicTab.add(music, BorderLayout.LINE_END);
+                background.add(musicTab);
+            }
+            
+            else {
                 background.add(new JLabel(""));// pour le reste des cases, du vide
             }
         }
-
+        
+    
     }
 
     //METHODES
@@ -115,6 +138,18 @@ public class Menu extends JFrame implements ActionListener {
             int rep = JOptionPane.showConfirmDialog(null, "Etes-vous sûr(e) de vouloir quitter le jeu ?", "Message de confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
             if (rep == JOptionPane.YES_OPTION) {
                 System.exit(0);
+            }
+        }
+        
+        if (e.getSource() == music) { // si clique sur Musique on/off
+            if (on == false) {
+                Media hit = new Media(new File("src/RessourcesSon/SilverForMonsters.mp3").toURI().toString());
+                mediaPlayer = new MediaPlayer(hit);          //créer le media player
+                mediaPlayer.play();  
+                on=true;
+            } else {
+                mediaPlayer.pause();
+                on=false;
             }
         }
 
