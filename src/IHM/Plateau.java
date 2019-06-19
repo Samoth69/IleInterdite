@@ -524,9 +524,9 @@ public class Plateau implements Observateur {
                 }
                 break;
             
-            case 3:                 paintNonSelected();
-                
-                setBtAssecherEnabled(true);
+            case 3:                
+                paintNonSelected();
+                setBtAssecherEnabled(false);
                 setBtDeplacementEnabled(false);
                 setBtPasserJoueurEnabled(false);
                 setBtAssecherText(nomAnnulé);
