@@ -8,7 +8,6 @@ package IHM;
 import Cartes.CarteRouge;
 import Enumerations.TypeEnumCouleurPion;
 import Personnages.Personnage;
-import democalques.ImageContainer;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
