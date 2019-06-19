@@ -329,47 +329,35 @@ public class Joueurs extends JFrame implements ActionListener {
             }
 
             for (int j = 0; j < (int) nbJoueurs.getSelectedItem(); j++) {
+                
                 if (listPseudo.get(j).getText().isEmpty()) {
                     JOptionPane.showMessageDialog(null, "Le champ joueur ne peut pas être vide.", "Message d'erreur", JOptionPane.ERROR_MESSAGE);
                     return; //quitte la fonction
 
                 }
-                /*if (listPseudo.get(j).getText().equals(listPseudo.get(j).getText())) {
-                 JOptionPane.showMessageDialog(null, "Deux joueurs ne peuvent pas avoir le même nom.", "Message d'erreur", JOptionPane.ERROR_MESSAGE);
-                 return; //quitte la fonction 
-                 }*/
+                
             }
-
-            if (pseudo1.getText().equals(pseudo2.getText())) {
-                JOptionPane.showMessageDialog(null, "Deux joueurs ne peuvent pas avoir le même nom.", "Message d'erreur", JOptionPane.ERROR_MESSAGE);
-                return; //quitte la fonction
+            
+            ArrayList<String> text = new ArrayList<>();
+            text.add(pseudo1.getText());
+            if (text.contains(pseudo2.getText())) {
+                ErreurDoublePseudo();
+                return;
             }
-
-            if (pseudo1.getText().equals(pseudo3.getText())) {
-                JOptionPane.showMessageDialog(null, "Deux joueurs ne peuvent pas avoir le même nom.", "Message d'erreur", JOptionPane.ERROR_MESSAGE);
-                return; //quitte la fonction
+            if ((int) nbJoueurs.getSelectedItem() > 2) {
+                text.add(pseudo2.getText());
+                if (text.contains(pseudo3.getText())) {
+                    ErreurDoublePseudo();
+                    return;
+                }
             }
-
-            if (pseudo1.getText().equals(pseudo4.getText())) {
-                JOptionPane.showMessageDialog(null, "Deux joueurs ne peuvent pas avoir le même nom.", "Message d'erreur", JOptionPane.ERROR_MESSAGE);
-                return; //quitte la fonction
+            if ((int) nbJoueurs.getSelectedItem() > 3) {
+                text.add(pseudo3.getText());
+                if (text.contains(pseudo4.getText())) {
+                    ErreurDoublePseudo();
+                    return;
+                }  
             }
-
-            if (pseudo2.getText().equals(pseudo3.getText())) {
-                JOptionPane.showMessageDialog(null, "Deux joueurs ne peuvent pas avoir le même nom.", "Message d'erreur", JOptionPane.ERROR_MESSAGE);
-                return; //quitte la fonction
-            }
-
-            if (pseudo2.getText().equals(pseudo4.getText())) {
-                JOptionPane.showMessageDialog(null, "Deux joueurs ne peuvent pas avoir le même nom.", "Message d'erreur", JOptionPane.ERROR_MESSAGE);
-                return; //quitte la fonction
-            }
-
-            if (pseudo3.getText().equals(pseudo4.getText())) {
-                JOptionPane.showMessageDialog(null, "Deux joueurs ne peuvent pas avoir le même nom.", "Message d'erreur", JOptionPane.ERROR_MESSAGE);
-                return; //quitte la fonction
-            }
-
         }
 
         this.joueur.setVisible(false);
@@ -407,6 +395,10 @@ public class Joueurs extends JFrame implements ActionListener {
         notifierObservateur(msg);
     }
 
+    private void ErreurDoublePseudo() {
+        JOptionPane.showMessageDialog(null, "Deux joueurs ne peuvent pas avoir le même nom.", "Message d'erreur", JOptionPane.ERROR_MESSAGE);
+    }
+    
     private Observateur observateur;
 
     public void addObservateur(Observateur o) {

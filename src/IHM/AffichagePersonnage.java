@@ -7,6 +7,7 @@ package IHM;
 
 import Cartes.CarteRouge;
 import Enumerations.TypeEnumCouleurPion;
+import Enumerations.TypeEnumTresors;
 import Personnages.Personnage;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -32,6 +33,8 @@ public class AffichagePersonnage extends JPanel{
     private Personnage perso;
     
     private JPanel panelMilieu;
+    
+    ArrayList<Personnage> listPersoEmplacement = new ArrayList<>();
     
     private JButton buttonDeplacement;
     private JButton buttonAssecher;
@@ -102,14 +105,6 @@ public class AffichagePersonnage extends JPanel{
         });
         
         buttonDonnerCarte = new JButton("Donner carte");
-        /**if(perso.getEmplacement().getPersonnages().size() == 1)
-        {
-            buttonDonnerCarte.setEnabled(false);
-        }
-        else
-        {
-            buttonDonnerCarte.setEnabled(true);
-        }**/
         buttonPrendreRelique = new JButton("Prendre relique");;
         buttonCarteSpecial = new JButton("Carte Spécial");
         
@@ -125,7 +120,7 @@ public class AffichagePersonnage extends JPanel{
             public void actionPerformed(ActionEvent arg0) {
                 if(perso.getEmplacement().getPersonnages().size() != 1)
                 {
-                    ArrayList<Personnage> listPersoEmplacement = perso.getEmplacement().getPersonnages();
+                    listPersoEmplacement.addAll(perso.getEmplacement().getPersonnages());
                     listPersoEmplacement.remove(perso);
                     VuDefausse vd = new VuDefausse(perso.getCartes(), "Donner carte", 1, listPersoEmplacement);
                     vd.setVisible(true);
@@ -155,6 +150,9 @@ public class AffichagePersonnage extends JPanel{
         buttonAssecher.setEnabled(b);
         buttonDeplacement.setEnabled(b);
         buttonPasserTour.setEnabled(b);
+        buttonPrendreRelique.setEnabled(b);
+        buttonCarteSpecial.setEnabled(b);
+        
         if (b) {
             labelTypeJoueur.setForeground(Color.black);
             labelJoueur.setForeground(Color.black);
@@ -169,6 +167,33 @@ public class AffichagePersonnage extends JPanel{
             pion.setCouleur(TypeEnumCouleurPion.AUCUN);
         }
         if (perso != null) {
+            if(perso.getEmplacement().getPersonnages().size() > 1)
+            {
+                buttonDonnerCarte.setEnabled(true);
+            }
+            else
+            {
+                buttonDonnerCarte.setEnabled(false);
+            }
+            if(perso.getEmplacement().getTresor() != TypeEnumTresors.AUCUN)
+            {
+                int comptTresor =0;
+                for(CarteRouge i : perso.getCartes())
+                {
+                    if(i.getTypeTresor() == perso.getEmplacement().getTresor())
+                    {
+                        comptTresor++;
+                    }
+                }
+                if(comptTresor == 4)
+                {
+                    buttonPrendreRelique.setEnabled(true);
+                }
+            }
+            else
+            {
+                buttonPrendreRelique.setEnabled(false);
+            }
             panelMilieu.removeAll();
             panelMilieu.revalidate();
             labelJoueur.setText(perso.getNom());
