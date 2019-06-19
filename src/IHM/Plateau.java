@@ -52,8 +52,6 @@ public class Plateau implements Observateur {
 
     private JLabel joueurActuel;
     private JLabel ActionRestante;
-
-    
     
     private JPanel panelGamePad;
 

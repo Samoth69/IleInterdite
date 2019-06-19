@@ -70,8 +70,10 @@ public class Pion extends JComponent{
                 g.setColor(Color.WHITE);
             break;
         }
+        g.fillOval(0, 0, width, height);
         
-        g.fillOval(/*(int)dim.getWidth()/2*/0, 0, 30, 30);
+        g.setColor(Color.white);
+        g.drawOval(0, 0, width, height);
     }
     
     @Override
