@@ -6,6 +6,7 @@
 package Personnages;
 
 import Enumerations.TypeEnumCouleurPion;
+import Enumerations.TypeEnumPersonnages;
 import IleInterdite.Grille;
 import IleInterdite.Tuile;
 
@@ -17,5 +18,10 @@ public class Ingenieur extends Personnage{
     
     public Ingenieur(String nom, Grille ile) {
         super(nom, ile, TypeEnumCouleurPion.ROUGE);
+    }
+    
+    @Override
+    public TypeEnumPersonnages getType() {
+        return TypeEnumPersonnages.INGENIEUR;
     }
 }

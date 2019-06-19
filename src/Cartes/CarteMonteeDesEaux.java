@@ -14,12 +14,12 @@ import Enumerations.TypeEnumTresors;
  */
 public class CarteMonteeDesEaux extends CarteRouge{
         
-        public CarteMonteeDesEaux(String nom){
-            super(nom);
+        public CarteMonteeDesEaux(String nom, String img){
+            super(nom, img);
         }
 
-        public CarteMonteeDesEaux(String nom, String description){
-            super(nom,description);
+        public CarteMonteeDesEaux(String nom, String description, String img){
+            super(nom,description, img);
         }
          
         @Override

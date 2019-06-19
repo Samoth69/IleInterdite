@@ -6,6 +6,7 @@
 package Personnages;
 
 import Enumerations.TypeEnumCouleurPion;
+import Enumerations.TypeEnumPersonnages;
 import IleInterdite.Grille;
 import IleInterdite.Tuile;
 
@@ -18,9 +19,9 @@ public class Navigateur extends Personnage{
     public Navigateur(String nom, Grille ile) {
         super(nom, ile, TypeEnumCouleurPion.JAUNE);
     }
-    /*
+    
     @Override
-    public Tuile[] getDeplacements(Tuile EmplacementJoueur) {
-        
-    }*/
+    public TypeEnumPersonnages getType() {
+        return TypeEnumPersonnages.NAVIGATEUR;
+    }
 }

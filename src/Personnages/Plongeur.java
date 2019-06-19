@@ -7,6 +7,7 @@ package Personnages;
 
 import Enumerations.TypeEnumCouleurPion;
 import Enumerations.TypeEnumInondation;
+import Enumerations.TypeEnumPersonnages;
 import IleInterdite.Grille;
 import IleInterdite.Tuile;
 import java.util.ArrayList;
@@ -94,5 +95,10 @@ public class Plongeur extends Personnage{
                 }
             }
         }
+    }
+    
+    @Override
+    public TypeEnumPersonnages getType() {
+        return TypeEnumPersonnages.PLONGEUR;
     }
 }

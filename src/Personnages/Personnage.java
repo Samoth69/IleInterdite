@@ -12,6 +12,7 @@ import Cartes.CarteInondation;
 import Cartes.CarteMonteeDesEaux;
 import Enumerations.TypeEnumCouleurPion;
 import Enumerations.TypeEnumInondation;
+import Enumerations.TypeEnumPersonnages;
 import IleInterdite.Grille;
 import IleInterdite.Tuile;
 import java.util.ArrayList;
@@ -194,7 +195,9 @@ public abstract class Personnage {
         return nom;
     }
     
-    //Empeche le joueur de se deplacer
+    //indique de quel type est la classe (explorateur, ingénieur....)
+    public abstract TypeEnumPersonnages getType();
+
     public void passageJoueurSuivant() {
         pouvoirDeplacementUtilise = false;
     }
