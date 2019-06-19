@@ -41,7 +41,7 @@ public class Menu extends JFrame implements ActionListener {
 
     public Menu() {
 
-        ImageIcon img = new ImageIcon("src/RessourcesMenu/IleInterdite.jpg");
+        ImageIcon img = new ImageIcon("src/RessourcesMenu/FondMenu.jpg");
         JLabel background = new JLabel("", img, JLabel.CENTER);
 
         menu = new JFrame("Menu");
@@ -92,7 +92,7 @@ public class Menu extends JFrame implements ActionListener {
 
         if (e.getSource() == regles) {
             try {
-                Desktop.getDesktop().open(new File(System.getProperty("user.dir") + "/src/RessourcesRegles/regles.pdf"));
+                Desktop.getDesktop().open(new File(System.getProperty("user.dir") + "/src/RessourcesMenu/Regles.pdf"));
             } catch (IOException ex) {
                 Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
             }
