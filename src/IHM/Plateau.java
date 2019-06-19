@@ -529,52 +529,23 @@ public class Plateau implements Observateur {
                     //System.out.println(t.getNom() + "\t" + t.getX() + "\t" + t.getY());
                 }
                 break;
-        }
-    }
-    
-    public void gamePadClick2() {
-        //System.out.println("deplacement = " + mode + " OLD:" + oldMode);
-
-        //si jamais l'ancien et le mode actuel sont égaux (donc potentiellement, l'utilisateur appuie deux fois sur "se deplacer")
-        //on remet le mode à 0 afin d'annuler action et de redéssiner le plateau normalement
-        if (oldMode == mode) {
-            mode = 0;
-        }
-
-        switch (mode) {
-            case 0: //normal
-                //System.out.println("coucou");
-                actionFinished();
-                break;
-            case 1: //se deplacer
-                paintNonSelected();
-                setBtAssecherEnabled(false);
-                setBtDeplacementEnabled(true);
-                setBtPasserJoueurEnabled(false);
-                setBtDeplacementText(nomAnnulé);
-
-                for (Tuile t : grille.getListTuile()) {
-                    JPanel jpa = panel[t.getX()][t.getY()];
-                    jpa.setBackground(tuileColor);
-                    //System.out.println(t.getNom() + "\t" + t.getX() + "\t" + t.getY());
-                }
-                break;
-            case 2:
-                paintNonSelected();
+            
+            case 3:                 paintNonSelected();
                 
                 setBtAssecherEnabled(true);
                 setBtDeplacementEnabled(false);
                 setBtPasserJoueurEnabled(false);
                 setBtAssecherText(nomAnnulé);
 
-                for (Tuile t : cj.getJoueurEntrainDeJouer().getTuileQuiPeutSecher()) {
+                for (Tuile t : grille.getListTuile()) {
                     JPanel jpa = panel[t.getX()][t.getY()];
                     jpa.setBackground(tuileColor);
                     //System.out.println(t.getNom() + "\t" + t.getX() + "\t" + t.getY());
                 }
-                break;
+                break;    
         }
     }
+    
     //ce déclenche quand une case sur l'écran est cliquer
     private void panelClick(JPanel jp, Tuile emplacement, int i, int j) {
         //System.out.println("panelClick: " + i + ", " + j);

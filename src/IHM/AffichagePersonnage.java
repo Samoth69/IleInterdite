@@ -159,10 +159,10 @@ public class AffichagePersonnage extends JPanel{
                 VuDefausse vd1 = new VuDefausse(carteActionDuJoueur, "utiliser carte");
                 vd1.setVisible(true);
                
-                vd1.getSelectedItems();
-                //perso.deplacement(vd1.getSelectedItems());
-                pl.changeMode(1);
-                pl.gamePadClick2();
+               //vd1.getSelectedItems();
+               //perso.deplacement(vd1.getSelectedItems());
+               pl.changeMode(3);
+               pl.gamePadClick();
                     
                 }
             }
