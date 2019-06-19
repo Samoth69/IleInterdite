@@ -501,11 +501,9 @@ public class ControleurJeuSecondaire implements Observe{
     public void partieGagne(){
         int nbJoueurSurHeliport = 0;
         
-        System.out.println("YO!");
         //  Si tous les tresors ont été récupérés
         if(pierreSacre == true && caliceOnde == true && cristalArdent == true && statueZephyr == true)
         {
-            System.out.println("Les tresor sont recuperé");
             for(int i = 0; i < personnages.size(); i++)
             {
                 //  Compte le nombre de joueurs sur l'heliport
@@ -518,7 +516,6 @@ public class ControleurJeuSecondaire implements Observe{
             //  On regarde si un des joueurs a une carte helicoptere
             if(nbJoueurSurHeliport == personnages.size())
             {
-                System.out.println("Tous les persos sont sur lheliport");
                 for(int i = 0; i < personnages.size(); i++)
                 {
                     ArrayList<CarteRouge> lesCartesDuJoueur = personnages.get(i).getCartes();
