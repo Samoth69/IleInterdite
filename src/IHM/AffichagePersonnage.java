@@ -151,13 +151,13 @@ public class AffichagePersonnage extends JPanel{
             public void actionPerformed(ActionEvent arg0) {
                 
                 for(int i=0; i<perso.getCartes().size(); i++){
-                    if(perso.getCartes().get(i).getTypeCarteAction()== TypeEnumCarteAction.HELICOPTERE || perso.getCartes().get(i).getTypeCarteAction()== TypeEnumCarteAction.SAC_DE_SABLE){
+                    if(perso.getCartes().get(i) instanceof CarteAction){
                         carteActionDuJoueur.add(perso.getCartes().get(i));
                     }
                 }
                 if(carteActionDuJoueur.isEmpty()==false){
-              // VuDefausse vd1 = new VuDefausse(carteActionDuJoueur, "utiliser carte");
-               //vd1.setVisible(true);
+                VuDefausse vd1 = new VuDefausse(carteActionDuJoueur, "utiliser carte");
+                vd1.setVisible(true);
                
                //vd1.getSelectedItems();
                //perso.deplacement(vd1.getSelectedItems());

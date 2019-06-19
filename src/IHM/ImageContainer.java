@@ -87,4 +87,16 @@ public class ImageContainer extends JPanel {
             return new Dimension(this.getParent().getWidth(), this.getParent().getHeight());
         }
     }
+    
+    public void setImage(String path) {
+        try {
+            this.image = ImageIO.read( new File(path));
+            if (sizeSet) {
+                width = image.getWidth(this);
+                height = image.getHeight(this);
+            }
+        } catch (IOException ex) {
+            System.err.println("Erreur en lecture de l'image " + path);
+        }
+    }
 }

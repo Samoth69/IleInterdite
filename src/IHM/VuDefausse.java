@@ -162,6 +162,8 @@ public class VuDefausse extends JDialog {
             
             final CarteRouge carte = carteJoueur.get(i);
             
+            carteSelectionne.clear();
+            
             ic.addMouseListener(new MouseListener() {
                 @Override
                 public void mouseClicked(MouseEvent arg0) {
