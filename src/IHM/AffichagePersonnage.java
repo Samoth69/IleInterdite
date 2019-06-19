@@ -7,7 +7,9 @@ package IHM;
 
 import Cartes.CarteRouge;
 import Enumerations.TypeEnumCouleurPion;
+import Enumerations.TypeEnumMessage;
 import Enumerations.TypeEnumTresors;
+import IleInterdite.Message;
 import Personnages.Personnage;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -31,8 +33,11 @@ public class AffichagePersonnage extends JPanel{
     private JPanel bigPion;
     private Pion pion;
     private Personnage perso;
+    private Plateau pl;
     
     private JPanel panelMilieu;
+    
+    boolean dejaDonne = false;
     
     ArrayList<Personnage> listPersoEmplacement = new ArrayList<>();
     
@@ -52,6 +57,8 @@ public class AffichagePersonnage extends JPanel{
     public AffichagePersonnage(Plateau pl, Personnage perso) {
         super(true);
         super.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+        
+        this.pl = pl;
         
         labelTypeJoueur = new JLabel();
         bigPion = new JPanel();
@@ -122,12 +129,24 @@ public class AffichagePersonnage extends JPanel{
                 {
                     listPersoEmplacement.addAll(perso.getEmplacement().getPersonnages());
                     listPersoEmplacement.remove(perso);
-                    VuDefausse vd = new VuDefausse(perso.getCartes(), "Donner carte", 1, listPersoEmplacement);
+                    VuDefausse vd = new VuDefausse(perso.getCartes(), "Donner carte", 1, listPersoEmplacement,pl.getControleurJeu().getNbActionRestante());
                     vd.setVisible(true);
                     perso.donnerCarteAJoueur(vd.getPersoQuiRecoitCartes(), vd.getSelectedItems());
+                    pl.getControleurJeu().setNbAction(vd.getNbActionRestante());
+                    listPersoEmplacement.clear();
+                    buttonDonnerCarte.setEnabled(false);
+                    pl.getControleurJeu().notifierObservateur(new Message(TypeEnumMessage.UPDATE_GUI));
+                    //dejaDonne = true;
                 }
             }
         });
+        
+        /**buttonPrendreRelique.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                pl.getControleurJeu().recupererTresor(pl.getControleurJeu().getJoueurEntrainDeJouer().getEmplacement());
+            }
+        });**/
         
         panelBas.add(buttonDeplacement);
         panelBas.add(buttonAssecher);
@@ -167,14 +186,36 @@ public class AffichagePersonnage extends JPanel{
             pion.setCouleur(TypeEnumCouleurPion.AUCUN);
         }
         if (perso != null) {
-            if(perso.getEmplacement().getPersonnages().size() > 1)
+            //  Si il y a une personne en plus du joueur en train de jouer sur la case
+            //  On active la commande pour donner les cartes
+            //  Sinon non
+            if(perso == pl.getControleurJeu().getJoueurEntrainDeJouer())
             {
-                buttonDonnerCarte.setEnabled(true);
+                if(!dejaDonne)
+                {
+                    if(perso.getEmplacement().getPersonnages().size() > 1)
+                    {
+                        buttonDonnerCarte.setEnabled(true);
+                    }
+                    else
+                    {
+                        buttonDonnerCarte.setEnabled(false);
+                    }
+                }
+                else
+                {
+                    buttonDonnerCarte.setEnabled(false);
+                }
             }
             else
             {
-                buttonDonnerCarte.setEnabled(false);
+                buttonDonnerCarte.setEnabled(false);  
             }
+            
+            
+            //  Si le personnage en train de jouer est sur une case avec un tresor
+            //  et qu'il posséde 4 carte du meme type que le tresor
+            //  la commande pour prendre le tresor est activee
             if(perso.getEmplacement().getTresor() != TypeEnumTresors.AUCUN)
             {
                 int comptTresor =0;
@@ -194,6 +235,7 @@ public class AffichagePersonnage extends JPanel{
             {
                 buttonPrendreRelique.setEnabled(false);
             }
+            
             panelMilieu.removeAll();
             panelMilieu.revalidate();
             labelJoueur.setText(perso.getNom());

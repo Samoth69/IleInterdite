@@ -143,7 +143,7 @@ public class ControleurJeuSecondaire implements Observe{
         return p;
     }
     
-    public void deplacerJoueurEnCour(Tuile newPos) {
+    public void deplacerJoueurEnCours(Tuile newPos) {
         if (nombreAction != Math.round(nombreAction)) { //si le nombre d'action est décimal on le rend entier
             nombreAction = (int)nombreAction;
         }
@@ -721,6 +721,16 @@ public class ControleurJeuSecondaire implements Observe{
         return personnages;
     }
     
+    public void setNbAction(double nbAction){
+        if(nbAction != 0)
+        {
+            nombreAction = nbAction;
+        }
+        else
+        {
+            passerJoueurSuivant();
+        }
+    }
     
     
     public ArrayList<CarteRouge> getListCarteRouge() {
