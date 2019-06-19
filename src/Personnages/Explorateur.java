@@ -6,6 +6,7 @@
 package Personnages;
 
 import Enumerations.TypeEnumCouleurPion;
+import Enumerations.TypeEnumPersonnages;
 import IleInterdite.Grille;
 import IleInterdite.Tuile;
 import java.util.ArrayList;
@@ -28,5 +29,10 @@ public class Explorateur extends Personnage {
     @Override
     public ArrayList<Tuile> getTuileQuiPeutSecher() {
         return super.ile.getTuilesAutoursMouille(this);
+    }
+
+    @Override
+    public TypeEnumPersonnages getType() {
+        return TypeEnumPersonnages.EXPLORATEUR;
     }
 }

@@ -17,8 +17,8 @@ public class CarteAction extends CarteRouge{
         
     private TypeEnumCarteAction type;
     
-    public CarteAction(String nom, TypeEnumCarteAction typeAction){     //Enlever String nom car inutile (?)
-        super(nom, typeAction.toString());
+    public CarteAction(String nom, TypeEnumCarteAction typeAction, String img){     //Enlever String nom car inutile (?)
+        super(nom, typeAction.toString(), img);
         type = typeAction;
     }
 
