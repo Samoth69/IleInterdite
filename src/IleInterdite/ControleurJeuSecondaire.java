@@ -23,6 +23,7 @@ import Personnages.Personnage;
 import Personnages.Pilote;
 import Personnages.Plongeur;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -49,9 +50,9 @@ public class ControleurJeuSecondaire implements Observe{
     
     private ArrayList<Personnage>personnages = new ArrayList<>();
     private ArrayList<CarteRouge>pileCarteRouge = new ArrayList<>();
-    private ArrayList<CarteRouge>defauseCarteRouge = new ArrayList<>();
+    private ArrayList<CarteRouge>defausseCarteRouge = new ArrayList<>();
     private ArrayList<CarteInondation>pileCarteInondation = new ArrayList<>();
-    private ArrayList<CarteInondation>defauseCarteInondation = new ArrayList<>();
+    private ArrayList<CarteInondation>defausseCarteInondation = new ArrayList<>();
     
     //-----------------------------------------------------------------------------------
     
@@ -154,6 +155,7 @@ public class ControleurJeuSecondaire implements Observe{
 
     public void recupererTresor(Tuile emplacementJoueur){
         int nbCarteTresor = 0;
+        ArrayList<CarteRouge> carteUtilise = new ArrayList<>();
         
         //  Si il y a bien un tresor
         if(emplacementJoueur.getTresor() != TypeEnumTresors.AUCUN)
@@ -184,11 +186,14 @@ public class ControleurJeuSecondaire implements Observe{
                                 {
                                     break;
                                 }
-                                getJoueurEntrainDeJouer().removeCarte(i);
-                                defausserCarte(i);
+                                
+                                carteUtilise.add(i);
+                                
                                 nbCarteTresor--;
                             }
                         }
+                        getJoueurEntrainDeJouer().getCartes().removeAll(carteUtilise);
+                        defausserCarte(carteUtilise);
                         
                     break;
                     case LION:  // idem
@@ -203,11 +208,14 @@ public class ControleurJeuSecondaire implements Observe{
                                 {
                                     break;
                                 }
-                                getJoueurEntrainDeJouer().removeCarte(i);
-                                defausserCarte(i);
+                                
+                                carteUtilise.add(i);
+                                
                                 nbCarteTresor--;
                             }
                         }
+                        getJoueurEntrainDeJouer().getCartes().removeAll(carteUtilise);
+                        defausserCarte(carteUtilise);
                     break;
                     case LUNE:  //idem
                         pierreSacre = true;
@@ -221,11 +229,14 @@ public class ControleurJeuSecondaire implements Observe{
                                 {
                                     break;
                                 }
-                                getJoueurEntrainDeJouer().removeCarte(i);
-                                defausserCarte(i);
+                                
+                                carteUtilise.add(i);
+                                
                                 nbCarteTresor--;
                             }
                         }
+                        getJoueurEntrainDeJouer().getCartes().removeAll(carteUtilise);
+                        defausserCarte(carteUtilise);
                     break;
                     case TROPHEE:   //idem
                         caliceOnde = true;
@@ -239,11 +250,14 @@ public class ControleurJeuSecondaire implements Observe{
                                 {
                                     break;
                                 }
-                                getJoueurEntrainDeJouer().removeCarte(i);
-                                defausserCarte(i);
+                                
+                                carteUtilise.add(i);
+                                
                                 nbCarteTresor--;
                             }
                         }
+                        getJoueurEntrainDeJouer().getCartes().removeAll(carteUtilise);
+                        defausserCarte(carteUtilise);
                     break;
                 }
                 //  retire le tresor de la case
@@ -337,8 +351,8 @@ public class ControleurJeuSecondaire implements Observe{
     public CarteRouge PiocherCarteRouge() {
         if(pileCarteRouge.isEmpty())
         {
-            pileCarteRouge.addAll(defauseCarteRouge);
-            defauseCarteRouge.clear();
+            pileCarteRouge.addAll(defausseCarteRouge);
+            defausseCarteRouge.clear();
             MelangeCarteRouge();
         }
         CarteRouge cr = pileCarteRouge.get(pileCarteRouge.size() - 1);
@@ -351,7 +365,7 @@ public class ControleurJeuSecondaire implements Observe{
             } else {
                 augmenterNiveauEau();
                 viderDefausseCarteInondation();
-                defauseCarteRouge.add(cr);
+                defausseCarteRouge.add(cr);
                 return null;
             }
         } else {
@@ -371,19 +385,23 @@ public class ControleurJeuSecondaire implements Observe{
     
     private void viderDefausseCarteInondation() {
         MelangeDefausseCarteInnondation();
-        pileCarteInondation.addAll(defauseCarteInondation);
-        defauseCarteInondation.clear();
+        pileCarteInondation.addAll(defausseCarteInondation);
+        defausseCarteInondation.clear();
         for (CarteInondation ci : pileCarteInondation) {
             System.out.println(ci.getNom());
         }
     }
     
     public void defausserCarte(CarteInondation ci) {
-        defauseCarteInondation.add(ci);
+        defausseCarteInondation.add(ci);
+    }
+    
+    public void defausserCarte(Collection<CarteRouge> cr){
+        defausseCarteRouge.addAll(cr);
     }
     
     public void defausserCarte(CarteRouge cr) {
-        defauseCarteRouge.add(cr);
+        defausseCarteRouge.add(cr);
     }
     
     public Tuile[][] getGrille() {
@@ -442,7 +460,7 @@ public class ControleurJeuSecondaire implements Observe{
     
     private void MelangeDefausseCarteInnondation() {
         //defausecarteinondatio
-        Collections.shuffle(defauseCarteInondation);
+        Collections.shuffle(defausseCarteInondation);
     }
     
     private void decrementAction(){
@@ -546,7 +564,7 @@ public class ControleurJeuSecondaire implements Observe{
             i++;
             CarteInondation cartepiocheinond = this.PiocherCarteInond();
             grille.AugmenterInnondation(cartepiocheinond.getNom());
-            defauseCarteInondation.add(cartepiocheinond);
+            defausseCarteInondation.add(cartepiocheinond);
         }
     }
     
