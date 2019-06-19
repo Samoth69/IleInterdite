@@ -38,12 +38,6 @@ import javax.swing.border.Border;
 public class Plateau implements Observateur {
 
     //ATTRIBUTS
-    
-    //Explorateur explo;
-    //Messager testP;
-    //Ingenieur inge;
-    //Grille grille;
-    //Pion pion, pion2, pion3;
     private ArrayList<Personnage> listPerso;
     private ArrayList<Pion> listPion;
     private Tuile plateau[][] = new Tuile[6][6];
@@ -100,6 +94,20 @@ public class Plateau implements Observateur {
     private final static String nomButtonAssecher = AffichagePersonnage.nomButtonAssecher;
     private final static String nomAnnulé = AffichagePersonnage.nomAnnulé;
     
+    private final static String cheminCalice = System.getProperty("user.dir") + "/src/RessourcesTresors/calice.png";
+    private final static String cheminCaliceNoir = System.getProperty("user.dir") + "/src/RessourcesTresors/calice-black.png";
+    private final static String cheminCristal = System.getProperty("user.dir") + "/src/RessourcesTresors/cristal.png";
+    private final static String cheminCristalNoir = System.getProperty("user.dir") + "/src/RessourcesTresors/cristal-black.png";
+    private final static String cheminPierre = System.getProperty("user.dir") + "/src/RessourcesTresors/pierre.png";
+    private final static String cheminPierreNoir = System.getProperty("user.dir") + "/src/RessourcesTresors/pierre-black.png";
+    private final static String cheminZephyr = System.getProperty("user.dir") + "/src/RessourcesTresors/zephyr.png";
+    private final static String cheminZephyrNoir = System.getProperty("user.dir") + "/src/RessourcesTresors/zephyr-black.png";
+    
+    private ImageContainer imgCalice = new ImageContainer(cheminCaliceNoir, 0, 0, 50, 50);
+    private ImageContainer imgCristal = new ImageContainer(cheminCristalNoir, 0, 0, 50 ,50);
+    private ImageContainer imgPierre = new ImageContainer(cheminPierreNoir, 0, 0, 50, 50);
+    private ImageContainer imgZephyr = new ImageContainer(cheminZephyrNoir, 0, 0, 50, 50);
+    
     //objet liste
     private JList listBasGamePad = new JList();
     //liste contenant l'historique du jeu
@@ -147,9 +155,6 @@ public class Plateau implements Observateur {
         /**
          * AJOUT PANEL PRINCIPAL + PANEL HAUT POUR TITRE FENETRE *
          */
-        //JPanel mainPanel = new JPanel();
-        //JLayeredPane  jlp = new JLayeredPane();
-        //mainPanel.setLayout(jlp);
         
         JPanel BorderLayoutPrincipal = new JPanel(new BorderLayout());
         window.add(BorderLayoutPrincipal);
@@ -265,33 +270,34 @@ public class Plateau implements Observateur {
             }
         });
         
-        joueurActuel = new JLabel("");
-        ActionRestante = new JLabel("",SwingConstants.CENTER);
         
-
         //*****PANELGAMEPAD *********************
+        joueurActuel = new JLabel("");
+        ActionRestante = new JLabel("",SwingConstants.CENTER); 
         panelGamePad = new JPanel(new BorderLayout());
         
-        JPanel paneltreshaut = new JPanel(new GridLayout(4,1));
+        JPanel panelTresHaut = new JPanel();
+        panelTresHaut.setLayout(new BoxLayout(panelTresHaut, BoxLayout.PAGE_AXIS));
         JLabel labelpion = new JLabel("Tour du joueur :",SwingConstants.CENTER);
         Font font1 = new Font("Arial",Font.BOLD,25);
         labelpion.setFont(font1);
-        paneltreshaut.add(labelpion);
-        JLabel joueurActuelbis = new JLabel("",SwingConstants.CENTER);
-        joueurActuelbis.setText(cj.getNomJoueur());
-        joueurActuelbis.setFont(font1);
-        paneltreshaut.add(new JLabel (" "));
-        paneltreshaut.add(joueurActuelbis);       
-        panelGamePad.add(paneltreshaut, BorderLayout.NORTH);
-        
-        JPanel panelHautGamePad = new JPanel(new GridLayout(4,1)); 
+        //JPanel panelHautGamePad = new JPanel(new GridLayout(2,1)); 
         JLabel labelaction = new JLabel("Action(s) restante(s):",SwingConstants.CENTER);
         labelaction.setFont(font1);
-        panelHautGamePad.add(labelaction);             
-        panelHautGamePad.add(ActionRestante); 
+        
         Font font2 = new Font("Arial",Font.BOLD,100);
         ActionRestante.setFont(font2);
-        panelGamePad.add(panelHautGamePad, BorderLayout.CENTER); 
+        panelTresHaut.add(labelpion);
+        JLabel joueurActuelbis = new JLabel(cj.getNomJoueur(),SwingConstants.CENTER);
+        joueurActuelbis.setFont(font1);
+        //paneltreshaut.add(new JLabel (" "));
+        panelTresHaut.add(joueurActuelbis);  
+        panelTresHaut.add(labelaction);             
+        panelTresHaut.add(ActionRestante); 
+        panelGamePad.add(panelTresHaut, BorderLayout.NORTH);
+        
+        
+        //panelGamePad.add(panelHautGamePad, BorderLayout.CENTER); 
         
        //******************************************************************
         
@@ -322,13 +328,22 @@ public class Plateau implements Observateur {
         JPanel panelGamePadBas = new JPanel();
         panelGamePadBas.setLayout(new BoxLayout(panelGamePadBas, BoxLayout.Y_AXIS));
 
+        JPanel panelTresor = new JPanel(new GridLayout(2,2));
+        panelTresor.add(imgCalice);
+        panelTresor.add(imgCristal);
+        panelTresor.add(imgPierre);
+        panelTresor.add(imgZephyr);
+        
+        panelGamePadBas.add(panelTresor);
+        
         JScrollPane scrollPane = new JScrollPane();
         scrollPane.setViewportView(listBasGamePad);
         scrollPane.setPreferredSize(new Dimension(scrollPane.getWidth(), 150));
 
         panelGamePadBas.add(new JLabel("Historique:", SwingConstants.CENTER));
-        panelGamePadBas.add(scrollPane, BorderLayout.SOUTH);
+        panelGamePadBas.add(scrollPane);
         panelGamePad.add(panelGamePadBas, BorderLayout.SOUTH);
+        
         BorderLayoutPrincipal.add(panelGamePad, BorderLayout.EAST);
 
         affecterCase(plateau, listPion, panelGrille);
@@ -510,7 +525,50 @@ public class Plateau implements Observateur {
                 break;
         }
     }
+    
+    public void gamePadClick2() {
+        //System.out.println("deplacement = " + mode + " OLD:" + oldMode);
 
+        //si jamais l'ancien et le mode actuel sont égaux (donc potentiellement, l'utilisateur appuie deux fois sur "se deplacer")
+        //on remet le mode à 0 afin d'annuler action et de redéssiner le plateau normalement
+        if (oldMode == mode) {
+            mode = 0;
+        }
+
+        switch (mode) {
+            case 0: //normal
+                //System.out.println("coucou");
+                actionFinished();
+                break;
+            case 1: //se deplacer
+                paintNonSelected();
+                setBtAssecherEnabled(false);
+                setBtDeplacementEnabled(true);
+                setBtPasserJoueurEnabled(false);
+                setBtDeplacementText(nomAnnulé);
+
+                for (Tuile t : grille.getListTuile()) {
+                    JPanel jpa = panel[t.getX()][t.getY()];
+                    jpa.setBackground(tuileColor);
+                    //System.out.println(t.getNom() + "\t" + t.getX() + "\t" + t.getY());
+                }
+                break;
+            case 2:
+                paintNonSelected();
+                
+                setBtAssecherEnabled(true);
+                setBtDeplacementEnabled(false);
+                setBtPasserJoueurEnabled(false);
+                setBtAssecherText(nomAnnulé);
+
+                for (Tuile t : cj.getJoueurEntrainDeJouer().getTuileQuiPeutSecher()) {
+                    JPanel jpa = panel[t.getX()][t.getY()];
+                    jpa.setBackground(tuileColor);
+                    //System.out.println(t.getNom() + "\t" + t.getX() + "\t" + t.getY());
+                }
+                break;
+        }
+    }
     //ce déclenche quand une case sur l'écran est cliquer
     private void panelClick(JPanel jp, Tuile emplacement, int i, int j) {
         //System.out.println("panelClick: " + i + ", " + j);
@@ -804,15 +862,25 @@ public class Plateau implements Observateur {
                 System.out.println("Fin partie : "+m.getMessage());
                 break;
             case RM_TRESOR:
-                
                 for(String i : listTresor.keySet())
                 {
-                    if(m.getEmplacementJoueur().getNom() == i)
+                    if(m.getEmplacementJoueur().getNom().equals(i))
                     {
                         listTresor.get(i).setVisible(false);
                     }
                 }
-                
+                if (cj.getTresorCaliceOnde()) {
+                    imgCalice.setImage(cheminCalice);
+                }
+                if (cj.getTresorCristalArdent()) {
+                    imgCristal.setImage(cheminCristal);
+                }
+                if (cj.getTresorPierreSacre()) {
+                    imgPierre.setImage(cheminPierre);
+                }
+                if (cj.getTresorStatueZephyr()) {
+                    imgZephyr.setImage(cheminZephyr);
+                }
                 break;
         }
     }

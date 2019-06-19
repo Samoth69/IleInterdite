@@ -532,6 +532,22 @@ public class ControleurJeuSecondaire implements Observe{
         return nombreJoueurDansPartie;
     }
     
+    public boolean getTresorPierreSacre() {
+        return pierreSacre;
+    }
+
+    public boolean getTresorStatueZephyr() {
+        return statueZephyr;
+    }
+
+    public boolean getTresorCristalArdent() {
+        return cristalArdent;
+    }
+
+    public boolean getTresorCaliceOnde() {
+        return caliceOnde;
+    }
+    
     //USELESS
     //Gerer le tour de Jeu
     public void TourDeJeu() {
