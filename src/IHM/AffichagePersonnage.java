@@ -177,7 +177,7 @@ public class AffichagePersonnage extends JPanel{
             labelTypeJoueur.setText(perso.getType().toString());
 
             for (CarteRouge cr : perso.getCartes()) {
-                panelMilieu.add(new ImageContainer(cr.getImage(), 0, 0, 55, 100));
+                panelMilieu.add(new ImageContainer(cr.getImage(), 0, 0, 50, 80));
             }
             panelMilieu.repaint();
         }

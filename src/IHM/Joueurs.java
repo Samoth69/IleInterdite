@@ -319,58 +319,92 @@ public class Joueurs extends JFrame implements ActionListener {
         if (e.getSource() == jouer) {
             ArrayList<String> usedRole = new ArrayList<>();
             for (int i = 0; i < (int) nbJoueurs.getSelectedItem(); i++) {
-                for (int j = 0; j < (int) nbJoueurs.getSelectedItem(); j++) {
-                    if (usedRole.contains((String) listRole.get(i).getSelectedItem())) {
-                        JOptionPane.showMessageDialog(null, "Chaque joueur doit avoir un rôle différent", "Message d'erreur", JOptionPane.ERROR_MESSAGE);
-                        return; //quitte la fonction
-                    }
-                    if ((String) listRole.get(i).getSelectedItem() != nomRoles[nomRoles.length - 1]) {
-                        usedRole.add((String) listRole.get(i).getSelectedItem());
-                    }
-                    if (listPseudo.get(j).getText().isEmpty()) {
-                        JOptionPane.showMessageDialog(null, "Le champ joueur ne peut pas être vide", "Message d'erreur", JOptionPane.ERROR_MESSAGE);
-                        return; //quitte la fonction
-
-                    }
+                if (usedRole.contains((String) listRole.get(i).getSelectedItem())) {
+                    JOptionPane.showMessageDialog(null, "Chaque joueur doit avoir un rôle différent.", "Message d'erreur", JOptionPane.ERROR_MESSAGE);
+                    return; //quitte la fonction
                 }
-
+                if ((String) listRole.get(i).getSelectedItem() != nomRoles[nomRoles.length - 1]) {
+                    usedRole.add((String) listRole.get(i).getSelectedItem());
+                }
             }
 
-            this.joueur.setVisible(false);
-            Message msg = new Message(TypeEnumMenuPrincipal.MENU_JOUER);
-            ArrayList<String> infos = new ArrayList<>();
-            switch ((String) niveauDepart.getSelectedItem()) {
-                case "Novice":
-                    infos.add("0");
-                    break;
-                case "Normal":
-                    infos.add("1");
-                    break;
-                case "Elite":
-                    infos.add("2");
-                    break;
-                case "Légendaire":
-                    infos.add("3");
-                    break;
-            }
-            infos.add(String.valueOf(nbJoueurs.getSelectedItem()));
-            infos.add(pseudo1.getText());
-            infos.add((String) role1.getSelectedItem());
-            infos.add(pseudo2.getText());
-            infos.add((String) role2.getSelectedItem());
+            for (int j = 0; j < (int) nbJoueurs.getSelectedItem(); j++) {
+                if (listPseudo.get(j).getText().isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Le champ joueur ne peut pas être vide.", "Message d'erreur", JOptionPane.ERROR_MESSAGE);
+                    return; //quitte la fonction
 
-            if ((int) nbJoueurs.getSelectedItem() >= 3) {
-                infos.add(pseudo3.getText());
-                infos.add((String) role3.getSelectedItem());
+                }
+                /*if (listPseudo.get(j).getText().equals(listPseudo.get(j).getText())) {
+                 JOptionPane.showMessageDialog(null, "Deux joueurs ne peuvent pas avoir le même nom.", "Message d'erreur", JOptionPane.ERROR_MESSAGE);
+                 return; //quitte la fonction 
+                 }*/
             }
-            if ((int) nbJoueurs.getSelectedItem() >= 4) {
-                infos.add(pseudo4.getText());
-                infos.add((String) role4.getSelectedItem());
+
+            if (pseudo1.getText().equals(pseudo2.getText())) {
+                JOptionPane.showMessageDialog(null, "Deux joueurs ne peuvent pas avoir le même nom.", "Message d'erreur", JOptionPane.ERROR_MESSAGE);
+                return; //quitte la fonction
             }
-            msg.setAdditionnal(infos);
-            notifierObservateur(msg);
+
+            if (pseudo1.getText().equals(pseudo3.getText())) {
+                JOptionPane.showMessageDialog(null, "Deux joueurs ne peuvent pas avoir le même nom.", "Message d'erreur", JOptionPane.ERROR_MESSAGE);
+                return; //quitte la fonction
+            }
+
+            if (pseudo1.getText().equals(pseudo4.getText())) {
+                JOptionPane.showMessageDialog(null, "Deux joueurs ne peuvent pas avoir le même nom.", "Message d'erreur", JOptionPane.ERROR_MESSAGE);
+                return; //quitte la fonction
+            }
+
+            if (pseudo2.getText().equals(pseudo3.getText())) {
+                JOptionPane.showMessageDialog(null, "Deux joueurs ne peuvent pas avoir le même nom.", "Message d'erreur", JOptionPane.ERROR_MESSAGE);
+                return; //quitte la fonction
+            }
+
+            if (pseudo2.getText().equals(pseudo4.getText())) {
+                JOptionPane.showMessageDialog(null, "Deux joueurs ne peuvent pas avoir le même nom.", "Message d'erreur", JOptionPane.ERROR_MESSAGE);
+                return; //quitte la fonction
+            }
+
+            if (pseudo3.getText().equals(pseudo4.getText())) {
+                JOptionPane.showMessageDialog(null, "Deux joueurs ne peuvent pas avoir le même nom.", "Message d'erreur", JOptionPane.ERROR_MESSAGE);
+                return; //quitte la fonction
+            }
+
         }
 
+        this.joueur.setVisible(false);
+        Message msg = new Message(TypeEnumMenuPrincipal.MENU_JOUER);
+        ArrayList<String> infos = new ArrayList<>();
+        switch ((String) niveauDepart.getSelectedItem()) {
+            case "Novice":
+                infos.add("0");
+                break;
+            case "Normal":
+                infos.add("1");
+                break;
+            case "Elite":
+                infos.add("2");
+                break;
+            case "Légendaire":
+                infos.add("3");
+                break;
+        }
+        infos.add(String.valueOf(nbJoueurs.getSelectedItem()));
+        infos.add(pseudo1.getText());
+        infos.add((String) role1.getSelectedItem());
+        infos.add(pseudo2.getText());
+        infos.add((String) role2.getSelectedItem());
+
+        if ((int) nbJoueurs.getSelectedItem() >= 3) {
+            infos.add(pseudo3.getText());
+            infos.add((String) role3.getSelectedItem());
+        }
+        if ((int) nbJoueurs.getSelectedItem() >= 4) {
+            infos.add(pseudo4.getText());
+            infos.add((String) role4.getSelectedItem());
+        }
+        msg.setAdditionnal(infos);
+        notifierObservateur(msg);
     }
 
     private Observateur observateur;

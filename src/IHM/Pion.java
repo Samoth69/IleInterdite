@@ -46,6 +46,9 @@ public class Pion extends JComponent{
     public void paint(Graphics g){
         Dimension dim = getSize();
         
+        g.setColor(Color.white);
+        g.fillOval(0, 0, width, height);
+        
         switch(couleur)
         {
             case BLEU:
@@ -70,10 +73,9 @@ public class Pion extends JComponent{
                 g.setColor(Color.WHITE);
             break;
         }
-        g.fillOval(0, 0, width, height);
+        g.fillOval(3, 3, width - 6, height - 6);
         
-        g.setColor(Color.white);
-        g.drawOval(0, 0, width, height);
+        
     }
     
     @Override
