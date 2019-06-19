@@ -301,6 +301,8 @@ public class Plateau implements Observateur {
 
         mainPanel.add(panelBottomGamePad, BorderLayout.SOUTH);
         
+        
+        
         JPanel panelGamePadBas = new JPanel();
         panelGamePadBas.setLayout(new BoxLayout(panelGamePadBas, BoxLayout.Y_AXIS));
 
@@ -628,19 +630,26 @@ public class Plateau implements Observateur {
         }
     }
     
-    private void setBtDonnerCarteEnabled(boolean b) {
+    private void setBtDonnerCarteParDefaut(){
+        affichagePerso1.setButtonDonnerCarteEnabled(false);
+        affichagePerso2.setButtonDonnerCarteEnabled(false);
+        affichagePerso3.setButtonDonnerCarteEnabled(false);
+        affichagePerso4.setButtonDonnerCarteEnabled(false);
+    }
+    
+    private void setBtDonnerCarteEnabled() {
         switch (cj.getJoueurNum()) {
             case 0:
-                affichagePerso1.setButtonDonnerCarteEnabled(b);
+                affichagePerso1.setButtonDonnerCarteEnabled(true);
                 break;
             case 1:
-                affichagePerso2.setButtonDonnerCarteEnabled(b);
+                affichagePerso2.setButtonDonnerCarteEnabled(true);
                 break;
             case 2:
-                affichagePerso3.setButtonDonnerCarteEnabled(b);
+                affichagePerso3.setButtonDonnerCarteEnabled(true);
                 break;
             case 3:
-                affichagePerso4.setButtonDonnerCarteEnabled(b);
+                affichagePerso4.setButtonDonnerCarteEnabled(true);
                 break;
         }
     }
