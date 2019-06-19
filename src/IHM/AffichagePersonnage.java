@@ -6,6 +6,7 @@
 package IHM;
 
 import Cartes.CarteRouge;
+import Cartes.CarteTresor;
 import Enumerations.TypeEnumCouleurPion;
 import Enumerations.TypeEnumMessage;
 import Enumerations.TypeEnumTresors;
@@ -39,7 +40,8 @@ public class AffichagePersonnage extends JPanel{
     
     boolean dejaDonne = false;
     
-    ArrayList<Personnage> listPersoEmplacement = new ArrayList<>();
+    private ArrayList<Personnage> listPersoEmplacement = new ArrayList<>();
+    private ArrayList<CarteRouge> carteTresorDuJoueur = new ArrayList<>();
     
     private JButton buttonDeplacement;
     private JButton buttonAssecher;
@@ -141,12 +143,12 @@ public class AffichagePersonnage extends JPanel{
             }
         });
         
-        /**buttonPrendreRelique.addActionListener(new ActionListener() {
+        buttonCarteSpecial.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
-                pl.getControleurJeu().recupererTresor(pl.getControleurJeu().getJoueurEntrainDeJouer().getEmplacement());
+                
             }
-        });**/
+        });
         
         panelBas.add(buttonDeplacement);
         panelBas.add(buttonAssecher);
@@ -185,17 +187,37 @@ public class AffichagePersonnage extends JPanel{
             this.setBorder(BorderFactory.createLineBorder(Color.gray, 2));
             pion.setCouleur(TypeEnumCouleurPion.AUCUN);
         }
+        
+        carteTresorDuJoueur.clear();
+        
+       
+        
+        
         if (perso != null) {
             //  Si il y a une personne en plus du joueur en train de jouer sur la case
             //  On active la commande pour donner les cartes
             //  Sinon non
-            if(perso == pl.getControleurJeu().getJoueurEntrainDeJouer())
+            for(CarteRouge i : perso.getCartes())
             {
-                if(!dejaDonne)
+                if(i instanceof CarteTresor)
                 {
-                    if(perso.getEmplacement().getPersonnages().size() > 1)
+                    carteTresorDuJoueur.add(i);
+                }
+            }
+            if(!carteTresorDuJoueur.isEmpty())
+            {
+                if(perso == pl.getControleurJeu().getJoueurEntrainDeJouer())
+                {
+                    if(!dejaDonne)
                     {
-                        buttonDonnerCarte.setEnabled(true);
+                        if(perso.getEmplacement().getPersonnages().size() > 1)
+                        {
+                            buttonDonnerCarte.setEnabled(true);
+                        }
+                        else
+                        {
+                            buttonDonnerCarte.setEnabled(false);
+                        }
                     }
                     else
                     {
@@ -204,13 +226,14 @@ public class AffichagePersonnage extends JPanel{
                 }
                 else
                 {
-                    buttonDonnerCarte.setEnabled(false);
+                    buttonDonnerCarte.setEnabled(false);  
                 }
             }
             else
             {
-                buttonDonnerCarte.setEnabled(false);  
+                buttonDonnerCarte.setEnabled(false);
             }
+        
             
             
             //  Si le personnage en train de jouer est sur une case avec un tresor

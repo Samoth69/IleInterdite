@@ -217,7 +217,14 @@ public class VuDefausse extends JDialog {
 
             @Override
             public void windowClosing(WindowEvent e) {
-                if(verifAvantFermeture()) {
+                if(modeDefausse)
+                {
+                    if(verifAvantFermeture()) {
+                        window.dispose();
+                    } 
+                }
+                else
+                {
                     window.dispose();
                 }
             }
