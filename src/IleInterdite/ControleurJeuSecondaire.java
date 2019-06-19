@@ -662,9 +662,16 @@ public class ControleurJeuSecondaire implements Observe {
     public ArrayList<Personnage> getPerso() {
         return personnages;
     }
-
-    public void setNbAction(double nbAction) {
-        nombreAction = nbAction;
+    
+    public void setNbAction(double nbAction){
+        if(nbAction != 0)
+        {
+            nombreAction = nbAction;
+        }
+        else
+        {
+            passerJoueurSuivant();
+        }
     }
 
     public ArrayList<CarteRouge> getListCarteRouge() {

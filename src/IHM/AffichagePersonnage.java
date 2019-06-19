@@ -6,8 +6,11 @@
 package IHM;
 
 import Cartes.CarteRouge;
+import Cartes.CarteTresor;
 import Enumerations.TypeEnumCouleurPion;
+import Enumerations.TypeEnumMessage;
 import Enumerations.TypeEnumTresors;
+import IleInterdite.Message;
 import Personnages.Personnage;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -31,12 +34,14 @@ public class AffichagePersonnage extends JPanel{
     private JPanel bigPion;
     private Pion pion;
     private Personnage perso;
+    private Plateau pl;
     
     private JPanel panelMilieu;
     
     boolean dejaDonne = false;
     
-    ArrayList<Personnage> listPersoEmplacement = new ArrayList<>();
+    private ArrayList<Personnage> listPersoEmplacement = new ArrayList<>();
+    private ArrayList<CarteRouge> carteTresorDuJoueur = new ArrayList<>();
     
     private JButton buttonDeplacement;
     private JButton buttonAssecher;
@@ -54,6 +59,8 @@ public class AffichagePersonnage extends JPanel{
     public AffichagePersonnage(Plateau pl, Personnage perso) {
         super(true);
         super.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+        
+        this.pl = pl;
         
         labelTypeJoueur = new JLabel();
         bigPion = new JPanel();
@@ -130,8 +137,16 @@ public class AffichagePersonnage extends JPanel{
                     pl.getControleurJeu().setNbAction(vd.getNbActionRestante());
                     listPersoEmplacement.clear();
                     buttonDonnerCarte.setEnabled(false);
+                    pl.getControleurJeu().notifierObservateur(new Message(TypeEnumMessage.UPDATE_GUI));
                     //dejaDonne = true;
                 }
+            }
+        });
+        
+        buttonCarteSpecial.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                
             }
         });
         
@@ -172,25 +187,53 @@ public class AffichagePersonnage extends JPanel{
             this.setBorder(BorderFactory.createLineBorder(Color.gray, 2));
             pion.setCouleur(TypeEnumCouleurPion.AUCUN);
         }
+        
+        carteTresorDuJoueur.clear();
+        
+       
+        
+        
         if (perso != null) {
             //  Si il y a une personne en plus du joueur en train de jouer sur la case
             //  On active la commande pour donner les cartes
             //  Sinon non
-            if(!dejaDonne)
+            for(CarteRouge i : perso.getCartes())
             {
-                if(perso.getEmplacement().getPersonnages().size() > 1)
+                if(i instanceof CarteTresor)
                 {
-                    buttonDonnerCarte.setEnabled(true);
+                    carteTresorDuJoueur.add(i);
+                }
+            }
+            if(!carteTresorDuJoueur.isEmpty())
+            {
+                if(perso == pl.getControleurJeu().getJoueurEntrainDeJouer())
+                {
+                    if(!dejaDonne)
+                    {
+                        if(perso.getEmplacement().getPersonnages().size() > 1)
+                        {
+                            buttonDonnerCarte.setEnabled(true);
+                        }
+                        else
+                        {
+                            buttonDonnerCarte.setEnabled(false);
+                        }
+                    }
+                    else
+                    {
+                        buttonDonnerCarte.setEnabled(false);
+                    }
                 }
                 else
                 {
-                    buttonDonnerCarte.setEnabled(false);
+                    buttonDonnerCarte.setEnabled(false);  
                 }
             }
             else
             {
                 buttonDonnerCarte.setEnabled(false);
             }
+        
             
             
             //  Si le personnage en train de jouer est sur une case avec un tresor
