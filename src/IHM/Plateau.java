@@ -16,6 +16,7 @@ import Personnages.*;
 import IleInterdite.Tuile;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -103,10 +104,10 @@ public class Plateau implements Observateur {
     private final static String cheminZephyr = System.getProperty("user.dir") + "/src/RessourcesTresors/zephyr.png";
     private final static String cheminZephyrNoir = System.getProperty("user.dir") + "/src/RessourcesTresors/zephyr-black.png";
     
-    private ImageContainer imgCalice = new ImageContainer(cheminCaliceNoir, 0, 0, 50, 50);
-    private ImageContainer imgCristal = new ImageContainer(cheminCristalNoir, 0, 0, 50 ,50);
-    private ImageContainer imgPierre = new ImageContainer(cheminPierreNoir, 0, 0, 50, 50);
-    private ImageContainer imgZephyr = new ImageContainer(cheminZephyrNoir, 0, 0, 50, 50);
+    private ImageContainer imgCalice = new ImageContainer(cheminCaliceNoir, 0, 0, 70, 100);
+    private ImageContainer imgCristal = new ImageContainer(cheminCristalNoir, 0, 0, 70 ,100);
+    private ImageContainer imgPierre = new ImageContainer(cheminPierreNoir, 0, 0, 70, 100);
+    private ImageContainer imgZephyr = new ImageContainer(cheminZephyrNoir, 0, 0, 70, 100);
     
     //objet liste
     private JList listBasGamePad = new JList();
@@ -277,23 +278,28 @@ public class Plateau implements Observateur {
         panelGamePad = new JPanel(new BorderLayout());
         
         JPanel panelTresHaut = new JPanel();
-        panelTresHaut.setLayout(new BoxLayout(panelTresHaut, BoxLayout.PAGE_AXIS));
+        BoxLayout bl = new BoxLayout(panelTresHaut, BoxLayout.PAGE_AXIS);
+        panelTresHaut.setLayout(bl);
         JLabel labelpion = new JLabel("Tour du joueur :",SwingConstants.CENTER);
+        labelpion.setAlignmentX(JLabel.CENTER_ALIGNMENT);
         Font font1 = new Font("Arial",Font.BOLD,25);
         labelpion.setFont(font1);
         //JPanel panelHautGamePad = new JPanel(new GridLayout(2,1)); 
-        JLabel labelaction = new JLabel("Action(s) restante(s):",SwingConstants.CENTER);
-        labelaction.setFont(font1);
+        JLabel labelAction = new JLabel("Action(s) restante(s):",SwingConstants.CENTER);
+        labelAction.setFont(font1);
+        labelAction.setAlignmentX(JLabel.CENTER_ALIGNMENT);
         
         Font font2 = new Font("Arial",Font.BOLD,100);
         ActionRestante.setFont(font2);
-        panelTresHaut.add(labelpion);
+        ActionRestante.setAlignmentX(JLabel.CENTER_ALIGNMENT);
+        panelTresHaut.add(labelpion, Component.CENTER_ALIGNMENT);
         JLabel joueurActuelbis = new JLabel(cj.getNomJoueur(),SwingConstants.CENTER);
         joueurActuelbis.setFont(font1);
+        joueurActuelbis.setAlignmentX(JLabel.CENTER_ALIGNMENT);
         //paneltreshaut.add(new JLabel (" "));
         panelTresHaut.add(joueurActuelbis);  
-        panelTresHaut.add(labelaction);             
-        panelTresHaut.add(ActionRestante); 
+        panelTresHaut.add(labelAction, Component.CENTER_ALIGNMENT);             
+        panelTresHaut.add(ActionRestante, Component.CENTER_ALIGNMENT); 
         panelGamePad.add(panelTresHaut, BorderLayout.NORTH);
         
         
@@ -852,6 +858,7 @@ public class Plateau implements Observateur {
                 if (cj.getTresorStatueZephyr()) {
                     imgZephyr.setImage(cheminZephyr);
                 }
+                window.repaint();
                 break;
         }
     }
