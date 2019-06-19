@@ -33,6 +33,7 @@ public class AffichagePersonnage extends JPanel{
     private JPanel bigPion;
     private Pion pion;
     private Personnage perso;
+    private Plateau pl;
     
     private JPanel panelMilieu;
     
@@ -56,6 +57,8 @@ public class AffichagePersonnage extends JPanel{
     public AffichagePersonnage(Plateau pl, Personnage perso) {
         super(true);
         super.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+        
+        this.pl = pl;
         
         labelTypeJoueur = new JLabel();
         bigPion = new JPanel();
@@ -138,6 +141,13 @@ public class AffichagePersonnage extends JPanel{
             }
         });
         
+        /**buttonPrendreRelique.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                pl.getControleurJeu().recupererTresor(pl.getControleurJeu().getJoueurEntrainDeJouer().getEmplacement());
+            }
+        });**/
+        
         panelBas.add(buttonDeplacement);
         panelBas.add(buttonAssecher);
         panelBas.add(buttonPasserTour);
@@ -179,11 +189,18 @@ public class AffichagePersonnage extends JPanel{
             //  Si il y a une personne en plus du joueur en train de jouer sur la case
             //  On active la commande pour donner les cartes
             //  Sinon non
-            if(!dejaDonne)
+            if(perso == pl.getControleurJeu().getJoueurEntrainDeJouer())
             {
-                if(perso.getEmplacement().getPersonnages().size() > 1)
+                if(!dejaDonne)
                 {
-                    buttonDonnerCarte.setEnabled(true);
+                    if(perso.getEmplacement().getPersonnages().size() > 1)
+                    {
+                        buttonDonnerCarte.setEnabled(true);
+                    }
+                    else
+                    {
+                        buttonDonnerCarte.setEnabled(false);
+                    }
                 }
                 else
                 {
@@ -192,7 +209,7 @@ public class AffichagePersonnage extends JPanel{
             }
             else
             {
-                buttonDonnerCarte.setEnabled(false);
+                buttonDonnerCarte.setEnabled(false);  
             }
             
             
