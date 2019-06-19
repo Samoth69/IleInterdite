@@ -1,17 +1,12 @@
- /*
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 package IHM;
 
-/**
- *
- * @author laraicha
- */
-        
 import Enumerations.TypeEnumMenuPrincipal;
-import Enumerations.TypeEnumMessage;
+import IleInterdite.ControleurJeuPrincipal;
 import IleInterdite.Message;
 import IleInterdite.Observateur;
 import java.awt.BorderLayout;
@@ -23,7 +18,7 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.HashSet;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -32,26 +27,26 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-        
+
+/**
+ *
+ * @author laraicha
+ */
 public class Joueurs extends JFrame implements ActionListener {
 
-    /**
-     * @param args the command line arguments
-     */
-    
     //ATTRIBUTS
     //JFrame et JButton
-    private JFrame joueurs;
+    private JFrame joueur;
     private JButton retour;
-    private JButton lancer;
+    private JButton jouer;
     private JButton quitter;
-    
+
     //JTextField
     private JTextField pseudo1;
     private JTextField pseudo2;
     private JTextField pseudo3;
     private JTextField pseudo4;
-    
+
     //JComboBox
     private JComboBox role1;
     private JComboBox role2;
@@ -59,234 +54,258 @@ public class Joueurs extends JFrame implements ActionListener {
     private JComboBox role4;
     private JComboBox nbJoueurs;
     private JComboBox niveauDepart;
-    
+
     //Listes
     private ArrayList<JTextField> listPseudo;
     private ArrayList<JComboBox> listRole;
     private final Integer[] nombreJoueur = {2, 3, 4};
-    private final String[] nomRoles = {"Explorateur", "Ingénieur", "Navigateur", "Pilote", "Plongeur","Aléatoire"};
+    private final String[] nomRoles = {"Explorateur", "Ingénieur", "Navigateur", "Pilote", "Plongeur", "Aléatoire"};
     private final String[] niveauEau = {"Novice", "Normal", "Elite", "Légendaire"};
-    
-    //CONSTRUCTEURS
-    public Joueurs() {
 
-    /**
-     * @param args the command line arguments
-     */
-        //Creation de la fenetre
-        joueurs = new JFrame();
-        joueurs.setTitle("Joueurs");
-        joueurs.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
-        joueurs.setSize(600, 300);
-        
+    public Joueurs() {
+        ImageIcon img = new ImageIcon("src/RessourcesJoueur/FondJoueur.jpg");
+        JLabel background = new JLabel("", img, JLabel.CENTER);
+
+        joueur = new JFrame("Joueur");
+        joueur.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
+        joueur.setSize(775, 330);
+
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        joueurs.setLocation(dim.width/2-joueurs.getSize().width/2, dim.height/2-joueurs.getSize().height/2);
-        
-        JPanel mainPanel = new JPanel(new BorderLayout());
-        joueurs.add(mainPanel);
-        
-        
-        JPanel panelCentre = new JPanel(new GridLayout(7, 4,5,5));
-        mainPanel.add(panelCentre, BorderLayout.CENTER);
-        
-        JPanel panelBas = new JPanel(new GridLayout(1, 6));
-        mainPanel.add(panelBas, BorderLayout.SOUTH);
-        
-        JPanel panelHaut = new JPanel();
-        mainPanel.add(panelHaut, BorderLayout.NORTH);
-  
-        
-        JLabel labelTitre = new JLabel("Joueurs");
-        labelTitre.setFont(new Font(labelTitre.getFont().getName(), labelTitre.getFont().getStyle(), (int) (labelTitre.getFont().getSize() * 2.0)));
-        panelHaut.add(labelTitre) ;
-        
+        joueur.setLocation(dim.width / 2 - joueur.getSize().width / 2, dim.height / 2 - joueur.getSize().height / 2);
+
+        background.setLayout(new GridLayout(9, 4, 5, 5));
+        joueur.setContentPane(background);
+
         retour = new JButton("Retour");
         retour.addActionListener(this);
-        lancer = new JButton("Lancer");
-        lancer.addActionListener(this);
+        jouer = new JButton("Jouer");
+        jouer.addActionListener(this);
         quitter = new JButton("Quitter");
         quitter.addActionListener(this);
-        
-        panelBas.add(retour);
-        panelBas.add(new JLabel(""));
-        panelBas.add(lancer);
-        panelBas.add(new JLabel(""));
-        panelBas.add(quitter);
-        
-        pseudo1 = new JTextField();        
-        pseudo2 = new JTextField();        
-        pseudo3 = new JTextField();    
+
+        pseudo1 = new JTextField();
+        pseudo2 = new JTextField();
+        pseudo3 = new JTextField();
         pseudo4 = new JTextField();
-        
+
         listPseudo = new ArrayList<>();
         listPseudo.add(pseudo1);
         listPseudo.add(pseudo2);
         listPseudo.add(pseudo3);
         listPseudo.add(pseudo4);
-        
+
         JLabel labeljoueur1 = new JLabel(" Joueur n°1", SwingConstants.LEFT);
-        
-        JLabel choisirnbjoueur = new JLabel("Nombre de Joueurs :", SwingConstants.LEFT);
-        
+        labeljoueur1.setFont(new Font(jouer.getFont().getName(), jouer.getFont().getStyle(), (int) (jouer.getFont().getSize() * 1.5)));
+
+        JLabel choisirnbjoueur = new JLabel(" Nombre de joueurs :", SwingConstants.LEFT);
+        choisirnbjoueur.setFont(new Font(jouer.getFont().getName(), jouer.getFont().getStyle(), (int) (jouer.getFont().getSize() * 1.5)));
+
         JLabel labeljoueur2 = new JLabel(" Joueur n°2", SwingConstants.LEFT);
-        
+        labeljoueur2.setFont(new Font(jouer.getFont().getName(), jouer.getFont().getStyle(), (int) (jouer.getFont().getSize() * 1.5)));
+
         JLabel labeljoueur3 = new JLabel(" Joueur n°3", SwingConstants.LEFT);
-        JLabel labeljoueurPseudo3 = new JLabel(" Pseudonyme : ", SwingConstants.LEFT);     
+        labeljoueur3.setFont(new Font(jouer.getFont().getName(), jouer.getFont().getStyle(), (int) (jouer.getFont().getSize() * 1.5)));
         
-        JLabel labeljoueur4 = new JLabel(" Joueur n°4", SwingConstants.LEFT);
+        JLabel labeljoueurPseudo3 = new JLabel(" Pseudonyme : ", SwingConstants.LEFT);
+        labeljoueurPseudo3.setFont(new Font(jouer.getFont().getName(), jouer.getFont().getStyle(), (int) (jouer.getFont().getSize() * 1.5)));
+
+        JLabel labeljoueur4 = new JLabel(" Joueur n°4", SwingConstants.LEFT);              
+        labeljoueur4.setFont(new Font(jouer.getFont().getName(), jouer.getFont().getStyle(), (int) (jouer.getFont().getSize() * 1.5)));
+
         JLabel labeljoueurPseudo4 = new JLabel(" Pseudonyme : ", SwingConstants.LEFT);
-        
-        JLabel labeljoueurRole1 = new JLabel(" Rôle:", SwingConstants.CENTER);
-        JLabel labeljoueurRole2 = new JLabel(" Rôle:", SwingConstants.CENTER);
-        JLabel labeljoueurRole3 = new JLabel(" Rôle:", SwingConstants.CENTER);
-        JLabel labeljoueurRole4 = new JLabel(" Rôle:", SwingConstants.CENTER);
-        
+        labeljoueurPseudo4.setFont(new Font(jouer.getFont().getName(), jouer.getFont().getStyle(), (int) (jouer.getFont().getSize() * 1.5)));
+
+        JLabel labeljoueurRole1 = new JLabel("Rôle :", SwingConstants.CENTER);
+        labeljoueurRole1.setFont(new Font(jouer.getFont().getName(), jouer.getFont().getStyle(), (int) (jouer.getFont().getSize() * 1.5)));
+        JLabel labeljoueurRole2 = new JLabel("Rôle :", SwingConstants.CENTER);
+        labeljoueurRole2.setFont(new Font(jouer.getFont().getName(), jouer.getFont().getStyle(), (int) (jouer.getFont().getSize() * 1.5)));
+        JLabel labeljoueurRole3 = new JLabel("Rôle :", SwingConstants.CENTER);
+        labeljoueurRole3.setFont(new Font(jouer.getFont().getName(), jouer.getFont().getStyle(), (int) (jouer.getFont().getSize() * 1.5)));
+        JLabel labeljoueurRole4 = new JLabel("Rôle :", SwingConstants.CENTER);
+        labeljoueurRole4.setFont(new Font(jouer.getFont().getName(), jouer.getFont().getStyle(), (int) (jouer.getFont().getSize() * 1.5)));
+
+        JLabel labeldifficulte = new JLabel(" Difficulté : ");
+        labeldifficulte.setFont(new Font(jouer.getFont().getName(), jouer.getFont().getStyle(), (int) (jouer.getFont().getSize() * 1.5)));
+
         role1 = new JComboBox(nomRoles);
         role1.setSelectedIndex(0);
-        
+        role1.setBackground(Color.WHITE);
+
         role2 = new JComboBox(nomRoles);
         role2.setSelectedIndex(1);
-        
+        role2.setBackground(Color.WHITE);
+
         role3 = new JComboBox(nomRoles);
         role3.setSelectedIndex(2);
-        
+
         role4 = new JComboBox(nomRoles);
         role4.setSelectedIndex(3);
-        
+
         niveauDepart = new JComboBox(niveauEau);
-        
+        niveauDepart.setBackground(Color.WHITE);
+
         listRole = new ArrayList<>();
         listRole.add(role1);
         listRole.add(role2);
         listRole.add(role3);
         listRole.add(role4);
-        
+
         //ACTION DU JCOMBOX NB JOUEURS
         nbJoueurs = new JComboBox(nombreJoueur);
+        nbJoueurs.setBackground(Color.WHITE);
+
         nbJoueurs.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                switch ((int)nbJoueurs.getSelectedItem()) {
+                switch ((int) nbJoueurs.getSelectedItem()) {
                     case 2:
-                        labeljoueur3.setForeground(Color.GRAY);
-                        labeljoueur4.setForeground(Color.GRAY);
-                        labeljoueurPseudo3.setForeground(Color.GRAY);
-                        labeljoueurPseudo4.setForeground(Color.GRAY);
-                        labeljoueurRole3.setForeground(Color.GRAY);
-                        labeljoueurRole4.setForeground(Color.GRAY);
+                        labeldifficulte.setForeground(Color.WHITE);
+                        choisirnbjoueur.setForeground(Color.WHITE);
+                        labeljoueur1.setForeground(Color.WHITE);
+                        labeljoueur2.setForeground(Color.WHITE);
+                        labeljoueur3.setForeground(Color.WHITE);
+                        labeljoueur4.setForeground(Color.WHITE);
+                        labeljoueurPseudo4.setForeground(Color.WHITE);
+                        labeljoueurPseudo3.setForeground(Color.WHITE);
+                        labeljoueurPseudo4.setForeground(Color.WHITE);
+                        labeljoueurRole1.setForeground(Color.WHITE);
+                        labeljoueurRole2.setForeground(Color.WHITE);
+                        labeljoueurRole3.setForeground(Color.WHITE);
+                        labeljoueurRole4.setForeground(Color.WHITE);
                         pseudo3.setEnabled(false);
+                        pseudo3.setBackground(new Color(224, 224, 224));
                         pseudo4.setEnabled(false);
+                        pseudo4.setBackground(new Color(224, 224, 224));
                         role3.setEnabled(false);
                         role4.setEnabled(false);
                         pseudo3.setText("");
                         pseudo4.setText("");
                         break;
                     case 3:
-                        labeljoueur3.setForeground(Color.BLACK);
-                        labeljoueur4.setForeground(Color.GRAY);
-                        labeljoueurPseudo3.setForeground(Color.BLACK);
-                        labeljoueurPseudo4.setForeground(Color.GRAY);
-                        labeljoueurRole3.setForeground(Color.BLACK);
-                        labeljoueurRole4.setForeground(Color.GRAY);
+                        labeldifficulte.setForeground(Color.WHITE);
+                        choisirnbjoueur.setForeground(Color.WHITE);
+                        labeljoueur1.setForeground(Color.WHITE);
+                        labeljoueur2.setForeground(Color.WHITE);
+                        labeljoueur3.setForeground(Color.WHITE);
+                        labeljoueur4.setForeground(Color.WHITE);
+                        labeljoueurPseudo3.setForeground(Color.WHITE);
+                        labeljoueurPseudo4.setForeground(Color.WHITE);
+                        labeljoueurRole1.setForeground(Color.WHITE);
+                        labeljoueurRole2.setForeground(Color.WHITE);
+                        labeljoueurRole3.setForeground(Color.WHITE);
+                        labeljoueurRole4.setForeground(Color.WHITE);
                         pseudo3.setEnabled(true);
+                        pseudo3.setBackground(Color.WHITE);
                         pseudo4.setEnabled(false);
+                        pseudo4.setBackground(new Color(224, 224, 224));
                         role3.setEnabled(true);
+                        role3.setBackground(Color.WHITE);
                         role4.setEnabled(false);
+                        role4.setBackground(new Color(224, 224, 224));
                         pseudo4.setText("");
                         break;
                     case 4:
-                        labeljoueur3.setForeground(Color.BLACK);
-                        labeljoueur4.setForeground(Color.BLACK);
-                        labeljoueurPseudo3.setForeground(Color.BLACK);
-                        labeljoueurPseudo4.setForeground(Color.BLACK);
-                        labeljoueurRole3.setForeground(Color.BLACK);
-                        labeljoueurRole4.setForeground(Color.BLACK);
+                        labeljoueur3.setForeground(Color.WHITE);
+                        labeljoueur4.setForeground(Color.WHITE);
+                        labeljoueurPseudo3.setForeground(Color.WHITE);
+                        labeljoueurPseudo4.setForeground(Color.WHITE);
+                        labeljoueurRole3.setForeground(Color.WHITE);
+                        labeljoueurRole4.setForeground(Color.WHITE);
                         pseudo3.setEnabled(true);
+                        pseudo3.setBackground(Color.WHITE);
                         pseudo4.setEnabled(true);
+                        pseudo4.setBackground(Color.WHITE);
                         role3.setEnabled(true);
+                        role3.setBackground(Color.WHITE);
                         role4.setEnabled(true);
+                        role4.setBackground(Color.WHITE);
                         break;
                 }
             }
         });
-       
-       nbJoueurs.setSelectedIndex(0);
-   
-       panelCentre.add(new JLabel("Difficulté : "));
-       panelCentre.add(niveauDepart);
-       for (int i=0;i<6;i++ ){
-            panelCentre.add(new JLabel(" "));
-       }
-       panelCentre.add(choisirnbjoueur);
-       panelCentre.add(nbJoueurs);
-       panelCentre.add(new JLabel(" "));
-       panelCentre.add(new JLabel(" "));
-       panelCentre.add(labeljoueur1);
-       panelCentre.add(pseudo1);
-       panelCentre.add(labeljoueurRole1);
-       panelCentre.add(role1);
-       panelCentre.add(labeljoueur2);
-       panelCentre.add(pseudo2);
-       panelCentre.add(labeljoueurRole2);
-       panelCentre.add(role2);
-       panelCentre.add(labeljoueur3);
-       panelCentre.add(pseudo3);
-       panelCentre.add(labeljoueurRole3);
-       panelCentre.add(role3);
-       panelCentre.add(labeljoueur4);
-       panelCentre.add(pseudo4);
-       panelCentre.add(labeljoueurRole4);
-       panelCentre.add(role4);
-       
-    }     
-    
+
+        nbJoueurs.setSelectedIndex(0);
+
+        background.add(labeldifficulte);
+        background.add(niveauDepart);
+        for (int i = 0; i < 6; i++) {
+            background.add(new JLabel(" "));
+        }
+
+        background.add(choisirnbjoueur);
+        background.add(nbJoueurs);
+        background.add(new JLabel(" "));
+        background.add(new JLabel(" "));
+        background.add(labeljoueur1);
+        background.add(pseudo1);
+        background.add(labeljoueurRole1);
+        background.add(role1);
+        background.add(labeljoueur2);
+        background.add(pseudo2);
+        background.add(labeljoueurRole2);
+        background.add(role2);
+        background.add(labeljoueur3);
+        background.add(pseudo3);
+        background.add(labeljoueurRole3);
+        background.add(role3);
+        background.add(labeljoueur4);
+        background.add(pseudo4);
+        background.add(labeljoueurRole4);
+        background.add(role4);
+        background.add(new JLabel(""));
+        background.add(new JLabel(""));
+        background.add(new JLabel(""));
+        background.add(new JLabel(""));
+        background.add(retour);
+        background.add(jouer);
+        background.add(quitter);
+    }
+
     //METHODES
-    
     //Affiche la fenetre
     public void afficher() {
-        this.joueurs.setVisible(true);
+        this.joueur.setVisible(true);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == retour) {
-            int rep = JOptionPane.showConfirmDialog(null,"Etes-vous sûr(e) de vouloir retourner au menu ?", "Message de confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);                   
+            int rep = JOptionPane.showConfirmDialog(null, "Etes-vous sûr(e) de vouloir retourner au menu ?", "Message de confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
             if (rep == JOptionPane.YES_OPTION) {
-                this.joueurs.setVisible(false);
+                this.joueur.setVisible(false);
                 notifierObservateur(new Message(TypeEnumMenuPrincipal.MENU_PRINCIPAL));
             }
         }
-        
+
         if (e.getSource() == quitter) {
-            int rep = JOptionPane.showConfirmDialog(null,"Etes-vous sûr(e) de vouloir quitter le jeu ?", "Message de confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);                   
+            int rep = JOptionPane.showConfirmDialog(null, "Etes-vous sûr(e) de vouloir quitter le jeu ?", "Message de confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
             if (rep == JOptionPane.YES_OPTION) {
                 System.exit(0);
             }
         }
-        
-        if (e.getSource() == lancer) {
+
+        if (e.getSource() == jouer) {
             ArrayList<String> usedRole = new ArrayList<>();
-            for (int i = 0; i < (int)nbJoueurs.getSelectedItem(); i++) {
-                if (usedRole.contains((String)listRole.get(i).getSelectedItem())) {
-                    JOptionPane.showMessageDialog(null, "Chaque joueur doit avoir un rôle différent");
+            for (int i = 0; i < (int) nbJoueurs.getSelectedItem(); i++) {
+                if (usedRole.contains((String) listRole.get(i).getSelectedItem())) {
+                    JOptionPane.showMessageDialog(null, "Chaque joueur doit avoir un rôle différent", "Erreur", JOptionPane.ERROR_MESSAGE);
                     return; //quitte la fonction
                 }
-                if ((String)listRole.get(i).getSelectedItem() != nomRoles[nomRoles.length-1]) {
-                    usedRole.add((String)listRole.get(i).getSelectedItem());
-                }   
+                if ((String) listRole.get(i).getSelectedItem() != nomRoles[nomRoles.length - 1]) {
+                    usedRole.add((String) listRole.get(i).getSelectedItem());
+                }
             }
-            for (int i = 0; i < (int)nbJoueurs.getSelectedItem(); i++) {
+            for (int i = 0; i < (int) nbJoueurs.getSelectedItem(); i++) {
                 if (listPseudo.get(i).getText().isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "Le pseudo d'un joueur ne peux pas être vide");
+                    JOptionPane.showMessageDialog(null, "Le champ joueur ne peut pas être vide", "Erreur", JOptionPane.ERROR_MESSAGE);
                     return; //quitte la fonction
                 }
             }
-            
-            
-            this.joueurs.setVisible(false);
+
+            this.joueur.setVisible(false);
             Message msg = new Message(TypeEnumMenuPrincipal.MENU_JOUER);
             ArrayList<String> infos = new ArrayList<>();
-            switch ((String)niveauDepart.getSelectedItem()) {
+            switch ((String) niveauDepart.getSelectedItem()) {
                 case "Novice":
                     infos.add("0");
                     break;
@@ -302,34 +321,34 @@ public class Joueurs extends JFrame implements ActionListener {
             }
             infos.add(String.valueOf(nbJoueurs.getSelectedItem()));
             infos.add(pseudo1.getText());
-            infos.add((String)role1.getSelectedItem());
+            infos.add((String) role1.getSelectedItem());
             infos.add(pseudo2.getText());
-            infos.add((String)role2.getSelectedItem());
-            
-            if ((int)nbJoueurs.getSelectedItem() >= 3) {
+            infos.add((String) role2.getSelectedItem());
+
+            if ((int) nbJoueurs.getSelectedItem() >= 3) {
                 infos.add(pseudo3.getText());
-                infos.add((String)role3.getSelectedItem());
+                infos.add((String) role3.getSelectedItem());
             }
-            if ((int)nbJoueurs.getSelectedItem() >= 4) {
+            if ((int) nbJoueurs.getSelectedItem() >= 4) {
                 infos.add(pseudo4.getText());
-                infos.add((String)role4.getSelectedItem());
+                infos.add((String) role4.getSelectedItem());
             }
             msg.setAdditionnal(infos);
             notifierObservateur(msg);
         }
-    
+
     }
-    
-    private Observateur observateur;    
+
+    private Observateur observateur;
+
     public void addObservateur(Observateur o) {
         this.observateur = o;
     }
-    
+
     public void notifierObservateur(Message m) {
         if (observateur != null) {
             observateur.traiterMessage(m);
         }
-    } 
+    }
+
 }
-
-
