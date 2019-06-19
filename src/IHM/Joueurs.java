@@ -319,7 +319,7 @@ public class Joueurs extends JFrame implements ActionListener {
             ArrayList<String> usedRole = new ArrayList<>();
             for (int i = 0; i < (int) nbJoueurs.getSelectedItem(); i++) {
                 if (usedRole.contains((String) listRole.get(i).getSelectedItem())) {
-                    JOptionPane.showMessageDialog(null, "Chaque joueur doit avoir un rôle différent", "Erreur", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Chaque joueur doit avoir un rôle différent", "Message d'erreur", JOptionPane.ERROR_MESSAGE);
                     return; //quitte la fonction
                 }
                 if ((String) listRole.get(i).getSelectedItem() != nomRoles[nomRoles.length - 1]) {
@@ -328,7 +328,7 @@ public class Joueurs extends JFrame implements ActionListener {
             }
             for (int i = 0; i < (int) nbJoueurs.getSelectedItem(); i++) {
                 if (listPseudo.get(i).getText().isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "Le champ joueur ne peut pas être vide", "Erreur", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Le champ joueur ne peut pas être vide", "Message d'erreur", JOptionPane.ERROR_MESSAGE);
                     return; //quitte la fonction
                 }
             }
