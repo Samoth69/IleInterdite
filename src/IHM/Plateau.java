@@ -258,25 +258,22 @@ public class Plateau implements Observateur {
         //*****PANELGAMEPAD *********************
         panelGamePad = new JPanel(new BorderLayout());
         
-        JPanel paneltreshaut = new JPanel();
+        JPanel paneltreshaut = new JPanel(new GridLayout(4,1));
         JLabel labelpion = new JLabel("Tour du joueur :");
-        Font font1 = new Font("Arial",Font.BOLD,25);
+        Font font1 = new Font("Arial",Font.BOLD,20);
         labelpion.setFont(font1);
         paneltreshaut.add(labelpion);
         panelGamePad.add(paneltreshaut, BorderLayout.NORTH);
         
-        JPanel panelHautGamePad = new JPanel(); 
+        JPanel panelHautGamePad = new JPanel(new GridLayout(4,1)); 
         JLabel labelaction = new JLabel("Action(s) restante(s):");
         labelaction.setFont(font1);
-        panelHautGamePad.add(labelaction);        
-      //  panelHautGamePad.add(jb);
-        panelGamePad.add(panelHautGamePad, BorderLayout.CENTER);
-        
-        JPanel panelMilieuGamePad =new JPanel();
-        panelMilieuGamePad.add(ActionRestante); 
+        panelHautGamePad.add(labelaction);             
+        panelHautGamePad.add(ActionRestante); 
         Font font2 = new Font("Arial",Font.BOLD,120);
         ActionRestante.setFont(font2);
-        panelGamePad.add(panelMilieuGamePad, BorderLayout.SOUTH);
+        panelGamePad.add(panelHautGamePad, BorderLayout.CENTER); 
+        
        //******************************************************************
         
         JPanel panelBottomGamePad = new JPanel(new GridLayout(0,cj.getNombreJoueurDansPartie()));
