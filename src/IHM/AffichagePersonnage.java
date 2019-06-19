@@ -175,7 +175,7 @@ public class AffichagePersonnage extends JPanel{
         if (b) {
             labelTypeJoueur.setForeground(Color.black);
             labelJoueur.setForeground(Color.black);
-            this.setBorder(BorderFactory.createLineBorder(perso.getCouleurPion().getColor(), 2));
+            this.setBorder(BorderFactory.createLineBorder(perso.getCouleurPion().getColor(), 10));
             if (perso != null) {
                 pion.setCouleur(perso.getCouleurPion());
             }
