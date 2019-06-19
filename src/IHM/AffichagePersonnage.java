@@ -7,6 +7,7 @@ package IHM;
 
 import Cartes.CarteRouge;
 import Cartes.CarteTresor;
+import Enumerations.TypeEnumCarteAction;
 import Enumerations.TypeEnumCouleurPion;
 import Enumerations.TypeEnumMessage;
 import Enumerations.TypeEnumTresors;
@@ -42,6 +43,7 @@ public class AffichagePersonnage extends JPanel{
     
     private ArrayList<Personnage> listPersoEmplacement = new ArrayList<>();
     private ArrayList<CarteRouge> carteTresorDuJoueur = new ArrayList<>();
+    private ArrayList<CarteRouge> cartesActionsDujoueur= new ArrayList<>();
     
     private JButton buttonDeplacement;
     private JButton buttonAssecher;
@@ -146,7 +148,11 @@ public class AffichagePersonnage extends JPanel{
         buttonCarteSpecial.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
-                
+                /*for(int i=; i<perso.getCartes().size(); i++){
+                    if(perso.getCartes().get(i).getTypeCarteAction()== TypeEnumCarteAction.HELICOPTERE || perso.getCartes().get(i).getTypeCarteAction()== TypeEnumCarteAction.SAC_DE_SABLE){
+                        cartesActionsDujoueur.add(perso.getCartes().get(i));
+                    }
+                }*/
             }
         });
         
