@@ -137,18 +137,22 @@ public class Plateau implements Observateur {
         /**
          * AJOUT PANEL PRINCIPAL + PANEL HAUT POUR TITRE FENETRE *
          */
-        JPanel mainPanel = new JPanel(new BorderLayout());
-        window.add(mainPanel);
+        //JPanel mainPanel = new JPanel();
+        //JLayeredPane  jlp = new JLayeredPane();
+        //mainPanel.setLayout(jlp);
+        
+        JPanel BorderLayoutPrincipal = new JPanel(new BorderLayout());
+        window.add(BorderLayoutPrincipal);
 
         JPanel panelHaut = new JPanel();
-        mainPanel.add(panelHaut, BorderLayout.NORTH);
+        BorderLayoutPrincipal.add(panelHaut, BorderLayout.NORTH);
         
         /*********************************** NIVEAU EAU ***************************************/
         contenantNiveauEauMain = new JPanel(new BorderLayout()); //menu principal qui sera ajouté au mainPanel
         contenantNiveauEauDroite = new JPanel(new GridLayout(10, 1)); //menu avec les chiffres indiquant le nombre de carte inondation à piocher
-        contenantNiveauEauDroite.setPreferredSize(new Dimension(25,mainPanel.getHeight()));
+        contenantNiveauEauDroite.setPreferredSize(new Dimension(25,BorderLayoutPrincipal.getHeight()));
         contenantNiveauEauGauche = new JPanel(new GridLayout(10, 1)); //niveau de l'eau
-        contenantNiveauEauGauche.setPreferredSize(new Dimension(90,mainPanel.getHeight()));
+        contenantNiveauEauGauche.setPreferredSize(new Dimension(90,BorderLayoutPrincipal.getHeight()));
         
         //MENU GAUCHE
         niveauEau = new JLabel[max + 1];
@@ -227,7 +231,7 @@ public class Plateau implements Observateur {
         
         contenantNiveauEauMain.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
         
-        mainPanel.add(contenantNiveauEauMain, BorderLayout.WEST);
+        BorderLayoutPrincipal.add(contenantNiveauEauMain, BorderLayout.WEST);
         
         ColoriserNiveauEau();
       /******************************************************************************************************/
@@ -240,7 +244,7 @@ public class Plateau implements Observateur {
          * AJOUT DE LA GRILLE DE JEU AU CENTRE DE LA FENETRE *
          */
         JPanel panelGrille = new JPanel(new GridLayout(6, 6));
-        mainPanel.add(panelGrille, BorderLayout.CENTER);
+        BorderLayoutPrincipal.add(panelGrille, BorderLayout.CENTER);
         
         JButton jb = new JButton("Augmenter niveau eau");
         jb.addActionListener(new ActionListener() {
@@ -283,7 +287,7 @@ public class Plateau implements Observateur {
             affichagePerso4 = new AffichagePersonnage(this, null);
         }
 
-        mainPanel.add(panelMilieuGamePad, BorderLayout.SOUTH);
+        BorderLayoutPrincipal.add(panelMilieuGamePad, BorderLayout.SOUTH);
         
         JPanel panelGamePadBas = new JPanel();
         panelGamePadBas.setLayout(new BoxLayout(panelGamePadBas, BoxLayout.Y_AXIS));
@@ -295,7 +299,7 @@ public class Plateau implements Observateur {
         panelGamePadBas.add(new JLabel("Historique:", SwingConstants.CENTER));
         panelGamePadBas.add(scrollPane, BorderLayout.SOUTH);
         panelGamePad.add(panelGamePadBas, BorderLayout.SOUTH);
-        mainPanel.add(panelGamePad, BorderLayout.EAST);
+        BorderLayoutPrincipal.add(panelGamePad, BorderLayout.EAST);
 
         affecterCase(plateau, listPion, panelGrille);
         updateGamePad();

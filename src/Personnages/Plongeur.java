@@ -22,80 +22,37 @@ public class Plongeur extends Personnage{
         super(nom, ile, TypeEnumCouleurPion.VIOLET);
     }
 
-    private ArrayList<Tuile> parcour = new ArrayList<>();
-
     @Override
     public ArrayList<Tuile> getDeplacements() {
-        Tuile tabTuile[][] = ile.getTuiles();
-        ArrayList<Tuile> tuilesAutourPraticable = new ArrayList<>();
+        ArrayList<Tuile> out = new ArrayList<>();
         Tuile tuileActuel = getEmplacement();
-        ArrayList<Tuile> tuileATraiter = new ArrayList<>();
-        //verif diagonale haut gauche
-        for (int i = -1; i <= 1; i++) {
-            for (int j = -1; j <= 1; j++) {
-                if (i != 0 || j != 0) {
-                    //System.out.println("i=" + i + "\tj=" + j);
-                    if(((tuileActuel.getX()+i) >= 0 && (tuileActuel.getX() + i) <= 5) && ((tuileActuel.getY() + j) >= 0 && (tuileActuel.getY() + j) <= 5) && tabTuile[tuileActuel.getX()+i][tuileActuel.getY()+j] != null)
-                    {
-                        //System.out.println(tuile.getX() + "\t" + i + "\t" + tuile.getY() + "\t" + j);
-                       // if((tabTuile[this.getEmplacement().getX()+i][this.getEmplacement().getY()+j].getInondation() == TypeEnumInondation.SEC) || (tabTuile[this.getEmplacement().getX()+i][this.getEmplacement().getY()+j].getInondation() == TypeEnumInondation.MOUILLE)) {
-                            tuilesAutourPraticable.add(tabTuile[tuileActuel.getX()+i][tuileActuel.getY()+j]);
-                            
-                            if(tabTuile[tuileActuel.getX()+i][tuileActuel.getY()+j].getInondation() == tuileActuel.getInondation() && tuileActuel.getInondation() != TypeEnumInondation.SEC)
-                            {
-                                tuileATraiter.add(tabTuile[tuileActuel.getX()+i][tuileActuel.getY()+j]);
-                            }
-
-                    }
-                }
-            } 
+        drawChemin(out, tuileActuel);
+        
+        //filtre pour enlever les tuiles inondée
+        ArrayList<Tuile> toDelete = new ArrayList<>();
+        for (Tuile t : out) {
+            if (t.getInondation() == TypeEnumInondation.INONDE) {
+                toDelete.add(t);
+            }
         }
+        out.removeAll(toDelete);
         
-        while(!tuileATraiter.isEmpty()) //is not empty
-        {
-            int k = 0;
-                for (int i = -1; i <= 1; i++) {
-                    for (int j = -1; j <= 1; j++) {
-                        if (i != 0 || j != 0) {
-                            //System.out.println("i=" + i + "\tj=" + j);
-                            //if(((tuileATraiter.get(k).getX()+i) >= 0 && (tuileATraiter.get(k).getX() + i) <= 5) && ((tuileATraiter.get(k).getY() + j) >= 0 && (tuileATraiter.get(k).getY() + j) <= 5) && tabTuile[tuileATraiter.get(k).getX()+i][tuileATraiter.get(k).getY()+j] != null)
-                            //{
-                                //System.out.println(tuile.getX() + "\t" + i + "\t" + tuile.getY() + "\t" + j);
-                                if(tabTuile[tuileATraiter.get(k).getX()+i][tuileATraiter.get(k).getY()+j].getInondation() == tuileATraiter.get(k).getInondation()) {
-                                    tuilesAutourPraticable.add(tabTuile[tuileATraiter.get(k).getX()+i][tuileATraiter.get(k).getY()+j]);
-                                }
-                                if(tabTuile[tuileATraiter.get(k).getX()+i][tuileATraiter.get(k).getY()+j].getInondation() == tuileATraiter.get(k).getInondation() && tuileATraiter.get(k).getInondation() != TypeEnumInondation.SEC)
-                                {
-                                    tuileATraiter.remove(tuileATraiter.size()-k);
-                                    tuileATraiter.add(tabTuile[tuileATraiter.get(k).getX()+i][tuileATraiter.get(k).getY()+j]);
-                                }
-
-                            //}
-                        }
-                        k++;
-                    }
-                }
-            k = 0;
-        }    
-        
-        return tuilesAutourPraticable;
+        return out;
     }
-
-    private void drawChemin(Tuile pos) {
-        for (Tuile t : getGrille().getTuilesAutours(pos)) {
-            System.out.println("for: " + t.getNom());
-            if (t.getX() == pos.getX() || t.getY() == pos.getY()) {
-                if (!parcour.contains(pos)) {
-                    if (t.getInondation() == TypeEnumInondation.SEC) {
-                        parcour.add(pos);
-                    } else {
-                        parcour.add(pos);
-                        drawChemin(t);
+    
+    private void drawChemin(ArrayList<Tuile> out, Tuile pos) {
+        for (Tuile t : ile.getTuilesAutours(pos)) {
+            if (!out.contains(t)) {
+                if (pos.getX() == t.getX() || pos.getY() == t.getY()) {
+                out.add(t);
+                    if (t.getInondation() != TypeEnumInondation.SEC) {
+                        drawChemin(out, t);
                     }
                 }
             }
         }
     }
+
     
     @Override
     public TypeEnumPersonnages getType() {
