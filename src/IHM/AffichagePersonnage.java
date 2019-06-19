@@ -102,14 +102,14 @@ public class AffichagePersonnage extends JPanel{
         });
         
         buttonDonnerCarte = new JButton("Donner carte");
-        if(perso.getEmplacement().getPersonnages().size() == 1)
+        /**if(perso.getEmplacement().getPersonnages().size() == 1)
         {
             buttonDonnerCarte.setEnabled(false);
         }
         else
         {
             buttonDonnerCarte.setEnabled(true);
-        }
+        }**/
         buttonPrendreRelique = new JButton("Prendre relique");;
         buttonCarteSpecial = new JButton("Carte Spécial");
         
