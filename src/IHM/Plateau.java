@@ -489,7 +489,7 @@ public class Plateau implements Observateur {
                     int y = cj.getJoueurEntrainDeJouer().getEmplacement().getY();
                     panel[x][y].remove(listPion.get(cj.getJoueurNum()));
                     panel[i][j].add(listPion.get(cj.getJoueurNum()));
-                    cj.deplacerJoueurEnCour(emplacement);
+                    cj.deplacerJoueurEnCours(emplacement);
                     break;
                 case 2:
                     //System.out.println("Assechement");
