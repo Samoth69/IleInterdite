@@ -26,12 +26,14 @@ import java.awt.event.MouseListener;
 import javax.swing.UIManager;
 import IleInterdite.Observe;
 import IleInterdite.Observateur;
+import Personnages.Personnage;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
@@ -42,16 +44,41 @@ import javax.swing.JOptionPane;
 public class VuDefausse extends JDialog {
 
     private JDialog dialog = this;
-    private JPanel mainPanel;
+    private JPanel mainPanel = new JPanel(new BorderLayout());
     private ArrayList<CarteRouge> carteDuJoueur = new ArrayList<>();  //Array des cartes a disposition du joueur
     private ArrayList<CarteRouge> carteSelectionne = new ArrayList<>(); //Array des cartes selectionnes
     private int nombreDeCarteADel; //nombre de carte à enlever de la main actuel
     private JDialog window;
-
+    private String[] nomDesPersos;
+    
+    public VuDefausse(ArrayList<CarteRouge> carteJoueur, String titre, int nombreDeCarteADel){
+        initialisation(carteJoueur, titre, nombreDeCarteADel);
+    }
+    
+    //Constructeur pour la vu donner carte
     //carteJoueur: liste des cartes à afficher
     //titre: titre de la fenêtre
     //nombreDeCarteADel: nombre de carte à supprimer
-    public VuDefausse(ArrayList<CarteRouge> carteJoueur, String titre, int nombreDeCarteADel) {
+    //persos : liste des personnages sur la meme case du joueur en train de jouer
+    public VuDefausse(ArrayList<CarteRouge> carteJoueur, String titre, int nombreDeCarteADel, ArrayList<Personnage> persos){
+        
+        for(int i = 0; i < persos.size(); i++)
+        {
+            nomDesPersos[i] = persos.get(i).getNom();
+        }
+        
+        
+        JComboBox boxPersos = new JComboBox(nomDesPersos);
+        
+        mainPanel.add(boxPersos, BorderLayout.NORTH);
+        
+        initialisation(carteJoueur, titre, nombreDeCarteADel);
+    }
+    
+    //carteJoueur: liste des cartes à afficher
+    //titre: titre de la fenêtre
+    //nombreDeCarteADel: nombre de carte à supprimer
+    private void initialisation(ArrayList<CarteRouge> carteJoueur, String titre, int nombreDeCarteADel) {
         this.window = this;
         this.nombreDeCarteADel = nombreDeCarteADel;
         //indique que ceci est un dialogue et va attendre que la fenêtre soit fermer AVANT de continuer le code.
@@ -61,7 +88,7 @@ public class VuDefausse extends JDialog {
         this.setTitle(titre);
         
         //panel principal
-        mainPanel = new JPanel(new BorderLayout());
+        
         this.add(mainPanel);
 
         //grid layout qui contient les cartes

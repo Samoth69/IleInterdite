@@ -502,6 +502,9 @@ public class Plateau implements Observateur {
 
     }
     
+    
+    //  BOUTON ASSECHER
+    
     private void setBtAssecherText(String t) {
         switch (cj.getJoueurNum()) {
             case 0:
@@ -535,6 +538,8 @@ public class Plateau implements Observateur {
                 break;
         }
     }
+    
+    //  BOUTON DEPLACEMENT
     
     private void setBtDeplacementText(String t) {
         switch (cj.getJoueurNum()) {
@@ -570,6 +575,8 @@ public class Plateau implements Observateur {
         }
     }
     
+    //  BOUTON PASSER JOUEUR
+    
     private void setBtPasserJoueurEnabled(boolean b) {
         switch (cj.getJoueurNum()) {
             case 0:
@@ -583,6 +590,42 @@ public class Plateau implements Observateur {
                 break;
             case 3:
                 affichagePerso4.setButtonPasserTourEnabled(b);
+                break;
+        }
+    }
+    
+    //  BOUTON DONNER CARTE
+    
+    private void setBtDonnerCarteText(String text) {
+        switch (cj.getJoueurNum()) {
+            case 0:
+                affichagePerso1.setButtonDonnerCarteText(text);
+                break;
+            case 1:
+                affichagePerso2.setButtonDonnerCarteText(text);
+                break;
+            case 2:
+                affichagePerso3.setButtonDonnerCarteText(text);
+                break;
+            case 3:
+                affichagePerso4.setButtonDonnerCarteText(text);
+                break;
+        }
+    }
+    
+    private void setBtDonnerCarteEnabled(boolean b) {
+        switch (cj.getJoueurNum()) {
+            case 0:
+                affichagePerso1.setButtonDonnerCarteEnabled(b);
+                break;
+            case 1:
+                affichagePerso2.setButtonDonnerCarteEnabled(b);
+                break;
+            case 2:
+                affichagePerso3.setButtonDonnerCarteEnabled(b);
+                break;
+            case 3:
+                affichagePerso4.setButtonDonnerCarteEnabled(b);
                 break;
         }
     }
