@@ -149,11 +149,22 @@ public class AffichagePersonnage extends JPanel{
         buttonCarteSpecial.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
-                /*for(int i=; i<perso.getCartes().size(); i++){
+                
+                for(int i=0; i<perso.getCartes().size(); i++){
                     if(perso.getCartes().get(i).getTypeCarteAction()== TypeEnumCarteAction.HELICOPTERE || perso.getCartes().get(i).getTypeCarteAction()== TypeEnumCarteAction.SAC_DE_SABLE){
-                        cartesActionsDujoueur.add(perso.getCartes().get(i));
+                        carteActionDuJoueur.add(perso.getCartes().get(i));
                     }
-                }*/
+                }
+                if(carteActionDuJoueur.isEmpty()==false){
+              // VuDefausse vd1 = new VuDefausse(carteActionDuJoueur, "utiliser carte");
+               //vd1.setVisible(true);
+               
+               //vd1.getSelectedItems();
+               //perso.deplacement(vd1.getSelectedItems());
+               pl.changeMode(1);
+               pl.gamePadClick2();
+                    
+                }
             }
         });
         
