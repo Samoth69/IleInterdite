@@ -34,6 +34,9 @@ import java.awt.event.ActionListener;
 
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.File;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
@@ -57,6 +60,8 @@ public class VuDefausse extends JDialog {
     private boolean modeActionSpe = false;
     private boolean carteActionIsSelected = false;
     
+    // Media player
+    private MediaPlayer mediaPlayer;
     
     //carteJoueur: liste des cartes à afficher
     //titre: titre de la fenêtre
@@ -276,6 +281,9 @@ public class VuDefausse extends JDialog {
             @Override
             public void actionPerformed(ActionEvent e) {
                 verifAvantFermeture();
+                Media hit = new Media(new File("src/RessourcesJoueur/carteRetire.mp3").toURI().toString());
+                mediaPlayer = new MediaPlayer(hit);          //créer le media player
+                mediaPlayer.play();
                
             }
 
