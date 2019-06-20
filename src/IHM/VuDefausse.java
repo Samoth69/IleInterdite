@@ -188,9 +188,6 @@ public class VuDefausse extends JDialog {
             ic.addMouseListener(new MouseListener() {
                 @Override
                 public void mouseClicked(MouseEvent arg0) {
-                Media hit = new Media(new File("src/RessourcesJoueur/carteRetire.mp3").toURI().toString());
-                mediaPlayer = new MediaPlayer(hit);          //créer le media player
-                mediaPlayer.play();
                     if(modeDefausse)
                     {
                         if (pn.getBackground() != Color.red) 
@@ -284,6 +281,9 @@ public class VuDefausse extends JDialog {
             @Override
             public void actionPerformed(ActionEvent e) {
                 verifAvantFermeture();
+                Media hit = new Media(new File("src/RessourcesJoueur/carteRetire.mp3").toURI().toString());
+                mediaPlayer = new MediaPlayer(hit);          //créer le media player
+                mediaPlayer.play();
                
             }
 
