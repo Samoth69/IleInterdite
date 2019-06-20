@@ -18,29 +18,37 @@ import Enumerations.TypeEnumTresors;
  */
 public class Tuile extends CarteInondation {
 
+    //ATTRIBUTS
     private int X;
     private int Y;
     private TypeEnumInondation EtatInondation = TypeEnumInondation.SEC;
     private ArrayList<Personnage> persoSurLaTuile = new ArrayList<Personnage>();
 
-    public Tuile(int X, int Y, CarteInondation ci) {
+    //CONSTRUCTEUR
+    public Tuile(int X, int Y, CarteInondation ci) {  //instanciation
         super(ci.getNom(), ci.getCouleurPion(), ci.getTresor(), null, null);
-        setX(X);
-        setY(Y);
+        setX(X); //position y de la tuile
+        setY(Y); //position x de la tuile
     }
+    
+    //METHODES
 
+    //retourne le tresor de la tuile
     public TypeEnumTresors getTresor() {
         return super.getTresor();
     }
-
+    
+    //setter d un tresor sur une tuile
     public void setTresor(TypeEnumTresors tresor) {
         super.setTresor(tresor);
     }
 
+    //retourne la position en X de la tuile
     public int getX() {
         return X;
     }
-
+    
+    //setter de le position en X de la tuile
     public void setX(int x) {
         if (x < 0) {
             this.X = 0;
@@ -48,11 +56,13 @@ public class Tuile extends CarteInondation {
             this.X = x;
         }
     }
-
+    
+    //retourne le position en Y de la tuile
     public int getY() {
         return Y;
     }
-
+    
+    //setter de la position en Y de la tuile
     public void setY(int y) {
         if (y < 0) {
             this.Y = 0;
@@ -60,7 +70,7 @@ public class Tuile extends CarteInondation {
             this.Y = y;
         }
     }
-
+    
     public TypeEnumInondation getInondation() {        // Renvoie etat de la tuile (SEC, MOUILLE ou INONDE)
         return EtatInondation;
     }
@@ -96,11 +106,11 @@ public class Tuile extends CarteInondation {
         }
     }
 
-    public void addJoueur(Personnage perso) {
+    public void addJoueur(Personnage perso) { //ajoute un perso sur la tuile
         persoSurLaTuile.add(perso);
     }
 
-    public void removeJoueur(Personnage perso) {
+    public void removeJoueur(Personnage perso) { // Retire tous les personnages de la tuile
         for (int i = 0; i < persoSurLaTuile.size(); i++) {
             if (persoSurLaTuile.get(i).getNom() == perso.getNom()) {
                 persoSurLaTuile.remove(i);
@@ -108,11 +118,11 @@ public class Tuile extends CarteInondation {
         }
     }
 
-    public ArrayList<Personnage> getPersonnages() {
+    public ArrayList<Personnage> getPersonnages() { //retourne le liste des personnages sur la tuile
         return persoSurLaTuile;
     }
 
-    public String getNom() {
+    public String getNom() { //retourne le nom
         return super.getNom();
     }
 }
