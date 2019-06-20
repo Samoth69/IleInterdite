@@ -20,18 +20,23 @@ import java.util.concurrent.ThreadLocalRandom; //pour générer nombre aléatoir
  * @author violentt
  */
 public class Grille {
-
+    
+    //ATRIBUTS
+    //creation d un tableau de tuile
     private final Tuile tabTuile[][] = new Tuile[6][6]; // A potentiellement changer pour mettre des cases vides --- par quoi mdr ?
     private final ArrayList<Tuile> listTuile = new ArrayList<>();
     private ArrayList<Personnage> persos = new ArrayList<>();
     private int counter = 0;
-
+    
+    //CONSTRUCTEUR
     public Grille(ArrayList<Personnage> p, boolean demo) {
-        persos.addAll(p);
+        persos.addAll(p);       //ajoute les persos dans la grille
         genererTableauTuiles(demo);
-        assignerJoueursATuile(persos);
+        assignerJoueursATuile(persos); //assigne tous les persos à une tuile
     }
+    //METHODES
 
+    //retourne un tableau de tuile
     public Tuile[][] getTuiles() {
         return tabTuile;
     }
@@ -66,6 +71,7 @@ public class Grille {
         }
     }
 
+    //ajoute une tuile à la grille
     private void addTuile(int x, int y, ArrayList<CarteInondation> tuile) {
         Tuile t = new Tuile(x, y, tuile.get(this.counter));
         tabTuile[x][y] = t;
@@ -75,8 +81,9 @@ public class Grille {
         this.counter++;
     }
 
+    //assigne chaque joueur à une tuile
     private void assignerJoueursATuile(ArrayList<Personnage> perso) {
-        for (Personnage p : perso) {
+        for (Personnage p : perso) { // pour tous les persos
             int i = 0;
             //System.out.println(listTuile.get(i).getCouleurPion());
             //System.out.println(p.getCouleurPion());
@@ -86,13 +93,15 @@ public class Grille {
             }
             if (i != listTuile.size()) {
                 p.setEmplacementJoueur(listTuile.get(i));
-                listTuile.get(i).addJoueur(p);
+                listTuile.get(i).addJoueur(p);              //ajouter la joueur à la list tuile
                 //System.out.println("Association");
             }
 
         }
     }
 
+    
+    //retourne la liste des tuiles
     public ArrayList<Tuile> getListTuile() {
         return listTuile;
     }
@@ -217,7 +226,8 @@ public class Grille {
     public ArrayList<Tuile> getTuilesAutoursMouille(Personnage personnage) {
         return getTuilesAutoursMouille(personnage.getEmplacement());
     }
-
+    
+    //retourne les tuiles autours
     public ArrayList<Tuile> getTuilesAutours(Tuile tuile) {
         ArrayList<Tuile> tuilesAutourMouille = new ArrayList<>();
         for (int i = -1; i <= 1; i++) {
