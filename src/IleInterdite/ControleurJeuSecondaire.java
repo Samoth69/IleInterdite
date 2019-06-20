@@ -242,7 +242,7 @@ public class ControleurJeuSecondaire implements Observe {
                     }
                 }
                 //  Si le joueur a 4 carte du tresor de la case alors...
-                if (nbCarteTresor == 4 || force) {
+                if (nbCarteTresor >= 4 || force) {
                     switch (emplacementJoueur.getTresor()) {
                         case FEU:   //si le tresor = feu
                             cristalArdent = true;   //tresor est possédé
@@ -537,6 +537,11 @@ public class ControleurJeuSecondaire implements Observe {
         notifierObservateur(new Message(TypeEnumMessage.JOUEUR_SUIVANT));
         verifFinDePartie();
         partieGagne();
+        if(estDansEau(getJoueurEntrainDeJouer()))
+        {
+            notifierObservateur(new Message(TypeEnumMessage.PERSO_DANS_EAU));
+        }
+        
         actionDebutTour();
     }
 
@@ -640,6 +645,17 @@ public class ControleurJeuSecondaire implements Observe {
         return caliceOnde;
     }
 
+    public boolean estDansEau(Personnage perso){
+        if(perso.getEmplacement().getInondation() == TypeEnumInondation.INONDE)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    
     public void partieGagne() {
         int nbJoueurSurHeliport = 0;
 
@@ -689,7 +705,7 @@ public class ControleurJeuSecondaire implements Observe {
         //  ------------------------------------------------------
         //  La boucle regarde si un personnage est mort
         for (int i = 0; i < personnages.size(); i++) {
-            if (personnages.get(i).getDeplacements().isEmpty()) {
+            if (personnages.get(i).getDeplacements().isEmpty() && personnages.get(i).getEmplacement().getInondation() == TypeEnumInondation.INONDE) {
                 Media hit = new Media(new File("src/RessourcesJoueur/JeuPerdu.mp3").toURI().toString());
                 mediaPlayer = new MediaPlayer(hit);          //créer le media player
                 mediaPlayer.play();

@@ -553,8 +553,7 @@ public class Plateau implements Observateur {
                 setBtAssecherEnabled(false);
                 setBtDeplacementEnabled(false);
                 setBtPasserJoueurEnabled(false);
-                setBtCarteActionEnabled(false);
-                setBtAssecherText(nomAnnulé);//Desactive tous les boutons
+                setBtCarteActionEnabled(false);//Desactive tous les boutons
 
                 //  Affiche toute les case non inondé, donc praticable
                 for (Tuile t : grille.getListTuile()) {
@@ -571,8 +570,7 @@ public class Plateau implements Observateur {
                 paintNonSelected();
                 setBtAssecherEnabled(false);
                 setBtDeplacementEnabled(false);
-                setBtPasserJoueurEnabled(false);
-                setBtAssecherText(nomAnnulé);   //Desactive tous les boutons
+                setBtPasserJoueurEnabled(false);   //Desactive tous les boutons
 
                 //Affiche toute les case mouille, donc sechable
                 for (Tuile t : grille.getListTuile()) {
@@ -583,6 +581,18 @@ public class Plateau implements Observateur {
                 }
                 //  Notifie l'observateur de l'action
                 cj.notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Carte Sac de Sable utilisée"));
+            case 5: //Si un  perseo est dans l'eau et doit sortir
+                paintNonSelected();
+                setBtAssecherEnabled(false);
+                setBtDeplacementEnabled(false);
+                setBtPasserJoueurEnabled(false);
+                setBtCarteActionEnabled(false);//Desactive tous les boutons
+
+                for (Tuile t : cj.getJoueurEntrainDeJouer().getDeplacements()) {
+                    JPanel jpa = panel[t.getX()][t.getY()];
+                    jpa.setBackground(tuileColor);
+                }
+                break;
         }
     }
 
@@ -617,6 +627,14 @@ public class Plateau implements Observateur {
                     cj.assecher(emplacement);
                     cj.setNbAction(cj.getNbActionRestante() + 1);//Car utiliser une carte action ne coute pas de point d'action
                     break;
+                case 5:
+                    x = cj.getJoueurEntrainDeJouer().getEmplacement().getX();
+                    y = cj.getJoueurEntrainDeJouer().getEmplacement().getY();
+                    panel[x][y].remove(listPion.get(cj.getJoueurNum()));
+                    panel[i][j].add(listPion.get(cj.getJoueurNum()));
+                    cj.deplacerJoueurEnCours(emplacement);
+                    break;
+                    
             }
             actionFinished();
         }
@@ -951,6 +969,9 @@ public class Plateau implements Observateur {
                 updateGamePad();
                 window.repaint();
                 break;
+            case PERSO_DANS_EAU:
+                changeMode(5);
+                gamePadClick();
         }
     }
 
