@@ -7,6 +7,7 @@ package IHM;
 
 import Cartes.CarteInondation;
 import Enumerations.TypeEnumCouleurPion;
+import Enumerations.TypeEnumInondation;
 import Enumerations.TypeEnumTresors;
 import IleInterdite.ControleurJeuSecondaire;
 import IleInterdite.Grille;
@@ -55,7 +56,7 @@ public class Plateau implements Observateur {
 
     //boolean deplacementMode = false; //Devient vrai si le joueur à cliquer sur la case de son emplacement et voit donc les cases sur lesquels il peut aller
     //indique le "mode" de l'interface cad, comment elle doit afficher la grille en fonction du bouton cliquer par l'utilisateur
-    private int mode = 0; //0: aucun, 1: deplacement, 2: assecher
+    private int mode = 0; //0: aucun, 1: deplacement, 2: assecher, 3: Deplacement carte helicoptere
     private int oldMode = 0; //permet de détecter les changement dans la variable mode
 
     //couleur des tuiles
@@ -538,9 +539,11 @@ public class Plateau implements Observateur {
                 setBtAssecherText(nomAnnulé);
 
                 for (Tuile t : grille.getListTuile()) {
-                    JPanel jpa = panel[t.getX()][t.getY()];
-                    jpa.setBackground(tuileColor);
-                    //System.out.println(t.getNom() + "\t" + t.getX() + "\t" + t.getY());
+                    if(t.getInondation() != TypeEnumInondation.INONDE)
+                    {
+                        JPanel jpa = panel[t.getX()][t.getY()];
+                        jpa.setBackground(tuileColor);
+                    }
                 }
                 break;    
         }
