@@ -839,12 +839,12 @@ public class ControleurJeuSecondaire implements Observe {
         out.add(new CarteTresor("Trophée", TypeEnumTresors.TROPHEE, chemin + "Calice.png"));
         out.add(new CarteTresor("Trophée", TypeEnumTresors.TROPHEE, chemin + "Calice.png"));
         out.add(new CarteTresor("Trophée", TypeEnumTresors.TROPHEE, chemin + "Calice.png"));
-        out.add(new CarteMonteeDesEaux("CarteMonteeDesEaux1", chemin + "MonteeDesEaux.png"));
-        out.add(new CarteMonteeDesEaux("CarteMonteeDesEaux2", chemin + "MonteeDesEaux.png"));
-        out.add(new CarteMonteeDesEaux("CarteMonteeDesEaux3", chemin + "MonteeDesEaux.png"));
-        out.add(new CarteAction("Hélicoptere", TypeEnumCarteAction.HELICOPTERE, chemin + "Helicoptere.png"));
-        out.add(new CarteAction("Hélicoptere", TypeEnumCarteAction.HELICOPTERE, chemin + "Helicoptere.png"));
-        out.add(new CarteAction("Hélicoptere", TypeEnumCarteAction.HELICOPTERE, chemin + "Helicoptere.png"));
+        out.add(new CarteMonteeDesEaux("CarteMontéeDesEaux1", chemin + "MonteeDesEaux.png"));
+        out.add(new CarteMonteeDesEaux("CarteMontéeDesEaux2", chemin + "MonteeDesEaux.png"));
+        out.add(new CarteMonteeDesEaux("CarteMontéeDesEaux3", chemin + "MonteeDesEaux.png"));
+        out.add(new CarteAction("Hélicoptère", TypeEnumCarteAction.HELICOPTERE, chemin + "Helicoptere.png"));
+        out.add(new CarteAction("Hélicoptère", TypeEnumCarteAction.HELICOPTERE, chemin + "Helicoptere.png"));
+        out.add(new CarteAction("Hélicoptère", TypeEnumCarteAction.HELICOPTERE, chemin + "Helicoptere.png"));
         out.add(new CarteAction("Sac", TypeEnumCarteAction.SAC_DE_SABLE, chemin + "SacsDeSable.png"));
         out.add(new CarteAction("Sac", TypeEnumCarteAction.SAC_DE_SABLE, chemin + "SacsDeSable.png"));
 
