@@ -142,7 +142,7 @@ public class AffichagePersonnage extends JPanel {
         buttonPrendreRelique.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) { //prend la relique à partir de l emplacement du joueurcourant
-                pl.getControleurJeu().recupererTresor(pl.getControleurJeu().getJoueurEntrainDeJouer().getEmplacement());
+                pl.getControleurJeu().recupererTresor(pl.getControleurJeu().getJoueurEntrainDeJouer().getEmplacement(), false);
             }
         });
         

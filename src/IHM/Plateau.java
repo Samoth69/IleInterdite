@@ -841,6 +841,8 @@ public class Plateau implements Observateur {
     }
 
     public void afficher() {
+        updateGamePad();
+        paintNormal();
         this.window.setVisible(true);
     }
 
