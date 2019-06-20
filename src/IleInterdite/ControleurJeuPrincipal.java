@@ -79,6 +79,9 @@ public class ControleurJeuPrincipal implements Observateur {
                                 case "Messager":
                                     perso.add(new Messager(infos.get(counter), null));
                                     break;
+                                case "Messager":
+                                    perso.add(new Messager(infos.get(counter), null));
+                                    break;
                                 case "Navigateur":
                                     perso.add(new Navigateur(infos.get(counter), null));
                                     break;
