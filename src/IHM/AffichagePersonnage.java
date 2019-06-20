@@ -142,7 +142,7 @@ public class AffichagePersonnage extends JPanel {
         buttonPasserTour.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
-                Media hit = new Media(new File("src/RessourcesJoueur/Click2.mp3").toURI().toString());
+                Media hit = new Media(new File("src/RessourcesJoueur/passerTour.mp3").toURI().toString());
                 mediaPlayer = new MediaPlayer(hit);          //créer le media player
                 mediaPlayer.play();
                 pl.getControleurJeu().passerJoueurSuivant();// passe au joueur suivant
@@ -158,7 +158,7 @@ public class AffichagePersonnage extends JPanel {
         buttonPrendreRelique.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) { //prend la relique à partir de l emplacement du joueurcourant
-                Media hit = new Media(new File("src/RessourcesJoueur/Click2.mp3").toURI().toString());
+                Media hit = new Media(new File("src/RessourcesJoueur/tresorGagne.mp3").toURI().toString());
                 mediaPlayer = new MediaPlayer(hit);          //créer le media player
                 mediaPlayer.play();
                 pl.getControleurJeu().recupererTresor(pl.getControleurJeu().getJoueurEntrainDeJouer().getEmplacement(), false);
