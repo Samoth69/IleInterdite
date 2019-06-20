@@ -46,6 +46,10 @@ public class ControleurJeuPrincipal implements Observateur {
         menu.afficher();
     }
 
+    public void afficherMenu(boolean b){
+        menu.setVisible(b);
+    }
+    
     //traite le message
     @Override
     public void traiterMessage(Message m) {
