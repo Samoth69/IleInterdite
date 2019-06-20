@@ -61,7 +61,7 @@ public class Joueurs extends JFrame implements ActionListener {
     private final Integer[] nombreJoueur = {2, 3, 4};
     private final String[] nomRoles = {"Aléatoire", "Explorateur", "Ingénieur", "Messager", "Navigateur", "Pilote", "Plongeur"};
     private final String[] niveauEau = {"Novice", "Normal", "Elite", "Légendaire"};
-    private final String[] modeJ = {"Mode normal", "Scénario n°1", "Scénario n°2"};
+    private final String[] modeJ = {"Mode normal", "Scénario n°1", "Scénario n°2", "Scénario n°3", "Scénario n°4", "Scénario n°5"};
     
     //CONSTRUCTEUR
     public Joueurs() {
