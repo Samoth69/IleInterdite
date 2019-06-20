@@ -7,6 +7,7 @@ package IHM;
 
 import Cartes.CarteInondation;
 import Enumerations.TypeEnumCouleurPion;
+import Enumerations.TypeEnumInondation;
 import Enumerations.TypeEnumTresors;
 import IleInterdite.ControleurJeuSecondaire;
 import IleInterdite.Grille;
@@ -344,7 +345,7 @@ public class Plateau implements Observateur {
         
         JScrollPane scrollPane = new JScrollPane();
         scrollPane.setViewportView(listBasGamePad);
-        scrollPane.setPreferredSize(new Dimension(scrollPane.getWidth(), 150));
+        scrollPane.setPreferredSize(new Dimension(/*scrollPane.getWidth()*/300, 150));
 
         panelGamePadBas.add(new JLabel("Historique:", SwingConstants.CENTER));
         panelGamePadBas.add(scrollPane);
@@ -550,7 +551,7 @@ public class Plateau implements Observateur {
     private void panelClick(JPanel jp, Tuile emplacement, int i, int j) {
         //System.out.println("panelClick: " + i + ", " + j);
         //System.out.println("deplacement = " + mode);
-        if (jp.getBackground() != nonSelectedColor) {
+        if (jp.getBackground() != nonSelectedColor && emplacement.getInondation() != TypeEnumInondation.INONDE) {
             switch (mode) {
                 case 1: //se deplacer
                     //System.out.println("Moving");
@@ -858,7 +859,7 @@ public class Plateau implements Observateur {
                 if (cj.getTresorStatueZephyr()) {
                     imgZephyr.setImage(cheminZephyr);
                 }
-                window.repaint();
+                updateGamePad();
                 break;
         }
     }
