@@ -71,7 +71,7 @@ public class AffichagePersonnage extends JPanel {
     public final static String nomButtonDeplacement = "Se Déplacer";
     public final static String nomButtonAssecher = "Assécher";
     public final static String nomAnnulé = "Annuler";
-    public final static String nomActionSpecialNavigateur = "Deplacer un joueur";
+    public final static String nomActionSpecialNavigateur = "Déplacer un joueur";
 
     // Media Player son
     private MediaPlayer mediaPlayer;
