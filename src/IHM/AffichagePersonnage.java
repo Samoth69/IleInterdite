@@ -151,8 +151,8 @@ public class AffichagePersonnage extends JPanel {
         
         //definie le nom des bouton donner carte, prendre relique et carte special
         buttonDonnerCarte = new JButton("Donner carte");
-        buttonPrendreRelique = new JButton("Prendre relique");;
-        buttonCarteSpecial = new JButton("Carte Spécial");
+        buttonPrendreRelique = new JButton("Prendre rélique");;
+        buttonCarteSpecial = new JButton("Carte spéciale");
         
         //action du bouton prendre relique
         buttonPrendreRelique.addActionListener(new ActionListener() {
@@ -232,7 +232,7 @@ public class AffichagePersonnage extends JPanel {
                 }
 
                 if (!carteActionDuJoueur.isEmpty()) {
-                    VuDefausse vd1 = new VuDefausse(carteActionDuJoueur, "utiliser carte"); //idem à donner carte
+                    VuDefausse vd1 = new VuDefausse(carteActionDuJoueur, "Utiliser carte"); //idem à donner carte
                     vd1.setVisible(true);
                
                     if(vd1.getSelectedItems().get(0).getTypeCarteAction() == TypeEnumCarteAction.HELICOPTERE)
