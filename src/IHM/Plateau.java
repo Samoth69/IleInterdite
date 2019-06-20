@@ -841,6 +841,8 @@ public class Plateau implements Observateur {
     }
 
     public void afficher() {
+        updateGamePad();
+        paintNormal();
         this.window.setVisible(true);
     }
 
@@ -913,6 +915,7 @@ public class Plateau implements Observateur {
                     imgZephyr.setImage(cheminZephyr);
                 }
                 updateGamePad();
+                window.repaint();
                 break;
         }
     }
