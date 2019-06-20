@@ -22,5 +22,6 @@ public enum TypeEnumMessage {
     UPDATE_GUI, //indique à l'interface de mettre à jour son affichage
     FIN_PARTIE, //indique une fin de partie
     PARTIE_GAGNE, //indique que les joueurs ont gagnés
-    RM_TRESOR   //Supprime un tresor d'une case
+    RM_TRESOR,   //Supprime un tresor d'une case
+    PERSO_DANS_EAU //Si un pero est dans l'eau et doit sortir
 }
