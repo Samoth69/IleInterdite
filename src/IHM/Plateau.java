@@ -400,7 +400,10 @@ public class Plateau implements Observateur {
 
                         for (String k : listTresor.keySet()) {
                             if (plateau[i][j].getNom() == k) {
-                                pn.add(listTresor.get(k));
+                                JLabel labT = new JLabel(listTresor.get(k).getNom());
+                                labT.setOpaque(true);
+                                labT.setBackground(listTresor.get(k).getCouleur());
+                                pn.add(labT);
                             }
                         }
 
