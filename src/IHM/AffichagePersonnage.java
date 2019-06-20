@@ -10,9 +10,11 @@ import Cartes.CarteRouge;
 import Cartes.CarteTresor;
 import Enumerations.TypeEnumCarteAction;
 import Enumerations.TypeEnumCouleurPion;
+import Enumerations.TypeEnumInondation;
 import Enumerations.TypeEnumMessage;
 import Enumerations.TypeEnumTresors;
 import IleInterdite.Message;
+import IleInterdite.Tuile;
 import Personnages.Personnage;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -164,15 +166,29 @@ public class AffichagePersonnage extends JPanel{
                     if(vd1.getSelectedItems().get(0).getTypeCarteAction() == TypeEnumCarteAction.HELICOPTERE)
                     {
                         pl.changeMode(3);
+                        pl.gamePadClick();
+                        perso.removeCarte(vd1.getSelectedItems().get(0));
                     }
                     else
                     {
-                        pl.changeMode(4);
+                        ArrayList<Tuile> verifCarteAAssecher = new ArrayList<>();
+                        for(Tuile t : pl.getControleurJeu().getListeCarte())
+                        {
+                            if(t.getInondation() == TypeEnumInondation.MOUILLE)
+                            {
+                                verifCarteAAssecher.add(t);
+                            }
+                        }
+                        if(!verifCarteAAssecher.isEmpty())
+                        {
+                            pl.changeMode(4);
+                            pl.gamePadClick();
+                            perso.removeCarte(vd1.getSelectedItems().get(0));
+                        }
+                        verifCarteAAssecher.clear();
+                        
                     }
                     
-                    pl.gamePadClick();
-                    
-                    perso.removeCarte(vd1.getSelectedItems().get(0));
                     pl.getControleurJeu().notifierObservateur(new Message(TypeEnumMessage.UPDATE_GUI));
                 }
             }

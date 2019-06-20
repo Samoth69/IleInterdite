@@ -913,6 +913,7 @@ public class Plateau implements Observateur {
                     imgZephyr.setImage(cheminZephyr);
                 }
                 updateGamePad();
+                window.repaint();
                 break;
         }
     }
