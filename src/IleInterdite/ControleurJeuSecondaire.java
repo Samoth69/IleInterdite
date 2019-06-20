@@ -725,8 +725,8 @@ public class ControleurJeuSecondaire implements Observe {
                         Media hit = new Media(new File("src/RessourcesJoueur/JeuPerdu.mp3").toURI().toString());
                         mediaPlayer = new MediaPlayer(hit);          //créer le media player
                         mediaPlayer.play();
-                        notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Fin de partie : Les 2 cases caverne sont inondé et les trésors avec"));
-                        notifierObservateur(new Message(TypeEnumMessage.FIN_PARTIE, "Les 2 cases caverne sont inondé et les trésors avec"));
+                        notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Fin de partie : Les 2 cases caverne sont inondées et leurs trésors avec"));
+                        notifierObservateur(new Message(TypeEnumMessage.FIN_PARTIE, "Les 2 cases caverne sont inondées et leurs trésors avec"));
                         break;  //  peut-etre problematique
                     }
                 }
@@ -738,8 +738,8 @@ public class ControleurJeuSecondaire implements Observe {
                         Media hit = new Media(new File("src/RessourcesJoueur/JeuPerdu.mp3").toURI().toString());
                         mediaPlayer = new MediaPlayer(hit);          //créer le media player
                         mediaPlayer.play();
-                        notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Fin de partie : Les 2 cases Temple sont inondé et les trésors avec"));
-                        notifierObservateur(new Message(TypeEnumMessage.FIN_PARTIE, "Les 2 cases Temple sont inondé et les trésors avec"));
+                        notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Fin de partie : Les 2 cases Temple sont inondées et leurs trésors avec"));
+                        notifierObservateur(new Message(TypeEnumMessage.FIN_PARTIE, "Les 2 cases Temple sont inondées et leurs trésors avec"));
                         break;  //  peut-etre problematique
                     }
                 }
@@ -751,8 +751,8 @@ public class ControleurJeuSecondaire implements Observe {
                         Media hit = new Media(new File("src/RessourcesJoueur/JeuPerdu.mp3").toURI().toString());
                         mediaPlayer = new MediaPlayer(hit);          //créer le media player
                         mediaPlayer.play();
-                        notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Fin de partie : Les 2 cases palais sont inondé et les trésors avec"));
-                        notifierObservateur(new Message(TypeEnumMessage.FIN_PARTIE, "Les 2 cases palais sont inondé et les trésors avec"));
+                        notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Fin de partie : Les 2 cases palais sont inondées et leurs trésors avec"));
+                        notifierObservateur(new Message(TypeEnumMessage.FIN_PARTIE, "Les 2 cases palais sont inondées et leurs trésors avec"));
                         break;  //  peut-etre problematique
                     }
                 }
@@ -764,8 +764,8 @@ public class ControleurJeuSecondaire implements Observe {
                         Media hit = new Media(new File("src/RessourcesJoueur/JeuPerdu.mp3").toURI().toString());
                         mediaPlayer = new MediaPlayer(hit);          //créer le media player
                         mediaPlayer.play();
-                        notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Fin de partie : Les 2 cases jardins sont inondé et les trésors avec"));
-                        notifierObservateur(new Message(TypeEnumMessage.FIN_PARTIE, "Les 2 cases jardins sont inondé et les trésors avec"));
+                        notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Fin de partie : Les 2 cases jardins sont inondées et leurs trésors avec"));
+                        notifierObservateur(new Message(TypeEnumMessage.FIN_PARTIE, "Les 2 cases jardins sont inondées et leurs trésors avec"));
                         break;  //  peut-etre problematique
                     }
                 }
