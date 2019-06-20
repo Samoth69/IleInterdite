@@ -59,7 +59,7 @@ public class Joueurs extends JFrame implements ActionListener {
     private ArrayList<JTextField> listPseudo;
     private ArrayList<JComboBox> listRole;
     private final Integer[] nombreJoueur = {2, 3, 4};
-    private final String[] nomRoles = {"Aléatoire", "Explorateur", "Ingénieur", "Navigateur", "Pilote", "Plongeur"};
+    private final String[] nomRoles = {"Aléatoire", "Explorateur", "Ingénieur", "Messager", "Navigateur", "Pilote", "Plongeur"};
     private final String[] niveauEau = {"Novice", "Normal", "Elite", "Légendaire"};
     private final String[] modeJ = {"Mode normal", "Scénario n°1", "Scénario n°2"};
 
