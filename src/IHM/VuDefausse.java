@@ -99,15 +99,31 @@ public class VuDefausse extends JDialog {
         }
         
         JComboBox boxPersos = new JComboBox(nomDesPersos);
+        boxPersos.setSelectedIndex(0);
         
         for(Personnage i : persos)
         {
             if(i.getNom() == boxPersos.getSelectedItem().toString())
             {
+                System.out.println(boxPersos.getSelectedItem().toString());
                 persoQuiRecoitCarte = i;
             }
         }
         
+        boxPersos.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                persoQuiRecoitCarte = null;
+                for(Personnage i : persos)
+                {
+                    if(i.getNom() == boxPersos.getSelectedItem().toString())
+                    {
+                        System.out.println(boxPersos.getSelectedItem().toString());
+                        persoQuiRecoitCarte = i;
+                    }
+                }
+            }
+        });
         
         mainPanel.add(boxPersos, BorderLayout.NORTH);
         
