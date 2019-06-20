@@ -335,7 +335,7 @@ public class Joueurs extends JFrame implements ActionListener {
                     JOptionPane.showMessageDialog(null, "Chaque joueur doit avoir un rôle différent.", "Message d'erreur", JOptionPane.ERROR_MESSAGE);
                     return; //quitte la fonction
                 }
-                if ((String) listRole.get(i).getSelectedItem() != nomRoles[nomRoles.length - 1]) {
+                if ((String)listRole.get(i).getSelectedItem() != nomRoles[nomRoles.length - 1]) {
                     usedRole.add((String) listRole.get(i).getSelectedItem());
                 }
             }
@@ -388,6 +388,7 @@ public class Joueurs extends JFrame implements ActionListener {
                     infos.add("3");
                     break;
             }
+            infos.add(Integer.toString(mode.getSelectedIndex()));
             infos.add(String.valueOf(nbJoueurs.getSelectedItem()));
             infos.add(pseudo1.getText());
             infos.add((String) role1.getSelectedItem());

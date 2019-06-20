@@ -10,9 +10,11 @@ import Cartes.CarteRouge;
 import Cartes.CarteTresor;
 import Enumerations.TypeEnumCarteAction;
 import Enumerations.TypeEnumCouleurPion;
+import Enumerations.TypeEnumInondation;
 import Enumerations.TypeEnumMessage;
 import Enumerations.TypeEnumTresors;
 import IleInterdite.Message;
+import IleInterdite.Tuile;
 import Personnages.Personnage;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -178,14 +180,34 @@ public class AffichagePersonnage extends JPanel {
                 if (!carteActionDuJoueur.isEmpty()) {
                     VuDefausse vd1 = new VuDefausse(carteActionDuJoueur, "utiliser carte"); //idem à donner carte
                     vd1.setVisible(true);
-
-                    if (vd1.getSelectedItems().get(0).getTypeCarteAction() == TypeEnumCarteAction.HELICOPTERE) {
-
+               
+                    if(vd1.getSelectedItems().get(0).getTypeCarteAction() == TypeEnumCarteAction.HELICOPTERE)
+                    {
+                        pl.changeMode(3);
+                        pl.gamePadClick();
+                        perso.removeCarte(vd1.getSelectedItems().get(0));
                     }
-
-                    //perso.deplacement(vd1.getSelectedItems());
-                    pl.changeMode(3); //change le mode en deplacement carte helicoptere (0: aucun, 1: deplacement, 2: assecher, 3: Deplacement carte helicoptere)
-                    pl.gamePadClick();//utilisé par les boutons déplacer et assécher afin de changer l'affichage du plateau
+                    else
+                    {
+                        ArrayList<Tuile> verifCarteAAssecher = new ArrayList<>();
+                        for(Tuile t : pl.getControleurJeu().getListeCarte())
+                        {
+                            if(t.getInondation() == TypeEnumInondation.MOUILLE)
+                            {
+                                verifCarteAAssecher.add(t);
+                            }
+                        }
+                        if(!verifCarteAAssecher.isEmpty())
+                        {
+                            pl.changeMode(4);
+                            pl.gamePadClick();
+                            perso.removeCarte(vd1.getSelectedItems().get(0));
+                        }
+                        verifCarteAAssecher.clear();
+                        
+                    }
+                    
+                    pl.getControleurJeu().notifierObservateur(new Message(TypeEnumMessage.UPDATE_GUI));
                 }
             }
         });
@@ -288,19 +310,17 @@ public class AffichagePersonnage extends JPanel {
                     carteActionDuJoueur.add(i);
                 }
             }
-
-            if (perso == pl.getControleurJeu().getJoueurEntrainDeJouer()) {
-                if (carteActionDuJoueur.isEmpty()) {
+            
+                if(carteActionDuJoueur.isEmpty())
+                {
                     buttonCarteSpecial.setEnabled(false);
                 } else {
                     buttonCarteSpecial.setEnabled(true);
                 }
-            } else {
-                buttonCarteSpecial.setEnabled(false);
-            }
-
-            panelMilieu.removeAll();//enleve les elements
-            panelMilieu.revalidate();//reinitialiser
+            
+            
+            panelMilieu.removeAll();
+            panelMilieu.revalidate();
             labelJoueur.setText(perso.getNom());
             labelTypeJoueur.setText(perso.getType().toString());
 
@@ -349,5 +369,9 @@ public class AffichagePersonnage extends JPanel {
     public void setButtonDonnerCarteEnabled(boolean b) {
         buttonDonnerCarte.setEnabled(b);
     }
-
+    
+    public void setBtCarteActionEnabled(boolean b){
+        buttonCarteSpecial.setEnabled(b);
+    }
+    
 }
