@@ -151,12 +151,21 @@ public class AffichagePersonnage extends JPanel {
         buttonDonnerCarte.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
+                carteTresorDuJoueur.clear();
+                
                 if(perso.getType() == TypeEnumPersonnages.MESSAGER)
                 {
                     listPersoEmplacement.clear();
                     listPersoEmplacement.addAll(pl.getControleurJeu().getPerso());//ajoute les personnage de l emplacement dans cette liste
-                    listPersoEmplacement.remove(perso);                                    //sauf celui qui lance la commande
-                    VuDefausse vd = new VuDefausse(perso.getCartes(), "Donner carte", 1, listPersoEmplacement, pl.getControleurJeu().getNbActionRestante());
+                    listPersoEmplacement.remove(perso);//sauf celui qui lance la commande
+                    for(CarteRouge i : perso.getCartes())
+                    {
+                        if(i instanceof CarteTresor)
+                        {
+                            carteTresorDuJoueur.add(i);
+                        }
+                    }
+                    VuDefausse vd = new VuDefausse(carteTresorDuJoueur, "Donner carte", 1, listPersoEmplacement, pl.getControleurJeu().getNbActionRestante());
                     vd.setVisible(true); //afficher les cartes à donner
                     perso.donnerCarteAJoueur(vd.getPersoQuiRecoitCartes(), vd.getSelectedItems()); //donner les cartes selectionner
                     pl.getControleurJeu().setNbAction(vd.getNbActionRestante()); //change le nombre d action restante
@@ -166,8 +175,15 @@ public class AffichagePersonnage extends JPanel {
                 }
                 if (perso.getEmplacement().getPersonnages().size() != 1) {
                     listPersoEmplacement.addAll(perso.getEmplacement().getPersonnages());//ajoute les personnage de l emplacement dans cette liste
-                    listPersoEmplacement.remove(perso);                                    //sauf celui qui lance la commande
-                    VuDefausse vd = new VuDefausse(perso.getCartes(), "Donner carte", 1, listPersoEmplacement, pl.getControleurJeu().getNbActionRestante());
+                    listPersoEmplacement.remove(perso); //sauf celui qui lance la commande
+                    for(CarteRouge i : perso.getCartes())
+                    {
+                        if(i instanceof CarteTresor)
+                        {
+                            carteTresorDuJoueur.add(i);
+                        }
+                    }
+                    VuDefausse vd = new VuDefausse(carteTresorDuJoueur, "Donner carte", 1, listPersoEmplacement, pl.getControleurJeu().getNbActionRestante());
                     vd.setVisible(true); //afficher les cartes à donner
                     perso.donnerCarteAJoueur(vd.getPersoQuiRecoitCartes(), vd.getSelectedItems()); //donner les cartes selectionner
                     pl.getControleurJeu().setNbAction(vd.getNbActionRestante()); //change le nombre d action restante
