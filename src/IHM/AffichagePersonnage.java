@@ -88,7 +88,7 @@ public class AffichagePersonnage extends JPanel {
             super.setVisible(false);   //pion invisible
             pion = new Pion(TypeEnumCouleurPion.AUCUN); //type aucun
         } else {//sinon
-            pion = new Pion(perso.getCouleurPion());  //Creer le pion
+            pion = new Pion(perso);  //Creer le pion
         }
         
         bigMainPanel = new JPanel(new BorderLayout());//creation d une grosse fenetre principal en borderlayout (NORTH,SOUTH,EAST..)

@@ -19,7 +19,7 @@ import javax.swing.JComponent;
 public class Pion extends JComponent{
 
     //ATTRIBUTS
-    //Personnage perso;
+    private Personnage perso;
     private TypeEnumCouleurPion couleur;
     private int width;
     private int height;
@@ -29,6 +29,7 @@ public class Pion extends JComponent{
         this.couleur = perso.getCouleurPion();
         width = 30;
         height = 30;
+        this.perso = perso;
     }
     
     //CONSTRUCTEURS2
@@ -95,5 +96,9 @@ public class Pion extends JComponent{
     //assigne la couleur au pion
     public void setCouleur(TypeEnumCouleurPion couleur) {
         this.couleur = couleur;
+    }
+    
+    public Personnage getPerso() {
+        return perso;
     }
 }
