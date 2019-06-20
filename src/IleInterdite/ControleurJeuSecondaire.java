@@ -211,7 +211,7 @@ public class ControleurJeuSecondaire implements Observe {
     
     public void deplacerJoueur(Personnage perso, Tuile newPos) {
         personnages.get(getNumJoueur(perso.getNom())).deplacement(newPos);
-        notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Deplacement de " + getJoueurEntrainDeJouer().getNom() + " sur " + newPos.getNom() + "."));
+        notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Déplacement de " + getJoueurEntrainDeJouer().getNom() + " sur " + newPos.getNom() + "."));
         notifierObservateur(new Message(TypeEnumMessage.UPDATE_GUI));
         partieGagne();  // regarde si la partie est gagnée
     }
@@ -222,7 +222,7 @@ public class ControleurJeuSecondaire implements Observe {
         }
         personnages.get(numJoueurEnCours).deplacement(newPos);
         decrementAction();
-        notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Deplacement de " + getJoueurEntrainDeJouer().getNom() + " sur " + newPos.getNom() + "."));
+        notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Déplacement de " + getJoueurEntrainDeJouer().getNom() + " sur " + newPos.getNom() + "."));
         partieGagne();  // regarde si la partie est gagnée
     }
 
