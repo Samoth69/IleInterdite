@@ -89,22 +89,26 @@ public class Menu extends JFrame implements ActionListener {
 
         //Mise en place des boutons dans des cases du gridlayout
         for (int i = 0; i < 33; i++) { // boucle 33 fois car il y a 33 cases
-            if (i == 16) {
-                background.add(jouer);  // bouton jouer à la 16eme case
-            } else if (i == 22) {
-                background.add(regles);  //bouton regles à la 22eme case
-            } else if (i == 28) {
-                background.add(quitter);   //bouton quitter à la 28eme case
-            } else if(i==32){
-                //créer un boutton musique en-bas à droite
-                JLabel musicTab= new JLabel();
-                musicTab.setLayout(new BorderLayout());
-                musicTab.add(music, BorderLayout.LINE_END);
-                background.add(musicTab);
-            }
-            
-            else {
-                background.add(new JLabel(""));// pour le reste des cases, du vide
+            switch (i) {
+                case 16:
+                    background.add(jouer);  // bouton jouer à la 16eme case
+                    break;
+                case 22:
+                    background.add(regles);  //bouton regles à la 22eme case
+                    break;
+                case 28:
+                    background.add(quitter);   //bouton quitter à la 28eme case
+                    break;
+                case 32:
+                    //créer un boutton musique en-bas à droite
+                    JLabel musicTab= new JLabel();
+                    musicTab.setLayout(new BorderLayout());
+                    musicTab.add(music, BorderLayout.LINE_END);
+                    background.add(musicTab);
+                    break;
+                default:
+                    background.add(new JLabel(""));// pour le reste des cases, du vide
+                    break;
             }
         }
         

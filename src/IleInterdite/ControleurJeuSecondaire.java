@@ -66,7 +66,43 @@ public class ControleurJeuSecondaire implements Observe{
         personnages.addAll(getPersonnagesDebutDePartie(nombreJoueurDansPartie));
         grille = new Grille(personnages);
     }*/
-    
+    public ControleurJeuSecondaire(ArrayList<Personnage> perso, int niveauEau, boolean demo) {
+        System.out.println("MODE SCENARIO");
+        this.niveauEau = niveauEau;
+        nombreJoueurDansPartie = perso.size();
+        personnages = perso;
+        grille = new Grille(personnages, demo);
+        pileCarteInondation = grille.getListCarteInondation();
+        pileCarteRouge = getListCarteRouge();
+        if (!demo) {
+            Collections.shuffle(pileCarteInondation);
+            Collections.shuffle(pileCarteRouge);
+        }
+        for (int i = 0; i <= 5; i++) {
+            CarteInondation ci = PiocherCarteInond();
+            augementerInondation(ci.getNom());
+            ControleurJeuSecondaire.this.defausserCarte(ci);
+        } 
+        for (int i = 1; i <= 2; i++) {
+            for (Personnage p : perso) {
+                CarteRouge cr = PiocherCarteRouge();
+                if (cr != null) {
+                    p.addCarte(cr);
+                }
+            }
+        }
+        
+        //  Initialise les variables pour indiquer qu'aucun tresor n'est possédé 
+        pierreSacre = false;
+        statueZephyr = false;
+        cristalArdent = false;
+        caliceOnde = false;
+        
+        //  initialise nombre d'action
+        nombreAction = 3;
+        demarrage = false;
+    }
+   /* 
     public ControleurJeuSecondaire(ArrayList<Personnage> perso, int niveauEau) {
         if (perso.size() < 2 || perso.size() > 4) {
             throw new Error("Le nombre de joueur doit être compris entre 2 et 4 (inclus)");
@@ -74,7 +110,7 @@ public class ControleurJeuSecondaire implements Observe{
         this.niveauEau = niveauEau;
         nombreJoueurDansPartie = perso.size();
         personnages = perso;
-        grille = new Grille(personnages);
+        grille = new Grille(personnages, false);
         pileCarteInondation = grille.getListCarteInondation();
         pileCarteRouge = getListCarteRouge();
         Collections.shuffle(pileCarteInondation);
@@ -104,7 +140,7 @@ public class ControleurJeuSecondaire implements Observe{
         nombreAction = 3;
         demarrage = false;
     }
-    
+    */
     //Obtient les personnages pour démararer la partie.
     //renvoie une liste contenant de NOUVEAU joueurs avec tous un role différent
     private ArrayList<Personnage> getPersonnagesDebutDePartie(int nbJoueurs) {
@@ -548,40 +584,6 @@ public class ControleurJeuSecondaire implements Observe{
         return caliceOnde;
     }
     
-    //USELESS
-    //Gerer le tour de Jeu
-    public void TourDeJeu() {
-        verifFinDePartie();
-        partieGagne();
-        
-        //ACTION NUMERO 1 : FAIRE SES ACTIONS
-        int nbaction = 3;
-        while(nbaction>0){
-            //FaireAction(typeAction);
-        }
-        //ACTION NUMERO 2 : PIOCHER CARTES ROUGES
-        for(int i = 1; i >= 2; i++) {
-            CarteRouge cartepioche = this.PiocherCarteRouge();
-            pileCarteRouge.remove(pileCarteRouge.size()-1);
-            
-            
-            if(cartepioche.getNom() == "CarteTresor") {
-                personnages.get(numJoueurEnCours).addCarte(cartepioche);
-            }
-        }
-        
-        int niveau = getNiveauEau();
-        
-        //ACTION NUMERO 3 : PIOCHER CARTES INNONDATION
-        int i=0;
-        while(niveau>i){
-            i++;
-            CarteInondation cartepiocheinond = this.PiocherCarteInond();
-            grille.AugmenterInnondation(cartepiocheinond.getNom());
-            defausseCarteInondation.add(cartepiocheinond);
-        }
-    }
-    
     public void partieGagne(){
         int nbJoueurSurHeliport = 0;
         
@@ -591,7 +593,7 @@ public class ControleurJeuSecondaire implements Observe{
             for(int i = 0; i < personnages.size(); i++)
             {
                 //  Compte le nombre de joueurs sur l'heliport
-                if(personnages.get(i).getEmplacement().getNom() == "Heliport")
+                if("Heliport".equals(personnages.get(i).getEmplacement().getNom()))
                 {
                     nbJoueurSurHeliport++;
                 }
@@ -648,7 +650,7 @@ public class ControleurJeuSecondaire implements Observe{
         //  Verifie si l'heliport n'est pas Inondé, sinon fin de partie
         for(int i = 0; i < grille.getListTuile().size(); i++)
         {
-            if(grille.getListTuile().get(i).getNom() == "Heliport")
+            if("Heliport".equals(grille.getListTuile().get(i).getNom()))
             {
                 if(grille.getListTuile().get(i).getInondation() == TypeEnumInondation.INONDE)
                 {
@@ -666,12 +668,12 @@ public class ControleurJeuSecondaire implements Observe{
         for(int i = 0; i < grille.getListTuile().size(); i++)
         {
             // Si la caverne est inondé et que l'on a pas recupéré le trésor alors...
-            if(grille.getListTuile().get(i).getNom() == "La Caverne des Ombres" && grille.getListTuile().get(i).getInondation() == TypeEnumInondation.INONDE && cristalArdent == false)
+            if("La Caverne des Ombres".equals(grille.getListTuile().get(i).getNom()) && grille.getListTuile().get(i).getInondation() == TypeEnumInondation.INONDE && cristalArdent == false)
             {
                 for(int j = 0; j < grille.getListTuile().size(); j++)
                 {
                     //  Si l'autre caverne est inondé et que l'on a pas recupéré le trésor la partie est fini
-                    if(grille.getListTuile().get(j).getNom() == "La Caverne du Brasier" && grille.getListTuile().get(j).getInondation() == TypeEnumInondation.INONDE)
+                    if("La Caverne du Brasier".equals(grille.getListTuile().get(j).getNom()) && grille.getListTuile().get(j).getInondation() == TypeEnumInondation.INONDE)
                     {
                         notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Fin de partie : Les 2 cases caverne sont inondé et les trésors avec"));
                         notifierObservateur(new Message(TypeEnumMessage.FIN_PARTIE));
@@ -680,11 +682,11 @@ public class ControleurJeuSecondaire implements Observe{
                 }
             }
             //  idem precedent
-            if(grille.getListTuile().get(i).getNom() == "Le Temple du Soleil" && grille.getListTuile().get(i).getInondation() == TypeEnumInondation.INONDE && pierreSacre == false)
+            if("Le Temple du Soleil".equals(grille.getListTuile().get(i).getNom()) && grille.getListTuile().get(i).getInondation() == TypeEnumInondation.INONDE && pierreSacre == false)
             {
                 for(int j = 0; j < grille.getListTuile().size(); j++)
                 {
-                    if(grille.getListTuile().get(j).getNom() == "Le Temple de La Lune" && grille.getListTuile().get(j).getInondation() == TypeEnumInondation.INONDE)
+                    if("Le Temple de La Lune".equals(grille.getListTuile().get(j).getNom()) && grille.getListTuile().get(j).getInondation() == TypeEnumInondation.INONDE)
                     {
                         notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Fin de partie : Les 2 cases Temple sont inondé et les trésors avec"));
                         notifierObservateur(new Message(TypeEnumMessage.FIN_PARTIE));
@@ -693,11 +695,11 @@ public class ControleurJeuSecondaire implements Observe{
                 }
             }
             //  idem precedent
-            if(grille.getListTuile().get(i).getNom() == "Le Palais de Corail" && grille.getListTuile().get(i).getInondation() == TypeEnumInondation.INONDE && caliceOnde == false)
+            if("Le Palais de Corail".equals(grille.getListTuile().get(i).getNom()) && grille.getListTuile().get(i).getInondation() == TypeEnumInondation.INONDE && caliceOnde == false)
             {
                 for(int j = 0; j < grille.getListTuile().size(); j++)
                 {
-                    if(grille.getListTuile().get(j).getNom() == "Le Palais des Marees" && grille.getListTuile().get(j).getInondation() == TypeEnumInondation.INONDE)
+                    if("Le Palais des Marees".equals(grille.getListTuile().get(j).getNom()) && grille.getListTuile().get(j).getInondation() == TypeEnumInondation.INONDE)
                     {
                         notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Fin de partie : Les 2 cases palais sont inondé et les trésors avec"));
                         notifierObservateur(new Message(TypeEnumMessage.FIN_PARTIE));
@@ -706,11 +708,11 @@ public class ControleurJeuSecondaire implements Observe{
                 }
             }
             //  idem precedent
-            if(grille.getListTuile().get(i).getNom() == "Le Jardin des Hurlements" && grille.getListTuile().get(i).getInondation() == TypeEnumInondation.INONDE && statueZephyr == false)
+            if("Le Jardin des Hurlements".equals(grille.getListTuile().get(i).getNom()) && grille.getListTuile().get(i).getInondation() == TypeEnumInondation.INONDE && statueZephyr == false)
             {
                 for(int j = 0; j < grille.getListTuile().size(); j++)
                 {
-                    if(grille.getListTuile().get(j).getNom() == "Le Jardin des Murmures" && grille.getListTuile().get(j).getInondation() == TypeEnumInondation.INONDE)
+                    if("Le Jardin des Murmures".equals(grille.getListTuile().get(j).getNom()) && grille.getListTuile().get(j).getInondation() == TypeEnumInondation.INONDE)
                     {
                         notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Fin de partie : Les 2 cases jardins sont inondé et les trésors avec"));
                         notifierObservateur(new Message(TypeEnumMessage.FIN_PARTIE));
@@ -747,7 +749,6 @@ public class ControleurJeuSecondaire implements Observe{
             passerJoueurSuivant();
         }
     }
-    
     
     public ArrayList<CarteRouge> getListCarteRouge() {
         ArrayList<CarteRouge> out = new ArrayList<>();

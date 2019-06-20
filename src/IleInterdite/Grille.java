@@ -26,33 +26,9 @@ public class Grille {
     private ArrayList<Personnage> persos = new ArrayList<>();
     private int counter = 0;
 
-    public Grille(Personnage perso1, Personnage perso2) {
-        persos.add(perso1);
-        persos.add(perso2);
-        genererTableauTuiles();
-        assignerJoueursATuile(persos);
-    }
-
-    public Grille(Personnage perso1, Personnage perso2, Personnage perso3) {
-        persos.add(perso1);
-        persos.add(perso2);
-        persos.add(perso3);
-        genererTableauTuiles();
-        assignerJoueursATuile(persos);
-    }
-
-    public Grille(Personnage perso1, Personnage perso2, Personnage perso3, Personnage perso4) {
-        persos.add(perso1);
-        persos.add(perso2);
-        persos.add(perso3);
-        persos.add(perso4);
-        genererTableauTuiles();
-        assignerJoueursATuile(persos);
-    }
-
-    public Grille(ArrayList<Personnage> p) {
+    public Grille(ArrayList<Personnage> p, boolean demo) {
         persos.addAll(p);
-        genererTableauTuiles();
+        genererTableauTuiles(demo);
         assignerJoueursATuile(persos);
     }
 
@@ -60,12 +36,20 @@ public class Grille {
         return tabTuile;
     }
 
-    //génère le tableau des tuiles aléatoire
     private void genererTableauTuiles() {
+        genererTableauTuiles(false);
+    }
+
+    //génère le tableau des tuiles aléatoire
+    //demo: désactive le mélange des cartes
+    private void genererTableauTuiles(boolean demo) {
         ArrayList<CarteInondation> tuile = getListCarteInondation();
-        for (int i = 0; i < ThreadLocalRandom.current().nextInt(2, 5); i++) {
-            Collections.shuffle(tuile); //mélange la liste des tuiles
+        if (!demo) {
+            for (int i = 0; i < ThreadLocalRandom.current().nextInt(2, 5); i++) {
+                Collections.shuffle(tuile); //mélange la liste des tuiles
+            }
         }
+
         counter = 0;
 
         for (int x = 0; x <= 5; x++) {
