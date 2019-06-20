@@ -206,6 +206,8 @@ public abstract class Personnage {
 
     //Permet de donner le pouvoir de deplacement au personnage
     protected void setPouvoirDeplacementUtilise(boolean v) {
-        pouvoirDeplacementUtilise = v;
+        if (!ile.isStartup()) {
+            pouvoirDeplacementUtilise = v;    
+        }
     }
 }

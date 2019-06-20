@@ -25,10 +25,13 @@ public class Grille {
     private final ArrayList<Tuile> listTuile = new ArrayList<>();
     private ArrayList<Personnage> persos = new ArrayList<>();
     private int counter = 0;
-
+    private boolean demoMode = false;
+    private boolean startup = true;
+    
     public Grille(ArrayList<Personnage> p, boolean demo) {
         persos.addAll(p);
         genererTableauTuiles(demo);
+        demoMode = demo;
         assignerJoueursATuile(persos);
     }
 
@@ -38,6 +41,18 @@ public class Grille {
 
     private void genererTableauTuiles() {
         genererTableauTuiles(false);
+    }
+    
+    public boolean isDemoMode() {
+        return demoMode;
+    }
+    
+    public boolean isStartup() {
+        return startup;
+    }
+
+    public void setStartup(boolean startup) {
+        this.startup = startup;
     }
 
     //génère le tableau des tuiles aléatoire

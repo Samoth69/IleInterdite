@@ -43,7 +43,8 @@ public class ControleurJeuSecondaire implements Observe {
     private double nombreAction;
     private Grille grille;
     private boolean demarrage = true; //est vrai pendant que le constructeur travaille. devient définitivement false après la fin du constructeur
-
+    private boolean demoMode = false; //indique si le jeu est en mode demo, désactive tout l'aléatoire du jeu
+    
     //  Variables qui indiques si les tresors on etait pris ou non
     private boolean pierreSacre, statueZephyr, cristalArdent, caliceOnde;
 
@@ -67,6 +68,7 @@ public class ControleurJeuSecondaire implements Observe {
     public ControleurJeuSecondaire(ArrayList<Personnage> perso, int niveauEau, boolean demo, ArrayList<CarteRouge> cr, ArrayList<CarteInondation> ci) {
         if (demo) {
             System.out.println("MODE SCENARIO");
+            demoMode = true;
         }
         this.niveauEau = niveauEau;
         nombreJoueurDansPartie = perso.size();
@@ -91,7 +93,7 @@ public class ControleurJeuSecondaire implements Observe {
         for (int i = 0; i <= 5; i++) {
             CarteInondation c = PiocherCarteInond();
             augementerInondation(c.getNom());
-            ControleurJeuSecondaire.this.defausserCarte(c);
+            defausserCarte(c);
         }
         for (int i = 1; i <= 2; i++) {
             for (Personnage p : perso) {
@@ -152,11 +154,7 @@ public class ControleurJeuSecondaire implements Observe {
         demarrage = false;
     }
      */
-    //donner un ordre préçis aux cartes du jeu. utilisé uniquement en mode démo
-    public void setCarteRouge(ArrayList cr) {
-
-    }
-
+    
     //Obtient les personnages pour démararer la partie.
     //renvoie une liste contenant de NOUVEAU joueurs avec tous un role différent
     private ArrayList<Personnage> getPersonnagesDebutDePartie(int nbJoueurs) {
@@ -207,6 +205,7 @@ public class ControleurJeuSecondaire implements Observe {
     public void deplacerJoueur(Personnage perso, Tuile newPos) {
         personnages.get(getNumJoueur(perso.getNom())).deplacement(newPos);
         notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Deplacement de " + getJoueurEntrainDeJouer().getNom() + " sur " + newPos.getNom()));
+        notifierObservateur(new Message(TypeEnumMessage.UPDATE_GUI));
         partieGagne();  // regarde si la partie est gagnée
     }
 
@@ -220,6 +219,8 @@ public class ControleurJeuSecondaire implements Observe {
         partieGagne();  // regarde si la partie est gagnée
     }
 
+    //recupère le trésor à l'emplacement donnée
+    //force: force la récupération du trésor, ignore les cartes nécéssaire et l'emplacement du joueur. NE DECREMENTE PAS LES ACTIONS RESTANTE
     public void recupererTresor(Tuile emplacementJoueur, boolean force) {
         if (emplacementJoueur != null) {
             int nbCarteTresor = 0;
@@ -253,8 +254,11 @@ public class ControleurJeuSecondaire implements Observe {
                                     nbCarteTresor--;
                                 }
                             }
-                            getJoueurEntrainDeJouer().getCartes().removeAll(carteUtilise);
-                            defausserCarte(carteUtilise);
+                            if (!force) {
+                                getJoueurEntrainDeJouer().getCartes().removeAll(carteUtilise);
+                                defausserCarte(carteUtilise);
+                            }
+                            
 
                             break;
                         case LION:  // idem
@@ -273,8 +277,10 @@ public class ControleurJeuSecondaire implements Observe {
                                     nbCarteTresor--;
                                 }
                             }
-                            getJoueurEntrainDeJouer().getCartes().removeAll(carteUtilise);
-                            defausserCarte(carteUtilise);
+                            if (!force) {
+                                getJoueurEntrainDeJouer().getCartes().removeAll(carteUtilise);
+                                defausserCarte(carteUtilise);
+                            }
                             break;
                         case LUNE:  //idem
                             pierreSacre = true;
@@ -292,8 +298,10 @@ public class ControleurJeuSecondaire implements Observe {
                                     nbCarteTresor--;
                                 }
                             }
-                            getJoueurEntrainDeJouer().getCartes().removeAll(carteUtilise);
-                            defausserCarte(carteUtilise);
+                            if (!force) {
+                                getJoueurEntrainDeJouer().getCartes().removeAll(carteUtilise);
+                                defausserCarte(carteUtilise);
+                            }
                             break;
                         case TROPHEE:   //idem
                             caliceOnde = true;
@@ -311,15 +319,18 @@ public class ControleurJeuSecondaire implements Observe {
                                     nbCarteTresor--;
                                 }
                             }
-                            getJoueurEntrainDeJouer().getCartes().removeAll(carteUtilise);
-                            defausserCarte(carteUtilise);
-
+                            if (!force) {
+                                getJoueurEntrainDeJouer().getCartes().removeAll(carteUtilise);
+                                defausserCarte(carteUtilise);
+                            }
                             break;
                     }
                     //  retire le tresor de la case
                     emplacementJoueur.setTresor(TypeEnumTresors.AUCUN);
 
-                    decrementAction();
+                    if (!force) {
+                        decrementAction();
+                    }
                     notifierObservateur(new Message(TypeEnumMessage.UPDATE_GUI, emplacementJoueur));
                 }
             } else {
@@ -334,6 +345,10 @@ public class ControleurJeuSecondaire implements Observe {
 
     public int getJoueurNum() {
         return numJoueurEnCours;
+    }
+    
+    public boolean isDemoMode() {
+        return demoMode;
     }
 
     public void assecher(Tuile t) {
@@ -423,7 +438,11 @@ public class ControleurJeuSecondaire implements Observe {
         pileCarteRouge.remove(pileCarteRouge.size() - 1);
         if (cr instanceof CarteMonteeDesEaux) {
             if (demarrage) {
-                pileCarteRouge.add(cr);
+                if (demoMode) {
+                    defausseCarteRouge.add(cr);
+                } else {
+                    pileCarteRouge.add(cr);
+                }
                 MelangeCarteRouge();
                 return PiocherCarteRouge();
             } else {
@@ -515,12 +534,17 @@ public class ControleurJeuSecondaire implements Observe {
     }
 
     private void MelangeCarteRouge() {
-        Collections.shuffle(pileCarteRouge);
+        if (!demoMode) {
+            Collections.shuffle(pileCarteRouge);
+        }
+        
     }
 
     private void MelangeDefausseCarteInnondation() {
         //defausecarteinondatio
-        Collections.shuffle(defausseCarteInondation);
+        if (!demoMode) {
+            Collections.shuffle(defausseCarteInondation);
+        }
     }
 
     private void decrementAction() {
@@ -585,6 +609,7 @@ public class ControleurJeuSecondaire implements Observe {
     private void actionDebutTour() {
         //CODE DE VERIF NB CARTE
         VerifNbCarte(personnages.get(numJoueurEnCours));
+        
     }
 
     //renvoie le nombre de joueur dans la partie

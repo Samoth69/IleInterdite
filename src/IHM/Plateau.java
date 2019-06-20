@@ -53,7 +53,7 @@ public class Plateau implements Observateur {
 
     private JLabel joueurActuel;
     private JLabel ActionRestante;
-    
+
     private JPanel panelGamePad;
 
     //boolean deplacementMode = false; //Devient vrai si le joueur à cliquer sur la case de son emplacement et voit donc les cases sur lesquels il peut aller
@@ -63,12 +63,12 @@ public class Plateau implements Observateur {
 
     //couleur des tuiles
     private final static Color emptyColor = new Color(255, 255, 255); //couleur case vide
-    private final static Color tuileMouilee = new Color(52, 152, 219);  
+    private final static Color tuileMouilee = new Color(52, 152, 219);
     private final static Color tuileInondee = emptyColor;
     private final static Color selectColor = new Color(12, 175, 12);
     private final static Color tuileColor = new Color(243, 156, 18);
     private final static Color nonSelectedColor = Color.gray;
-    
+
     //Marqueur sur le niveau d'eau
     private final static Color echelleDeath = Color.white;
     private final static Color echelleBleu5 = new Color(27, 79, 114);
@@ -78,26 +78,26 @@ public class Plateau implements Observateur {
     private final static Color echelleMarqueur = Color.yellow;
     private final static Color echetteText = Color.white;
     private final static Color echetteRed = Color.red;
-    
+
     //Fenetre et label
     private final JFrame window;
     private JLabel niveauEau[];
     private JLabel niveauEau2[];
-    
+
     private JPanel contenantNiveauEauMain;
     private JPanel contenantNiveauEauGauche;
     private JPanel contenantNiveauEauDroite;
-    
+
     //affichage perso => pion, nom , role, carte
     private AffichagePersonnage affichagePerso1;
     private AffichagePersonnage affichagePerso2;
     private AffichagePersonnage affichagePerso3;
     private AffichagePersonnage affichagePerso4;
-    
+
     private final static String nomButtonDeplacement = AffichagePersonnage.nomButtonDeplacement;
     private final static String nomButtonAssecher = AffichagePersonnage.nomButtonAssecher;
     private final static String nomAnnulé = AffichagePersonnage.nomAnnulé;
-    
+
     private final static String cheminCalice = System.getProperty("user.dir") + "/src/RessourcesTresors/calice.png";
     private final static String cheminCaliceNoir = System.getProperty("user.dir") + "/src/RessourcesTresors/calice-black.png";
     private final static String cheminCristal = System.getProperty("user.dir") + "/src/RessourcesTresors/cristal.png";
@@ -106,17 +106,17 @@ public class Plateau implements Observateur {
     private final static String cheminPierreNoir = System.getProperty("user.dir") + "/src/RessourcesTresors/pierre-black.png";
     private final static String cheminZephyr = System.getProperty("user.dir") + "/src/RessourcesTresors/zephyr.png";
     private final static String cheminZephyrNoir = System.getProperty("user.dir") + "/src/RessourcesTresors/zephyr-black.png";
-    
+
     private ImageContainer imgCalice = new ImageContainer(cheminCaliceNoir, 0, 0, 70, 100);
-    private ImageContainer imgCristal = new ImageContainer(cheminCristalNoir, 0, 0, 70 ,100);
+    private ImageContainer imgCristal = new ImageContainer(cheminCristalNoir, 0, 0, 70, 100);
     private ImageContainer imgPierre = new ImageContainer(cheminPierreNoir, 0, 0, 70, 100);
     private ImageContainer imgZephyr = new ImageContainer(cheminZephyrNoir, 0, 0, 70, 100);
-    
+
     //objet liste
     private JList listBasGamePad = new JList();
     //liste contenant l'historique du jeu
     private ArrayList<String> historiqueAction = new ArrayList<>();
-    
+
     private final int max = 9; //taille frise inondation
     //private int niveauEaucompteur = max;
 
@@ -131,12 +131,9 @@ public class Plateau implements Observateur {
         for (Personnage p : listPerso) { //Attribution pion/role
             listPion.add(new Pion(p));
         }
-        
-        
-        for(int i = 0; i < grille.getListTuile().size(); i++)
-        {
-            if(grille.getListTuile().get(i).getTresor() != TypeEnumTresors.AUCUN)
-            {
+
+        for (int i = 0; i < grille.getListTuile().size(); i++) {
+            if (grille.getListTuile().get(i).getTresor() != TypeEnumTresors.AUCUN) {
                 listTresor.put(grille.getListTuile().get(i).getNom(), new Tresor(grille.getListTuile().get(i).getTresor()));
             }
         }
@@ -159,67 +156,69 @@ public class Plateau implements Observateur {
         /**
          * AJOUT PANEL PRINCIPAL + PANEL HAUT POUR TITRE FENETRE *
          */
-        
         JPanel BorderLayoutPrincipal = new JPanel(new BorderLayout());
         window.add(BorderLayoutPrincipal);
 
         JPanel panelHaut = new JPanel();
         BorderLayoutPrincipal.add(panelHaut, BorderLayout.NORTH);
-        
-        /*********************************** NIVEAU EAU ***************************************/
+
+        /**
+         * ********************************* NIVEAU EAU
+         * **************************************
+         */
         contenantNiveauEauMain = new JPanel(new BorderLayout()); //menu principal qui sera ajouté au mainPanel
         contenantNiveauEauDroite = new JPanel(new GridLayout(10, 1)); //menu avec les chiffres indiquant le nombre de carte inondation à piocher
-        contenantNiveauEauDroite.setPreferredSize(new Dimension(25,BorderLayoutPrincipal.getHeight()));
+        contenantNiveauEauDroite.setPreferredSize(new Dimension(25, BorderLayoutPrincipal.getHeight()));
         contenantNiveauEauGauche = new JPanel(new GridLayout(10, 1)); //niveau de l'eau
-        contenantNiveauEauGauche.setPreferredSize(new Dimension(90,BorderLayoutPrincipal.getHeight()));
-        
+        contenantNiveauEauGauche.setPreferredSize(new Dimension(90, BorderLayoutPrincipal.getHeight()));
+
         //MENU GAUCHE
         niveauEau = new JLabel[max + 1];
-        for(int i = 0; i <= max; i++){
+        for (int i = 0; i <= max; i++) {
             //System.out.println(i);
             //System.out.println(max - i);
             //System.out.println();
-            niveauEau[max - i]=new JLabel(/*Integer.toString(i)*/"", SwingConstants.CENTER);
+            niveauEau[max - i] = new JLabel(/*Integer.toString(i)*/"", SwingConstants.CENTER);
             //niveauEau[max - i].setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-            niveauEau[max - i].setPreferredSize(new Dimension(150, contenantNiveauEauGauche.getHeight()/12));
+            niveauEau[max - i].setPreferredSize(new Dimension(150, contenantNiveauEauGauche.getHeight() / 12));
         }
         for (int i = 0; i <= max; i++) {
             contenantNiveauEauGauche.add(niveauEau[i]);
         }
-        
+
         niveauEau[max].setText("Novice");
         niveauEau[max - 1].setText("Normal");
         niveauEau[max - 2].setText("Elite");
         niveauEau[max - 3].setText("Légendaire");
         niveauEau[0].setText("Dead");
-        
+
         //MENU DROITE
-        JLabel num2 = new JLabel("2", SwingConstants.RIGHT); 
-        JLabel num3 = new JLabel("3", SwingConstants.RIGHT); 
-        JLabel num4 = new JLabel("4", SwingConstants.RIGHT); 
-        JLabel num5 = new JLabel("5", SwingConstants.RIGHT); 
-        
+        JLabel num2 = new JLabel("2", SwingConstants.RIGHT);
+        JLabel num3 = new JLabel("3", SwingConstants.RIGHT);
+        JLabel num4 = new JLabel("4", SwingConstants.RIGHT);
+        JLabel num5 = new JLabel("5", SwingConstants.RIGHT);
+
         niveauEau2 = new JLabel[max + 1];
-        
+
         for (int i = 0; i <= max; i++) {
-            switch(i) {
+            switch (i) {
                 case 8:
                     //num2.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-                    num2.setPreferredSize(new Dimension(90, contenantNiveauEauGauche.getHeight()/12));
+                    num2.setPreferredSize(new Dimension(90, contenantNiveauEauGauche.getHeight() / 12));
                     num2.setFont(new Font(num2.getFont().getName(), Font.PLAIN, 35)); //on garde la police utilisé par l'objet                    
                     contenantNiveauEauDroite.add(num2);
                     niveauEau2[8] = num2;
                     break;
                 case 5:
                     //num3.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-                    num3.setPreferredSize(new Dimension(90, contenantNiveauEauGauche.getHeight()/12));
+                    num3.setPreferredSize(new Dimension(90, contenantNiveauEauGauche.getHeight() / 12));
                     num3.setFont(new Font(num3.getFont().getName(), Font.PLAIN, 35)); //on garde la police utilisé par l'objet           
                     contenantNiveauEauDroite.add(num3);
                     niveauEau2[5] = num3;
                     break;
                 case 3:
                     //num4.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-                    num4.setPreferredSize(new Dimension(90, contenantNiveauEauGauche.getHeight()/12));
+                    num4.setPreferredSize(new Dimension(90, contenantNiveauEauGauche.getHeight() / 12));
                     num4.setFont(new Font(num4.getFont().getName(), Font.PLAIN, 35)); //on garde la police utilisé par l'objet           
                     contenantNiveauEauDroite.add(num4);
                     niveauEau2[3] = num4;
@@ -227,33 +226,35 @@ public class Plateau implements Observateur {
                 case 1:
                     //num5.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
                     //num5.setBackground(Color.red);
-                    num5.setPreferredSize(new Dimension(90, contenantNiveauEauGauche.getHeight()/12));
+                    num5.setPreferredSize(new Dimension(90, contenantNiveauEauGauche.getHeight() / 12));
                     num5.setFont(new Font(num5.getFont().getName(), Font.PLAIN, 35)); //on garde la police utilisé par l'objet    
-                    
+
                     contenantNiveauEauDroite.add(num5);
                     niveauEau2[1] = num5;
                     break;
                 default:
                     JLabel numEmpty = new JLabel("");
                     //numEmpty.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-                    numEmpty.setPreferredSize(new Dimension(90, contenantNiveauEauGauche.getHeight()/12));
-                    
+                    numEmpty.setPreferredSize(new Dimension(90, contenantNiveauEauGauche.getHeight() / 12));
+
                     contenantNiveauEauDroite.add(numEmpty);
                     niveauEau2[i] = numEmpty;
                     break;
             }
         }
-        
+
         //MENU PRINCPALE
         contenantNiveauEauMain.add(contenantNiveauEauGauche, BorderLayout.WEST);
         contenantNiveauEauMain.add(contenantNiveauEauDroite, BorderLayout.EAST);
-        
+
         contenantNiveauEauMain.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
-        
+
         BorderLayoutPrincipal.add(contenantNiveauEauMain, BorderLayout.WEST);
-        
+
         ColoriserNiveauEau();
-      /******************************************************************************************************/
+        /**
+         * ***************************************************************************************************
+         */
         JLabel labelTitre = new JLabel("Ile Interdite");
         labelTitre.setForeground(Color.BLUE);
         labelTitre.setFont(new Font(labelTitre.getFont().getName(), labelTitre.getFont().getStyle(), (int) (labelTitre.getFont().getSize() * 1.5)));
@@ -264,7 +265,7 @@ public class Plateau implements Observateur {
          */
         JPanel panelGrille = new JPanel(new GridLayout(6, 6));
         BorderLayoutPrincipal.add(panelGrille, BorderLayout.CENTER);
-        
+
         JButton jb = new JButton("Augmenter niveau eau");
         jb.addActionListener(new ActionListener() {
             @Override
@@ -273,50 +274,46 @@ public class Plateau implements Observateur {
                 System.out.println(cj.getNombreCarteInondationAPiocher());
             }
         });
-        
-        
+
         //*****PANELGAMEPAD *********************
         joueurActuel = new JLabel("");
-        ActionRestante = new JLabel("",SwingConstants.CENTER); 
+        ActionRestante = new JLabel("", SwingConstants.CENTER);
         panelGamePad = new JPanel(new BorderLayout());
-        
+
         JPanel panelTresHaut = new JPanel();
         BoxLayout bl = new BoxLayout(panelTresHaut, BoxLayout.PAGE_AXIS);
         panelTresHaut.setLayout(bl);
-        JLabel labelpion = new JLabel("Tour du joueur :",SwingConstants.CENTER);
+        JLabel labelpion = new JLabel("Tour du joueur :", SwingConstants.CENTER);
         labelpion.setAlignmentX(JLabel.CENTER_ALIGNMENT);
-        Font font1 = new Font("Arial",Font.BOLD,25);
+        Font font1 = new Font("Arial", Font.BOLD, 25);
         labelpion.setFont(font1);
         //JPanel panelHautGamePad = new JPanel(new GridLayout(2,1)); 
-        JLabel labelAction = new JLabel("Action(s) restante(s):",SwingConstants.CENTER);
+        JLabel labelAction = new JLabel("Action(s) restante(s):", SwingConstants.CENTER);
         labelAction.setFont(font1);
         labelAction.setAlignmentX(JLabel.CENTER_ALIGNMENT);
-        
-        Font font2 = new Font("Arial",Font.BOLD,100);
+
+        Font font2 = new Font("Arial", Font.BOLD, 100);
         ActionRestante.setFont(font2);
         ActionRestante.setAlignmentX(JLabel.CENTER_ALIGNMENT);
         panelTresHaut.add(labelpion, Component.CENTER_ALIGNMENT);
-        JLabel joueurActuelbis = new JLabel(cj.getNomJoueur(),SwingConstants.CENTER);
+        JLabel joueurActuelbis = new JLabel(cj.getNomJoueur(), SwingConstants.CENTER);
         joueurActuelbis.setFont(font1);
         joueurActuelbis.setAlignmentX(JLabel.CENTER_ALIGNMENT);
         //paneltreshaut.add(new JLabel (" "));
-        panelTresHaut.add(joueurActuelbis);  
-        panelTresHaut.add(labelAction, Component.CENTER_ALIGNMENT);             
-        panelTresHaut.add(ActionRestante, Component.CENTER_ALIGNMENT); 
+        panelTresHaut.add(joueurActuelbis);
+        panelTresHaut.add(labelAction, Component.CENTER_ALIGNMENT);
+        panelTresHaut.add(ActionRestante, Component.CENTER_ALIGNMENT);
         panelGamePad.add(panelTresHaut, BorderLayout.NORTH);
-        
-        
+
         //panelGamePad.add(panelHautGamePad, BorderLayout.CENTER); 
-        
-       //******************************************************************
-        
-        JPanel panelBottomGamePad = new JPanel(new GridLayout(0,cj.getNombreJoueurDansPartie()));
-        
+        //******************************************************************
+        JPanel panelBottomGamePad = new JPanel(new GridLayout(0, cj.getNombreJoueurDansPartie()));
+
         affichagePerso1 = new AffichagePersonnage(this, listPerso.get(0));
         affichagePerso2 = new AffichagePersonnage(this, listPerso.get(1));
         panelBottomGamePad.add(affichagePerso1);
         panelBottomGamePad.add(affichagePerso2);
-        
+
         if (cj.getNombreJoueurDansPartie() > 2) {
             affichagePerso3 = new AffichagePersonnage(this, listPerso.get(2));
             panelBottomGamePad.add(affichagePerso3);
@@ -331,20 +328,18 @@ public class Plateau implements Observateur {
         }
 
         BorderLayoutPrincipal.add(panelBottomGamePad, BorderLayout.SOUTH);
-        
-        
-        
+
         JPanel panelGamePadBas = new JPanel();
         panelGamePadBas.setLayout(new BoxLayout(panelGamePadBas, BoxLayout.Y_AXIS));
 
-        JPanel panelTresor = new JPanel(new GridLayout(2,2));
+        JPanel panelTresor = new JPanel(new GridLayout(2, 2));
         panelTresor.add(imgCalice);
         panelTresor.add(imgCristal);
         panelTresor.add(imgPierre);
         panelTresor.add(imgZephyr);
-        
+
         panelGamePadBas.add(panelTresor);
-        
+
         JScrollPane scrollPane = new JScrollPane();
         scrollPane.setViewportView(listBasGamePad);
         scrollPane.setPreferredSize(new Dimension(/*scrollPane.getWidth()*/300, 150));
@@ -352,7 +347,7 @@ public class Plateau implements Observateur {
         panelGamePadBas.add(new JLabel("Historique:", SwingConstants.CENTER));
         panelGamePadBas.add(scrollPane);
         panelGamePad.add(panelGamePadBas, BorderLayout.SOUTH);
-        
+
         BorderLayoutPrincipal.add(panelGamePad, BorderLayout.EAST);
 
         affecterCase(plateau, listPion, panelGrille);
@@ -361,7 +356,7 @@ public class Plateau implements Observateur {
 
     public void affecterCase(Tuile plateau[][], ArrayList<Pion> listPion, JPanel grille) {
         int nbTresor = 0;
-        
+
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 6; j++) {
                 //Creation d'une case
@@ -379,24 +374,33 @@ public class Plateau implements Observateur {
                             pn.add(listPion.get(p));
                         }
                     }
+                    //pour charque personnage
+                    /*for (Personnage p : listPerso) {
+                        //si l'emplacement du personnage correspond à la case actuel
+                        if (p.getEmplacement() == plateau[i][j]) {
+                            for (Pion pi : listPion) {
+                                if (pi.getCouleurPion() == p.getCouleurPion()) {
+                                    pn.add(pi);
+                                    break;
+                                }
+                            }
+                        }
+                    }*/
 
                     if (plateau[i][j].getTresor() != TypeEnumTresors.AUCUN) {
 
-                        for(String k : listTresor.keySet())
-                        {
-                            if(plateau[i][j].getNom() == k)
-                            {
+                        for (String k : listTresor.keySet()) {
+                            if (plateau[i][j].getNom() == k) {
                                 pn.add(listTresor.get(k));
                             }
                         }
-                        
+
                         //pn.add(new Tresor(plateau[i][j].getTresor()));
-                        
                     }
                 } else {
                     pn.setBackground(emptyColor);       //background en blanc
                 }
-                
+
                 if (pn.getBackground() != emptyColor) {
                     final JPanel xjp = pn;
                     final Tuile xt = plateau[i][j];
@@ -436,9 +440,9 @@ public class Plateau implements Observateur {
     //met à jour les informations du gamepad en fonction de l'état du jeu
     private void updateGamePad() {
         joueurActuel.setText(cj.getNomJoueur());
-        ActionRestante.setText(Integer.toString((int)cj.getNbActionRestante()));
+        ActionRestante.setText(Integer.toString((int) cj.getNbActionRestante()));
         listBasGamePad.setListData(historiqueAction.toArray());
-        
+
         switch (cj.getJoueurNum()) {
             case 0:
                 affichagePerso1.update(true);
@@ -466,14 +470,14 @@ public class Plateau implements Observateur {
                 break;
         }
     }
-    
+
     //indique l'état de l'interface plateau.
     public void changeMode(int mode) {
         oldMode = this.mode;
         this.mode = mode;
     }
-    
-    public ControleurJeuSecondaire getControleurJeu()  {
+
+    public ControleurJeuSecondaire getControleurJeu() {
         return cj;
     }
 
@@ -518,7 +522,7 @@ public class Plateau implements Observateur {
                 break;
             case 2:
                 paintNonSelected();
-                
+
                 setBtAssecherEnabled(true);
                 setBtDeplacementEnabled(false);
                 setBtPasserJoueurEnabled(false);
@@ -529,7 +533,7 @@ public class Plateau implements Observateur {
                     jpa.setBackground(tuileColor);
                 }
                 break;
-            
+
             case 3: //Se deplacer avec une carte action helicoptere         
                 paintNonSelected();
                 setBtAssecherEnabled(false);
@@ -540,16 +544,15 @@ public class Plateau implements Observateur {
 
                 //  Affiche toute les case non inondé, donc praticable
                 for (Tuile t : grille.getListTuile()) {
-                    if(t.getInondation() != TypeEnumInondation.INONDE)
-                    {
+                    if (t.getInondation() != TypeEnumInondation.INONDE) {
                         JPanel jpa = panel[t.getX()][t.getY()];
                         jpa.setBackground(tuileColor);
                     }
                 }
                 //  Notifie l'observateur de l'action
                 cj.notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Carte Helicoptere utilisée"));
-                break;    
-               
+                break;
+
             case 4: //Assecher avec une carte action sac de sable
                 paintNonSelected();
                 setBtAssecherEnabled(false);
@@ -559,8 +562,7 @@ public class Plateau implements Observateur {
 
                 //Affiche toute les case mouille, donc sechable
                 for (Tuile t : grille.getListTuile()) {
-                    if(t.getInondation() == TypeEnumInondation.MOUILLE)
-                    {
+                    if (t.getInondation() == TypeEnumInondation.MOUILLE) {
                         JPanel jpa = panel[t.getX()][t.getY()];
                         jpa.setBackground(tuileColor);
                     }
@@ -569,13 +571,13 @@ public class Plateau implements Observateur {
                 cj.notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Carte Sac de Sable utilisée"));
         }
     }
-    
+
     //ce déclenche quand une case sur l'écran est cliquer
     private void panelClick(JPanel jp, Tuile emplacement, int i, int j) {
         //System.out.println("panelClick: " + i + ", " + j);
         //System.out.println("deplacement = " + mode);
         if (jp.getBackground() != nonSelectedColor && emplacement.getInondation() != TypeEnumInondation.INONDE) {
-            int x,y;
+            int x, y;
             switch (mode) {
                 case 1: //se deplacer
                     //System.out.println("Moving");
@@ -595,21 +597,37 @@ public class Plateau implements Observateur {
                     panel[x][y].remove(listPion.get(cj.getJoueurNum()));
                     panel[i][j].add(listPion.get(cj.getJoueurNum()));
                     cj.deplacerJoueurEnCours(emplacement);
-                    cj.setNbAction(cj.getNbActionRestante()+1);//Car utiliser une carte action ne coute pas de point d'action
+                    cj.setNbAction(cj.getNbActionRestante() + 1);//Car utiliser une carte action ne coute pas de point d'action
                     break;
                 case 4: //Assecher avece une carte action
                     cj.assecher(emplacement);
-                    cj.setNbAction(cj.getNbActionRestante()+1);//Car utiliser une carte action ne coute pas de point d'action
+                    cj.setNbAction(cj.getNbActionRestante() + 1);//Car utiliser une carte action ne coute pas de point d'action
                     break;
             }
             actionFinished();
         }
 
     }
-    
-    
+
+    //met à jour les emplacements des pions
+    public void updatePion() {
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 6; j++) {
+                for (Pion p : listPion) {
+                    panel[i][j].remove(p);
+                }
+            }
+        }
+        for (Pion p : listPion) {
+            int x = p.getPerso().getEmplacement().getX();
+            int y = p.getPerso().getEmplacement().getY();
+            
+            panel[x][y].add(p);
+        }
+
+    }
+
     //  BOUTON ASSECHER
-    
     private void setBtAssecherText(String t) {
         switch (cj.getJoueurNum()) {
             case 0:
@@ -626,11 +644,11 @@ public class Plateau implements Observateur {
                 break;
         }
     }
-    
+
     private void setBtAssecherEnabled(boolean b) {
         switch (cj.getJoueurNum()) {
             case 0:
-                affichagePerso1.setButtonAssecherEnabled(b);      
+                affichagePerso1.setButtonAssecherEnabled(b);
                 break;
             case 1:
                 affichagePerso2.setButtonAssecherEnabled(b);
@@ -643,9 +661,8 @@ public class Plateau implements Observateur {
                 break;
         }
     }
-    
+
     //  BOUTON DEPLACEMENT
-    
     private void setBtDeplacementText(String t) {
         switch (cj.getJoueurNum()) {
             case 0:
@@ -662,11 +679,11 @@ public class Plateau implements Observateur {
                 break;
         }
     }
-    
+
     private void setBtDeplacementEnabled(boolean b) {
         switch (cj.getJoueurNum()) {
             case 0:
-                affichagePerso1.setButtonDeplacementEnabled(b);      
+                affichagePerso1.setButtonDeplacementEnabled(b);
                 break;
             case 1:
                 affichagePerso2.setButtonDeplacementEnabled(b);
@@ -679,9 +696,8 @@ public class Plateau implements Observateur {
                 break;
         }
     }
-    
+
     //  BOUTON PASSER JOUEUR
-    
     private void setBtPasserJoueurEnabled(boolean b) {
         switch (cj.getJoueurNum()) {
             case 0:
@@ -698,9 +714,8 @@ public class Plateau implements Observateur {
                 break;
         }
     }
-    
+
     //  BOUTON DONNER CARTE
-    
     private void setBtDonnerCarteText(String text) {
         switch (cj.getJoueurNum()) {
             case 0:
@@ -717,8 +732,8 @@ public class Plateau implements Observateur {
                 break;
         }
     }
-    
-    private void setBtCarteActionEnabled(boolean b){
+
+    private void setBtCarteActionEnabled(boolean b) {
         switch (cj.getJoueurNum()) {
             case 0:
                 affichagePerso1.setBtCarteActionEnabled(b);
@@ -734,14 +749,14 @@ public class Plateau implements Observateur {
                 break;
         }
     }
-    
-    private void setBtDonnerCarteParDefaut(){
+
+    private void setBtDonnerCarteParDefaut() {
         affichagePerso1.setButtonDonnerCarteEnabled(false);
         affichagePerso2.setButtonDonnerCarteEnabled(false);
         affichagePerso3.setButtonDonnerCarteEnabled(false);
         affichagePerso4.setButtonDonnerCarteEnabled(false);
     }
-    
+
     private void setBtDonnerCarteEnabled() {
         switch (cj.getJoueurNum()) {
             case 0:
@@ -758,14 +773,14 @@ public class Plateau implements Observateur {
                 break;
         }
     }
-    
+
     private void ColoriserNiveauEau() {
         for (int i = max; i >= 0; i--) {
             niveauEau[i].setOpaque(true);
             niveauEau[i].setForeground(echetteText);
             niveauEau2[i].setOpaque(true);
             niveauEau2[i].setForeground(echetteText);
-            if (i == max || i == max-1) {
+            if (i == max || i == max - 1) {
                 niveauEau[i].setBackground(echelleBleu2);
                 niveauEau2[i].setBackground(echelleBleu2);
             } else if (i <= max - 2 && i >= max - 4) {
@@ -826,13 +841,13 @@ public class Plateau implements Observateur {
         }
         window.repaint();
     }
-    
+
     //ajoute un message à l'historique de partie ET met à jour l'interface (pour afficher les majs
     public void ajouterMessageHistorique(String text) {
         historiqueAction.add(text);
         updateGamePad();
     }
-    
+
     public void ajouterMessageHistorique(ArrayList<String> text) {
         for (String t : text) {
             historiqueAction.add(t);
@@ -861,7 +876,7 @@ public class Plateau implements Observateur {
             case PIOCHE_CARTE_INONDATION:
                 ArrayList t = new ArrayList<>();
                 t.add("Carte Inondation piocher:");
-                for (CarteInondation ci : (ArrayList<CarteInondation>)m.getAdditionnal()) {
+                for (CarteInondation ci : (ArrayList<CarteInondation>) m.getAdditionnal()) {
                     t.add(" - " + ci.getNom());
                 }
                 t.add("\n");
@@ -869,14 +884,10 @@ public class Plateau implements Observateur {
                 paintNormal();
                 break;
             case HISTORIQUE:
-                if(!m.getMessage().isEmpty())
-                {
+                if (!m.getMessage().isEmpty()) {
                     ajouterMessageHistorique(m.getMessage());
-                }
-                else
-                {
-                    if(!m.getAdditionnal().isEmpty())
-                    {
+                } else {
+                    if (!m.getAdditionnal().isEmpty()) {
                         ajouterMessageHistorique(m.getAdditionnal());
                     }
                 }
@@ -887,18 +898,17 @@ public class Plateau implements Observateur {
                 break;
             case UPDATE_GUI:
                 updateGamePad();
+                paintNormal();
                 break;
             case FIN_PARTIE:
                 System.out.println("Fin partie : ");
                 break;
             case PARTIE_GAGNE:
-                System.out.println("Fin partie : "+m.getMessage());
+                System.out.println("Fin partie : " + m.getMessage());
                 break;
             case RM_TRESOR:
-                for(String i : listTresor.keySet())
-                {
-                    if(m.getEmplacementJoueur().getNom().equals(i))
-                    {
+                for (String i : listTresor.keySet()) {
+                    if (m.getEmplacementJoueur().getNom().equals(i)) {
                         listTresor.get(i).setVisible(false);
                     }
                 }
