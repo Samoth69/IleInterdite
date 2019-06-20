@@ -10,9 +10,11 @@ import Cartes.CarteRouge;
 import Cartes.CarteTresor;
 import Enumerations.TypeEnumCarteAction;
 import Enumerations.TypeEnumCouleurPion;
+import Enumerations.TypeEnumInondation;
 import Enumerations.TypeEnumMessage;
 import Enumerations.TypeEnumTresors;
 import IleInterdite.Message;
+import IleInterdite.Tuile;
 import Personnages.Personnage;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -26,276 +28,285 @@ import javax.swing.*;
  *
  * @author violentt
  */
-public class AffichagePersonnage extends JPanel{
-  
-    private JPanel bigMainPanel;
+public class AffichagePersonnage extends JPanel {
+
+    //ATTRIBUTS
     
+    //fenetre principal
+    private JPanel bigMainPanel;
+
+    //label du joueur et type joueur
     private JLabel labelJoueur;
     private JLabel labelTypeJoueur;
 
+    //pion, perso et plateau
     private JPanel bigPion;
     private Pion pion;
     private Personnage perso;
     private Plateau pl;
-    
+
     private JPanel panelMilieu;
-    
+
     boolean dejaDonne = false;
     
+    //liste des personnages, carte tresor et carte actio,
     private ArrayList<Personnage> listPersoEmplacement = new ArrayList<>();
     private ArrayList<CarteRouge> carteTresorDuJoueur = new ArrayList<>();
     private ArrayList<CarteRouge> carteActionDuJoueur = new ArrayList<>();
     
-    private JButton buttonDeplacement;
-    private JButton buttonAssecher;
-    private JButton buttonPasserTour;
-    private JButton buttonDonnerCarte;
-    private JButton buttonPrendreRelique;
-    private JButton buttonCarteSpecial;
+    //Bouton du gamepad
+    private JButton buttonDeplacement; //deplace le perso en fontion de son role
+    private JButton buttonAssecher;    //asseche en fonction du role
+    private JButton buttonPasserTour;   //passe au joueur suivant
+    private JButton buttonDonnerCarte;  //donne une carte à un joueur de la meme case
+    private JButton buttonPrendreRelique; //defausse 4 cartes correspondant à la relique, prend la relique
+    private JButton buttonCarteSpecial; //joue une carte action special: helicoptère et sac de sable
     
+    //definie le nom des bouton
     public final static String nomButtonDeplacement = "Se Déplacer";
     public final static String nomButtonAssecher = "Assécher";
     public final static String nomAnnulé = "Annuler";
-    
+
     private final static String imgFolder = System.getProperty("user.dir") + "/src/RessourcesPlateau/";
-    
+
+    //CONSTRUCTEUR
     public AffichagePersonnage(Plateau pl, Personnage perso) {
-        super(true);
-        super.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+        super(true); //double buffered
+        super.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2)); //bordure
         
+        //plateau
         this.pl = pl;
         
-        labelTypeJoueur = new JLabel();
-        bigPion = new JPanel();
-        this.perso = perso;
         
-        if (perso == null) {
-            super.setVisible(false);
-            pion = new Pion(TypeEnumCouleurPion.AUCUN);
-        } else {
-            pion = new Pion(perso.getCouleurPion());
-        }    
-    
-        bigMainPanel = new JPanel(new BorderLayout());
-        JPanel panelHaut = new JPanel(new BorderLayout());
+        labelTypeJoueur = new JLabel(); //label type joueuer
+        bigPion = new JPanel(); //fenetre bigpion
+        this.perso = perso; //Personnage
+        
+        //pion du perso
+        if (perso == null) { //si perso est null
+            super.setVisible(false);   //pion invisible
+            pion = new Pion(TypeEnumCouleurPion.AUCUN); //type aucun
+        } else {//sinon
+            pion = new Pion(perso.getCouleurPion());  //Creer le pion
+        }
+        
+        bigMainPanel = new JPanel(new BorderLayout());//creation d une grosse fenetre principal en borderlayout (NORTH,SOUTH,EAST..)
+        JPanel panelHaut = new JPanel(new BorderLayout()); //panel haut en borderlayout
 
-        labelJoueur = new JLabel("...");
-        labelTypeJoueur = new JLabel("...");
-        panelHaut.add(labelJoueur, BorderLayout.WEST);
-        panelHaut.add(labelTypeJoueur, BorderLayout.EAST);
-        bigPion.add(pion);
-        panelHaut.add(bigPion, BorderLayout.CENTER);
+        labelJoueur = new JLabel("..."); //label joueur modifié plus tard
+        labelTypeJoueur = new JLabel("..."); //label type(role) joueur modifié plus tard
+        panelHaut.add(labelJoueur, BorderLayout.WEST);  //placement label joueuer à l ouest du panel haut
+        panelHaut.add(labelTypeJoueur, BorderLayout.EAST);//placement du labeltypejoueur à l est du panel haut
+        bigPion.add(pion);  //ajoute le pion à la fenetre bigpion
+        panelHaut.add(bigPion, BorderLayout.CENTER);//ajoute la fenetre bigpion au centre du panelhaut
+
+        panelMilieu = new JPanel(new FlowLayout());//panel contenant les cartes
+
+        JPanel panelBas = new JPanel(new GridLayout(2, 3));//panel bas en grille de 2 lignes 3 colonnes
         
-        panelMilieu = new JPanel(new FlowLayout());
-        
-        JPanel panelBas = new JPanel(new GridLayout(2,3));
-        
+        //action du bouton deplacement
         buttonDeplacement = new JButton(nomButtonDeplacement);
         buttonDeplacement.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
-                pl.changeMode(1);
-                pl.gamePadClick();
+                pl.changeMode(1); //change le mode en deplacement (0: aucun, 1: deplacement, 2: assecher, 3: Deplacement carte helicoptere)
+                pl.gamePadClick();//utilisé par les boutons déplacer et assécher afin de changer l'affichage du plateau
             }
         });
-
+        
+        //action du bouton assecher
         buttonAssecher = new JButton(nomButtonAssecher);
         buttonAssecher.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
-                pl.changeMode(2);
-                pl.gamePadClick();
+                pl.changeMode(2);//change le mode en assecher (0: aucun, 1: deplacement, 2: assecher, 3: Deplacement carte helicoptere)
+                pl.gamePadClick();//utilisé par les boutons déplacer et assécher afin de changer l'affichage du plateau
             }
         });
         
+        //action du bouton passer tour
         buttonPasserTour = new JButton("Passer tour");
         buttonPasserTour.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
-                pl.getControleurJeu().passerJoueurSuivant();
+                pl.getControleurJeu().passerJoueurSuivant();// passe au joueur suivant
             }
         });
         
+        //definie le nom des bouton donner carte, prendre relique et carte special
         buttonDonnerCarte = new JButton("Donner carte");
         buttonPrendreRelique = new JButton("Prendre relique");;
         buttonCarteSpecial = new JButton("Carte Spécial");
         
+        //action du bouton prendre relique
         buttonPrendreRelique.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent arg0) {
+            public void actionPerformed(ActionEvent arg0) { //prend la relique à partir de l emplacement du joueurcourant
                 pl.getControleurJeu().recupererTresor(pl.getControleurJeu().getJoueurEntrainDeJouer().getEmplacement(), false);
             }
         });
         
+        //action du bouton donner carte
         buttonDonnerCarte.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
-                if(perso.getEmplacement().getPersonnages().size() != 1)
-                {
-                    listPersoEmplacement.addAll(perso.getEmplacement().getPersonnages());
-                    listPersoEmplacement.remove(perso);
-                    VuDefausse vd = new VuDefausse(perso.getCartes(), "Donner carte", 1, listPersoEmplacement,pl.getControleurJeu().getNbActionRestante());
-                    vd.setVisible(true);
-                    perso.donnerCarteAJoueur(vd.getPersoQuiRecoitCartes(), vd.getSelectedItems());
-                    pl.getControleurJeu().setNbAction(vd.getNbActionRestante());
-                    listPersoEmplacement.clear();
-                    buttonDonnerCarte.setEnabled(false);
-                    pl.getControleurJeu().notifierObservateur(new Message(TypeEnumMessage.UPDATE_GUI));
+                if (perso.getEmplacement().getPersonnages().size() != 1) {
+                    listPersoEmplacement.addAll(perso.getEmplacement().getPersonnages());//ajoute les personnage de l emplacement dans cette liste
+                    listPersoEmplacement.remove(perso);                                    //sauf celui qui lance la commande
+                    VuDefausse vd = new VuDefausse(perso.getCartes(), "Donner carte", 1, listPersoEmplacement, pl.getControleurJeu().getNbActionRestante());
+                    vd.setVisible(true); //afficher les cartes à donner
+                    perso.donnerCarteAJoueur(vd.getPersoQuiRecoitCartes(), vd.getSelectedItems()); //donner les cartes selectionner
+                    pl.getControleurJeu().setNbAction(vd.getNbActionRestante()); //change le nombre d action restante
+                    listPersoEmplacement.clear(); //vide la liste
+                    buttonDonnerCarte.setEnabled(false); 
+                    pl.getControleurJeu().notifierObservateur(new Message(TypeEnumMessage.UPDATE_GUI)); //met à jour l interface
                     //dejaDonne = true;
                 }
             }
         });
         
+        //action du bouton action spécial
         buttonCarteSpecial.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 carteActionDuJoueur.clear();
-                
-                for(CarteRouge i : perso.getCartes()){
-                    if(i instanceof CarteAction){
+
+                for (CarteRouge i : perso.getCartes()) {
+                    if (i instanceof CarteAction) {
                         carteActionDuJoueur.add(i);
                     }
                 }
-                
-                if(!carteActionDuJoueur.isEmpty()){
-                    VuDefausse vd1 = new VuDefausse(carteActionDuJoueur, "utiliser carte");
+
+                if (!carteActionDuJoueur.isEmpty()) {
+                    VuDefausse vd1 = new VuDefausse(carteActionDuJoueur, "utiliser carte"); //idem à donner carte
                     vd1.setVisible(true);
                
                     if(vd1.getSelectedItems().get(0).getTypeCarteAction() == TypeEnumCarteAction.HELICOPTERE)
                     {
                         pl.changeMode(3);
+                        pl.gamePadClick();
+                        perso.removeCarte(vd1.getSelectedItems().get(0));
                     }
                     else
                     {
-                        pl.changeMode(4);
+                        ArrayList<Tuile> verifCarteAAssecher = new ArrayList<>();
+                        for(Tuile t : pl.getControleurJeu().getListeCarte())
+                        {
+                            if(t.getInondation() == TypeEnumInondation.MOUILLE)
+                            {
+                                verifCarteAAssecher.add(t);
+                            }
+                        }
+                        if(!verifCarteAAssecher.isEmpty())
+                        {
+                            pl.changeMode(4);
+                            pl.gamePadClick();
+                            perso.removeCarte(vd1.getSelectedItems().get(0));
+                        }
+                        verifCarteAAssecher.clear();
+                        
                     }
                     
-                    pl.gamePadClick();
-                    
-                    perso.removeCarte(vd1.getSelectedItems().get(0));
                     pl.getControleurJeu().notifierObservateur(new Message(TypeEnumMessage.UPDATE_GUI));
                 }
             }
         });
-        
+        //ajoute au panel bas les boutons
         panelBas.add(buttonDeplacement);
         panelBas.add(buttonAssecher);
         panelBas.add(buttonPasserTour);
         panelBas.add(buttonDonnerCarte);
         panelBas.add(buttonPrendreRelique);
         panelBas.add(buttonCarteSpecial);
-        
 
-        bigMainPanel.add(panelHaut, BorderLayout.NORTH);
-        bigMainPanel.add(panelMilieu, BorderLayout.CENTER);
-        bigMainPanel.add(panelBas, BorderLayout.SOUTH);
+        bigMainPanel.add(panelHaut, BorderLayout.NORTH); //panelhaut au nord du bigpanel
+        bigMainPanel.add(panelMilieu, BorderLayout.CENTER); //panelmilieu au centre du bigpanel
+        bigMainPanel.add(panelBas, BorderLayout.SOUTH); // Panelbas au sud du big panel
         //System.out.println(bigPion.getSize());
         this.add(bigMainPanel);
-        
+
     }
     
+    //METHODES
+
     //met à jour les éléments de la fenêtre avec le joueur passé en paramètre
+    //Permet à l'utilisateur d'identifier rapidemment la joueur qui joue
+    //identifier: en grisant les autres joueur; colorant (avec bordure epaisse) le joueur actuel
     public void update(Boolean b) {
+        //desactivie ou active les fenetre en fonction du boolean b
         buttonAssecher.setEnabled(b);
         buttonDeplacement.setEnabled(b);
         buttonPasserTour.setEnabled(b);
         buttonPrendreRelique.setEnabled(b);
         buttonCarteSpecial.setEnabled(b);
-        
-        if (b) {
-            labelTypeJoueur.setForeground(Color.black);
+
+        if (b) { // si b= true
+            labelTypeJoueur.setForeground(Color.black);   //labeljoueur et type joueur en noir
             labelJoueur.setForeground(Color.black);
-            this.setBorder(BorderFactory.createLineBorder(perso.getCouleurPion().getColor(), 10));
+            this.setBorder(BorderFactory.createLineBorder(perso.getCouleurPion().getColor(), 10)); //bordure epaisse de la couleur du joueur qui joue
             if (perso != null) {
                 pion.setCouleur(perso.getCouleurPion());
             }
         } else {
-            labelTypeJoueur.setForeground(Color.gray);
+            labelTypeJoueur.setForeground(Color.gray); //labeljoueur et typejoueur en gris
             labelJoueur.setForeground(Color.gray);
-            this.setBorder(BorderFactory.createLineBorder(Color.gray, 2));
+            this.setBorder(BorderFactory.createLineBorder(Color.gray, 2)); //bordure fine des joueurs qui ne jouent pas
             pion.setCouleur(TypeEnumCouleurPion.AUCUN);
         }
-        
+
         carteTresorDuJoueur.clear();
-        
+
         if (perso != null) {
             //  Si il y a une personne en plus du joueur en train de jouer sur la case
             //  On active la commande pour donner les cartes
             //  Sinon non
-            for(CarteRouge i : perso.getCartes())
-            {
-                if(i instanceof CarteTresor)
-                {
+            for (CarteRouge i : perso.getCartes()) {
+                if (i instanceof CarteTresor) {
                     carteTresorDuJoueur.add(i);
                 }
             }
-            if(!carteTresorDuJoueur.isEmpty())
-            {
-                if(perso == pl.getControleurJeu().getJoueurEntrainDeJouer())
-                {
-                    if(!dejaDonne)
-                    {
-                        if(perso.getEmplacement().getPersonnages().size() > 1)
-                        {
+            if (!carteTresorDuJoueur.isEmpty()) {
+                if (perso == pl.getControleurJeu().getJoueurEntrainDeJouer()) {
+                    if (!dejaDonne) {
+                        if (perso.getEmplacement().getPersonnages().size() > 1) {
                             buttonDonnerCarte.setEnabled(true);
-                        }
-                        else
-                        {
+                        } else {
                             buttonDonnerCarte.setEnabled(false);
                         }
-                    }
-                    else
-                    {
+                    } else {
                         buttonDonnerCarte.setEnabled(false);
                     }
+                } else {
+                    buttonDonnerCarte.setEnabled(false);
                 }
-                else
-                {
-                    buttonDonnerCarte.setEnabled(false);  
-                }
-            }
-            else
-            {
+            } else {
                 buttonDonnerCarte.setEnabled(false);
             }
-        
-            
-            
+
             //  Si le personnage en train de jouer est sur une case avec un tresor
             //  et qu'il posséde 4 carte du meme type que le tresor
             //  la commande pour prendre le tresor est activee
-            if(perso.getEmplacement().getTresor() != TypeEnumTresors.AUCUN)
-            {
-                int comptTresor =0;
-                for(CarteRouge i : perso.getCartes())
-                {
-                    if(i.getTypeTresor() == perso.getEmplacement().getTresor())
-                    {
+            if (perso.getEmplacement().getTresor() != TypeEnumTresors.AUCUN) {
+                int comptTresor = 0;
+                for (CarteRouge i : perso.getCartes()) {
+                    if (i.getTypeTresor() == perso.getEmplacement().getTresor()) {
                         comptTresor++;
                     }
                 }
-                if(comptTresor == 4)
-                {
+                if (comptTresor == 4) {
                     buttonPrendreRelique.setEnabled(true);
-                }
-                else
-                {
+                } else {
                     buttonPrendreRelique.setEnabled(false);
-                }  
-            }
-            else
-            {
+                }
+            } else {
                 buttonPrendreRelique.setEnabled(false);
             }
-            
+
             carteActionDuJoueur.clear();
-            
-            //-------------------------
-            
-            for(CarteRouge i : perso.getCartes())
-            {
-                if(i instanceof CarteAction)
-                {
+
+            //-------------------------meme principe
+            for (CarteRouge i : perso.getCartes()) {
+                if (i instanceof CarteAction) {
                     carteActionDuJoueur.add(i);
                 }
             }
@@ -303,9 +314,7 @@ public class AffichagePersonnage extends JPanel{
                 if(carteActionDuJoueur.isEmpty())
                 {
                     buttonCarteSpecial.setEnabled(false);
-                }
-                else
-                {
+                } else {
                     buttonCarteSpecial.setEnabled(true);
                 }
             
@@ -316,42 +325,48 @@ public class AffichagePersonnage extends JPanel{
             labelTypeJoueur.setText(perso.getType().toString());
 
             for (CarteRouge cr : perso.getCartes()) {
-                panelMilieu.add(new ImageContainer(cr.getImage(), 0, 0, 50, 80));
+                panelMilieu.add(new ImageContainer(cr.getImage(), 0, 0, 50, 80)); //update des cartes en main
             }
             panelMilieu.repaint();
         }
-        
+
     }
-    
+
+    //setter du texte du bouton deplacement
     public void setButtonDeplacementText(String text) {
         buttonDeplacement.setText(text);
     }
     
+    //active/desactive le bonton deplacement
     public void setButtonDeplacementEnabled(boolean b) {
         buttonDeplacement.setEnabled(b);
     }
-    
+    //setter du texte du bouton assecher
     public void setButtonAssecherText(String text) {
         buttonAssecher.setText(text);
     }
-    
+    //active/desactive le bouton assecher
     public void setButtonAssecherEnabled(boolean b) {
         buttonAssecher.setEnabled(b);
     }
     
+    //texte du bouton passer tour
     public void setButtonPasserTourText(String text) {
         buttonPasserTour.setText(text);
     }
     
+    //active/desactive ce bouton
     public void setButtonPasserTourEnabled(boolean b) {
         buttonPasserTour.setEnabled(b);
     }
     
-    public void setButtonDonnerCarteText(String text){
+    //texte du bouton donner carte
+    public void setButtonDonnerCarteText(String text) {
         buttonDonnerCarte.setText(text);
     }
-    
-    public void setButtonDonnerCarteEnabled(boolean b){
+
+    //active/desactive le bouton donner carte
+    public void setButtonDonnerCarteEnabled(boolean b) {
         buttonDonnerCarte.setEnabled(b);
     }
     
