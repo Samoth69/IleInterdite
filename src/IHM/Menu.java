@@ -125,11 +125,17 @@ public class Menu extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == jouer) {               //Si clique sur jouer
+                Media hit = new Media(new File("src/RessourcesJoueur/ClickBouton.mp3").toURI().toString());
+                mediaPlayer = new MediaPlayer(hit);          //créer le media player
+                mediaPlayer.play();
             this.menu.setVisible(false);               //fenetre invisible
             notifierObservateur(new Message(TypeEnumMenuPrincipal.MENU_JOUEURS)); //notif observateur de l'action choisi
         }
 
         if (e.getSource() == regles) {  //si clique sur regles
+            Media hit = new Media(new File("src/RessourcesJoueur/ClickBouton.mp3").toURI().toString());
+                mediaPlayer = new MediaPlayer(hit);          //créer le media player
+                mediaPlayer.play();
             try {
                 Desktop.getDesktop().open(new File(System.getProperty("user.dir") + "/src/RessourcesMenu/Regles.pdf")); //Ouvre un pdf contenant les regles du jeu
             } catch (IOException ex) {
@@ -139,6 +145,9 @@ public class Menu extends JFrame implements ActionListener {
         }
 
         if (e.getSource() == quitter) { // si clique sur quitter, message de confirmation
+                Media hit = new Media(new File("src/RessourcesJoueur/ClickBoutonOff.mp3").toURI().toString());
+                mediaPlayer = new MediaPlayer(hit);          //créer le media player
+                mediaPlayer.play();
             int rep = JOptionPane.showConfirmDialog(null, "Etes-vous sûr(e) de vouloir quitter le jeu ?", "Message de confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
             if (rep == JOptionPane.YES_OPTION) {
                 System.exit(0);

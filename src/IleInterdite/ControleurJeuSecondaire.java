@@ -22,10 +22,13 @@ import Personnages.Navigateur;
 import Personnages.Personnage;
 import Personnages.Pilote;
 import Personnages.Plongeur;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.concurrent.ThreadLocalRandom;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
 /**
  *
@@ -47,7 +50,11 @@ public class ControleurJeuSecondaire implements Observe {
     
     //  Variables qui indiques si les tresors on etait pris ou non
     private boolean pierreSacre, statueZephyr, cristalArdent, caliceOnde;
-
+    
+    // Media Player pour le son
+    private MediaPlayer mediaPlayer;
+    
+    
     private ArrayList<Personnage> personnages = new ArrayList<>();
     private ArrayList<CarteRouge> pileCarteRouge = new ArrayList<>();
     private ArrayList<CarteRouge> defausseCarteRouge = new ArrayList<>();
@@ -654,6 +661,9 @@ public class ControleurJeuSecondaire implements Observe {
                         //  Si un joueur a une carte helicoptere, partie gagne
                         if (lesCartesDuJoueur.get(j) instanceof CarteAction) {
                             if (lesCartesDuJoueur.get(j).getTypeCarteAction() == TypeEnumCarteAction.HELICOPTERE) {
+                                Media hit = new Media(new File("src/RessourcesJoueur/Victoire.mp3").toURI().toString());
+                                mediaPlayer = new MediaPlayer(hit);          //créer le media player
+                                mediaPlayer.play();
                                 notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Partie Gagnée !"));
                                 notifierObservateur(new Message(TypeEnumMessage.PARTIE_GAGNE, "Partie Gagnée"));
                                 break;
@@ -669,6 +679,9 @@ public class ControleurJeuSecondaire implements Observe {
     public void verifFinDePartie() {
         //  Si le niveau d'eau est au max, alors fin de partie
         if (niveauEau >= 9) {
+            Media hit = new Media(new File("src/RessourcesJoueur/JeuPerdu.mp3").toURI().toString());
+            mediaPlayer = new MediaPlayer(hit);          //créer le media player
+            mediaPlayer.play();
             notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Fin de partie : Niveau d'eau maximum atteint"));
             notifierObservateur(new Message(TypeEnumMessage.FIN_PARTIE, "Niveau d'eau maximum atteint"));
         }
@@ -677,6 +690,9 @@ public class ControleurJeuSecondaire implements Observe {
         //  La boucle regarde si un personnage est mort
         for (int i = 0; i < personnages.size(); i++) {
             if (personnages.get(i).getDeplacements().isEmpty()) {
+                Media hit = new Media(new File("src/RessourcesJoueur/JeuPerdu.mp3").toURI().toString());
+                mediaPlayer = new MediaPlayer(hit);          //créer le media player
+                mediaPlayer.play();
                 notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, personnages.get(i).getNom() + " est mort"));
                 notifierObservateur(new Message(TypeEnumMessage.FIN_PARTIE, personnages.get(i).getNom() + " est mort"));
             }
@@ -687,8 +703,12 @@ public class ControleurJeuSecondaire implements Observe {
         for (int i = 0; i < grille.getListTuile().size(); i++) {
             if ("Heliport".equals(grille.getListTuile().get(i).getNom())) {
                 if (grille.getListTuile().get(i).getInondation() == TypeEnumInondation.INONDE) {
+                    Media hit = new Media(new File("src/RessourcesJoueur/JeuPerdu.mp3").toURI().toString());
+                    mediaPlayer = new MediaPlayer(hit);          //créer le media player
+                    mediaPlayer.play();
                     notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Heliport Inondé"));
                     notifierObservateur(new Message(TypeEnumMessage.FIN_PARTIE, "Heliport Inondé"));
+                    
                 }
                 break; // vas peut-etre poser probleme suite au notifierObservateur
             }
@@ -702,6 +722,9 @@ public class ControleurJeuSecondaire implements Observe {
                 for (int j = 0; j < grille.getListTuile().size(); j++) {
                     //  Si l'autre caverne est inondé et que l'on a pas recupéré le trésor la partie est fini
                     if ("La Caverne du Brasier".equals(grille.getListTuile().get(j).getNom()) && grille.getListTuile().get(j).getInondation() == TypeEnumInondation.INONDE) {
+                        Media hit = new Media(new File("src/RessourcesJoueur/JeuPerdu.mp3").toURI().toString());
+                        mediaPlayer = new MediaPlayer(hit);          //créer le media player
+                        mediaPlayer.play();
                         notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Fin de partie : Les 2 cases caverne sont inondé et les trésors avec"));
                         notifierObservateur(new Message(TypeEnumMessage.FIN_PARTIE, "Les 2 cases caverne sont inondé et les trésors avec"));
                         break;  //  peut-etre problematique
@@ -712,6 +735,9 @@ public class ControleurJeuSecondaire implements Observe {
             if ("Le Temple du Soleil".equals(grille.getListTuile().get(i).getNom()) && grille.getListTuile().get(i).getInondation() == TypeEnumInondation.INONDE && pierreSacre == false) {
                 for (int j = 0; j < grille.getListTuile().size(); j++) {
                     if ("Le Temple de La Lune".equals(grille.getListTuile().get(j).getNom()) && grille.getListTuile().get(j).getInondation() == TypeEnumInondation.INONDE) {
+                        Media hit = new Media(new File("src/RessourcesJoueur/JeuPerdu.mp3").toURI().toString());
+                        mediaPlayer = new MediaPlayer(hit);          //créer le media player
+                        mediaPlayer.play();
                         notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Fin de partie : Les 2 cases Temple sont inondé et les trésors avec"));
                         notifierObservateur(new Message(TypeEnumMessage.FIN_PARTIE, "Les 2 cases Temple sont inondé et les trésors avec"));
                         break;  //  peut-etre problematique
@@ -722,6 +748,9 @@ public class ControleurJeuSecondaire implements Observe {
             if ("Le Palais de Corail".equals(grille.getListTuile().get(i).getNom()) && grille.getListTuile().get(i).getInondation() == TypeEnumInondation.INONDE && caliceOnde == false) {
                 for (int j = 0; j < grille.getListTuile().size(); j++) {
                     if ("Le Palais des Marees".equals(grille.getListTuile().get(j).getNom()) && grille.getListTuile().get(j).getInondation() == TypeEnumInondation.INONDE) {
+                        Media hit = new Media(new File("src/RessourcesJoueur/JeuPerdu.mp3").toURI().toString());
+                        mediaPlayer = new MediaPlayer(hit);          //créer le media player
+                        mediaPlayer.play();
                         notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Fin de partie : Les 2 cases palais sont inondé et les trésors avec"));
                         notifierObservateur(new Message(TypeEnumMessage.FIN_PARTIE, "Les 2 cases palais sont inondé et les trésors avec"));
                         break;  //  peut-etre problematique
@@ -732,6 +761,9 @@ public class ControleurJeuSecondaire implements Observe {
             if ("Le Jardin des Hurlements".equals(grille.getListTuile().get(i).getNom()) && grille.getListTuile().get(i).getInondation() == TypeEnumInondation.INONDE && statueZephyr == false) {
                 for (int j = 0; j < grille.getListTuile().size(); j++) {
                     if ("Le Jardin des Murmures".equals(grille.getListTuile().get(j).getNom()) && grille.getListTuile().get(j).getInondation() == TypeEnumInondation.INONDE) {
+                        Media hit = new Media(new File("src/RessourcesJoueur/JeuPerdu.mp3").toURI().toString());
+                        mediaPlayer = new MediaPlayer(hit);          //créer le media player
+                        mediaPlayer.play();
                         notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Fin de partie : Les 2 cases jardins sont inondé et les trésors avec"));
                         notifierObservateur(new Message(TypeEnumMessage.FIN_PARTIE, "Les 2 cases jardins sont inondé et les trésors avec"));
                         break;  //  peut-etre problematique
