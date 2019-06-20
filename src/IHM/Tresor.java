@@ -17,6 +17,7 @@ import Enumerations.TypeEnumTresors;
 public class Tresor extends JComponent{
     
     TypeEnumTresors type;
+    Color couleur;
     
     Tresor(TypeEnumTresors typeTresor){
         this.type = typeTresor;
@@ -28,6 +29,7 @@ public class Tresor extends JComponent{
         {
             case FEU:
                 g.setColor(Color.red);
+                
             break;
             case LION:
                 g.setColor(Color.YELLOW);
@@ -46,7 +48,52 @@ public class Tresor extends JComponent{
         g.fillRect(0, 0, 10, 10);
     }
     
+    
     public TypeEnumTresors getTypeTresor(){
         return type;
+    }
+
+    public Color getCouleur(){
+        switch(type)
+        {
+            case FEU:
+                return Color.red;
+            case LION:
+                return Color.YELLOW;
+            case LUNE:
+                return new Color(153, 51, 153);
+            case TROPHEE:
+                return Color.CYAN;
+            case AUCUN:
+                
+            default:
+                return new Color(255, false);
+        }
+    }
+    
+    public void setColorGris(){
+        couleur = Color.GRAY;
+    }
+    
+    public void setColorBack(){
+        couleur = getCouleur();
+    }
+    
+    public String getNom(){
+        switch(type)
+        {
+            case FEU:
+                return "Cristal Ardent";
+            case LION:
+                return "Statue Zephyr";
+            case LUNE:
+                return "Pierre Sacree";
+            case TROPHEE:
+                return "Calice des Ondes";
+            case AUCUN:
+                return "";
+            default:
+                return "NA";
+        }
     }
 }

@@ -20,9 +20,12 @@ import Personnages.Personnage;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javax.swing.*;
 
 /**
@@ -70,6 +73,9 @@ public class AffichagePersonnage extends JPanel {
     public final static String nomAnnulé = "Annuler";
     public final static String nomActionSpecialNavigateur = "Deplacer un joueur";
 
+    // Media Player son
+    private MediaPlayer mediaPlayer;
+    
     private final static String imgFolder = System.getProperty("user.dir") + "/src/RessourcesPlateau/";
 
     //CONSTRUCTEUR
@@ -112,6 +118,9 @@ public class AffichagePersonnage extends JPanel {
         buttonDeplacement.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
+                Media hit = new Media(new File("src/RessourcesJoueur/Click2.mp3").toURI().toString());
+                mediaPlayer = new MediaPlayer(hit);          //créer le media player
+                mediaPlayer.play();
                 pl.changeMode(1); //change le mode en deplacement (0: aucun, 1: deplacement, 2: assecher, 3: Deplacement carte helicoptere)
                 pl.gamePadClick();//utilisé par les boutons déplacer et assécher afin de changer l'affichage du plateau
             }
@@ -122,6 +131,9 @@ public class AffichagePersonnage extends JPanel {
         buttonAssecher.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
+                Media hit = new Media(new File("src/RessourcesJoueur/Click2.mp3").toURI().toString());
+                mediaPlayer = new MediaPlayer(hit);          //créer le media player
+                mediaPlayer.play();
                 pl.changeMode(2);//change le mode en assecher (0: aucun, 1: deplacement, 2: assecher, 3: Deplacement carte helicoptere)
                 pl.gamePadClick();//utilisé par les boutons déplacer et assécher afin de changer l'affichage du plateau
             }
@@ -132,20 +144,26 @@ public class AffichagePersonnage extends JPanel {
         buttonPasserTour.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
+                Media hit = new Media(new File("src/RessourcesJoueur/passerTour.mp3").toURI().toString());
+                mediaPlayer = new MediaPlayer(hit);          //créer le media player
+                mediaPlayer.play();
                 pl.getControleurJeu().passerJoueurSuivant();// passe au joueur suivant
             }
         });
         
         //definie le nom des bouton donner carte, prendre relique et carte special
         buttonDonnerCarte = new JButton("Donner carte");
-        buttonPrendreRelique = new JButton("Prendre relique");;
-        buttonCarteSpecial = new JButton("Carte Spécial");
+        buttonPrendreRelique = new JButton("Prendre rélique");;
+        buttonCarteSpecial = new JButton("Carte spéciale");
         buttonActionSpecialNavigateur = new JButton(nomActionSpecialNavigateur);
         
         //action du bouton prendre relique
         buttonPrendreRelique.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) { //prend la relique à partir de l emplacement du joueurcourant
+                Media hit = new Media(new File("src/RessourcesJoueur/tresorGagne.mp3").toURI().toString());
+                mediaPlayer = new MediaPlayer(hit);          //créer le media player
+                mediaPlayer.play();
                 pl.getControleurJeu().recupererTresor(pl.getControleurJeu().getJoueurEntrainDeJouer().getEmplacement(), false);
             }
         });
@@ -154,6 +172,9 @@ public class AffichagePersonnage extends JPanel {
         buttonDonnerCarte.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
+                Media hit = new Media(new File("src/RessourcesJoueur/Click2.mp3").toURI().toString());
+                mediaPlayer = new MediaPlayer(hit);          //créer le media player
+                mediaPlayer.play();
                 carteTresorDuJoueur.clear();
                 
                 if(perso.getType() == TypeEnumPersonnages.MESSAGER)
@@ -202,6 +223,9 @@ public class AffichagePersonnage extends JPanel {
         buttonCarteSpecial.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
+                Media hit = new Media(new File("src/RessourcesJoueur/Click2.mp3").toURI().toString());
+                mediaPlayer = new MediaPlayer(hit);          //créer le media player
+                mediaPlayer.play();
                 carteActionDuJoueur.clear();
 
                 for (CarteRouge i : perso.getCartes()) {
@@ -211,7 +235,7 @@ public class AffichagePersonnage extends JPanel {
                 }
 
                 if (!carteActionDuJoueur.isEmpty()) {
-                    VuDefausse vd1 = new VuDefausse(carteActionDuJoueur, "utiliser carte"); //idem à donner carte
+                    VuDefausse vd1 = new VuDefausse(carteActionDuJoueur, "Utiliser carte"); //idem à donner carte
                     vd1.setVisible(true);
                
                     if(vd1.getSelectedItems().get(0).getTypeCarteAction() == TypeEnumCarteAction.HELICOPTERE)
@@ -248,7 +272,7 @@ public class AffichagePersonnage extends JPanel {
         buttonActionSpecialNavigateur.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                pl.changeMode(5);
+                pl.changeMode(6);
                 pl.gamePadClick();
             }
         });

@@ -29,6 +29,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
 import java.io.IOException;
 import static java.lang.Compiler.command;
 import javax.swing.*;
@@ -36,6 +37,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javax.swing.border.Border;
 
 /**
@@ -123,6 +126,10 @@ public class Plateau implements Observateur {
 
     private final int max = 9; //taille frise inondation
     //private int niveauEaucompteur = max;
+    
+    //
+    private MediaPlayer mediaPlayer;
+    
     private Personnage selectedPerso; //variable utilisé pour indiqué le personnage qui à été sélectionner par le navigateur et pour le déplacer sur la carte
 
     //CONSTRUCTEUR
@@ -384,7 +391,10 @@ public class Plateau implements Observateur {
 
                         for (String k : listTresor.keySet()) {
                             if (plateau[i][j].getNom() == k) {
-                                pn.add(listTresor.get(k));
+                                JLabel labT = new JLabel(listTresor.get(k).getNom());
+                                labT.setOpaque(true);
+                                labT.setBackground(listTresor.get(k).getCouleur());
+                                pn.add(labT);
                             }
                         }
 
@@ -535,8 +545,7 @@ public class Plateau implements Observateur {
                 setBtAssecherEnabled(false);
                 setBtDeplacementEnabled(false);
                 setBtPasserJoueurEnabled(false);
-                setBtCarteActionEnabled(false);
-                setBtAssecherText(nomAnnulé);//Desactive tous les boutons
+                setBtCarteActionEnabled(false);//Desactive tous les boutons
 
                 //  Affiche toute les case non inondé, donc praticable
                 for (Tuile t : grille.getListTuile()) {
@@ -553,8 +562,7 @@ public class Plateau implements Observateur {
                 paintNonSelected();
                 setBtAssecherEnabled(false);
                 setBtDeplacementEnabled(false);
-                setBtPasserJoueurEnabled(false);
-                setBtAssecherText(nomAnnulé);   //Desactive tous les boutons
+                setBtPasserJoueurEnabled(false);   //Desactive tous les boutons
 
                 //Affiche toute les case mouille, donc sechable
                 for (Tuile t : grille.getListTuile()) {
@@ -565,8 +573,19 @@ public class Plateau implements Observateur {
                 }
                 //  Notifie l'observateur de l'action
                 cj.notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Carte Sac de Sable utilisée"));
+            case 5: //Si un  perseo est dans l'eau et doit sortir
+                paintNonSelected();
+                setBtAssecherEnabled(false);
+                setBtDeplacementEnabled(false);
+                setBtPasserJoueurEnabled(false);
+                setBtCarteActionEnabled(false);//Desactive tous les boutons
+
+                for (Tuile t : cj.getJoueurEntrainDeJouer().getDeplacements()) {
+                    JPanel jpa = panel[t.getX()][t.getY()];
+                    jpa.setBackground(tuileColor);
+                }
                 break;
-            case 5:
+            case 6:
                 final ArrayList<String> arpseudos = new ArrayList<>();
                 for (Personnage p : cj.getPerso()) {
                     arpseudos.add(p.getNom());
@@ -651,6 +670,13 @@ public class Plateau implements Observateur {
                     cj.setNbAction(cj.getNbActionRestante() + 1);//Car utiliser une carte action ne coute pas de point d'action
                     break;
                 case 5:
+                    x = cj.getJoueurEntrainDeJouer().getEmplacement().getX();
+                    y = cj.getJoueurEntrainDeJouer().getEmplacement().getY();
+                    panel[x][y].remove(listPion.get(cj.getJoueurNum()));
+                    panel[i][j].add(listPion.get(cj.getJoueurNum()));
+                    cj.deplacerJoueurEnCours(emplacement);
+                    break;
+                case 6:
                     cj.deplacerJoueur(selectedPerso, emplacement);
                     cj.decrementAction();
                     updatePion();
@@ -942,11 +968,14 @@ public class Plateau implements Observateur {
                 //System.out.println(cj.getJoueurNum());
                 break;
             case CHANGEMENT_NIVEAU_EAU:
+                Media hit = new Media(new File("src/RessourcesJoueur/NiveauEauSon.mp3").toURI().toString());
+                mediaPlayer = new MediaPlayer(hit);          //créer le media player
+                mediaPlayer.play();
                 ColoriserNiveauEau();
                 break;
             case PIOCHE_CARTE_INONDATION:
                 ArrayList t = new ArrayList<>();
-                t.add("Carte Inondation piocher:");
+                t.add("Carte Inondation piochée : ");
                 for (CarteInondation ci : (ArrayList<CarteInondation>) m.getAdditionnal()) {
                     t.add(" - " + ci.getNom());
                 }
@@ -972,16 +1001,19 @@ public class Plateau implements Observateur {
                 paintNormal();
                 break;
             case FIN_PARTIE:
-                JOptionPane.showMessageDialog(null, "GAME OVER : \n" + m.getMessage(), "Fin De Partie", JOptionPane.PLAIN_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Partie perdue : " + m.getMessage(), "Fin de partie", JOptionPane.ERROR_MESSAGE);
                 window.setVisible(false);
                 System.exit(0);
                 break;
             case PARTIE_GAGNE:
-                JOptionPane.showMessageDialog(null, "PARTIE GAGNEE !", "Fin De Partie", JOptionPane.PLAIN_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Partie gagnée !", "Fin de partie", JOptionPane.INFORMATION_MESSAGE);
                 window.setVisible(false);
                 System.exit(0);
                 break;
             case RM_TRESOR:
+                Media hite = new Media(new File("src/RessourcesJoueur/tresorGagne.mp3").toURI().toString());
+                mediaPlayer = new MediaPlayer(hite);          //créer le media player
+                mediaPlayer.play();
                 for (String i : listTresor.keySet()) {
                     if (m.getEmplacementJoueur().getNom().equals(i)) {
                         listTresor.get(i).setVisible(false);
@@ -1002,6 +1034,9 @@ public class Plateau implements Observateur {
                 updateGamePad();
                 window.repaint();
                 break;
+            case PERSO_DANS_EAU:
+                changeMode(5);
+                gamePadClick();
         }
     }
 
