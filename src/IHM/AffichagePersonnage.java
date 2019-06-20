@@ -12,6 +12,7 @@ import Enumerations.TypeEnumCarteAction;
 import Enumerations.TypeEnumCouleurPion;
 import Enumerations.TypeEnumInondation;
 import Enumerations.TypeEnumMessage;
+import Enumerations.TypeEnumPersonnages;
 import Enumerations.TypeEnumTresors;
 import IleInterdite.Message;
 import IleInterdite.Tuile;
@@ -150,6 +151,19 @@ public class AffichagePersonnage extends JPanel {
         buttonDonnerCarte.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
+                if(perso.getType() == TypeEnumPersonnages.MESSAGER)
+                {
+                    listPersoEmplacement.clear();
+                    listPersoEmplacement.addAll(pl.getControleurJeu().getPerso());//ajoute les personnage de l emplacement dans cette liste
+                    listPersoEmplacement.remove(perso);                                    //sauf celui qui lance la commande
+                    VuDefausse vd = new VuDefausse(perso.getCartes(), "Donner carte", 1, listPersoEmplacement, pl.getControleurJeu().getNbActionRestante());
+                    vd.setVisible(true); //afficher les cartes à donner
+                    perso.donnerCarteAJoueur(vd.getPersoQuiRecoitCartes(), vd.getSelectedItems()); //donner les cartes selectionner
+                    pl.getControleurJeu().setNbAction(vd.getNbActionRestante()); //change le nombre d action restante
+                    listPersoEmplacement.clear(); //vide la liste
+                    buttonDonnerCarte.setEnabled(false); 
+                    pl.getControleurJeu().notifierObservateur(new Message(TypeEnumMessage.UPDATE_GUI)); //met à jour l interface
+                }
                 if (perso.getEmplacement().getPersonnages().size() != 1) {
                     listPersoEmplacement.addAll(perso.getEmplacement().getPersonnages());//ajoute les personnage de l emplacement dans cette liste
                     listPersoEmplacement.remove(perso);                                    //sauf celui qui lance la commande
@@ -268,11 +282,19 @@ public class AffichagePersonnage extends JPanel {
             if (!carteTresorDuJoueur.isEmpty()) {
                 if (perso == pl.getControleurJeu().getJoueurEntrainDeJouer()) {
                     if (!dejaDonne) {
-                        if (perso.getEmplacement().getPersonnages().size() > 1) {
+                        if(perso.getType() == TypeEnumPersonnages.MESSAGER)
+                        {
                             buttonDonnerCarte.setEnabled(true);
-                        } else {
-                            buttonDonnerCarte.setEnabled(false);
                         }
+                        else
+                        {
+                            if (perso.getEmplacement().getPersonnages().size() > 1) {
+                                buttonDonnerCarte.setEnabled(true);
+                            } else {
+                                buttonDonnerCarte.setEnabled(false);
+                            }
+                        }
+                        
                     } else {
                         buttonDonnerCarte.setEnabled(false);
                     }
