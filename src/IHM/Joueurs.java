@@ -17,6 +17,7 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import javafx.scene.media.MediaPlayer;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -26,7 +27,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-
+import javafx.scene.media.Media;
+import java.io.File;
 /**
  *
  * @author laraicha
@@ -61,8 +63,10 @@ public class Joueurs extends JFrame implements ActionListener {
     private final Integer[] nombreJoueur = {2, 3, 4};
     private final String[] nomRoles = {"Aléatoire", "Explorateur", "Ingénieur", "Messager", "Navigateur", "Pilote", "Plongeur"};
     private final String[] niveauEau = {"Novice", "Normal", "Elite", "Légendaire"};
-    private final String[] modeJ = {"Mode normal", "Scénario n°1", "Scénario n°2", "Scénario n°3", "Scénario n°4", "Scénario n°5"};
+    private final String[] modeJ = {"Normal", "Scénario n°1", "Scénario n°2", "Scénario n°3", "Scénario n°4", "Scénario n°5"};
     
+    //Media player pour les sons
+    private MediaPlayer mediaPlayer;
     //CONSTRUCTEUR
     public Joueurs() {
         ImageIcon img = new ImageIcon("src/RessourcesJoueur/FondJoueur.jpg"); //image de fond
@@ -326,6 +330,9 @@ public class Joueurs extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == retour) {   //Message de confirmation retour
+            Media hit = new Media(new File("src/RessourcesJoueur/ClickBoutonOff.mp3").toURI().toString());
+                mediaPlayer = new MediaPlayer(hit);          //créer le media player
+                mediaPlayer.play();
             int rep = JOptionPane.showConfirmDialog(null, "Etes-vous sûr(e) de vouloir retourner au menu ?", "Message de confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
             if (rep == JOptionPane.YES_OPTION) {
                 this.joueur.setVisible(false);
@@ -334,6 +341,9 @@ public class Joueurs extends JFrame implements ActionListener {
         }
 
         if (e.getSource() == quitter) { //message de confirmation quitter
+            Media hit = new Media(new File("src/RessourcesJoueur/ClickBoutonOff.mp3").toURI().toString());
+                mediaPlayer = new MediaPlayer(hit);          //créer le media player
+                mediaPlayer.play();
             int rep = JOptionPane.showConfirmDialog(null, "Etes-vous sûr(e) de vouloir quitter le jeu ?", "Message de confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
             if (rep == JOptionPane.YES_OPTION) {
                 System.exit(0);
@@ -342,6 +352,9 @@ public class Joueurs extends JFrame implements ActionListener {
 
         if (e.getSource() == jouer) {  //controle/prevention : role different
             ArrayList<String> usedRole = new ArrayList<>();
+                Media hit = new Media(new File("src/RessourcesJoueur/ClickBouton.mp3").toURI().toString());
+                mediaPlayer = new MediaPlayer(hit);          //créer le media player
+                mediaPlayer.play();
             for (int i = 0; i < (int) nbJoueurs.getSelectedItem(); i++) {
                 if (usedRole.contains((String) listRole.get(i).getSelectedItem())) {
                     JOptionPane.showMessageDialog(null, "Chaque joueur doit avoir un rôle différent.", "Message d'erreur", JOptionPane.ERROR_MESSAGE);
