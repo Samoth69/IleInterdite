@@ -29,6 +29,7 @@ import java.util.Collections;
 import java.util.concurrent.ThreadLocalRandom;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -47,14 +48,13 @@ public class ControleurJeuSecondaire implements Observe {
     private Grille grille;
     private boolean demarrage = true; //est vrai pendant que le constructeur travaille. devient définitivement false après la fin du constructeur
     private boolean demoMode = false; //indique si le jeu est en mode demo, désactive tout l'aléatoire du jeu
-    
+
     //  Variables qui indiques si les tresors on etait pris ou non
     private boolean pierreSacre, statueZephyr, cristalArdent, caliceOnde;
-    
+
     // Media Player pour le son
     private MediaPlayer mediaPlayer;
-    
-    
+
     private ArrayList<Personnage> personnages = new ArrayList<>();
     private ArrayList<CarteRouge> pileCarteRouge = new ArrayList<>();
     private ArrayList<CarteRouge> defausseCarteRouge = new ArrayList<>();
@@ -64,14 +64,14 @@ public class ControleurJeuSecondaire implements Observe {
     //-----------------------------------------------------------------------------------
     //METHODES
 /*
-    public ControleurJeuSecondaire(int nbJoueur) {
-        if (nbJoueur < 2 || nbJoueur > 4) {
-            throw new Error("Le nombre de joueur doit être compris entre 2 et 4 (inclus)");
-        }
-        nombreJoueurDansPartie = nbJoueur;
-        personnages.addAll(getPersonnagesDebutDePartie(nombreJoueurDansPartie));
-        grille = new Grille(personnages);
-    }*/
+     public ControleurJeuSecondaire(int nbJoueur) {
+     if (nbJoueur < 2 || nbJoueur > 4) {
+     throw new Error("Le nombre de joueur doit être compris entre 2 et 4 (inclus)");
+     }
+     nombreJoueurDansPartie = nbJoueur;
+     personnages.addAll(getPersonnagesDebutDePartie(nombreJoueurDansPartie));
+     grille = new Grille(personnages);
+     }*/
     public ControleurJeuSecondaire(ArrayList<Personnage> perso, int niveauEau, boolean demo, ArrayList<CarteRouge> cr, ArrayList<CarteInondation> ci) {
         if (demo) {
             System.out.println("MODE SCENARIO");
@@ -123,45 +123,44 @@ public class ControleurJeuSecondaire implements Observe {
     }
 
     /* 
-    public ControleurJeuSecondaire(ArrayList<Personnage> perso, int niveauEau) {
-        if (perso.size() < 2 || perso.size() > 4) {
-            throw new Error("Le nombre de joueur doit être compris entre 2 et 4 (inclus)");
-        }
-        this.niveauEau = niveauEau;
-        nombreJoueurDansPartie = perso.size();
-        personnages = perso;
-        grille = new Grille(personnages, false);
-        pileCarteInondation = grille.getListCarteInondation();
-        pileCarteRouge = getListCarteRouge();
-        Collections.shuffle(pileCarteInondation);
-        Collections.shuffle(pileCarteRouge);
+     public ControleurJeuSecondaire(ArrayList<Personnage> perso, int niveauEau) {
+     if (perso.size() < 2 || perso.size() > 4) {
+     throw new Error("Le nombre de joueur doit être compris entre 2 et 4 (inclus)");
+     }
+     this.niveauEau = niveauEau;
+     nombreJoueurDansPartie = perso.size();
+     personnages = perso;
+     grille = new Grille(personnages, false);
+     pileCarteInondation = grille.getListCarteInondation();
+     pileCarteRouge = getListCarteRouge();
+     Collections.shuffle(pileCarteInondation);
+     Collections.shuffle(pileCarteRouge);
         
-        for (int i = 0; i <= 5; i++) {
-            CarteInondation ci = PiocherCarteInond();
-            augementerInondation(ci.getNom());
-            ControleurJeuSecondaire.this.defausserCarte(ci);
-        } 
-        for (int i = 1; i <= 2; i++) {
-            for (Personnage p : perso) {
-                CarteRouge cr = PiocherCarteRouge();
-                if (cr != null) {
-                    p.addCarte(cr);
-                }
-            }
-        }
+     for (int i = 0; i <= 5; i++) {
+     CarteInondation ci = PiocherCarteInond();
+     augementerInondation(ci.getNom());
+     ControleurJeuSecondaire.this.defausserCarte(ci);
+     } 
+     for (int i = 1; i <= 2; i++) {
+     for (Personnage p : perso) {
+     CarteRouge cr = PiocherCarteRouge();
+     if (cr != null) {
+     p.addCarte(cr);
+     }
+     }
+     }
         
-        //  Initialise les variables pour indiquer qu'aucun tresor n'est possédé 
-        pierreSacre = false;
-        statueZephyr = false;
-        cristalArdent = false;
-        caliceOnde = false;
+     //  Initialise les variables pour indiquer qu'aucun tresor n'est possédé 
+     pierreSacre = false;
+     statueZephyr = false;
+     cristalArdent = false;
+     caliceOnde = false;
         
-        //  initialise nombre d'action
-        nombreAction = 3;
-        demarrage = false;
-    }
+     //  initialise nombre d'action
+     nombreAction = 3;
+     demarrage = false;
+     }
      */
-    
     //Obtient les personnages pour démararer la partie.
     //renvoie une liste contenant de NOUVEAU joueurs avec tous un role différent
     private ArrayList<Personnage> getPersonnagesDebutDePartie(int nbJoueurs) {
@@ -199,7 +198,7 @@ public class ControleurJeuSecondaire implements Observe {
         }
         return p;
     }
-    
+
     public int getNumJoueur(String nomJoueur) {
         for (int i = 0; i < personnages.size(); i++) {
             if (personnages.get(i).getNom().toLowerCase().equals(nomJoueur.toLowerCase())) {
@@ -208,7 +207,7 @@ public class ControleurJeuSecondaire implements Observe {
         }
         return -1;
     }
-    
+
     public void deplacerJoueur(Personnage perso, Tuile newPos) {
         personnages.get(getNumJoueur(perso.getNom())).deplacement(newPos);
         notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Deplacement de " + getJoueurEntrainDeJouer().getNom() + " sur " + newPos.getNom()));
@@ -265,7 +264,6 @@ public class ControleurJeuSecondaire implements Observe {
                                 getJoueurEntrainDeJouer().getCartes().removeAll(carteUtilise);
                                 defausserCarte(carteUtilise);
                             }
-                            
 
                             break;
                         case LION:  // idem
@@ -353,7 +351,7 @@ public class ControleurJeuSecondaire implements Observe {
     public int getJoueurNum() {
         return numJoueurEnCours;
     }
-    
+
     public boolean isDemoMode() {
         return demoMode;
     }
@@ -537,11 +535,10 @@ public class ControleurJeuSecondaire implements Observe {
         notifierObservateur(new Message(TypeEnumMessage.JOUEUR_SUIVANT));
         verifFinDePartie();
         partieGagne();
-        if(estDansEau(getJoueurEntrainDeJouer()))
-        {
+        if (estDansEau(getJoueurEntrainDeJouer())) {
             notifierObservateur(new Message(TypeEnumMessage.PERSO_DANS_EAU));
         }
-        
+
         actionDebutTour();
     }
 
@@ -549,7 +546,7 @@ public class ControleurJeuSecondaire implements Observe {
         if (!demoMode) {
             Collections.shuffle(pileCarteRouge);
         }
-        
+
     }
 
     private void MelangeDefausseCarteInnondation() {
@@ -621,7 +618,9 @@ public class ControleurJeuSecondaire implements Observe {
     private void actionDebutTour() {
         //CODE DE VERIF NB CARTE
         VerifNbCarte(personnages.get(numJoueurEnCours));
-        
+        if (getJoueurEntrainDeJouer().getEmplacement().getInondation() == TypeEnumInondation.INONDE) {
+            JOptionPane.showMessageDialog(null, "Vous êtes sur une case inondée, vous devez en sortir.");
+        }
     }
 
     //renvoie le nombre de joueur dans la partie
@@ -645,17 +644,14 @@ public class ControleurJeuSecondaire implements Observe {
         return caliceOnde;
     }
 
-    public boolean estDansEau(Personnage perso){
-        if(perso.getEmplacement().getInondation() == TypeEnumInondation.INONDE)
-        {
+    public boolean estDansEau(Personnage perso) {
+        if (perso.getEmplacement().getInondation() == TypeEnumInondation.INONDE) {
             return true;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
-    
+
     public void partieGagne() {
         int nbJoueurSurHeliport = 0;
 
@@ -724,7 +720,7 @@ public class ControleurJeuSecondaire implements Observe {
                     mediaPlayer.play();
                     notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Heliport Inondé"));
                     notifierObservateur(new Message(TypeEnumMessage.FIN_PARTIE, "Heliport Inondé"));
-                    
+
                 }
                 break; // vas peut-etre poser probleme suite au notifierObservateur
             }

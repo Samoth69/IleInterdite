@@ -64,6 +64,8 @@ public class ControleurJeuPrincipal implements Observateur {
                 ArrayList<String> infos = m.getAdditionnal();
                 ArrayList<Personnage> perso = new ArrayList<>();
                 
+             
+                
                 switch (infos.get(1)) {
                     case "0": //mode normal
                         int counter = 3;
