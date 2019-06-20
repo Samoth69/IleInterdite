@@ -74,7 +74,7 @@ public class ControleurJeuSecondaire implements Observe {
     }*/
     public ControleurJeuSecondaire(ArrayList<Personnage> perso, int niveauEau, boolean demo, ArrayList<CarteRouge> cr, ArrayList<CarteInondation> ci) {
         if (demo) {
-            System.out.println("MODE SCENARIO");
+            System.out.println("Mode scénario activé");
             demoMode = true;
         }
         this.niveauEau = niveauEau;
@@ -178,16 +178,16 @@ public class ControleurJeuSecondaire implements Observe {
 
             switch (rnd) {
                 case 1:
-                    p.add(new Explorateur("Pseudo Explo", grille));
+                    p.add(new Explorateur("Pseudo Explorateur", grille));
                     break;
                 case 2:
-                    p.add(new Ingenieur("Pseudo Inge", grille));
+                    p.add(new Ingenieur("Pseudo Ingénieur", grille));
                     break;
                 case 3:
                     p.add(new Messager("Pseudo Messager", grille));
                     break;
                 case 4:
-                    p.add(new Navigateur("Pseudo Nav", grille));
+                    p.add(new Navigateur("Pseudo Navigateur", grille));
                     break;
                 case 5:
                     p.add(new Pilote("Pseudo Pilote", grille));
@@ -211,7 +211,7 @@ public class ControleurJeuSecondaire implements Observe {
     
     public void deplacerJoueur(Personnage perso, Tuile newPos) {
         personnages.get(getNumJoueur(perso.getNom())).deplacement(newPos);
-        notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Deplacement de " + getJoueurEntrainDeJouer().getNom() + " sur " + newPos.getNom()));
+        notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Déplacement de " + getJoueurEntrainDeJouer().getNom() + " sur " + newPos.getNom() + "."));
         notifierObservateur(new Message(TypeEnumMessage.UPDATE_GUI));
         partieGagne();  // regarde si la partie est gagnée
     }
@@ -222,7 +222,7 @@ public class ControleurJeuSecondaire implements Observe {
         }
         personnages.get(numJoueurEnCours).deplacement(newPos);
         decrementAction();
-        notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Deplacement de " + getJoueurEntrainDeJouer().getNom() + " sur " + newPos.getNom()));
+        notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Déplacement de " + getJoueurEntrainDeJouer().getNom() + " sur " + newPos.getNom() + "."));
         partieGagne();  // regarde si la partie est gagnée
     }
 
@@ -246,7 +246,7 @@ public class ControleurJeuSecondaire implements Observe {
                     switch (emplacementJoueur.getTresor()) {
                         case FEU:   //si le tresor = feu
                             cristalArdent = true;   //tresor est possédé
-                            notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Le tresor Cristal Ardent a été récupéré"));
+                            notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Le trésor Cristal Ardent a été récupéré."));
                             //message qui indique la tuile où le tresor doit etre supprimé
                             notifierObservateur(new Message(TypeEnumMessage.RM_TRESOR, emplacementJoueur));
 
@@ -270,7 +270,7 @@ public class ControleurJeuSecondaire implements Observe {
                             break;
                         case LION:  // idem
                             statueZephyr = true;
-                            notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Le tresor Statue de Zephyr a été récupéré"));
+                            notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Le trésor Statue de Zephyr a été récupéré."));
                             notifierObservateur(new Message(TypeEnumMessage.RM_TRESOR, emplacementJoueur));
 
                             for (CarteRouge i : getJoueurEntrainDeJouer().getCartes()) {
@@ -291,7 +291,7 @@ public class ControleurJeuSecondaire implements Observe {
                             break;
                         case LUNE:  //idem
                             pierreSacre = true;
-                            notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Le tresor Pierre Sacré a été récupéré"));
+                            notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Le trésor Pierre Sacré a été récupéré."));
                             notifierObservateur(new Message(TypeEnumMessage.RM_TRESOR, emplacementJoueur));
 
                             for (CarteRouge i : getJoueurEntrainDeJouer().getCartes()) {
@@ -312,7 +312,7 @@ public class ControleurJeuSecondaire implements Observe {
                             break;
                         case TROPHEE:   //idem
                             caliceOnde = true;
-                            notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Le tresor Calice des Ondes a été récupéré"));
+                            notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Le trésor Calice des Ondes a été récupéré."));
                             notifierObservateur(new Message(TypeEnumMessage.RM_TRESOR, emplacementJoueur));
 
                             for (CarteRouge i : getJoueurEntrainDeJouer().getCartes()) {
@@ -341,7 +341,7 @@ public class ControleurJeuSecondaire implements Observe {
                     notifierObservateur(new Message(TypeEnumMessage.UPDATE_GUI, emplacementJoueur));
                 }
             } else {
-                notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Pas possible de recup tresor"));
+                notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Il n'est pas possible de récupérer le trésor."));
             }
         }
     }
@@ -366,7 +366,7 @@ public class ControleurJeuSecondaire implements Observe {
             decrementAction();
         }
 
-        notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "La case " + t.getNom() + " à été asséché"));
+        notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "La case " + t.getNom() + " a été asséchée."));
     }
 
     //cherche dans un arraylist si num est trouvé, renvoie true. sinon renvoie faux.
@@ -503,7 +503,7 @@ public class ControleurJeuSecondaire implements Observe {
 
     public void VerifNbCarte(Personnage perso) {
         if (perso.getCartes().size() > 5) {
-            VuDefausse vd = new VuDefausse(perso.getCartes(), "Defaussez une carte", perso.getCartes().size() - 5);
+            VuDefausse vd = new VuDefausse(perso.getCartes(), "Défaussez une carte", perso.getCartes().size() - 5);
             vd.setVisible(true);
             for (CarteRouge cr : vd.getSelectedItems()) {
                 perso.removeCarte(cr);
@@ -582,7 +582,7 @@ public class ControleurJeuSecondaire implements Observe {
     private void decrementActionAfterCheck() {
         if (nombreAction < 1.0 && getJoueurEntrainDeJouer().getTuileQuiPeutSecher().isEmpty()) {
             ArrayList<String> t = new ArrayList<>();
-            t.add("Le joueur ne peux plus assécher de tuile.");
+            t.add("Le joueur ne peut plus assécher de tuile.");
             notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, t));
             passerJoueurSuivant();
         }
@@ -592,7 +592,7 @@ public class ControleurJeuSecondaire implements Observe {
     public void augmenterNiveauEau() {
         niveauEau++;
         notifierObservateur(new Message(TypeEnumMessage.CHANGEMENT_NIVEAU_EAU));
-        notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Le niveau d'eau a augmenté"));
+        notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Le niveau d'eau a augmenté."));
         if (!demarrage) {
             verifFinDePartie();
         }
@@ -698,7 +698,7 @@ public class ControleurJeuSecondaire implements Observe {
             Media hit = new Media(new File("src/RessourcesJoueur/JeuPerdu.mp3").toURI().toString());
             mediaPlayer = new MediaPlayer(hit);          //créer le media player
             mediaPlayer.play();
-            notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Fin de partie : Niveau d'eau maximum atteint"));
+            notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Fin de la partie : le niveau d'eau maximal a été atteint."));
             notifierObservateur(new Message(TypeEnumMessage.FIN_PARTIE, "Niveau d'eau maximum atteint"));
         }
 
@@ -709,8 +709,8 @@ public class ControleurJeuSecondaire implements Observe {
                 Media hit = new Media(new File("src/RessourcesJoueur/JeuPerdu.mp3").toURI().toString());
                 mediaPlayer = new MediaPlayer(hit);          //créer le media player
                 mediaPlayer.play();
-                notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, personnages.get(i).getNom() + " est mort"));
-                notifierObservateur(new Message(TypeEnumMessage.FIN_PARTIE, personnages.get(i).getNom() + " est mort"));
+                notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, personnages.get(i).getNom() + " est mort."));
+                notifierObservateur(new Message(TypeEnumMessage.FIN_PARTIE, personnages.get(i).getNom() + " est mort."));
             }
         }
 
@@ -722,8 +722,8 @@ public class ControleurJeuSecondaire implements Observe {
                     Media hit = new Media(new File("src/RessourcesJoueur/JeuPerdu.mp3").toURI().toString());
                     mediaPlayer = new MediaPlayer(hit);          //créer le media player
                     mediaPlayer.play();
-                    notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Heliport Inondé"));
-                    notifierObservateur(new Message(TypeEnumMessage.FIN_PARTIE, "Heliport Inondé"));
+                    notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Héliport Inondé."));
+                    notifierObservateur(new Message(TypeEnumMessage.FIN_PARTIE, "Héliport Inondé."));
                     
                 }
                 break; // vas peut-etre poser probleme suite au notifierObservateur
@@ -741,8 +741,8 @@ public class ControleurJeuSecondaire implements Observe {
                         Media hit = new Media(new File("src/RessourcesJoueur/JeuPerdu.mp3").toURI().toString());
                         mediaPlayer = new MediaPlayer(hit);          //créer le media player
                         mediaPlayer.play();
-                        notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Fin de partie : Les 2 cases caverne sont inondées et leurs trésors avec"));
-                        notifierObservateur(new Message(TypeEnumMessage.FIN_PARTIE, "Les 2 cases caverne sont inondées et leurs trésors avec"));
+                        notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Fin de partie : les deux cases Caverne ainsi que leurs trésors ont été inondées."));
+                        notifierObservateur(new Message(TypeEnumMessage.FIN_PARTIE, "Les deux cases Caverne ainsi que leurs trésors ont été inondées."));
                         break;  //  peut-etre problematique
                     }
                 }
@@ -754,8 +754,8 @@ public class ControleurJeuSecondaire implements Observe {
                         Media hit = new Media(new File("src/RessourcesJoueur/JeuPerdu.mp3").toURI().toString());
                         mediaPlayer = new MediaPlayer(hit);          //créer le media player
                         mediaPlayer.play();
-                        notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Fin de partie : Les 2 cases Temple sont inondées et leurs trésors avec"));
-                        notifierObservateur(new Message(TypeEnumMessage.FIN_PARTIE, "Les 2 cases Temple sont inondées et leurs trésors avec"));
+                        notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Fin de partie : les deux cases Temple ainsi que leurs trésors ont été inondées."));
+                        notifierObservateur(new Message(TypeEnumMessage.FIN_PARTIE, "Les deux cases Temple ainsi que leurs trésors ont été inondées."));
                         break;  //  peut-etre problematique
                     }
                 }
@@ -767,8 +767,8 @@ public class ControleurJeuSecondaire implements Observe {
                         Media hit = new Media(new File("src/RessourcesJoueur/JeuPerdu.mp3").toURI().toString());
                         mediaPlayer = new MediaPlayer(hit);          //créer le media player
                         mediaPlayer.play();
-                        notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Fin de partie : Les 2 cases palais sont inondées et leurs trésors avec"));
-                        notifierObservateur(new Message(TypeEnumMessage.FIN_PARTIE, "Les 2 cases palais sont inondées et leurs trésors avec"));
+                        notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Fin de partie : les deux cases Palais ainsi que leurs trésors ont été inondées."));
+                        notifierObservateur(new Message(TypeEnumMessage.FIN_PARTIE, "Les deux cases Palais ainsi que leurs trésors ont été inondées."));
                         break;  //  peut-etre problematique
                     }
                 }
@@ -780,8 +780,8 @@ public class ControleurJeuSecondaire implements Observe {
                         Media hit = new Media(new File("src/RessourcesJoueur/JeuPerdu.mp3").toURI().toString());
                         mediaPlayer = new MediaPlayer(hit);          //créer le media player
                         mediaPlayer.play();
-                        notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Fin de partie : Les 2 cases jardins sont inondées et leurs trésors avec"));
-                        notifierObservateur(new Message(TypeEnumMessage.FIN_PARTIE, "Les 2 cases jardins sont inondées et leurs trésors avec"));
+                        notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Fin de partie : les deux cases Jardin ainsi que leurs trésors ont été inondées."));
+                        notifierObservateur(new Message(TypeEnumMessage.FIN_PARTIE, "Les deux cases Jardin ainsi que leurs trésors ont été inondées."));
                         break;  //  peut-etre problematique
                     }
                 }
@@ -834,19 +834,19 @@ public class ControleurJeuSecondaire implements Observe {
         out.add(new CarteTresor("Feu", TypeEnumTresors.FEU, chemin + "Cristal.png"));
         out.add(new CarteTresor("Feu", TypeEnumTresors.FEU, chemin + "Cristal.png"));
         out.add(new CarteTresor("Feu", TypeEnumTresors.FEU, chemin + "Cristal.png"));
-        out.add(new CarteTresor("Trophee", TypeEnumTresors.TROPHEE, chemin + "Calice.png"));
-        out.add(new CarteTresor("Trophee", TypeEnumTresors.TROPHEE, chemin + "Calice.png"));
-        out.add(new CarteTresor("Trophee", TypeEnumTresors.TROPHEE, chemin + "Calice.png"));
-        out.add(new CarteTresor("Trophee", TypeEnumTresors.TROPHEE, chemin + "Calice.png"));
-        out.add(new CarteTresor("Trophee", TypeEnumTresors.TROPHEE, chemin + "Calice.png"));
+        out.add(new CarteTresor("Trophée", TypeEnumTresors.TROPHEE, chemin + "Calice.png"));
+        out.add(new CarteTresor("Trophée", TypeEnumTresors.TROPHEE, chemin + "Calice.png"));
+        out.add(new CarteTresor("Trophée", TypeEnumTresors.TROPHEE, chemin + "Calice.png"));
+        out.add(new CarteTresor("Trophée", TypeEnumTresors.TROPHEE, chemin + "Calice.png"));
+        out.add(new CarteTresor("Trophée", TypeEnumTresors.TROPHEE, chemin + "Calice.png"));
         out.add(new CarteMonteeDesEaux("CarteMonteeDesEaux1", chemin + "MonteeDesEaux.png"));
         out.add(new CarteMonteeDesEaux("CarteMonteeDesEaux2", chemin + "MonteeDesEaux.png"));
         out.add(new CarteMonteeDesEaux("CarteMonteeDesEaux3", chemin + "MonteeDesEaux.png"));
-        out.add(new CarteAction("Helicoptere", TypeEnumCarteAction.HELICOPTERE, chemin + "Helicoptere.png"));
-        out.add(new CarteAction("Helicoptere", TypeEnumCarteAction.HELICOPTERE, chemin + "Helicoptere.png"));
-        out.add(new CarteAction("Helicoptere", TypeEnumCarteAction.HELICOPTERE, chemin + "Helicoptere.png"));
-        out.add(new CarteAction("sac", TypeEnumCarteAction.SAC_DE_SABLE, chemin + "SacsDeSable.png"));
-        out.add(new CarteAction("sac", TypeEnumCarteAction.SAC_DE_SABLE, chemin + "SacsDeSable.png"));
+        out.add(new CarteAction("Hélicoptere", TypeEnumCarteAction.HELICOPTERE, chemin + "Helicoptere.png"));
+        out.add(new CarteAction("Hélicoptere", TypeEnumCarteAction.HELICOPTERE, chemin + "Helicoptere.png"));
+        out.add(new CarteAction("Hélicoptere", TypeEnumCarteAction.HELICOPTERE, chemin + "Helicoptere.png"));
+        out.add(new CarteAction("Sac", TypeEnumCarteAction.SAC_DE_SABLE, chemin + "SacsDeSable.png"));
+        out.add(new CarteAction("Sac", TypeEnumCarteAction.SAC_DE_SABLE, chemin + "SacsDeSable.png"));
 
         return out;
     }

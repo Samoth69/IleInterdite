@@ -910,7 +910,7 @@ public class Plateau implements Observateur {
                 break;
             case PIOCHE_CARTE_INONDATION:
                 ArrayList t = new ArrayList<>();
-                t.add("Carte Inondation piocher:");
+                t.add("Carte Inondation piochée : ");
                 for (CarteInondation ci : (ArrayList<CarteInondation>) m.getAdditionnal()) {
                     t.add(" - " + ci.getNom());
                 }
@@ -936,7 +936,7 @@ public class Plateau implements Observateur {
                 paintNormal();
                 break;
             case FIN_PARTIE:
-                JOptionPane.showMessageDialog(null, "Partie perdue : \n" + m.getMessage(), "Fin de partie", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Partie perdue : " + m.getMessage(), "Fin de partie", JOptionPane.ERROR_MESSAGE);
                 window.setVisible(false);
                 System.exit(0);
                 break;
