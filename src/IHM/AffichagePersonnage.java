@@ -110,8 +110,14 @@ public class AffichagePersonnage extends JPanel {
         panelHaut.add(bigPion, BorderLayout.CENTER);//ajoute la fenetre bigpion au centre du panelhaut
 
         panelMilieu = new JPanel(new FlowLayout());//panel contenant les cartes
-
-        JPanel panelBas = new JPanel(new GridLayout(2, 3));//panel bas en grille de 2 lignes 3 colonnes
+        JPanel panelBas;
+        if (perso instanceof Personnages.Navigateur) {
+            panelBas = new JPanel(new GridLayout(3, 3));//panel bas en grille de 2 lignes 3 colonnes
+        } else {
+            panelBas = new JPanel(new GridLayout(2, 3));//panel bas en grille de 2 lignes 3 colonnes
+        }
+        
+        
         
         //action du bouton deplacement
         buttonDeplacement = new JButton(nomButtonDeplacement);
