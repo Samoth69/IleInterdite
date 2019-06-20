@@ -183,7 +183,7 @@ public class AffichagePersonnage extends JPanel {
                
                     if(vd1.getSelectedItems().get(0).getTypeCarteAction() == TypeEnumCarteAction.HELICOPTERE)
                     {
-                        pl.changeMode(3);
+                        pl.changeMode(3);//change le mode en deplcement carte helicop (0: aucun, 1: deplacement, 2: assecher, 3: Deplacement carte helicoptere)
                         pl.gamePadClick();
                         perso.removeCarte(vd1.getSelectedItems().get(0));
                     }
