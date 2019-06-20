@@ -432,6 +432,17 @@ public class ControleurJeuSecondaire implements Observe {
         }
         return null;
     }
+    
+    //cherche un joueur par sont nom,
+    //revoie null si il n'est pas trouvé
+    public Personnage getJoueur(String nom) {
+        for (Personnage p : personnages) {
+            if (p.getNom().toLowerCase().equals(nom.toLowerCase())) {
+                return p;
+            }
+        }
+        return null;
+    }
 
     //pioche une carte rouge.
     //RENVOIE NULL SI LA CARTE PIOCHER EST UNE MONTEE DES EAUX
@@ -554,7 +565,7 @@ public class ControleurJeuSecondaire implements Observe {
         }
     }
 
-    private void decrementAction() {
+    public void decrementAction() {
         if (nombreAction != Math.round(nombreAction)) {
             nombreAction = Math.round(nombreAction);
         }

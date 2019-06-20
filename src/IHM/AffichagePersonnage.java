@@ -62,11 +62,13 @@ public class AffichagePersonnage extends JPanel {
     private JButton buttonDonnerCarte;  //donne une carte à un joueur de la meme case
     private JButton buttonPrendreRelique; //defausse 4 cartes correspondant à la relique, prend la relique
     private JButton buttonCarteSpecial; //joue une carte action special: helicoptère et sac de sable
+    private JButton buttonActionSpecialNavigateur; //action spécial du navigateur (poussez un joueur de 1 ou 2 case)
     
     //definie le nom des bouton
     public final static String nomButtonDeplacement = "Se Déplacer";
     public final static String nomButtonAssecher = "Assécher";
     public final static String nomAnnulé = "Annuler";
+    public final static String nomActionSpecialNavigateur = "Deplacer un joueur";
 
     private final static String imgFolder = System.getProperty("user.dir") + "/src/RessourcesPlateau/";
 
@@ -138,6 +140,7 @@ public class AffichagePersonnage extends JPanel {
         buttonDonnerCarte = new JButton("Donner carte");
         buttonPrendreRelique = new JButton("Prendre relique");;
         buttonCarteSpecial = new JButton("Carte Spécial");
+        buttonActionSpecialNavigateur = new JButton(nomActionSpecialNavigateur);
         
         //action du bouton prendre relique
         buttonPrendreRelique.addActionListener(new ActionListener() {
@@ -241,6 +244,14 @@ public class AffichagePersonnage extends JPanel {
                 }
             }
         });
+        
+        buttonActionSpecialNavigateur.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                pl.changeMode(5);
+                pl.gamePadClick();
+            }
+        });
         //ajoute au panel bas les boutons
         panelBas.add(buttonDeplacement);
         panelBas.add(buttonAssecher);
@@ -248,6 +259,9 @@ public class AffichagePersonnage extends JPanel {
         panelBas.add(buttonDonnerCarte);
         panelBas.add(buttonPrendreRelique);
         panelBas.add(buttonCarteSpecial);
+        if (perso instanceof Personnages.Navigateur) {
+            panelBas.add(buttonActionSpecialNavigateur);
+        }
 
         bigMainPanel.add(panelHaut, BorderLayout.NORTH); //panelhaut au nord du bigpanel
         bigMainPanel.add(panelMilieu, BorderLayout.CENTER); //panelmilieu au centre du bigpanel
@@ -410,6 +424,10 @@ public class AffichagePersonnage extends JPanel {
     
     public void setBtCarteActionEnabled(boolean b){
         buttonCarteSpecial.setEnabled(b);
+    }
+
+    void setBtActionSpecialText(String text) {
+        buttonActionSpecialNavigateur.setText(text);
     }
     
 }

@@ -100,6 +100,7 @@ public class Plateau implements Observateur {
     private final static String nomButtonDeplacement = AffichagePersonnage.nomButtonDeplacement;
     private final static String nomButtonAssecher = AffichagePersonnage.nomButtonAssecher;
     private final static String nomAnnulé = AffichagePersonnage.nomAnnulé;
+    private final static String nomActionSpecialNavigateur = AffichagePersonnage.nomActionSpecialNavigateur;
 
     private final static String cheminCalice = System.getProperty("user.dir") + "/src/RessourcesTresors/calice.png";
     private final static String cheminCaliceNoir = System.getProperty("user.dir") + "/src/RessourcesTresors/calice-black.png";
@@ -122,6 +123,7 @@ public class Plateau implements Observateur {
 
     private final int max = 9; //taille frise inondation
     //private int niveauEaucompteur = max;
+    private Personnage selectedPerso; //variable utilisé pour indiqué le personnage qui à été sélectionner par le navigateur et pour le déplacer sur la carte
 
     //CONSTRUCTEUR
     public Plateau(ArrayList<Personnage> persos, ControleurJeuSecondaire cj) {
@@ -377,18 +379,6 @@ public class Plateau implements Observateur {
                             pn.add(listPion.get(p));
                         }
                     }
-                    //pour charque personnage
-                    /*for (Personnage p : listPerso) {
-                        //si l'emplacement du personnage correspond à la case actuel
-                        if (p.getEmplacement() == plateau[i][j]) {
-                            for (Pion pi : listPion) {
-                                if (pi.getCouleurPion() == p.getCouleurPion()) {
-                                    pn.add(pi);
-                                    break;
-                                }
-                            }
-                        }
-                    }*/
 
                     if (plateau[i][j].getTresor() != TypeEnumTresors.AUCUN) {
 
@@ -491,6 +481,7 @@ public class Plateau implements Observateur {
         updateGamePad();
         setBtAssecherText(nomButtonAssecher);
         setBtDeplacementText(nomButtonDeplacement);
+        setBtActionSpecialText(nomActionSpecialNavigateur);
         setBtAssecherEnabled(true);
         setBtDeplacementEnabled(true);
         setBtPasserJoueurEnabled(true);
@@ -574,6 +565,57 @@ public class Plateau implements Observateur {
                 }
                 //  Notifie l'observateur de l'action
                 cj.notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Carte Sac de Sable utilisée"));
+                break;
+            case 5:
+                final ArrayList<String> arpseudos = new ArrayList<>();
+                for (Personnage p : cj.getPerso()) {
+                    arpseudos.add(p.getNom());
+                }
+                arpseudos.remove(cj.getJoueurEntrainDeJouer().getNom());
+
+                final JComboBox<String> combo = new JComboBox<>(arpseudos.toArray(new String[0]));
+
+                String[] options = {"OK", "Cancel"};
+
+                String title = "Sélectionner un joueur";
+                int selection = JOptionPane.showOptionDialog(null, combo, title,
+                        JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, options,
+                        options[0]);
+
+                if (selection == 0) {
+                    System.out.println("selection is: " + options[selection]);
+
+                    paintNonSelected();
+                    setBtAssecherEnabled(false);
+                    setBtDeplacementEnabled(false);
+                    setBtPasserJoueurEnabled(false);
+                    //setBtAssecherText(nomAnnulé);   //Desactive tous les boutons
+                    setBtActionSpecialText(nomAnnulé);
+
+                    //Affiche toute les case mouille, donc sechable
+                    selectedPerso = cj.getJoueur((String) combo.getSelectedItem());
+                    int px = selectedPerso.getEmplacement().getX();
+                    int py = selectedPerso.getEmplacement().getY();
+
+                    for (int x = -2; x <= 2; x++) {
+                        for (int y = -2; y <= 2; y++) {
+                            if (px + x <= 5 && px + x >= 0 && py + y <= 5 && py + y >= 0) {
+                                if (!((x == -2 && y == -2) || (x == -2 && y == 2) || (x == 2 && y == -2) || (x == 2 && y == 2) ||
+                                        (x == -2 && y == -1) || (x == -2 && y == 1) || (x == 2 && y == -1) || (x == 2 && y == 1) ||
+                                        (x == -1 && y == -2) || (x == -1 && y == 2) || (x == 1 && y == -2) || (x == 1 && y == 2))) {
+                                    if (plateau[px + x][py + y] != null) {
+                                        JPanel jpa = panel[px + x][py + y];
+                                        jpa.setBackground(tuileColor);
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                } else {
+                    actionFinished();
+                }
+                break;
         }
     }
 
@@ -608,6 +650,12 @@ public class Plateau implements Observateur {
                     cj.assecher(emplacement);
                     cj.setNbAction(cj.getNbActionRestante() + 1);//Car utiliser une carte action ne coute pas de point d'action
                     break;
+                case 5:
+                    cj.deplacerJoueur(selectedPerso, emplacement);
+                    cj.decrementAction();
+                    updatePion();
+                    paintNormal();
+                    break;
             }
             actionFinished();
         }
@@ -626,7 +674,7 @@ public class Plateau implements Observateur {
         for (Pion p : listPion) {
             int x = p.getPerso().getEmplacement().getX();
             int y = p.getPerso().getEmplacement().getY();
-            
+
             panel[x][y].add(p);
         }
 
@@ -755,6 +803,24 @@ public class Plateau implements Observateur {
         }
     }
 
+    //  BOUTON DONNER CARTE
+    private void setBtActionSpecialText(String text) {
+        switch (cj.getJoueurNum()) {
+            case 0:
+                affichagePerso1.setBtActionSpecialText(text);
+                break;
+            case 1:
+                affichagePerso2.setBtActionSpecialText(text);
+                break;
+            case 2:
+                affichagePerso3.setBtActionSpecialText(text);
+                break;
+            case 3:
+                affichagePerso4.setBtActionSpecialText(text);
+                break;
+        }
+    }
+
     private void setBtDonnerCarteParDefaut() {
         affichagePerso1.setButtonDonnerCarteEnabled(false);
         affichagePerso2.setButtonDonnerCarteEnabled(false);
@@ -829,7 +895,7 @@ public class Plateau implements Observateur {
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 6; j++) {
                 JPanel jp = panel[i][j];
-                if (jp.getBackground() != emptyColor) {
+                if (plateau[i][j] != null && jp.getBackground() != emptyColor) {
                     switch (plateau[i][j].getInondation()) {
                         case SEC:
                             jp.setBackground(tuileColor);     //background en jaune
@@ -906,12 +972,12 @@ public class Plateau implements Observateur {
                 paintNormal();
                 break;
             case FIN_PARTIE:
-                JOptionPane.showMessageDialog(null, "GAME OVER : \n"+m.getMessage(), "Fin De Partie", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null, "GAME OVER : \n" + m.getMessage(), "Fin De Partie", JOptionPane.PLAIN_MESSAGE);
                 window.setVisible(false);
                 System.exit(0);
                 break;
             case PARTIE_GAGNE:
-                JOptionPane.showMessageDialog(null, "PARTIE GAGNEE !", "Fin De Partie", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null, "PARTIE GAGNEE !", "Fin De Partie", JOptionPane.PLAIN_MESSAGE);
                 window.setVisible(false);
                 System.exit(0);
                 break;
