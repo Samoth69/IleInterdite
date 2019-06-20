@@ -214,6 +214,7 @@ public class ControleurJeuSecondaire implements Observe{
                         notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Le tresor Cristal Ardent a été récupéré"));
                         //message qui indique la tuile où le tresor doit etre supprimé
                         notifierObservateur(new Message(TypeEnumMessage.RM_TRESOR, emplacementJoueur));
+                        
                         for(CarteRouge i : getJoueurEntrainDeJouer().getCartes())
                         {
                             if(i.getTypeTresor() == TypeEnumTresors.FEU)
@@ -236,6 +237,7 @@ public class ControleurJeuSecondaire implements Observe{
                         statueZephyr = true;
                         notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Le tresor Statue de Zephyr a été récupéré"));
                         notifierObservateur(new Message(TypeEnumMessage.RM_TRESOR, emplacementJoueur));
+                        
                         for(CarteRouge i : getJoueurEntrainDeJouer().getCartes())
                         {
                             if(i.getTypeTresor() == TypeEnumTresors.LION)
@@ -257,6 +259,7 @@ public class ControleurJeuSecondaire implements Observe{
                         pierreSacre = true;
                         notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Le tresor Pierre Sacré a été récupéré"));
                         notifierObservateur(new Message(TypeEnumMessage.RM_TRESOR, emplacementJoueur));
+                        
                         for(CarteRouge i : getJoueurEntrainDeJouer().getCartes())
                         {
                             if(i.getTypeTresor() == TypeEnumTresors.LUNE)
@@ -278,6 +281,7 @@ public class ControleurJeuSecondaire implements Observe{
                         caliceOnde = true;
                         notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Le tresor Calice des Ondes a été récupéré"));
                         notifierObservateur(new Message(TypeEnumMessage.RM_TRESOR, emplacementJoueur));
+                        
                         for(CarteRouge i : getJoueurEntrainDeJouer().getCartes())
                         {
                             if(i.getTypeTresor() == TypeEnumTresors.TROPHEE)
@@ -294,12 +298,14 @@ public class ControleurJeuSecondaire implements Observe{
                         }
                         getJoueurEntrainDeJouer().getCartes().removeAll(carteUtilise);
                         defausserCarte(carteUtilise);
+                        
                     break;
                 }
                 //  retire le tresor de la case
                 emplacementJoueur.setTresor(TypeEnumTresors.AUCUN);
             
                 decrementAction();
+                notifierObservateur(new Message(TypeEnumMessage.UPDATE_GUI, emplacementJoueur));
             }
         }
         else

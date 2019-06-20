@@ -6,8 +6,10 @@
 package IHM;
 
 import Cartes.CarteInondation;
+import Cartes.CarteRouge;
 import Enumerations.TypeEnumCouleurPion;
 import Enumerations.TypeEnumInondation;
+import Enumerations.TypeEnumMessage;
 import Enumerations.TypeEnumTresors;
 import IleInterdite.ControleurJeuSecondaire;
 import IleInterdite.Grille;
@@ -56,7 +58,7 @@ public class Plateau implements Observateur {
 
     //boolean deplacementMode = false; //Devient vrai si le joueur à cliquer sur la case de son emplacement et voit donc les cases sur lesquels il peut aller
     //indique le "mode" de l'interface cad, comment elle doit afficher la grille en fonction du bouton cliquer par l'utilisateur
-    private int mode = 0; //0: aucun, 1: deplacement, 2: assecher
+    private int mode = 0; //0: aucun, 1: deplacement, 2: assecher, 3: Deplacement carte helicoptere
     private int oldMode = 0; //permet de détecter les changement dans la variable mode
 
     //couleur des tuiles
@@ -500,7 +502,6 @@ public class Plateau implements Observateur {
 
         switch (mode) {
             case 0: //normal
-                //System.out.println("coucou");
                 actionFinished();
                 break;
             case 1: //se deplacer
@@ -508,12 +509,11 @@ public class Plateau implements Observateur {
                 setBtAssecherEnabled(false);
                 setBtDeplacementEnabled(true);
                 setBtPasserJoueurEnabled(false);
-                setBtDeplacementText(nomAnnulé);
+                setBtDeplacementText(nomAnnulé);//Desactive tous les boutons
 
                 for (Tuile t : cj.getJoueurEntrainDeJouer().getDeplacements()) {
                     JPanel jpa = panel[t.getX()][t.getY()];
                     jpa.setBackground(tuileColor);
-                    //System.out.println(t.getNom() + "\t" + t.getX() + "\t" + t.getY());
                 }
                 break;
             case 2:
@@ -522,28 +522,51 @@ public class Plateau implements Observateur {
                 setBtAssecherEnabled(true);
                 setBtDeplacementEnabled(false);
                 setBtPasserJoueurEnabled(false);
-                setBtAssecherText(nomAnnulé);
+                setBtAssecherText(nomAnnulé);//Desactive tous les boutons
 
                 for (Tuile t : cj.getJoueurEntrainDeJouer().getTuileQuiPeutSecher()) {
                     JPanel jpa = panel[t.getX()][t.getY()];
                     jpa.setBackground(tuileColor);
-                    //System.out.println(t.getNom() + "\t" + t.getX() + "\t" + t.getY());
                 }
                 break;
             
-            case 3:                
+            case 3: //Se deplacer avec une carte action helicoptere         
                 paintNonSelected();
                 setBtAssecherEnabled(false);
                 setBtDeplacementEnabled(false);
                 setBtPasserJoueurEnabled(false);
-                setBtAssecherText(nomAnnulé);
+                setBtCarteActionEnabled(false);
+                setBtAssecherText(nomAnnulé);//Desactive tous les boutons
 
+                //  Affiche toute les case non inondé, donc praticable
                 for (Tuile t : grille.getListTuile()) {
-                    JPanel jpa = panel[t.getX()][t.getY()];
-                    jpa.setBackground(tuileColor);
-                    //System.out.println(t.getNom() + "\t" + t.getX() + "\t" + t.getY());
+                    if(t.getInondation() != TypeEnumInondation.INONDE)
+                    {
+                        JPanel jpa = panel[t.getX()][t.getY()];
+                        jpa.setBackground(tuileColor);
+                    }
                 }
+                //  Notifie l'observateur de l'action
+                cj.notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Carte Helicoptere utilisée"));
                 break;    
+               
+            case 4: //Assecher avec une carte action sac de sable
+                paintNonSelected();
+                setBtAssecherEnabled(false);
+                setBtDeplacementEnabled(false);
+                setBtPasserJoueurEnabled(false);
+                setBtAssecherText(nomAnnulé);   //Desactive tous les boutons
+
+                //Affiche toute les case mouille, donc sechable
+                for (Tuile t : grille.getListTuile()) {
+                    if(t.getInondation() == TypeEnumInondation.MOUILLE)
+                    {
+                        JPanel jpa = panel[t.getX()][t.getY()];
+                        jpa.setBackground(tuileColor);
+                    }
+                }
+                //  Notifie l'observateur de l'action
+                cj.notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Carte Sac de Sable utilisée"));
         }
     }
     
@@ -552,11 +575,12 @@ public class Plateau implements Observateur {
         //System.out.println("panelClick: " + i + ", " + j);
         //System.out.println("deplacement = " + mode);
         if (jp.getBackground() != nonSelectedColor && emplacement.getInondation() != TypeEnumInondation.INONDE) {
+            int x,y;
             switch (mode) {
                 case 1: //se deplacer
                     //System.out.println("Moving");
-                    int x = cj.getJoueurEntrainDeJouer().getEmplacement().getX();
-                    int y = cj.getJoueurEntrainDeJouer().getEmplacement().getY();
+                    x = cj.getJoueurEntrainDeJouer().getEmplacement().getX();
+                    y = cj.getJoueurEntrainDeJouer().getEmplacement().getY();
                     panel[x][y].remove(listPion.get(cj.getJoueurNum()));
                     panel[i][j].add(listPion.get(cj.getJoueurNum()));
                     cj.deplacerJoueurEnCours(emplacement);
@@ -564,6 +588,18 @@ public class Plateau implements Observateur {
                 case 2:
                     //System.out.println("Assechement");
                     cj.assecher(emplacement);
+                    break;
+                case 3: //Se deplacer avec une carte action helicoptere
+                    x = cj.getJoueurEntrainDeJouer().getEmplacement().getX();
+                    y = cj.getJoueurEntrainDeJouer().getEmplacement().getY();
+                    panel[x][y].remove(listPion.get(cj.getJoueurNum()));
+                    panel[i][j].add(listPion.get(cj.getJoueurNum()));
+                    cj.deplacerJoueurEnCours(emplacement);
+                    cj.setNbAction(cj.getNbActionRestante()+1);//Car utiliser une carte action ne coute pas de point d'action
+                    break;
+                case 4: //Assecher avece une carte action
+                    cj.assecher(emplacement);
+                    cj.setNbAction(cj.getNbActionRestante()+1);//Car utiliser une carte action ne coute pas de point d'action
                     break;
             }
             actionFinished();
@@ -678,6 +714,23 @@ public class Plateau implements Observateur {
                 break;
             case 3:
                 affichagePerso4.setButtonDonnerCarteText(text);
+                break;
+        }
+    }
+    
+    private void setBtCarteActionEnabled(boolean b){
+        switch (cj.getJoueurNum()) {
+            case 0:
+                affichagePerso1.setBtCarteActionEnabled(b);
+                break;
+            case 1:
+                affichagePerso2.setBtCarteActionEnabled(b);
+                break;
+            case 2:
+                affichagePerso3.setBtCarteActionEnabled(b);
+                break;
+            case 3:
+                affichagePerso4.setBtCarteActionEnabled(b);
                 break;
         }
     }
