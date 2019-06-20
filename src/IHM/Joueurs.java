@@ -59,7 +59,7 @@ public class Joueurs extends JFrame implements ActionListener {
     private ArrayList<JTextField> listPseudo;
     private ArrayList<JComboBox> listRole;
     private final Integer[] nombreJoueur = {2, 3, 4};
-    private final String[] nomRoles = {"Explorateur", "Ingénieur", "Navigateur", "Pilote", "Plongeur", "Aléatoire"};
+    private final String[] nomRoles = {"Aléatoire", "Explorateur", "Ingénieur", "Navigateur", "Pilote", "Plongeur"};
     private final String[] niveauEau = {"Novice", "Normal", "Elite", "Légendaire"};
     private final String[] modeJ = {"Mode normal", "Scénario n°1", "Scénario n°2"};
 
@@ -157,7 +157,7 @@ public class Joueurs extends JFrame implements ActionListener {
         labelMode.setForeground(Color.WHITE);
 
         role1 = new JComboBox(nomRoles);
-        role1.setSelectedIndex(5);
+        role1.setSelectedIndex(0);
         role1.setBackground(Color.WHITE);
         role1.setFont(new Font(role1.getFont().getName(), role1.getFont().getStyle(), (int) (role1.getFont().getSize() * 1.5)));
 
@@ -167,16 +167,16 @@ public class Joueurs extends JFrame implements ActionListener {
         mode.setFont(new Font(mode.getFont().getName(), mode.getFont().getStyle(), (int) (mode.getFont().getSize() * 1.5)));
 
         role2 = new JComboBox(nomRoles);
-        role2.setSelectedIndex(5);
+        role2.setSelectedIndex(0);
         role2.setBackground(Color.WHITE);
         role2.setFont(new Font(role2.getFont().getName(), role2.getFont().getStyle(), (int) (role2.getFont().getSize() * 1.5)));
 
         role3 = new JComboBox(nomRoles);
-        role3.setSelectedIndex(5);
+        role3.setSelectedIndex(0);
         role3.setFont(new Font(role3.getFont().getName(), role3.getFont().getStyle(), (int) (role3.getFont().getSize() * 1.5)));
 
         role4 = new JComboBox(nomRoles);
-        role4.setSelectedIndex(5);
+        role4.setSelectedIndex(0);
         role4.setFont(new Font(role4.getFont().getName(), role4.getFont().getStyle(), (int) (role4.getFont().getSize() * 1.5)));
 
         niveauDepart = new JComboBox(niveauEau);
@@ -335,7 +335,7 @@ public class Joueurs extends JFrame implements ActionListener {
                     JOptionPane.showMessageDialog(null, "Chaque joueur doit avoir un rôle différent.", "Message d'erreur", JOptionPane.ERROR_MESSAGE);
                     return; //quitte la fonction
                 }
-                if ((String)listRole.get(i).getSelectedItem() != nomRoles[nomRoles.length - 1]) {
+                if ((String)listRole.get(i).getSelectedItem() != nomRoles[0]) {
                     usedRole.add((String) listRole.get(i).getSelectedItem());
                 }
             }
