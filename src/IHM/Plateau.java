@@ -516,6 +516,7 @@ public class Plateau implements Observateur {
                 setBtAssecherEnabled(false);
                 setBtDeplacementEnabled(true);
                 setBtPasserJoueurEnabled(false);
+                setBtCarteActionEnabled(false);
                 setBtDeplacementText(nomAnnulé);//Desactive tous les boutons
 
                 for (Tuile t : cj.getJoueurEntrainDeJouer().getDeplacements()) {
@@ -529,6 +530,7 @@ public class Plateau implements Observateur {
                 setBtAssecherEnabled(true);
                 setBtDeplacementEnabled(false);
                 setBtPasserJoueurEnabled(false);
+                setBtCarteActionEnabled(false);
                 setBtAssecherText(nomAnnulé);//Desactive tous les boutons
 
                 for (Tuile t : cj.getJoueurEntrainDeJouer().getTuileQuiPeutSecher()) {
