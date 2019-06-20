@@ -6,6 +6,7 @@
 package Personnages;
 
 import Enumerations.TypeEnumCouleurPion;
+import Enumerations.TypeEnumInondation;
 import Enumerations.TypeEnumPersonnages;
 import IleInterdite.Grille;
 import IleInterdite.Tuile;
@@ -32,7 +33,7 @@ public class Pilote extends Personnage {
         } else { //deplacement avec pouvoir
             for (int i = 0; i <= 5; i++) {
                 for (int j = 0; j <= 5; j++) {
-                    if ((i != super.getEmplacement().getX() || j != super.getEmplacement().getY()) && tb[i][j] != null) {
+                    if ((i != super.getEmplacement().getX() || j != super.getEmplacement().getY()) && tb[i][j] != null && tb[i][j].getInondation() != TypeEnumInondation.INONDE) {
                         out.add(tb[i][j]);             //ajoute a la liste out, toute les tuiles pratiquable.
                     }
                 }
