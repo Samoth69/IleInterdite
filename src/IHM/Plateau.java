@@ -6,6 +6,7 @@
 package IHM;
 
 import Cartes.CarteInondation;
+import Cartes.CarteRouge;
 import Enumerations.TypeEnumCouleurPion;
 import Enumerations.TypeEnumInondation;
 import Enumerations.TypeEnumMessage;

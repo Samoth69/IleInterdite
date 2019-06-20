@@ -300,8 +300,6 @@ public class AffichagePersonnage extends JPanel{
                 }
             }
             
-            if(perso == pl.getControleurJeu().getJoueurEntrainDeJouer())
-            {
                 if(carteActionDuJoueur.isEmpty())
                 {
                     buttonCarteSpecial.setEnabled(false);
@@ -310,11 +308,6 @@ public class AffichagePersonnage extends JPanel{
                 {
                     buttonCarteSpecial.setEnabled(true);
                 }
-            }
-            else
-            {
-                buttonCarteSpecial.setEnabled(false);
-            }
             
             
             panelMilieu.removeAll();
