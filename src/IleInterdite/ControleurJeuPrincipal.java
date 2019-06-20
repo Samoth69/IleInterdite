@@ -46,6 +46,10 @@ public class ControleurJeuPrincipal implements Observateur {
         menu.afficher();
     }
 
+    public void afficherMenu(boolean b){
+        menu.setVisible(b);
+    }
+    
     //traite le message
     @Override
     public void traiterMessage(Message m) {
@@ -71,6 +75,9 @@ public class ControleurJeuPrincipal implements Observateur {
                                     break;
                                 case "Ingénieur":
                                     perso.add(new Ingenieur(infos.get(counter), null));
+                                    break;
+                                case "Messager":
+                                    perso.add(new Messager(infos.get(counter), null));
                                     break;
                                 case "Navigateur":
                                     perso.add(new Navigateur(infos.get(counter), null));

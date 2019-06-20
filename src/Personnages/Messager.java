@@ -24,12 +24,14 @@ public class Messager extends Personnage {
 
     @Override
     public void donnerCarteAJoueur(Personnage personnage, ArrayList<CarteRouge> cartes) {
-
+            personnage.addCartes(cartes);
+            this.removeCartes(cartes);
     }
 
     @Override
     public void donnerCarteAJoueur(Personnage personnage, CarteRouge carte) {
-
+            personnage.addCarte(carte);
+            this.removeCarte(carte);
     }
 
     @Override

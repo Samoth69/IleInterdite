@@ -9,6 +9,7 @@ import Cartes.CarteInondation;
 import Cartes.CarteRouge;
 import Enumerations.TypeEnumCouleurPion;
 import Enumerations.TypeEnumInondation;
+import Enumerations.TypeEnumMenuPrincipal;
 import Enumerations.TypeEnumMessage;
 import Enumerations.TypeEnumTresors;
 import IleInterdite.ControleurJeuSecondaire;
@@ -28,6 +29,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
+import static java.lang.Compiler.command;
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -901,7 +904,10 @@ public class Plateau implements Observateur {
                 paintNormal();
                 break;
             case FIN_PARTIE:
-                System.out.println("Fin partie : ");
+                int rep = JOptionPane.showConfirmDialog(null, "GAME OVER : "+m.getMessage()+"\n Voulez-vous retourner au menu principale ?", "Message de confirmation", JOptionPane.YES_OPTION, JOptionPane.WARNING_MESSAGE);
+                
+                    window.setVisible(false);
+                    System.exit(0);
                 break;
             case PARTIE_GAGNE:
                 System.out.println("Fin partie : " + m.getMessage());
