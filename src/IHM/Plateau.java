@@ -502,7 +502,6 @@ public class Plateau implements Observateur {
 
         switch (mode) {
             case 0: //normal
-                //System.out.println("coucou");
                 actionFinished();
                 break;
             case 1: //se deplacer
@@ -510,12 +509,11 @@ public class Plateau implements Observateur {
                 setBtAssecherEnabled(false);
                 setBtDeplacementEnabled(true);
                 setBtPasserJoueurEnabled(false);
-                setBtDeplacementText(nomAnnulé);
+                setBtDeplacementText(nomAnnulé);//Desactive tous les boutons
 
                 for (Tuile t : cj.getJoueurEntrainDeJouer().getDeplacements()) {
                     JPanel jpa = panel[t.getX()][t.getY()];
                     jpa.setBackground(tuileColor);
-                    //System.out.println(t.getNom() + "\t" + t.getX() + "\t" + t.getY());
                 }
                 break;
             case 2:
@@ -524,12 +522,11 @@ public class Plateau implements Observateur {
                 setBtAssecherEnabled(true);
                 setBtDeplacementEnabled(false);
                 setBtPasserJoueurEnabled(false);
-                setBtAssecherText(nomAnnulé);
+                setBtAssecherText(nomAnnulé);//Desactive tous les boutons
 
                 for (Tuile t : cj.getJoueurEntrainDeJouer().getTuileQuiPeutSecher()) {
                     JPanel jpa = panel[t.getX()][t.getY()];
                     jpa.setBackground(tuileColor);
-                    //System.out.println(t.getNom() + "\t" + t.getX() + "\t" + t.getY());
                 }
                 break;
             
@@ -539,8 +536,9 @@ public class Plateau implements Observateur {
                 setBtDeplacementEnabled(false);
                 setBtPasserJoueurEnabled(false);
                 setBtCarteActionEnabled(false);
-                setBtAssecherText(nomAnnulé);
+                setBtAssecherText(nomAnnulé);//Desactive tous les boutons
 
+                //  Affiche toute les case non inondé, donc praticable
                 for (Tuile t : grille.getListTuile()) {
                     if(t.getInondation() != TypeEnumInondation.INONDE)
                     {
@@ -548,7 +546,7 @@ public class Plateau implements Observateur {
                         jpa.setBackground(tuileColor);
                     }
                 }
-                
+                //  Notifie l'observateur de l'action
                 cj.notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Carte Helicoptere utilisée"));
                 break;    
                
@@ -557,8 +555,9 @@ public class Plateau implements Observateur {
                 setBtAssecherEnabled(false);
                 setBtDeplacementEnabled(false);
                 setBtPasserJoueurEnabled(false);
-                setBtAssecherText(nomAnnulé);
+                setBtAssecherText(nomAnnulé);   //Desactive tous les boutons
 
+                //Affiche toute les case mouille, donc sechable
                 for (Tuile t : grille.getListTuile()) {
                     if(t.getInondation() == TypeEnumInondation.MOUILLE)
                     {
@@ -566,6 +565,7 @@ public class Plateau implements Observateur {
                         jpa.setBackground(tuileColor);
                     }
                 }
+                //  Notifie l'observateur de l'action
                 cj.notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Carte Sac de Sable utilisée"));
         }
     }
