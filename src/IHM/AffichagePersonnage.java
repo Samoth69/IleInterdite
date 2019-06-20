@@ -163,12 +163,17 @@ public class AffichagePersonnage extends JPanel{
                
                     if(vd1.getSelectedItems().get(0).getTypeCarteAction() == TypeEnumCarteAction.HELICOPTERE)
                     {
-                        
+                        pl.changeMode(3);
+                    }
+                    else
+                    {
+                        pl.changeMode(4);
                     }
                     
-                    //perso.deplacement(vd1.getSelectedItems());
-                    pl.changeMode(3);
                     pl.gamePadClick();
+                    
+                    perso.removeCarte(vd1.getSelectedItems().get(0));
+                    pl.getControleurJeu().notifierObservateur(new Message(TypeEnumMessage.UPDATE_GUI));
                 }
             }
         });
@@ -357,5 +362,8 @@ public class AffichagePersonnage extends JPanel{
         buttonDonnerCarte.setEnabled(b);
     }
     
+    public void setBtCarteActionEnabled(boolean b){
+        buttonCarteSpecial.setEnabled(b);
+    }
     
 }

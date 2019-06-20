@@ -8,6 +8,7 @@ package IHM;
 import Cartes.CarteInondation;
 import Enumerations.TypeEnumCouleurPion;
 import Enumerations.TypeEnumInondation;
+import Enumerations.TypeEnumMessage;
 import Enumerations.TypeEnumTresors;
 import IleInterdite.ControleurJeuSecondaire;
 import IleInterdite.Grille;
@@ -531,11 +532,12 @@ public class Plateau implements Observateur {
                 }
                 break;
             
-            case 3:                
+            case 3: //Se deplacer avec une carte action helicoptere         
                 paintNonSelected();
                 setBtAssecherEnabled(false);
                 setBtDeplacementEnabled(false);
                 setBtPasserJoueurEnabled(false);
+                setBtCarteActionEnabled(false);
                 setBtAssecherText(nomAnnulé);
 
                 for (Tuile t : grille.getListTuile()) {
@@ -545,7 +547,25 @@ public class Plateau implements Observateur {
                         jpa.setBackground(tuileColor);
                     }
                 }
+                
+                cj.notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Carte Helicoptere utilisée"));
                 break;    
+               
+            case 4: //Assecher avec une carte action sac de sable
+                paintNonSelected();
+                setBtAssecherEnabled(false);
+                setBtDeplacementEnabled(false);
+                setBtPasserJoueurEnabled(false);
+                setBtAssecherText(nomAnnulé);
+
+                for (Tuile t : grille.getListTuile()) {
+                    if(t.getInondation() == TypeEnumInondation.MOUILLE)
+                    {
+                        JPanel jpa = panel[t.getX()][t.getY()];
+                        jpa.setBackground(tuileColor);
+                    }
+                }
+                cj.notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Carte Sac de Sable utilisée"));
         }
     }
     
@@ -554,11 +574,12 @@ public class Plateau implements Observateur {
         //System.out.println("panelClick: " + i + ", " + j);
         //System.out.println("deplacement = " + mode);
         if (jp.getBackground() != nonSelectedColor && emplacement.getInondation() != TypeEnumInondation.INONDE) {
+            int x,y;
             switch (mode) {
                 case 1: //se deplacer
                     //System.out.println("Moving");
-                    int x = cj.getJoueurEntrainDeJouer().getEmplacement().getX();
-                    int y = cj.getJoueurEntrainDeJouer().getEmplacement().getY();
+                    x = cj.getJoueurEntrainDeJouer().getEmplacement().getX();
+                    y = cj.getJoueurEntrainDeJouer().getEmplacement().getY();
                     panel[x][y].remove(listPion.get(cj.getJoueurNum()));
                     panel[i][j].add(listPion.get(cj.getJoueurNum()));
                     cj.deplacerJoueurEnCours(emplacement);
@@ -566,6 +587,18 @@ public class Plateau implements Observateur {
                 case 2:
                     //System.out.println("Assechement");
                     cj.assecher(emplacement);
+                    break;
+                case 3: //Se deplacer avec une carte action helicoptere
+                    x = cj.getJoueurEntrainDeJouer().getEmplacement().getX();
+                    y = cj.getJoueurEntrainDeJouer().getEmplacement().getY();
+                    panel[x][y].remove(listPion.get(cj.getJoueurNum()));
+                    panel[i][j].add(listPion.get(cj.getJoueurNum()));
+                    cj.deplacerJoueurEnCours(emplacement);
+                    cj.setNbAction(cj.getNbActionRestante()+1);//Car utiliser une carte action ne coute pas de point d'action
+                    break;
+                case 4: //Assecher avece une carte action
+                    cj.assecher(emplacement);
+                    cj.setNbAction(cj.getNbActionRestante()+1);//Car utiliser une carte action ne coute pas de point d'action
                     break;
             }
             actionFinished();
@@ -680,6 +713,23 @@ public class Plateau implements Observateur {
                 break;
             case 3:
                 affichagePerso4.setButtonDonnerCarteText(text);
+                break;
+        }
+    }
+    
+    private void setBtCarteActionEnabled(boolean b){
+        switch (cj.getJoueurNum()) {
+            case 0:
+                affichagePerso1.setBtCarteActionEnabled(b);
+                break;
+            case 1:
+                affichagePerso2.setBtCarteActionEnabled(b);
+                break;
+            case 2:
+                affichagePerso3.setBtCarteActionEnabled(b);
+                break;
+            case 3:
+                affichagePerso4.setBtCarteActionEnabled(b);
                 break;
         }
     }
