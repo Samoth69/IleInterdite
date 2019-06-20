@@ -906,12 +906,12 @@ public class Plateau implements Observateur {
                 paintNormal();
                 break;
             case FIN_PARTIE:
-                JOptionPane.showMessageDialog(null, "GAME OVER : \n"+m.getMessage(), "Fin De Partie", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Partie perdue : \n" + m.getMessage(), "Fin de partie", JOptionPane.ERROR_MESSAGE);
                 window.setVisible(false);
                 System.exit(0);
                 break;
             case PARTIE_GAGNE:
-                JOptionPane.showMessageDialog(null, "PARTIE GAGNEE !", "Fin De Partie", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Partie gagnée !", "Fin de partie", JOptionPane.INFORMATION_MESSAGE);
                 window.setVisible(false);
                 System.exit(0);
                 break;
