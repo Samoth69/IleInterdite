@@ -48,6 +48,7 @@ public class Tresor extends JComponent{
         g.fillRect(0, 0, 10, 10);
     }
     
+    
     public TypeEnumTresors getTypeTresor(){
         return type;
     }
@@ -68,6 +69,14 @@ public class Tresor extends JComponent{
             default:
                 return new Color(255, false);
         }
+    }
+    
+    public void setColorGris(){
+        couleur = Color.GRAY;
+    }
+    
+    public void setColorBack(){
+        couleur = getCouleur();
     }
     
     public String getNom(){
