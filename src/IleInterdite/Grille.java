@@ -30,9 +30,9 @@ public class Grille {
     private boolean demoMode = false;
     private boolean startup = true;
     
-    public Grille(ArrayList<Personnage> p, boolean demo) {
+    public Grille(ArrayList<Personnage> p, boolean demo, ArrayList<CarteInondation> ci) {
         persos.addAll(p);       //ajoute les persos dans la grille
-        genererTableauTuiles(demo);
+        genererTableauTuiles(demo, ci);
         demoMode = demo;
         assignerJoueursATuile(persos);
     }
@@ -44,7 +44,7 @@ public class Grille {
     }
 
     private void genererTableauTuiles() {
-        genererTableauTuiles(false);
+        genererTableauTuiles(false, null);
     }
     
     public boolean isDemoMode() {
@@ -61,8 +61,14 @@ public class Grille {
 
     //génère le tableau des tuiles aléatoire
     //demo: désactive le mélange des cartes
-    private void genererTableauTuiles(boolean demo) {
-        ArrayList<CarteInondation> tuile = getListCarteInondation();
+    private void genererTableauTuiles(boolean demo, ArrayList<CarteInondation> ci) {
+        ArrayList<CarteInondation> tuile;
+        if (ci == null) {
+            tuile = getListCarteInondation();
+        } else {
+            tuile = ci;
+        }
+        
         if (!demo) {
             for (int i = 0; i < ThreadLocalRandom.current().nextInt(2, 5); i++) {
                 Collections.shuffle(tuile); //mélange la liste des tuiles

@@ -73,7 +73,7 @@ public class ControleurJeuSecondaire implements Observe {
         this.niveauEau = niveauEau;
         nombreJoueurDansPartie = perso.size();
         personnages = perso;
-        grille = new Grille(personnages, demo);
+        grille = new Grille(personnages, demo, ci);
 
         if (demo && ci != null) {
             pileCarteInondation = ci;

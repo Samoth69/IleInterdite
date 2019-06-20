@@ -150,7 +150,7 @@ public class Plateau implements Observateur {
         window = new JFrame();
         window.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
         // Définit la taille de la fenêtre en pixels
-        /*window.setSize(1500, 900);*/
+        window.setSize(1500, 900);
         window.setExtendedState(JFrame.MAXIMIZED_BOTH);
         window.setTitle("Plateau");
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
