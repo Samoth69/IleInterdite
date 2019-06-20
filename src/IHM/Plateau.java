@@ -6,10 +6,7 @@
 package IHM;
 
 import Cartes.CarteInondation;
-import Cartes.CarteRouge;
-import Enumerations.TypeEnumCouleurPion;
 import Enumerations.TypeEnumInondation;
-import Enumerations.TypeEnumMenuPrincipal;
 import Enumerations.TypeEnumMessage;
 import Enumerations.TypeEnumTresors;
 import IleInterdite.ControleurJeuSecondaire;
@@ -29,17 +26,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.io.File;
-import java.io.IOException;
-import static java.lang.Compiler.command;
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
-import javax.swing.border.Border;
+//import javafx.scene.media.Media;
+//import javafx.scene.media.MediaPlayer;
 
 /**
  *
@@ -127,8 +118,7 @@ public class Plateau implements Observateur {
     private final int max = 9; //taille frise inondation
     //private int niveauEaucompteur = max;
     
-    //
-    private MediaPlayer mediaPlayer;
+    //private MediaPlayer mediaPlayer;
     
     private Personnage selectedPerso; //variable utilisé pour indiqué le personnage qui à été sélectionner par le navigateur et pour le déplacer sur la carte
 
@@ -968,9 +958,9 @@ public class Plateau implements Observateur {
                 //System.out.println(cj.getJoueurNum());
                 break;
             case CHANGEMENT_NIVEAU_EAU:
-                Media hit = new Media(new File("src/RessourcesJoueur/NiveauEauSon.mp3").toURI().toString());
-                mediaPlayer = new MediaPlayer(hit);          //créer le media player
-                mediaPlayer.play();
+                //Media hit = new Media(new File("src/RessourcesJoueur/NiveauEauSon.mp3").toURI().toString());
+                //mediaPlayer = new MediaPlayer(hit);          //créer le media player
+                //mediaPlayer.play();
                 ColoriserNiveauEau();
                 break;
             case PIOCHE_CARTE_INONDATION:
@@ -1011,9 +1001,9 @@ public class Plateau implements Observateur {
                 System.exit(0);
                 break;
             case RM_TRESOR:
-                Media hite = new Media(new File("src/RessourcesJoueur/tresorGagne.mp3").toURI().toString());
-                mediaPlayer = new MediaPlayer(hite);          //créer le media player
-                mediaPlayer.play();
+                //Media hite = new Media(new File("src/RessourcesJoueur/tresorGagne.mp3").toURI().toString());
+                //mediaPlayer = new MediaPlayer(hite);          //créer le media player
+                //mediaPlayer.play();
                 for (String i : listTresor.keySet()) {
                     if (m.getEmplacementJoueur().getNom().equals(i)) {
                         listTresor.get(i).setVisible(false);

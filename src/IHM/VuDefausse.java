@@ -6,37 +6,27 @@
 package IHM;
 
 import Cartes.CarteAction;
-import Cartes.CarteInondation;
 import Cartes.CarteRouge;
-import Enumerations.TypeEnumMessage;
 import Enumerations.TypeEnumTresors;
-
 import java.awt.Dimension;
 import java.awt.Toolkit;
-import javax.swing.JFrame;
-
-import IleInterdite.Message;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 import javax.swing.BorderFactory;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.UIManager;
-import IleInterdite.Observe;
-import IleInterdite.Observateur;
 import Personnages.Personnage;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.File;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
+//import javafx.scene.media.Media;
+//import javafx.scene.media.MediaPlayer;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
@@ -61,7 +51,7 @@ public class VuDefausse extends JDialog {
     private boolean carteActionIsSelected = false;
     
     // Media player
-    private MediaPlayer mediaPlayer;
+    //private MediaPlayer mediaPlayer;
     
     //carteJoueur: liste des cartes à afficher
     //titre: titre de la fenêtre
@@ -281,9 +271,9 @@ public class VuDefausse extends JDialog {
             @Override
             public void actionPerformed(ActionEvent e) {
                 verifAvantFermeture();
-                Media hit = new Media(new File("src/RessourcesJoueur/carteRetire.mp3").toURI().toString());
-                mediaPlayer = new MediaPlayer(hit);          //créer le media player
-                mediaPlayer.play();
+                //Media hit = new Media(new File("src/RessourcesJoueur/carteRetire.mp3").toURI().toString());
+                //mediaPlayer = new MediaPlayer(hit);          //créer le media player
+                //mediaPlayer.play();
                
             }
 

@@ -8,6 +8,7 @@ package IHM;
 import Enumerations.TypeEnumMenuPrincipal;
 import IleInterdite.Message;
 import IleInterdite.Observateur;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -17,7 +18,6 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import javafx.scene.media.MediaPlayer;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -27,10 +27,11 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import javafx.scene.media.Media;
+//import javafx.scene.media.Media;
+//import javafx.scene.media.MediaPlayer;
 import java.io.File;
+
 /**
- *
  * @author laraicha
  */
 public class Joueurs extends JFrame implements ActionListener {
@@ -64,9 +65,9 @@ public class Joueurs extends JFrame implements ActionListener {
     private final String[] nomRoles = {"Aléatoire", "Explorateur", "Ingénieur", "Messager", "Navigateur", "Pilote", "Plongeur"};
     private final String[] niveauEau = {"Novice", "Normal", "Elite", "Légendaire"};
     private final String[] modeJ = {"Normal", "Scénario n°1", "Scénario n°2", "Scénario n°3", "Scénario n°4", "Scénario n°5"};
-    
+
     //Media player pour les sons
-    private MediaPlayer mediaPlayer;
+    //private MediaPlayer mediaPlayer;
     //CONSTRUCTEUR
     public Joueurs() {
         ImageIcon img = new ImageIcon("src/RessourcesJoueur/FondJoueur.jpg"); //image de fond
@@ -95,7 +96,7 @@ public class Joueurs extends JFrame implements ActionListener {
         panelBas.setOpaque(false);
 
         joueur.setContentPane(panelcenter);
-        
+
         //Definie le nom des bouton
         retour = new JButton("Retour");
         retour.addActionListener(this);
@@ -103,26 +104,26 @@ public class Joueurs extends JFrame implements ActionListener {
         jouer.addActionListener(this);
         quitter = new JButton("Quitter");
         quitter.addActionListener(this);
-        
+
         //JTextfield pour chauqe pseudo de peronnage
         pseudo1 = new JTextField();
         pseudo2 = new JTextField();
         pseudo3 = new JTextField();
         pseudo4 = new JTextField();
-        
+
         //modification du font des Jextfield
         pseudo1.setFont(new Font(pseudo1.getFont().getName(), pseudo1.getFont().getStyle(), (int) (pseudo1.getFont().getSize() * 1.5)));
         pseudo2.setFont(new Font(pseudo2.getFont().getName(), pseudo2.getFont().getStyle(), (int) (pseudo2.getFont().getSize() * 1.5)));
         pseudo3.setFont(new Font(pseudo3.getFont().getName(), pseudo3.getFont().getStyle(), (int) (pseudo3.getFont().getSize() * 1.5)));
         pseudo4.setFont(new Font(pseudo4.getFont().getName(), pseudo4.getFont().getStyle(), (int) (pseudo4.getFont().getSize() * 1.5)));
-        
+
         //liste des pseudos
         listPseudo = new ArrayList<>();
         listPseudo.add(pseudo1);
         listPseudo.add(pseudo2);
         listPseudo.add(pseudo3);
         listPseudo.add(pseudo4);
-        
+
         //**********************DEFINITIONS DES LABEL (font, couleur,position)**************************************************************
         JLabel labelTitre = new JLabel("Joueurs");
         labelTitre.setFont(new Font(labelTitre.getFont().getName(), labelTitre.getFont().getStyle(), (int) (labelTitre.getFont().getSize() * 2.0)));
@@ -166,13 +167,13 @@ public class Joueurs extends JFrame implements ActionListener {
         labelMode.setFont(new Font(labelMode.getFont().getName(), labelMode.getFont().getStyle(), (int) (labelMode.getFont().getSize() * 1.5)));
         labelMode.setForeground(Color.WHITE);
         //************************************************************************************************************
-        
+
         //Combobox des roles + font
         role1 = new JComboBox(nomRoles);
         role1.setSelectedIndex(0);
         role1.setBackground(Color.WHITE);
         role1.setFont(new Font(role1.getFont().getName(), role1.getFont().getStyle(), (int) (role1.getFont().getSize() * 1.5)));
-        
+
         role2 = new JComboBox(nomRoles);
         role2.setSelectedIndex(0);
         role2.setBackground(Color.WHITE);
@@ -185,18 +186,18 @@ public class Joueurs extends JFrame implements ActionListener {
         role4 = new JComboBox(nomRoles);
         role4.setSelectedIndex(0);
         role4.setFont(new Font(role4.getFont().getName(), role4.getFont().getStyle(), (int) (role4.getFont().getSize() * 1.5)));
-        
+
         //Combobox du mode + font
         mode = new JComboBox(modeJ);
         mode.setSelectedIndex(0);
         mode.setBackground(Color.WHITE);
         mode.setFont(new Font(mode.getFont().getName(), mode.getFont().getStyle(), (int) (mode.getFont().getSize() * 1.5)));
-        
+
         //Combobox du niveau+font
         niveauDepart = new JComboBox(niveauEau);
         niveauDepart.setBackground(Color.WHITE);
         niveauDepart.setFont(new Font(niveauDepart.getFont().getName(), niveauDepart.getFont().getStyle(), (int) (niveauDepart.getFont().getSize() * 1.5)));
-        
+
         //role ajouter à une liste
         listRole = new ArrayList<>();
         listRole.add(role1);
@@ -257,7 +258,7 @@ public class Joueurs extends JFrame implements ActionListener {
                         role4.setEnabled(false);
                         role4.setBackground(new Color(224, 224, 224));
                         pseudo4.setText("");
-                        break;  
+                        break;
                     case 4:                                          //4 joueurs
                         labeljoueur3.setForeground(Color.WHITE);
                         labeljoueur4.setForeground(Color.WHITE);
@@ -279,7 +280,7 @@ public class Joueurs extends JFrame implements ActionListener {
         });
 
         nbJoueurs.setSelectedIndex(0);
-        
+
         // ******************ajoute les composants dans les grilles ************
         background.add(new JLabel(" "));
         background.add(new JLabel(" "));  //' cases vide
@@ -330,9 +331,9 @@ public class Joueurs extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == retour) {   //Message de confirmation retour
-            Media hit = new Media(new File("src/RessourcesJoueur/ClickBoutonOff.mp3").toURI().toString());
-                mediaPlayer = new MediaPlayer(hit);          //créer le media player
-                mediaPlayer.play();
+            //Media hit = new Media(new File("src/RessourcesJoueur/ClickBoutonOff.mp3").toURI().toString());
+            //mediaPlayer = new MediaPlayer(hit);          //créer le media player
+            //mediaPlayer.play();
             int rep = JOptionPane.showConfirmDialog(null, "Etes-vous sûr(e) de vouloir retourner au menu ?", "Message de confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
             if (rep == JOptionPane.YES_OPTION) {
                 this.joueur.setVisible(false);
@@ -341,9 +342,9 @@ public class Joueurs extends JFrame implements ActionListener {
         }
 
         if (e.getSource() == quitter) { //message de confirmation quitter
-            Media hit = new Media(new File("src/RessourcesJoueur/ClickBoutonOff.mp3").toURI().toString());
-                mediaPlayer = new MediaPlayer(hit);          //créer le media player
-                mediaPlayer.play();
+            //Media hit = new Media(new File("src/RessourcesJoueur/ClickBoutonOff.mp3").toURI().toString());
+            //mediaPlayer = new MediaPlayer(hit);          //créer le media player
+            //mediaPlayer.play();
             int rep = JOptionPane.showConfirmDialog(null, "Etes-vous sûr(e) de vouloir quitter le jeu ?", "Message de confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
             if (rep == JOptionPane.YES_OPTION) {
                 System.exit(0);
@@ -352,15 +353,15 @@ public class Joueurs extends JFrame implements ActionListener {
 
         if (e.getSource() == jouer) {  //controle/prevention : role different
             ArrayList<String> usedRole = new ArrayList<>();
-                Media hit = new Media(new File("src/RessourcesJoueur/ClickBouton.mp3").toURI().toString());
-                mediaPlayer = new MediaPlayer(hit);          //créer le media player
-                mediaPlayer.play();
+            //Media hit = new Media(new File("src/RessourcesJoueur/ClickBouton.mp3").toURI().toString());
+            //mediaPlayer = new MediaPlayer(hit);          //créer le media player
+            //mediaPlayer.play();
             for (int i = 0; i < (int) nbJoueurs.getSelectedItem(); i++) {
                 if (usedRole.contains((String) listRole.get(i).getSelectedItem())) {
                     JOptionPane.showMessageDialog(null, "Chaque joueur doit avoir un rôle différent.", "Message d'erreur", JOptionPane.ERROR_MESSAGE);
                     return; //quitte la fonction
                 }
-                if ((String)listRole.get(i).getSelectedItem() != nomRoles[0]) {
+                if ((String) listRole.get(i).getSelectedItem() != nomRoles[0]) {
                     usedRole.add((String) listRole.get(i).getSelectedItem());
                 }
             }
@@ -398,11 +399,11 @@ public class Joueurs extends JFrame implements ActionListener {
             }
 
             this.joueur.setVisible(false);
-            Message msg = new Message(TypeEnumMenuPrincipal.MENU_JOUER); 
+            Message msg = new Message(TypeEnumMenuPrincipal.MENU_JOUER);
             ArrayList<String> infos = new ArrayList<>();
             switch ((String) niveauDepart.getSelectedItem()) {   //nibeau de depart
                 case "Novice":
-                    infos.add("0");               
+                    infos.add("0");
                     break;
                 case "Normal":
                     infos.add("1");
@@ -414,7 +415,7 @@ public class Joueurs extends JFrame implements ActionListener {
                     infos.add("3");
                     break;
             }
-            
+
             //*****Attribue le role aux joueurs **********
             infos.add(Integer.toString(mode.getSelectedIndex()));
             infos.add(String.valueOf(nbJoueurs.getSelectedItem()));
@@ -435,8 +436,9 @@ public class Joueurs extends JFrame implements ActionListener {
             notifierObservateur(msg);
         }
     }
-         //   ***********************
-   //affiche une message d alerte
+
+    //   ***********************
+    //affiche une message d alerte
     private void ErreurDoublePseudo() {
         JOptionPane.showMessageDialog(null, "Deux joueurs ne peuvent pas avoir le même nom.", "Message d'erreur", JOptionPane.ERROR_MESSAGE);
     }

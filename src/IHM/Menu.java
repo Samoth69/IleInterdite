@@ -8,6 +8,7 @@ package IHM;
 import Enumerations.TypeEnumMenuPrincipal;
 import IleInterdite.Message;
 import IleInterdite.Observateur;
+
 import java.awt.BorderLayout;
 import java.awt.Desktop;
 import java.awt.Dimension;
@@ -20,17 +21,15 @@ import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.embed.swing.JFXPanel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
+//import javafx.scene.media.Media;
+//import javafx.scene.media.MediaPlayer;
 
 /**
- *
  * @author laraicha
  */
 public class Menu extends JFrame implements ActionListener {
@@ -46,7 +45,7 @@ public class Menu extends JFrame implements ActionListener {
     //ATTRIBUTS POUR LE SON
     private JButton music;
     private boolean on;
-    private MediaPlayer mediaPlayer;
+    //private MediaPlayer mediaPlayer;
 
     //CONSTRUCTEUR
     public Menu() {
@@ -71,13 +70,13 @@ public class Menu extends JFrame implements ActionListener {
         regles.addActionListener(this);
         quitter = new JButton("Quitter");
         quitter.addActionListener(this);
-        music= new JButton("Musique ON/OFF");
+        music = new JButton("Musique ON/OFF");
         music.addActionListener(this);
-        
-        JFXPanel fxPanel = new JFXPanel(); // necessaire pour jouer un son .mp3
-        
+
+        //JFXPanel fxPanel = new JFXPanel(); // necessaire pour jouer un son .mp3
+
         //boolean music on ou off
-        on=false;
+        on = false;
         //grille de 11 lignes, 3 colonnes
         background.setLayout(new GridLayout(11, 3));
         menu.setContentPane(background);
@@ -101,7 +100,7 @@ public class Menu extends JFrame implements ActionListener {
                     break;
                 case 32:
                     //créer un boutton musique en-bas à droite
-                    JLabel musicTab= new JLabel();
+                    JLabel musicTab = new JLabel();
                     musicTab.setLayout(new BorderLayout());
                     musicTab.add(music, BorderLayout.LINE_END);
                     background.add(musicTab);
@@ -111,8 +110,8 @@ public class Menu extends JFrame implements ActionListener {
                     break;
             }
         }
-        
-    
+
+
     }
 
     //METHODES
@@ -125,17 +124,17 @@ public class Menu extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == jouer) {               //Si clique sur jouer
-                Media hit = new Media(new File("src/RessourcesJoueur/ClickBouton.mp3").toURI().toString());
-                mediaPlayer = new MediaPlayer(hit);          //créer le media player
-                mediaPlayer.play();
+            //Media hit = new Media(new File("src/RessourcesJoueur/ClickBouton.mp3").toURI().toString());
+            // mediaPlayer = new MediaPlayer(hit);          //créer le media player
+            // mediaPlayer.play();
             this.menu.setVisible(false);               //fenetre invisible
             notifierObservateur(new Message(TypeEnumMenuPrincipal.MENU_JOUEURS)); //notif observateur de l'action choisi
         }
 
         if (e.getSource() == regles) {  //si clique sur regles
-            Media hit = new Media(new File("src/RessourcesJoueur/ClickBouton.mp3").toURI().toString());
-                mediaPlayer = new MediaPlayer(hit);          //créer le media player
-                mediaPlayer.play();
+            //Media hit = new Media(new File("src/RessourcesJoueur/ClickBouton.mp3").toURI().toString());
+            //mediaPlayer = new MediaPlayer(hit);          //créer le media player
+            //mediaPlayer.play();
             try {
                 Desktop.getDesktop().open(new File(System.getProperty("user.dir") + "/src/RessourcesMenu/Regles.pdf")); //Ouvre un pdf contenant les regles du jeu
             } catch (IOException ex) {
@@ -145,24 +144,24 @@ public class Menu extends JFrame implements ActionListener {
         }
 
         if (e.getSource() == quitter) { // si clique sur quitter, message de confirmation
-                Media hit = new Media(new File("src/RessourcesJoueur/ClickBoutonOff.mp3").toURI().toString());
-                mediaPlayer = new MediaPlayer(hit);          //créer le media player
-                mediaPlayer.play();
+            //Media hit = new Media(new File("src/RessourcesJoueur/ClickBoutonOff.mp3").toURI().toString());
+            // mediaPlayer = new MediaPlayer(hit);          //créer le media player
+            // mediaPlayer.play();
             int rep = JOptionPane.showConfirmDialog(null, "Etes-vous sûr(e) de vouloir quitter le jeu ?", "Message de confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
             if (rep == JOptionPane.YES_OPTION) {
                 System.exit(0);
             }
         }
-        
+
         if (e.getSource() == music) { // si clique sur Musique on/off
             if (on == false) {
-                Media hit = new Media(new File("src/RessourcesMenu/darude.mp3"/**"src/RessourcesMenu/SilverForMonsters.mp3"**/).toURI().toString());
-                mediaPlayer = new MediaPlayer(hit);          //créer le media player
-                mediaPlayer.play();  
-                on=true;
+                //Media hit = new Media(new File("src/RessourcesMenu/darude.mp3"/**"src/RessourcesMenu/SilverForMonsters.mp3"**/).toURI().toString());
+                //mediaPlayer = new MediaPlayer(hit);          //créer le media player
+                //mediaPlayer.play();
+                on = true;
             } else {
-                mediaPlayer.pause();
-                on=false;
+                //mediaPlayer.pause();
+                on = false;
             }
         }
 
