@@ -18,30 +18,33 @@ import javax.swing.JComponent;
  */
 public class Pion extends JComponent{
 
+    //ATTRIBUTS
     //Personnage perso;
     private TypeEnumCouleurPion couleur;
     private int width;
     private int height;
     
+    //CONSTRUCTEUR1
     public Pion(Personnage perso){
         this.couleur = perso.getCouleurPion();
         width = 30;
         height = 30;
     }
     
+    //CONSTRUCTEURS2
     public Pion(TypeEnumCouleurPion couleur){
         this.couleur = couleur;
         width = 30;
         height = 30;
     }
-    
+    //CONSTRUCTEURS3
     public Pion(TypeEnumCouleurPion couleur, int width, int height) {
         this.couleur = couleur;
         this.width = width;
         this.height = height;
     }
     
-    //Fonction appelé par defaut pour dessiner le pion
+    //Fonction appelé par defaut pour dessiner le pion /mettre la couleur
     @Override
     public void paint(Graphics g){
         Dimension dim = getSize();
@@ -78,6 +81,7 @@ public class Pion extends JComponent{
         
     }
     
+    //retourne une dimension predefinie
     @Override
     public Dimension getPreferredSize() {
         return new Dimension(width, height);
@@ -88,6 +92,7 @@ public class Pion extends JComponent{
         return couleur;
     }
 
+    //assigne la couleur au pion
     public void setCouleur(TypeEnumCouleurPion couleur) {
         this.couleur = couleur;
     }
