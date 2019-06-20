@@ -503,7 +503,7 @@ public class ControleurJeuSecondaire implements Observe {
 
     public void VerifNbCarte(Personnage perso) {
         if (perso.getCartes().size() > 5) {
-            VuDefausse vd = new VuDefausse(perso.getCartes(), "Defaussez une carte", perso.getCartes().size() - 5);
+            VuDefausse vd = new VuDefausse(perso.getCartes(), "Défaussez une carte", perso.getCartes().size() - 5);
             vd.setVisible(true);
             for (CarteRouge cr : vd.getSelectedItems()) {
                 perso.removeCarte(cr);
@@ -741,8 +741,8 @@ public class ControleurJeuSecondaire implements Observe {
                         Media hit = new Media(new File("src/RessourcesJoueur/JeuPerdu.mp3").toURI().toString());
                         mediaPlayer = new MediaPlayer(hit);          //créer le media player
                         mediaPlayer.play();
-                        notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Fin de partie : Les deux cases Caverne aisni que leurs trésors sont inondées."));
-                        notifierObservateur(new Message(TypeEnumMessage.FIN_PARTIE, "Les deux cases Caverne aisni que leurs trésors sont inondées."));
+                        notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Fin de partie : Les deux cases Caverne aisni que leurs trésors ont été inondées."));
+                        notifierObservateur(new Message(TypeEnumMessage.FIN_PARTIE, "Les deux cases Caverne aisni que leurs trésors ont été inondées."));
                         break;  //  peut-etre problematique
                     }
                 }
@@ -754,8 +754,8 @@ public class ControleurJeuSecondaire implements Observe {
                         Media hit = new Media(new File("src/RessourcesJoueur/JeuPerdu.mp3").toURI().toString());
                         mediaPlayer = new MediaPlayer(hit);          //créer le media player
                         mediaPlayer.play();
-                        notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Fin de partie : Les deux cases Temple aisni que leurs trésors sont inondées."));
-                        notifierObservateur(new Message(TypeEnumMessage.FIN_PARTIE, "Les deux cases Temple aisni que leurs trésors sont inondées."));
+                        notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Fin de partie : Les deux cases Temple aisni que leurs trésors ont été inondées."));
+                        notifierObservateur(new Message(TypeEnumMessage.FIN_PARTIE, "Les deux cases Temple aisni que leurs trésors ont été inondées."));
                         break;  //  peut-etre problematique
                     }
                 }
@@ -767,8 +767,8 @@ public class ControleurJeuSecondaire implements Observe {
                         Media hit = new Media(new File("src/RessourcesJoueur/JeuPerdu.mp3").toURI().toString());
                         mediaPlayer = new MediaPlayer(hit);          //créer le media player
                         mediaPlayer.play();
-                        notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Fin de partie : Les deux cases Palais aisni que leurs trésors sont inondées."));
-                        notifierObservateur(new Message(TypeEnumMessage.FIN_PARTIE, "Les deux cases Palais aisni que leurs trésors sont inondées."));
+                        notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Fin de partie : Les deux cases Palais aisni que leurs trésors ont été inondées."));
+                        notifierObservateur(new Message(TypeEnumMessage.FIN_PARTIE, "Les deux cases Palais aisni que leurs trésors ont été inondées."));
                         break;  //  peut-etre problematique
                     }
                 }
@@ -780,8 +780,8 @@ public class ControleurJeuSecondaire implements Observe {
                         Media hit = new Media(new File("src/RessourcesJoueur/JeuPerdu.mp3").toURI().toString());
                         mediaPlayer = new MediaPlayer(hit);          //créer le media player
                         mediaPlayer.play();
-                        notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Fin de partie : Les deux cases Jardin aisni que leurs trésors sont inondées."));
-                        notifierObservateur(new Message(TypeEnumMessage.FIN_PARTIE, "Les deux cases Jardin aisni que leurs trésors sont inondées."));
+                        notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "Fin de partie : Les deux cases Jardin aisni que leurs trésors ont été inondées."));
+                        notifierObservateur(new Message(TypeEnumMessage.FIN_PARTIE, "Les deux cases Jardin aisni que leurs trésors ont été inondées."));
                         break;  //  peut-etre problematique
                     }
                 }
