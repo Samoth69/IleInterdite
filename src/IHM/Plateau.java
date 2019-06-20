@@ -892,13 +892,14 @@ public class Plateau implements Observateur {
                 updateGamePad();
                 break;
             case FIN_PARTIE:
-                int rep = JOptionPane.showConfirmDialog(null, "GAME OVER : "+m.getMessage()+"\n Voulez-vous retourner au menu principale ?", "Message de confirmation", JOptionPane.YES_OPTION, JOptionPane.WARNING_MESSAGE);
-                
-                    window.setVisible(false);
-                    System.exit(0);
+                JOptionPane.showMessageDialog(null, "GAME OVER : \n"+m.getMessage(), "Fin De Partie", JOptionPane.WARNING_MESSAGE);
+                window.setVisible(false);
+                System.exit(0);
                 break;
             case PARTIE_GAGNE:
-                System.out.println("Fin partie : "+m.getMessage());
+                JOptionPane.showMessageDialog(null, "PARTIE GAGNEE !", "Fin De Partie", JOptionPane.WARNING_MESSAGE);
+                window.setVisible(false);
+                System.exit(0);
                 break;
             case RM_TRESOR:
                 for(String i : listTresor.keySet())
