@@ -105,7 +105,7 @@ public class Tresor extends JComponent{
             case LION:
                 return "Statue Zephyr";
             case LUNE:
-                return "Pierre Sacree";
+                return "Pierre Sacrée";
             case TROPHEE:
                 return "Calice des Ondes";
             case AUCUN:
@@ -134,12 +134,12 @@ public class Tresor extends JComponent{
                 lbT.setBackground(couleur);
                 break;
             case LUNE:
-                lbT = new JLabel("Pierre Sacree");
+                lbT = new JLabel("Pierre Sacrée");
                 lbT.setOpaque(true);
                 lbT.setBackground(couleur);
                 break;
             case TROPHEE:
-                lbT = new JLabel("Calice des ondes");
+                lbT = new JLabel("Calice des Ondes");
                 lbT.setOpaque(true);
                 lbT.setBackground(couleur);
                 break;

@@ -277,6 +277,7 @@ public class Joueurs extends JFrame implements ActionListener {
                         break;
                 }
             }
+
         });
 
         nbJoueurs.setSelectedIndex(0);
