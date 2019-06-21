@@ -95,6 +95,7 @@ public class Tresor extends JComponent{
     
     public void setColorBack(){
         setCouleur();
+        initLabel();
     }
     
     public String getNom(){

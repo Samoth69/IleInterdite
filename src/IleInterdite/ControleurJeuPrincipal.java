@@ -298,7 +298,9 @@ public class ControleurJeuPrincipal implements Observateur {
                         cj.augementerInondation("le palais des marees");
                         cj.augementerInondation("le temple du soleil");
                         cj.augementerInondation("observatoire");
-                        cj.deplacerJoueur(perso.get(0), cj.searchTuile("heliport"));
+                        cj.augementerInondation("la caverne du brasier");
+                        cj.augementerInondation("le marais brumeux");
+                        cj.deplacerJoueur(perso.get(0), cj.searchTuile("Le marais brumeux"));
                         cj.deplacerJoueur(perso.get(1), cj.searchTuile("les dunes de l'illusion")); 
                         cj.getIle().setStartup(false);
                         plateau.updatePion();
@@ -490,6 +492,7 @@ public class ControleurJeuPrincipal implements Observateur {
         out.add(new CarteInondation("Les Falaises de l’Oubli", cheminCarte + "LesFalaisesDeLOubli.png", cheminTuile + "LesFalaisesDeLOubli.png"));
         out.add(new CarteInondation("La Porte d'Argent", TypeEnumCouleurPion.ORANGE, cheminCarte + "LaPortedArgent.png", cheminTuile + "LaPortedArgent.png"));
         out.add(new CarteInondation("Les Dunes de l'Illusion", cheminCarte + "LesDunesDeLIllusion.png", cheminTuile + "lesDunesDeLIllusion.png"));
+        out.add(new CarteInondation("Heliport", TypeEnumCouleurPion.BLEU, cheminCarte + "Heliport.png", cheminTuile + "Heliport.png"));
         out.add(new CarteInondation("La Porte de Cuivre", TypeEnumCouleurPion.VERT, cheminCarte + "LaPorteDeCuivre.png", cheminTuile + "LaPorteDeCuivre.png"));
         out.add(new CarteInondation("La Caverne des Ombres", TypeEnumTresors.FEU, cheminCarte + "LaCaverneDesOmbres.png", cheminTuile + "LaCaverneDesOmbres.png"));
         out.add(new CarteInondation("Le Palais de Corail", TypeEnumTresors.TROPHEE, cheminCarte + "LePalaisDeCorail.png", cheminTuile + "LePalaisDeCorail.png"));
@@ -499,16 +502,15 @@ public class ControleurJeuPrincipal implements Observateur {
         out.add(new CarteInondation("Le Temple de La Lune", TypeEnumTresors.LUNE, cheminCarte + "LeTempleDeLaLune.png", cheminTuile + "LeTempleDeLaLune.png"));
         out.add(new CarteInondation("La Foret Pourpre", cheminCarte + "LaForetPoupre.png", cheminTuile + "LaForetPoupre.png"));
         out.add(new CarteInondation("Le Lagon Perdu", cheminCarte + "LeLagonPerdu.png", cheminTuile + "LeLagonPerdu.png"));
-
         out.add(new CarteInondation("Le Jardin des Murmures", TypeEnumTresors.LION, cheminCarte + "LeJardinDesMurmures.png", cheminTuile + "LeJardinDesMurmures.png"));
+        out.add(new CarteInondation("La Caverne du Brasier", TypeEnumTresors.FEU, cheminCarte + "CaverneDuBrasier.png", cheminTuile + "LaCaverneDuBrasier.png"));
         out.add(new CarteInondation("Le Palais des Marees", TypeEnumTresors.TROPHEE, cheminCarte + "LePalaisDesMarees.png", cheminTuile + "LePalaisDesMarees.png"));
-        
         out.add(new CarteInondation("Le Rocher Fantome", cheminCarte + "LeRocherFantome.png", cheminTuile + "LeRocherFantome.png"));
         out.add(new CarteInondation("Observatoire", cheminCarte + "Observatoire.png", cheminTuile + "Observatoire.png"));
         out.add(new CarteInondation("Le Marais Brumeux", cheminCarte + "LeMaraisBrumeux.png", cheminTuile + "LeMaraisBrumeux.png"));
-        out.add(new CarteInondation("La Caverne du Brasier", TypeEnumTresors.FEU, cheminCarte + "CaverneDuBrasier.png", cheminTuile + "LaCaverneDuBrasier.png"));
+        //out.add(new CarteInondation("La Caverne du Brasier", TypeEnumTresors.FEU, cheminCarte + "CaverneDuBrasier.png", cheminTuile + "LaCaverneDuBrasier.png"));
         out.add(new CarteInondation("Le Temple du Soleil", TypeEnumTresors.LUNE, cheminCarte + "LeTempteDuSoleil.png", cheminTuile + "LeTempleDuSoleil.png"));
-        out.add(new CarteInondation("Heliport", TypeEnumCouleurPion.BLEU, cheminCarte + "Heliport.png", cheminTuile + "Heliport.png"));
+        
         
         
         

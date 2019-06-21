@@ -151,7 +151,7 @@ public class Plateau implements Observateur {
         // Définit la taille de la fenêtre en pixels
         window.setSize(1500, 900);
         window.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        window.setTitle("Plateau");
+        window.setTitle("Ile interdite");
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         window.setLocation(dim.width / 2 - window.getSize().width / 2, dim.height / 2 - window.getSize().height / 2);
 
@@ -257,10 +257,10 @@ public class Plateau implements Observateur {
         /**
          * ***************************************************************************************************
          */
-        JLabel labelTitre = new JLabel("Ile Interdite");
-        labelTitre.setForeground(Color.BLUE);
-        labelTitre.setFont(new Font(labelTitre.getFont().getName(), labelTitre.getFont().getStyle(), (int) (labelTitre.getFont().getSize() * 1.5)));
-        panelHaut.add(labelTitre);
+        //JLabel labelTitre = new JLabel("Ile Interdite");
+        //labelTitre.setForeground(Color.BLUE);
+        //labelTitre.setFont(new Font(labelTitre.getFont().getName(), labelTitre.getFont().getStyle(), (int) (labelTitre.getFont().getSize() * 1.5)));
+        //panelHaut.add(labelTitre);
 
         /**
          * AJOUT DE LA GRILLE DE JEU AU CENTRE DE LA FENETRE *
@@ -278,7 +278,7 @@ public class Plateau implements Observateur {
         });
 
         //*****PANELGAMEPAD *********************
-        joueurActuel = new JLabel("");
+        joueurActuel = new JLabel("", SwingConstants.CENTER);
         ActionRestante = new JLabel("", SwingConstants.CENTER);
         panelGamePad = new JPanel(new BorderLayout());
 
@@ -298,11 +298,9 @@ public class Plateau implements Observateur {
         ActionRestante.setFont(font2);
         ActionRestante.setAlignmentX(JLabel.CENTER_ALIGNMENT);
         panelTresHaut.add(labelpion, Component.CENTER_ALIGNMENT);
-        JLabel joueurActuelbis = new JLabel(cj.getNomJoueur(), SwingConstants.CENTER);
-        joueurActuelbis.setFont(font1);
-        joueurActuelbis.setAlignmentX(JLabel.CENTER_ALIGNMENT);
-        //paneltreshaut.add(new JLabel (" "));
-        panelTresHaut.add(joueurActuelbis);
+        joueurActuel.setFont(font1);
+        joueurActuel.setAlignmentX(JLabel.CENTER_ALIGNMENT);
+        panelTresHaut.add(joueurActuel);
         panelTresHaut.add(labelAction, Component.CENTER_ALIGNMENT);
         panelTresHaut.add(ActionRestante, Component.CENTER_ALIGNMENT);
         panelGamePad.add(panelTresHaut, BorderLayout.NORTH);
@@ -904,6 +902,10 @@ public class Plateau implements Observateur {
 
             }
         }
+        for(String i : listTresor.keySet())
+        {
+            listTresor.get(i).getLabel().setBackground(emptyColor);
+        }
         window.repaint();
     }
 
@@ -926,6 +928,10 @@ public class Plateau implements Observateur {
                     }
                 }
             }
+        }
+        for(String i : listTresor.keySet())
+        {
+            listTresor.get(i).setColorBack();
         }
         window.repaint();
     }
@@ -984,6 +990,7 @@ public class Plateau implements Observateur {
                 }
                 break;
             case NOUVEAU_TOUR:
+                updateGamePad();
                 ajouterMessageHistorique("\n");
                 ajouterMessageHistorique("Nouveau tour");
                 break;
