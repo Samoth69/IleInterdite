@@ -904,6 +904,10 @@ public class Plateau implements Observateur {
 
             }
         }
+        for(String i : listTresor.keySet())
+        {
+            listTresor.get(i).getLabel().setBackground(emptyColor);
+        }
         window.repaint();
     }
 
@@ -926,6 +930,10 @@ public class Plateau implements Observateur {
                     }
                 }
             }
+        }
+        for(String i : listTresor.keySet())
+        {
+            listTresor.get(i).setColorBack();
         }
         window.repaint();
     }
