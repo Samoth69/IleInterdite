@@ -162,44 +162,6 @@ public class ControleurJeuSecondaire implements Observe {
     }
      */
     
-    //Obtient les personnages pour démararer la partie.
-    //renvoie une liste contenant de NOUVEAU joueurs avec tous un role différent
-    private ArrayList<Personnage> getPersonnagesDebutDePartie(int nbJoueurs) {
-        ArrayList<Personnage> p = new ArrayList<>();
-        ArrayList<Integer> PersonnageDejaUtilise = new ArrayList<>();
-
-        for (int i = 0; i < nbJoueurs; i++) {
-            int rnd = 0;
-
-            while (rnd == 0 || search(PersonnageDejaUtilise, rnd)) {
-                rnd = ThreadLocalRandom.current().nextInt(1, 6 + 1);
-            }
-            PersonnageDejaUtilise.add(rnd);
-
-            switch (rnd) {
-                case 1:
-                    p.add(new Explorateur("Pseudo Explorateur", grille));
-                    break;
-                case 2:
-                    p.add(new Ingenieur("Pseudo Ingénieur", grille));
-                    break;
-                case 3:
-                    p.add(new Messager("Pseudo Messager", grille));
-                    break;
-                case 4:
-                    p.add(new Navigateur("Pseudo Navigateur", grille));
-                    break;
-                case 5:
-                    p.add(new Pilote("Pseudo Pilote", grille));
-                    break;
-                case 6:
-                    p.add(new Plongeur("Pseudo Plongeur", grille));
-                    break;
-            }
-        }
-        return p;
-    }
-    
     public int getNumJoueur(String nomJoueur) {
         for (int i = 0; i < personnages.size(); i++) {
             if (personnages.get(i).getNom().toLowerCase().equals(nomJoueur.toLowerCase())) {
@@ -367,23 +329,6 @@ public class ControleurJeuSecondaire implements Observe {
         }
 
         notifierObservateur(new Message(TypeEnumMessage.HISTORIQUE, "La case " + t.getNom() + " a été asséchée."));
-    }
-
-    //cherche dans un arraylist si num est trouvé, renvoie true. sinon renvoie faux.
-    private boolean search(ArrayList<Integer> ar, int num) {
-        boolean exist = false;
-        for (int i = 0; i < ar.size(); i++) {
-            if (ar.get(i) == num) {
-                exist = true;
-                break;
-            }
-        }
-
-        if (exist) {
-            return true;
-        } else {
-            return false;
-        }
     }
 
     //renvoie l'objet Grille

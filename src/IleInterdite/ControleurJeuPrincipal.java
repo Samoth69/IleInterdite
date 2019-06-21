@@ -18,6 +18,7 @@ import IHM.Menu;
 import IHM.Plateau;
 import Personnages.*;
 import java.util.ArrayList;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  *
@@ -70,6 +71,7 @@ public class ControleurJeuPrincipal implements Observateur {
                     case "0": //mode normal
                         int counter = 3;
                         int joueurCompter = 0;
+                        int nombreJoueurRandom = 0;
                         while (joueurCompter < Integer.valueOf(infos.get(2))) {
                             switch (infos.get(counter + 1)) {
                                 case "Explorateur":
@@ -91,6 +93,8 @@ public class ControleurJeuPrincipal implements Observateur {
                                     perso.add(new Plongeur(infos.get(counter), null));
                                     break;
                                 case "Aléatoire":
+                                    nombreJoueurRandom++;
+                                    /*
                                     //  Variable aléatoire pour le switch
                                     int valAle = 1 + (int) (Math.random() * ((5 - 1) + 1));
                                     //  Variable qui indique si un role de joueur (ex : Explo) est disponible
@@ -183,12 +187,32 @@ public class ControleurJeuPrincipal implements Observateur {
                                                     perso.add(new Plongeur(infos.get(counter), null));
                                                 }
                                                 break;
+                                            case 6: //  idem cas 1
+                                                for (Personnage p : perso) {
+                                                    if (p instanceof Messager) {
+                                                        joueurOk = false;
+                                                        if (valAle <= 4) {
+                                                            valAle++;
+                                                        } else {
+                                                            valAle = 1;
+                                                        }
+                                                    }
+                                                }
+                                                if (joueurOk) {
+                                                    perso.add(new Messager(infos.get(counter), null));
+                                                }
+                                                break;
                                         }
-                                    } while (joueurOk != true);   //  Tant que l'on n' a pas trouvé de role dispo on cherche
+                                    } while (joueurOk != true);   //  Tant que l'on n' a pas trouvé de role dispo on cherche*/
+                                    break;
+                                default:
                                     break;
                             }
                             joueurCompter++;
                             counter += 2;
+                        }
+                        if (nombreJoueurRandom > 0) {
+                            perso.addAll(getPersonnagesDebutDePartie(perso, nombreJoueurRandom, null));
                         }
                         cj = new ControleurJeuSecondaire(perso, Integer.parseInt(infos.get(0)), false, null, null);
                         plateau = new Plateau(perso, cj);
@@ -553,5 +577,82 @@ public class ControleurJeuPrincipal implements Observateur {
         
         
         return out;
+    }
+    
+    //Obtient les personnages pour démararer la partie.
+    //renvoie une liste contenant de NOUVEAU joueurs avec tous un role différent
+    public ArrayList<Personnage> getPersonnagesDebutDePartie(ArrayList<Personnage> persoDejaUtilise, int nbJoueurs, Grille grille) {
+        ArrayList<Personnage> p = new ArrayList<>();
+        ArrayList<Integer> PersonnageDejaUtilise = new ArrayList<>();
+        for (Personnage pe : persoDejaUtilise) {
+            switch(pe.getType()) {
+                case EXPLORATEUR:
+                    PersonnageDejaUtilise.add(1);
+                    break;
+                case INGENIEUR:
+                    PersonnageDejaUtilise.add(2);
+                    break;
+                case MESSAGER:
+                    PersonnageDejaUtilise.add(3);
+                    break;
+                case NAVIGATEUR:
+                    PersonnageDejaUtilise.add(4);
+                    break;
+                case PILOTE:
+                    PersonnageDejaUtilise.add(5);
+                    break;
+                case PLONGEUR:
+                    PersonnageDejaUtilise.add(6);
+                    break;
+            }
+        }
+
+        for (int i = 0; i < nbJoueurs; i++) {
+            int rnd = 0;
+
+            while (rnd == 0 || search(PersonnageDejaUtilise, rnd)) {
+                rnd = ThreadLocalRandom.current().nextInt(1, 6 + 1);
+            }
+            PersonnageDejaUtilise.add(rnd);
+
+            switch (rnd) {
+                case 1:
+                    p.add(new Explorateur("Pseudo Explorateur", grille));
+                    break;
+                case 2:
+                    p.add(new Ingenieur("Pseudo Ingénieur", grille));
+                    break;
+                case 3:
+                    p.add(new Messager("Pseudo Messager", grille));
+                    break;
+                case 4:
+                    p.add(new Navigateur("Pseudo Navigateur", grille));
+                    break;
+                case 5:
+                    p.add(new Pilote("Pseudo Pilote", grille));
+                    break;
+                case 6:
+                    p.add(new Plongeur("Pseudo Plongeur", grille));
+                    break;
+            }
+        }
+        return p;
+    }
+    
+        //cherche dans un arraylist si num est trouvé, renvoie true. sinon renvoie faux.
+    private boolean search(ArrayList<Integer> ar, int num) {
+        boolean exist = false;
+        for (int i = 0; i < ar.size(); i++) {
+            if (ar.get(i) == num) {
+                exist = true;
+                break;
+            }
+        }
+
+        if (exist) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
