@@ -17,17 +17,18 @@ import javax.swing.JLabel;
  */
 public class Tresor extends JComponent{
     
-    TypeEnumTresors type;
-    Color couleur;
-    JLabel lbT;
+    TypeEnumTresors type; //type trésor
+    Color couleur; //couleur de fond du label
+    JLabel lbT; //nom du trésor
     
     Tresor(TypeEnumTresors typeTresor){
         this.type = typeTresor;
-        
+        lbT = new JLabel("");
         setCouleur();
         initLabel();
     }
     
+    //redésine le label
     public void paint(Graphics g){
         
         switch(type)
@@ -56,11 +57,12 @@ public class Tresor extends JComponent{
         g.fillRect(0, 0, 10, 10);
     }
     
-    
+    //renvoie le type du trésor
     public TypeEnumTresors getTypeTresor(){
         return type;
     }
 
+    //met à jour la couleur de fond du label
     public void setCouleur(){
         switch(type)
         {
@@ -85,19 +87,24 @@ public class Tresor extends JComponent{
         }
     }
     
+    //renvoie la couleur
     public Color getColor(){
         return couleur;
     }
     
+    //met l'élément en transparence pour afficher la couleur de la case à la place
     public void setColorGris(){
-        couleur = Color.GRAY;
+        lbT.setOpaque(false);
     }
     
+    //remet la couleur du trésor
     public void setColorBack(){
+        lbT.setOpaque(true);
         setCouleur();
         initLabel();
     }
     
+    //renvoie le nom de la classe
     public String getNom(){
         switch(type)
         {
@@ -116,31 +123,33 @@ public class Tresor extends JComponent{
         }
     }
     
+    //renvoie le label
     public JLabel getLabel(){
         return lbT;
     }
     
+    //met à jour le label
     public void initLabel(){
         
          switch(type)
         {
             case FEU:
-                lbT = new JLabel("Cristal Ardent");
+                lbT.setText("Cristal Ardent");
                 lbT.setOpaque(true);
                 lbT.setBackground(couleur);
                 break;
             case LION:
-                lbT = new JLabel("Statue Zephyr");
+                lbT.setText("Statue Zephyr");
                 lbT.setOpaque(true);
                 lbT.setBackground(couleur);
                 break;
             case LUNE:
-                lbT = new JLabel("Pierre Sacree");
+                lbT.setText("Pierre Sacree");
                 lbT.setOpaque(true);
                 lbT.setBackground(couleur);
                 break;
             case TROPHEE:
-                lbT = new JLabel("Calice des ondes");
+                lbT.setText("Calice des ondes");
                 lbT.setOpaque(true);
                 lbT.setBackground(couleur);
                 break;

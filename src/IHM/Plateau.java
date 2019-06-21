@@ -29,6 +29,8 @@ import java.awt.event.MouseListener;
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 //import javafx.scene.media.Media;
 //import javafx.scene.media.MediaPlayer;
 
@@ -899,7 +901,9 @@ public class Plateau implements Observateur {
                 if (jp.getBackground() != emptyColor) {
                     jp.setBackground(nonSelectedColor);
                 }
-
+                if (plateau[i][j] != null && listTresor.get(plateau[i][j].getNom()) != null) {
+                    listTresor.get(plateau[i][j].getNom()).setColorGris();
+                }
             }
         }
         for(String i : listTresor.keySet())
@@ -925,6 +929,9 @@ public class Plateau implements Observateur {
                         case INONDE:
                             jp.setBackground(tuileInondee);
                             break;
+                    }
+                    if (listTresor.get(plateau[i][j].getNom()) != null) {
+                        listTresor.get(plateau[i][j].getNom()).setColorBack();
                     }
                 }
             }
