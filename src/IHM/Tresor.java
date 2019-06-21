@@ -9,6 +9,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import javax.swing.JComponent;
 import Enumerations.TypeEnumTresors;
+import javax.swing.JLabel;
 
 /**
  *
@@ -18,9 +19,13 @@ public class Tresor extends JComponent{
     
     TypeEnumTresors type;
     Color couleur;
+    JLabel lbT;
     
     Tresor(TypeEnumTresors typeTresor){
         this.type = typeTresor;
+        
+        setCouleur();
+        initLabel();
     }
     
     public void paint(Graphics g){
@@ -29,16 +34,19 @@ public class Tresor extends JComponent{
         {
             case FEU:
                 g.setColor(Color.red);
-                
+                couleur = Color.red;
             break;
             case LION:
                 g.setColor(Color.YELLOW);
+                couleur = Color.YELLOW;
             break;
             case LUNE:
                 g.setColor(new Color(153, 51, 153));    // Violet
+                couleur = new Color(153, 51, 153);
             break;
             case TROPHEE:
                 g.setColor(Color.CYAN);
+                couleur = Color.CYAN;
             break;
             case AUCUN:
                 // Ne pas traiter
@@ -53,22 +61,32 @@ public class Tresor extends JComponent{
         return type;
     }
 
-    public Color getCouleur(){
+    public void setCouleur(){
         switch(type)
         {
             case FEU:
-                return Color.red;
+                couleur = Color.red;
+                break;
             case LION:
-                return Color.YELLOW;
+                couleur = Color.YELLOW;
+                break;
             case LUNE:
-                return new Color(153, 51, 153);
+                couleur =  new Color(153, 51, 153);
+                break;
             case TROPHEE:
-                return Color.CYAN;
+                couleur = Color.CYAN;
+                break;
             case AUCUN:
-                
+                couleur = new Color(255, false);
+                break;
             default:
-                return new Color(255, false);
+                couleur = new Color(255, false);
+                break;
         }
+    }
+    
+    public Color getColor(){
+        return couleur;
     }
     
     public void setColorGris(){
@@ -76,7 +94,8 @@ public class Tresor extends JComponent{
     }
     
     public void setColorBack(){
-        couleur = getCouleur();
+        setCouleur();
+        initLabel();
     }
     
     public String getNom(){
@@ -94,6 +113,41 @@ public class Tresor extends JComponent{
                 return "";
             default:
                 return "NA";
+        }
+    }
+    
+    public JLabel getLabel(){
+        return lbT;
+    }
+    
+    public void initLabel(){
+        
+         switch(type)
+        {
+            case FEU:
+                lbT = new JLabel("Cristal Ardent");
+                lbT.setOpaque(true);
+                lbT.setBackground(couleur);
+                break;
+            case LION:
+                lbT = new JLabel("Statue Zephyr");
+                lbT.setOpaque(true);
+                lbT.setBackground(couleur);
+                break;
+            case LUNE:
+                lbT = new JLabel("Pierre Sacree");
+                lbT.setOpaque(true);
+                lbT.setBackground(couleur);
+                break;
+            case TROPHEE:
+                lbT = new JLabel("Calice des ondes");
+                lbT.setOpaque(true);
+                lbT.setBackground(couleur);
+                break;
+            case AUCUN:
+                break;
+            default:
+                break;
         }
     }
 }
