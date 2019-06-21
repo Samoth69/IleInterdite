@@ -381,10 +381,11 @@ public class Plateau implements Observateur {
 
                         for (String k : listTresor.keySet()) {
                             if (plateau[i][j].getNom() == k) {
-                                JLabel labT = new JLabel(listTresor.get(k).getNom());
-                                labT.setOpaque(true);
-                                labT.setBackground(listTresor.get(k).getCouleur());
-                                pn.add(labT);
+                                //JLabel labT = new JLabel(listTresor.get(k).getNom());
+                                //labT.setOpaque(true);
+                                //labT.setBackground(listTresor.get(k).getCouleur());
+                                //pn.add(labT);
+                                pn.add(listTresor.get(k).getLabel());
                             }
                         }
 
@@ -1006,7 +1007,7 @@ public class Plateau implements Observateur {
                 //mediaPlayer.play();
                 for (String i : listTresor.keySet()) {
                     if (m.getEmplacementJoueur().getNom().equals(i)) {
-                        listTresor.get(i).setVisible(false);
+                        listTresor.get(i).getLabel().setVisible(false);
                     }
                 }
                 if (cj.getTresorCaliceOnde()) {
