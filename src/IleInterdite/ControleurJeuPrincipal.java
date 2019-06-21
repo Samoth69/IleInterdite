@@ -12,6 +12,7 @@ import Cartes.CarteRouge;
 import Cartes.CarteTresor;
 import Enumerations.TypeEnumCarteAction;
 import Enumerations.TypeEnumCouleurPion;
+import Enumerations.TypeEnumPersonnages;
 import Enumerations.TypeEnumTresors;
 import IHM.Joueurs;
 import IHM.Menu;
@@ -47,10 +48,10 @@ public class ControleurJeuPrincipal implements Observateur {
         menu.afficher();
     }
 
-    public void afficherMenu(boolean b){
+    public void afficherMenu(boolean b) {
         menu.setVisible(b);
     }
-    
+
     //traite le message
     @Override
     public void traiterMessage(Message m) {
@@ -64,9 +65,7 @@ public class ControleurJeuPrincipal implements Observateur {
             case MENU_JOUER:                // si les message est MENU_JOUER
                 ArrayList<String> infos = m.getAdditionnal();
                 ArrayList<Personnage> perso = new ArrayList<>();
-                
-             
-                
+
                 switch (infos.get(1)) {
                     case "0": //mode normal
                         int counter = 3;
@@ -93,126 +92,42 @@ public class ControleurJeuPrincipal implements Observateur {
                                     perso.add(new Plongeur(infos.get(counter), null));
                                     break;
                                 case "Aléatoire":
-                                    nombreJoueurRandom++;
-                                    /*
-                                    //  Variable aléatoire pour le switch
-                                    int valAle = 1 + (int) (Math.random() * ((5 - 1) + 1));
-                                    //  Variable qui indique si un role de joueur (ex : Explo) est disponible
-                                    boolean joueurOk = true;
+                                    //ArrayList<Personnage> p = new ArrayList<>();
+                                    Personnage person = null;
+                                    //ArrayList<Integer> PersonnageDejaUtilise = new ArrayList<>();
+                                    int rnd = 0;
 
-                                    //  boucle do while
                                     do {
-                                        //  reset de la variable sur true
-                                        joueurOk = true;
-
-                                        switch (valAle) {
+                                        rnd = ThreadLocalRandom.current().nextInt(1, 6 + 1);
+                                        switch (rnd) {
                                             case 1:
-                                                //  Verifie que le role est bien dispo
-                                                for (Personnage p : perso) {
-                                                    //  Si il y a deja un role Explo
-                                                    if (p instanceof Explorateur) {
-                                                        //  variable qui indique si un role est dispo est passé sur false
-                                                        joueurOk = false;
-                                                        //  si la variable aléatoire depasse les cas du switch
-                                                        if (valAle <= 4) {
-                                                            valAle++;
-                                                        } else {
-                                                            valAle = 1;
-                                                        }
-                                                    }
-                                                }
-                                                //  si le role est dispo
-                                                if (joueurOk) {
-                                                    //  Ajout du personnage avec son role
-                                                    perso.add(new Explorateur(infos.get(counter), null));
-                                                }
+                                                person = (new Explorateur(infos.get(counter), null));
                                                 break;
-                                            case 2: //  idem cas 1
-                                                for (Personnage p : perso) {
-                                                    if (p instanceof Ingenieur) {
-                                                        joueurOk = false;
-                                                        if (valAle <= 4) {
-                                                            valAle++;
-                                                        } else {
-                                                            valAle = 1;
-                                                        }
-                                                    }
-                                                }
-                                                if (joueurOk) {
-                                                    perso.add(new Ingenieur(infos.get(counter), null));
-                                                }
+                                            case 2:
+                                                person = (new Ingenieur(infos.get(counter), null));
                                                 break;
-                                            case 3: //  idem cas 1
-                                                for (Personnage p : perso) {
-                                                    if (p instanceof Navigateur) {
-                                                        joueurOk = false;
-                                                        if (valAle <= 4) {
-                                                            valAle++;
-                                                        } else {
-                                                            valAle = 1;
-                                                        }
-                                                    }
-                                                }
-                                                if (joueurOk) {
-                                                    perso.add(new Navigateur(infos.get(counter), null));
-                                                }
+                                            case 3:
+                                                person = (new Messager(infos.get(counter), null));
                                                 break;
-                                            case 4: //  idem cas 1
-                                                for (Personnage p : perso) {
-                                                    if (p instanceof Pilote) {
-                                                        joueurOk = false;
-                                                        if (valAle <= 4) {
-                                                            valAle++;
-                                                        } else {
-                                                            valAle = 1;
-                                                        }
-                                                    }
-                                                }
-                                                if (joueurOk) {
-                                                    perso.add(new Pilote(infos.get(counter), null));
-                                                }
+                                            case 4:
+                                                person = (new Navigateur(infos.get(counter), null));
                                                 break;
-                                            case 5: //  idem cas 1
-                                                for (Personnage p : perso) {
-                                                    if (p instanceof Plongeur) {
-                                                        joueurOk = false;
-                                                        if (valAle <= 4) {
-                                                            valAle++;
-                                                        } else {
-                                                            valAle = 1;
-                                                        }
-                                                    }
-                                                }
-                                                if (joueurOk) {
-                                                    perso.add(new Plongeur(infos.get(counter), null));
-                                                }
+                                            case 5:
+                                                person = (new Pilote(infos.get(counter), null));
                                                 break;
-                                            case 6: //  idem cas 1
-                                                for (Personnage p : perso) {
-                                                    if (p instanceof Messager) {
-                                                        joueurOk = false;
-                                                        if (valAle <= 4) {
-                                                            valAle++;
-                                                        } else {
-                                                            valAle = 1;
-                                                        }
-                                                    }
-                                                }
-                                                if (joueurOk) {
-                                                    perso.add(new Messager(infos.get(counter), null));
-                                                }
+                                            case 6:
+                                                person = (new Plongeur(infos.get(counter), null));
                                                 break;
+
                                         }
-                                    } while (joueurOk != true);   //  Tant que l'on n' a pas trouvé de role dispo on cherche*/
+                                    } while (rnd == 0 || person == null || search(perso, person.getType()));
+                                    perso.add(person);
                                     break;
                                 default:
                                     break;
                             }
                             joueurCompter++;
                             counter += 2;
-                        }
-                        if (nombreJoueurRandom > 0) {
-                            perso.addAll(getPersonnagesDebutDePartie(perso, nombreJoueurRandom, null));
                         }
                         cj = new ControleurJeuSecondaire(perso, Integer.parseInt(infos.get(0)), false, null, null);
                         plateau = new Plateau(perso, cj);
@@ -227,7 +142,7 @@ public class ControleurJeuPrincipal implements Observateur {
                         perso.add(new Ingenieur("Inge", null));
                         perso.add(new Pilote("Pilote", null));
                         perso.add(new Plongeur("Plongeur", null));
-                        
+
                         cj = new ControleurJeuSecondaire(perso, 4, true, getCarteRouge1(), getCarteInond1());
                         cj.getIle().setStartup(true);
                         plateau = new Plateau(perso, cj);
@@ -235,7 +150,7 @@ public class ControleurJeuPrincipal implements Observateur {
                         for (Personnage p : perso) {
                             p.setGrille(cj.getIle());
                         }
-                        
+
                         cj.augementerInondation("la caverne des ombres");
                         cj.augementerInondation("la caverne du brasier");
                         cj.augementerInondation("le jardin des hurlements");
@@ -258,7 +173,7 @@ public class ControleurJeuPrincipal implements Observateur {
                     case "2": //scénario 2
                         perso.add(new Ingenieur("Inge", null));
                         perso.add(new Pilote("Pilote", null));
-                        
+
                         cj = new ControleurJeuSecondaire(perso, 2, true, getCarteRouge1(), getCarteInond2());
                         cj.getIle().setStartup(true);
                         plateau = new Plateau(perso, cj);
@@ -266,7 +181,7 @@ public class ControleurJeuPrincipal implements Observateur {
                         for (Personnage p : perso) {
                             p.setGrille(cj.getIle());
                         }
-                        
+
                         cj.augementerInondation("la caverne des ombres");
                         cj.augementerInondation("la caverne du brasier");
                         //cj.augementerInondation("le jardin des hurlements");
@@ -276,16 +191,16 @@ public class ControleurJeuPrincipal implements Observateur {
                         cj.augementerInondation("le temple du soleil");
                         cj.augementerInondation("le temple de la lune");
                         cj.deplacerJoueur(perso.get(0), cj.searchTuile("heliport"));
-                        cj.deplacerJoueur(perso.get(1), cj.searchTuile("les dunes de l'illusion")); 
+                        cj.deplacerJoueur(perso.get(1), cj.searchTuile("les dunes de l'illusion"));
                         cj.getIle().setStartup(false);
                         plateau.updatePion();
                         plateau.afficher();
-                        
+
                         break;
                     case "3": //scénario 3
                         perso.add(new Ingenieur("Inge", null));
                         perso.add(new Pilote("Pilote", null));
-                        
+
                         cj = new ControleurJeuSecondaire(perso, 2, true, getCarteRouge1(), getCarteInond3());
                         cj.getIle().setStartup(true);
                         plateau = new Plateau(perso, cj);
@@ -293,19 +208,19 @@ public class ControleurJeuPrincipal implements Observateur {
                         for (Personnage p : perso) {
                             p.setGrille(cj.getIle());
                         }
-                        
+
                         cj.augementerInondation("heliport");
                         cj.deplacerJoueur(perso.get(0), cj.searchTuile("la caverne des ombres"));
-                        cj.deplacerJoueur(perso.get(1), cj.searchTuile("les dunes de l'illusion")); 
+                        cj.deplacerJoueur(perso.get(1), cj.searchTuile("les dunes de l'illusion"));
                         cj.getIle().setStartup(false);
                         plateau.updatePion();
                         plateau.afficher();
-                        
+
                         break;
                     case "4": //scénario 4
                         perso.add(new Ingenieur("Inge", null));
                         perso.add(new Pilote("Pilote", null));
-                        
+
                         cj = new ControleurJeuSecondaire(perso, 2, true, getCarteRouge1(), getCarteInond4());
                         cj.getIle().setStartup(true);
                         plateau = new Plateau(perso, cj);
@@ -313,7 +228,7 @@ public class ControleurJeuPrincipal implements Observateur {
                         for (Personnage p : perso) {
                             p.setGrille(cj.getIle());
                         }
-                        
+
                         //cj.augementerInondation("heliport");
                         /*cj.augementerInondation("le temple du soleil");
                         cj.augementerInondation("le palais des marees");
@@ -325,16 +240,16 @@ public class ControleurJeuPrincipal implements Observateur {
                         cj.augementerInondation("la caverne du brasier");
                         cj.augementerInondation("le marais brumeux");
                         cj.deplacerJoueur(perso.get(0), cj.searchTuile("Le marais brumeux"));
-                        cj.deplacerJoueur(perso.get(1), cj.searchTuile("les dunes de l'illusion")); 
+                        cj.deplacerJoueur(perso.get(1), cj.searchTuile("les dunes de l'illusion"));
                         cj.getIle().setStartup(false);
                         plateau.updatePion();
                         plateau.afficher();
-                        
+
                         break;
                     case "5": //scénario 5
                         perso.add(new Ingenieur("Inge", null));
                         perso.add(new Pilote("Pilote", null));
-                        
+
                         cj = new ControleurJeuSecondaire(perso, 2, true, getCarteRouge2(), getCarteInond4());
                         cj.getIle().setStartup(true);
                         plateau = new Plateau(perso, cj);
@@ -349,13 +264,13 @@ public class ControleurJeuPrincipal implements Observateur {
                         cj.augmenterNiveauEau();
                         cj.augmenterNiveauEau();
                         cj.augmenterNiveauEau();
-                        
+
                         cj.deplacerJoueur(perso.get(0), cj.searchTuile("heliport"));
-                        cj.deplacerJoueur(perso.get(1), cj.searchTuile("les dunes de l'illusion")); 
+                        cj.deplacerJoueur(perso.get(1), cj.searchTuile("les dunes de l'illusion"));
                         cj.getIle().setStartup(false);
                         plateau.updatePion();
                         plateau.afficher();
-                        
+
                         break;
                     default:
                         break;
@@ -363,7 +278,7 @@ public class ControleurJeuPrincipal implements Observateur {
 
         }
     }
-    
+
     private ArrayList<CarteInondation> getCarteInond1() {
         ArrayList<CarteInondation> out = new ArrayList<>();
 
@@ -396,45 +311,45 @@ public class ControleurJeuPrincipal implements Observateur {
         out.add(new CarteInondation("Le Jardin des Murmures", TypeEnumTresors.LION, cheminCarte + "LeJardinDesMurmures.png", cheminTuile + "LeJardinDesMurmures.png"));
 
         return out;
-}
-    
+    }
+
     private ArrayList<CarteRouge> getCarteRouge1() {
         ArrayList<CarteRouge> out = new ArrayList<>();
-        
+
         final String chemin = System.getProperty("user.dir") + "/src/RessourcesCarteTresor/";
-        
+
         out.add(new CarteMonteeDesEaux("CarteMonteeDesEaux1", chemin + "MonteeDesEaux.png"));
         out.add(new CarteMonteeDesEaux("CarteMonteeDesEaux2", chemin + "MonteeDesEaux.png"));
         out.add(new CarteMonteeDesEaux("CarteMonteeDesEaux3", chemin + "MonteeDesEaux.png"));
-        out.add(new CarteAction("Helicoptere",TypeEnumCarteAction.HELICOPTERE, chemin + "Helicoptere.png"));
-        out.add(new CarteTresor("Trophee",TypeEnumTresors.TROPHEE, chemin + "Calice.png"));
-        out.add(new CarteAction("Helicoptere",TypeEnumCarteAction.HELICOPTERE, chemin + "Helicoptere.png"));
-        out.add(new CarteAction("sac",TypeEnumCarteAction.SAC_DE_SABLE, chemin + "SacsDeSable.png"));
-        out.add(new CarteAction("sac",TypeEnumCarteAction.SAC_DE_SABLE, chemin + "SacsDeSable.png"));
-        out.add(new CarteTresor("Lion",TypeEnumTresors.LION, chemin + "Zephyr.png"));
-        out.add(new CarteTresor("Lion",TypeEnumTresors.LION, chemin + "Zephyr.png"));
-        out.add(new CarteTresor("Lion",TypeEnumTresors.LION, chemin + "Zephyr.png"));
-        out.add(new CarteTresor("Lion",TypeEnumTresors.LION, chemin + "Zephyr.png"));
-        out.add(new CarteTresor("Lion",TypeEnumTresors.LION, chemin + "Zephyr.png"));
-        out.add(new CarteTresor("Lune",TypeEnumTresors.LUNE, chemin + "Pierre.png"));
-        out.add(new CarteTresor("Lune",TypeEnumTresors.LUNE, chemin + "Pierre.png"));
-        out.add(new CarteTresor("Lune",TypeEnumTresors.LUNE, chemin + "Pierre.png"));
-        out.add(new CarteTresor("Lune",TypeEnumTresors.LUNE, chemin + "Pierre.png"));
-        out.add(new CarteTresor("Lune",TypeEnumTresors.LUNE, chemin + "Pierre.png"));
-        out.add(new CarteTresor("Feu",TypeEnumTresors.FEU, chemin + "Cristal.png"));
-        out.add(new CarteTresor("Feu",TypeEnumTresors.FEU, chemin + "Cristal.png"));
-        out.add(new CarteTresor("Feu",TypeEnumTresors.FEU, chemin + "Cristal.png"));
-        out.add(new CarteTresor("Trophee",TypeEnumTresors.TROPHEE, chemin + "Calice.png"));
-        out.add(new CarteTresor("Trophee",TypeEnumTresors.TROPHEE, chemin + "Calice.png"));
-        out.add(new CarteTresor("Feu",TypeEnumTresors.FEU, chemin + "Cristal.png"));
-        out.add(new CarteTresor("Trophee",TypeEnumTresors.TROPHEE, chemin + "Calice.png"));
-        out.add(new CarteAction("Helicoptere",TypeEnumCarteAction.HELICOPTERE, chemin + "Helicoptere.png"));
-        out.add(new CarteTresor("Trophee",TypeEnumTresors.TROPHEE, chemin + "Calice.png"));
-        out.add(new CarteTresor("Feu",TypeEnumTresors.FEU, chemin + "Cristal.png"));
-        
+        out.add(new CarteAction("Helicoptere", TypeEnumCarteAction.HELICOPTERE, chemin + "Helicoptere.png"));
+        out.add(new CarteTresor("Trophee", TypeEnumTresors.TROPHEE, chemin + "Calice.png"));
+        out.add(new CarteAction("Helicoptere", TypeEnumCarteAction.HELICOPTERE, chemin + "Helicoptere.png"));
+        out.add(new CarteAction("sac", TypeEnumCarteAction.SAC_DE_SABLE, chemin + "SacsDeSable.png"));
+        out.add(new CarteAction("sac", TypeEnumCarteAction.SAC_DE_SABLE, chemin + "SacsDeSable.png"));
+        out.add(new CarteTresor("Lion", TypeEnumTresors.LION, chemin + "Zephyr.png"));
+        out.add(new CarteTresor("Lion", TypeEnumTresors.LION, chemin + "Zephyr.png"));
+        out.add(new CarteTresor("Lion", TypeEnumTresors.LION, chemin + "Zephyr.png"));
+        out.add(new CarteTresor("Lion", TypeEnumTresors.LION, chemin + "Zephyr.png"));
+        out.add(new CarteTresor("Lion", TypeEnumTresors.LION, chemin + "Zephyr.png"));
+        out.add(new CarteTresor("Lune", TypeEnumTresors.LUNE, chemin + "Pierre.png"));
+        out.add(new CarteTresor("Lune", TypeEnumTresors.LUNE, chemin + "Pierre.png"));
+        out.add(new CarteTresor("Lune", TypeEnumTresors.LUNE, chemin + "Pierre.png"));
+        out.add(new CarteTresor("Lune", TypeEnumTresors.LUNE, chemin + "Pierre.png"));
+        out.add(new CarteTresor("Lune", TypeEnumTresors.LUNE, chemin + "Pierre.png"));
+        out.add(new CarteTresor("Feu", TypeEnumTresors.FEU, chemin + "Cristal.png"));
+        out.add(new CarteTresor("Feu", TypeEnumTresors.FEU, chemin + "Cristal.png"));
+        out.add(new CarteTresor("Feu", TypeEnumTresors.FEU, chemin + "Cristal.png"));
+        out.add(new CarteTresor("Trophee", TypeEnumTresors.TROPHEE, chemin + "Calice.png"));
+        out.add(new CarteTresor("Trophee", TypeEnumTresors.TROPHEE, chemin + "Calice.png"));
+        out.add(new CarteTresor("Feu", TypeEnumTresors.FEU, chemin + "Cristal.png"));
+        out.add(new CarteTresor("Trophee", TypeEnumTresors.TROPHEE, chemin + "Calice.png"));
+        out.add(new CarteAction("Helicoptere", TypeEnumCarteAction.HELICOPTERE, chemin + "Helicoptere.png"));
+        out.add(new CarteTresor("Trophee", TypeEnumTresors.TROPHEE, chemin + "Calice.png"));
+        out.add(new CarteTresor("Feu", TypeEnumTresors.FEU, chemin + "Cristal.png"));
+
         return out;
     }
-    
+
     private ArrayList<CarteInondation> getCarteInond2() {
         ArrayList<CarteInondation> out = new ArrayList<>();
 
@@ -465,10 +380,10 @@ public class ControleurJeuPrincipal implements Observateur {
         out.add(new CarteInondation("La Caverne des Ombres", TypeEnumTresors.FEU, cheminCarte + "LaCaverneDesOmbres.png", cheminTuile + "LaCaverneDesOmbres.png"));
         out.add(new CarteInondation("Le Palais de Corail", TypeEnumTresors.TROPHEE, cheminCarte + "LePalaisDeCorail.png", cheminTuile + "LePalaisDeCorail.png"));
         out.add(new CarteInondation("Le Jardin des Hurlements", TypeEnumTresors.LION, cheminCarte + "LeJardinDesHurlements.png", cheminTuile + "LeJardinDesHurlements.png"));
-        
+
         return out;
     }
-    
+
     private ArrayList<CarteInondation> getCarteInond3() {
         ArrayList<CarteInondation> out = new ArrayList<>();
 
@@ -499,10 +414,10 @@ public class ControleurJeuPrincipal implements Observateur {
         out.add(new CarteInondation("La Caverne des Ombres", TypeEnumTresors.FEU, cheminCarte + "LaCaverneDesOmbres.png", cheminTuile + "LaCaverneDesOmbres.png"));
         out.add(new CarteInondation("Le Palais de Corail", TypeEnumTresors.TROPHEE, cheminCarte + "LePalaisDeCorail.png", cheminTuile + "LePalaisDeCorail.png"));
         out.add(new CarteInondation("Le Jardin des Hurlements", TypeEnumTresors.LION, cheminCarte + "LeJardinDesHurlements.png", cheminTuile + "LeJardinDesHurlements.png"));
-        
+
         return out;
     }
-    
+
     private ArrayList<CarteInondation> getCarteInond4() {
         ArrayList<CarteInondation> out = new ArrayList<>();
 
@@ -534,125 +449,54 @@ public class ControleurJeuPrincipal implements Observateur {
         out.add(new CarteInondation("Le Marais Brumeux", cheminCarte + "LeMaraisBrumeux.png", cheminTuile + "LeMaraisBrumeux.png"));
         //out.add(new CarteInondation("La Caverne du Brasier", TypeEnumTresors.FEU, cheminCarte + "CaverneDuBrasier.png", cheminTuile + "LaCaverneDuBrasier.png"));
         out.add(new CarteInondation("Le Temple du Soleil", TypeEnumTresors.LUNE, cheminCarte + "LeTempteDuSoleil.png", cheminTuile + "LeTempleDuSoleil.png"));
-        
-        
-        
-        
+
         return out;
     }
-    
+
     private ArrayList<CarteRouge> getCarteRouge2() {
         ArrayList<CarteRouge> out = new ArrayList<>();
-        
+
         final String chemin = System.getProperty("user.dir") + "/src/RessourcesCarteTresor/";
-        
-        out.add(new CarteAction("Helicoptere",TypeEnumCarteAction.HELICOPTERE, chemin + "Helicoptere.png"));
-        out.add(new CarteTresor("Trophee",TypeEnumTresors.TROPHEE, chemin + "Calice.png"));
-        out.add(new CarteAction("Helicoptere",TypeEnumCarteAction.HELICOPTERE, chemin + "Helicoptere.png"));
-        out.add(new CarteAction("sac",TypeEnumCarteAction.SAC_DE_SABLE, chemin + "SacsDeSable.png"));
-        out.add(new CarteAction("sac",TypeEnumCarteAction.SAC_DE_SABLE, chemin + "SacsDeSable.png"));
-        out.add(new CarteTresor("Lion",TypeEnumTresors.LION, chemin + "Zephyr.png"));
-        out.add(new CarteTresor("Lion",TypeEnumTresors.LION, chemin + "Zephyr.png"));
-        out.add(new CarteTresor("Lion",TypeEnumTresors.LION, chemin + "Zephyr.png"));
-        out.add(new CarteTresor("Lion",TypeEnumTresors.LION, chemin + "Zephyr.png"));
-        out.add(new CarteTresor("Lion",TypeEnumTresors.LION, chemin + "Zephyr.png"));
-        out.add(new CarteTresor("Lune",TypeEnumTresors.LUNE, chemin + "Pierre.png"));
-        out.add(new CarteTresor("Lune",TypeEnumTresors.LUNE, chemin + "Pierre.png"));
-        out.add(new CarteTresor("Lune",TypeEnumTresors.LUNE, chemin + "Pierre.png"));
-        out.add(new CarteTresor("Lune",TypeEnumTresors.LUNE, chemin + "Pierre.png"));
-        out.add(new CarteTresor("Lune",TypeEnumTresors.LUNE, chemin + "Pierre.png"));
-        out.add(new CarteTresor("Feu",TypeEnumTresors.FEU, chemin + "Cristal.png"));
-        out.add(new CarteTresor("Feu",TypeEnumTresors.FEU, chemin + "Cristal.png"));
-        out.add(new CarteTresor("Feu",TypeEnumTresors.FEU, chemin + "Cristal.png"));
-        out.add(new CarteTresor("Trophee",TypeEnumTresors.TROPHEE, chemin + "Calice.png"));
-        out.add(new CarteTresor("Trophee",TypeEnumTresors.TROPHEE, chemin + "Calice.png"));
+
+        out.add(new CarteAction("Helicoptere", TypeEnumCarteAction.HELICOPTERE, chemin + "Helicoptere.png"));
+        out.add(new CarteTresor("Trophee", TypeEnumTresors.TROPHEE, chemin + "Calice.png"));
+        out.add(new CarteAction("Helicoptere", TypeEnumCarteAction.HELICOPTERE, chemin + "Helicoptere.png"));
+        out.add(new CarteAction("sac", TypeEnumCarteAction.SAC_DE_SABLE, chemin + "SacsDeSable.png"));
+        out.add(new CarteAction("sac", TypeEnumCarteAction.SAC_DE_SABLE, chemin + "SacsDeSable.png"));
+        out.add(new CarteTresor("Lion", TypeEnumTresors.LION, chemin + "Zephyr.png"));
+        out.add(new CarteTresor("Lion", TypeEnumTresors.LION, chemin + "Zephyr.png"));
+        out.add(new CarteTresor("Lion", TypeEnumTresors.LION, chemin + "Zephyr.png"));
+        out.add(new CarteTresor("Lion", TypeEnumTresors.LION, chemin + "Zephyr.png"));
+        out.add(new CarteTresor("Lion", TypeEnumTresors.LION, chemin + "Zephyr.png"));
+        out.add(new CarteTresor("Lune", TypeEnumTresors.LUNE, chemin + "Pierre.png"));
+        out.add(new CarteTresor("Lune", TypeEnumTresors.LUNE, chemin + "Pierre.png"));
+        out.add(new CarteTresor("Lune", TypeEnumTresors.LUNE, chemin + "Pierre.png"));
+        out.add(new CarteTresor("Lune", TypeEnumTresors.LUNE, chemin + "Pierre.png"));
+        out.add(new CarteTresor("Lune", TypeEnumTresors.LUNE, chemin + "Pierre.png"));
+        out.add(new CarteTresor("Feu", TypeEnumTresors.FEU, chemin + "Cristal.png"));
+        out.add(new CarteTresor("Feu", TypeEnumTresors.FEU, chemin + "Cristal.png"));
+        out.add(new CarteTresor("Feu", TypeEnumTresors.FEU, chemin + "Cristal.png"));
+        out.add(new CarteTresor("Trophee", TypeEnumTresors.TROPHEE, chemin + "Calice.png"));
+        out.add(new CarteTresor("Trophee", TypeEnumTresors.TROPHEE, chemin + "Calice.png"));
         out.add(new CarteMonteeDesEaux("CarteMonteeDesEaux1", chemin + "MonteeDesEaux.png"));
         out.add(new CarteMonteeDesEaux("CarteMonteeDesEaux2", chemin + "MonteeDesEaux.png"));
         out.add(new CarteMonteeDesEaux("CarteMonteeDesEaux3", chemin + "MonteeDesEaux.png"));
-        out.add(new CarteTresor("Feu",TypeEnumTresors.FEU, chemin + "Cristal.png"));
-        out.add(new CarteTresor("Trophee",TypeEnumTresors.TROPHEE, chemin + "Calice.png"));
-        out.add(new CarteAction("Helicoptere",TypeEnumCarteAction.HELICOPTERE, chemin + "Helicoptere.png"));
-        out.add(new CarteTresor("Trophee",TypeEnumTresors.TROPHEE, chemin + "Calice.png"));
-        out.add(new CarteTresor("Feu",TypeEnumTresors.FEU, chemin + "Cristal.png"));
-        
-        
+        out.add(new CarteTresor("Feu", TypeEnumTresors.FEU, chemin + "Cristal.png"));
+        out.add(new CarteTresor("Trophee", TypeEnumTresors.TROPHEE, chemin + "Calice.png"));
+        out.add(new CarteAction("Helicoptere", TypeEnumCarteAction.HELICOPTERE, chemin + "Helicoptere.png"));
+        out.add(new CarteTresor("Trophee", TypeEnumTresors.TROPHEE, chemin + "Calice.png"));
+        out.add(new CarteTresor("Feu", TypeEnumTresors.FEU, chemin + "Cristal.png"));
+
         return out;
     }
-    
-    //Obtient les personnages pour démararer la partie.
-    //renvoie une liste contenant de NOUVEAU joueurs avec tous un role différent
-    public ArrayList<Personnage> getPersonnagesDebutDePartie(ArrayList<Personnage> persoDejaUtilise, int nbJoueurs, Grille grille) {
-        ArrayList<Personnage> p = new ArrayList<>();
-        ArrayList<Integer> PersonnageDejaUtilise = new ArrayList<>();
-        for (Personnage pe : persoDejaUtilise) {
-            switch(pe.getType()) {
-                case EXPLORATEUR:
-                    PersonnageDejaUtilise.add(1);
-                    break;
-                case INGENIEUR:
-                    PersonnageDejaUtilise.add(2);
-                    break;
-                case MESSAGER:
-                    PersonnageDejaUtilise.add(3);
-                    break;
-                case NAVIGATEUR:
-                    PersonnageDejaUtilise.add(4);
-                    break;
-                case PILOTE:
-                    PersonnageDejaUtilise.add(5);
-                    break;
-                case PLONGEUR:
-                    PersonnageDejaUtilise.add(6);
-                    break;
+
+    //cherche dans un arraylist si num est trouvé, renvoie true. sinon renvoie faux.
+    private boolean search(ArrayList<Personnage> p, TypeEnumPersonnages tep) {
+        for (Personnage pe : p) {
+            if (pe.getType() == tep) {
+                return true;
             }
         }
-
-        for (int i = 0; i < nbJoueurs; i++) {
-            int rnd = 0;
-
-            while (rnd == 0 || search(PersonnageDejaUtilise, rnd)) {
-                rnd = ThreadLocalRandom.current().nextInt(1, 6 + 1);
-            }
-            PersonnageDejaUtilise.add(rnd);
-
-            switch (rnd) {
-                case 1:
-                    p.add(new Explorateur("Pseudo Explorateur", grille));
-                    break;
-                case 2:
-                    p.add(new Ingenieur("Pseudo Ingénieur", grille));
-                    break;
-                case 3:
-                    p.add(new Messager("Pseudo Messager", grille));
-                    break;
-                case 4:
-                    p.add(new Navigateur("Pseudo Navigateur", grille));
-                    break;
-                case 5:
-                    p.add(new Pilote("Pseudo Pilote", grille));
-                    break;
-                case 6:
-                    p.add(new Plongeur("Pseudo Plongeur", grille));
-                    break;
-            }
-        }
-        return p;
-    }
-    
-        //cherche dans un arraylist si num est trouvé, renvoie true. sinon renvoie faux.
-    private boolean search(ArrayList<Integer> ar, int num) {
-        boolean exist = false;
-        for (int i = 0; i < ar.size(); i++) {
-            if (ar.get(i) == num) {
-                exist = true;
-                break;
-            }
-        }
-
-        if (exist) {
-            return true;
-        } else {
-            return false;
-        }
+        return false;
     }
 }
