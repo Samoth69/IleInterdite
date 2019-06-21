@@ -113,7 +113,7 @@ public class Tresor extends JComponent{
             case LION:
                 return "Statue Zephyr";
             case LUNE:
-                return "Pierre Sacree";
+                return "Pierre Sacrée";
             case TROPHEE:
                 return "Calice des Ondes";
             case AUCUN:
