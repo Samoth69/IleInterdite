@@ -201,24 +201,27 @@ public class AffichagePersonnage extends JPanel {
                     buttonDonnerCarte.setEnabled(false); 
                     pl.getControleurJeu().notifierObservateur(new Message(TypeEnumMessage.UPDATE_GUI)); //met à jour l interface
                 }
-                if (perso.getEmplacement().getPersonnages().size() != 1) {
-                    listPersoEmplacement.addAll(perso.getEmplacement().getPersonnages());//ajoute les personnage de l emplacement dans cette liste
-                    listPersoEmplacement.remove(perso); //sauf celui qui lance la commande
-                    for(CarteRouge i : perso.getCartes())
-                    {
-                        if(i instanceof CarteTresor)
+                else
+                {
+                    if (perso.getEmplacement().getPersonnages().size() != 1) {
+                        listPersoEmplacement.addAll(perso.getEmplacement().getPersonnages());//ajoute les personnage de l emplacement dans cette liste
+                        listPersoEmplacement.remove(perso); //sauf celui qui lance la commande
+                        for(CarteRouge i : perso.getCartes())
                         {
-                            carteTresorDuJoueur.add(i);
+                            if(i instanceof CarteTresor)
+                            {
+                                carteTresorDuJoueur.add(i);
+                            }
                         }
+                        VuDefausse vd = new VuDefausse(carteTresorDuJoueur, "Donner carte", 1, listPersoEmplacement, pl.getControleurJeu().getNbActionRestante());
+                        vd.setVisible(true); //afficher les cartes à donner
+                        perso.donnerCarteAJoueur(vd.getPersoQuiRecoitCartes(), vd.getSelectedItems()); //donner les cartes selectionner
+                        pl.getControleurJeu().setNbAction(vd.getNbActionRestante()); //change le nombre d action restante
+                        listPersoEmplacement.clear(); //vide la liste
+                        buttonDonnerCarte.setEnabled(false); 
+                        pl.getControleurJeu().notifierObservateur(new Message(TypeEnumMessage.UPDATE_GUI)); //met à jour l interface
+                        //dejaDonne = true;
                     }
-                    VuDefausse vd = new VuDefausse(carteTresorDuJoueur, "Donner carte", 1, listPersoEmplacement, pl.getControleurJeu().getNbActionRestante());
-                    vd.setVisible(true); //afficher les cartes à donner
-                    perso.donnerCarteAJoueur(vd.getPersoQuiRecoitCartes(), vd.getSelectedItems()); //donner les cartes selectionner
-                    pl.getControleurJeu().setNbAction(vd.getNbActionRestante()); //change le nombre d action restante
-                    listPersoEmplacement.clear(); //vide la liste
-                    buttonDonnerCarte.setEnabled(false); 
-                    pl.getControleurJeu().notifierObservateur(new Message(TypeEnumMessage.UPDATE_GUI)); //met à jour l interface
-                    //dejaDonne = true;
                 }
             }
         });
